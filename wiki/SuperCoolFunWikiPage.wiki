@@ -9,5 +9,5 @@ Read this line again.
 = Details =
 
 
-  #*bold text*
-  #_italic text_
+  # *bold text*
+  # _italic text_
