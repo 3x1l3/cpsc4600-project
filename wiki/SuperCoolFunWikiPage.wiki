@@ -8,9 +8,6 @@ Read this line again.
 
 = Details =
 
-Add your content here.  Format your content with:
-*bold text*
-_italic text_
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+* *bold text*
+* _italic text_
