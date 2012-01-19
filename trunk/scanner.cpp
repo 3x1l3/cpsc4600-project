@@ -6,7 +6,7 @@ Scanner::Scanner() {
     src_i = 0;
     source = NULL;
     peek = ' ';
-    assignment = Word();
+ 
 }
 
 /**
@@ -46,17 +46,17 @@ bool Scanner::readch(char c) {
 }
 
 Token Scanner::nextToken() {
-
+  
     //Skip Whitespaces
-
     for (src_i = 0; src_i < source->size(); src_i++) {
-        peek = source->at(src_i);
-
+	
+	peek = source->at(src_i);
+	
         if ( peek == ' ' || peek == '\t') continue;
-        else if (peek == '\n') line++;
+        else if (peek == '\n') { line++; }
         else
             break;
-
+      
     }
 
     //Handle Special Symbols
@@ -68,15 +68,18 @@ Token Scanner::nextToken() {
 
     }
 */
+  
     //Handle Digits
     if (isdigit(peek)) {
         int v = 0;
+	
         do {
-            v = 10 * v + atoi((char*)peek);
+            v = 10 * v + atoi(&peek);
             src_i++;
-            peek = source->at(src_i);
+            peek = source->at(src_i);   
         } while ( isdigit(peek) );
-
+	
+      return Token(NUM);
     }
 
     return Token();

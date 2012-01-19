@@ -7,11 +7,12 @@
 #define FALSE 259
 #define ASSIGN 260
 
+#include <iostream>
 #include <string>
 #include <unistd.h>
 #include <stdlib.h>
 #include "token.h"
-#include "word.h"
+
 
 class Scanner {
 private:
@@ -26,7 +27,6 @@ public:
     ~Scanner() { };
     Token nextToken();
     void loadSource(std::string&);
-    Word assignment;
 };
 
 #endif

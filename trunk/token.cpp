@@ -29,3 +29,4 @@ void Token::set(int t) {
     value = t;
     symbol = (char)t;
 }
+
