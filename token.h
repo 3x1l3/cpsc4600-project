@@ -1,10 +1,14 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <string>
+
 class Token {
 
-private:
+protected:
     int value;
+
+private:
     char symbol;
 
 public:
@@ -16,6 +20,7 @@ public:
     char getSymbol();
     void set(char);
     void set(int);
+    
 };
 
 #endif
