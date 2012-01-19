@@ -1,50 +1,31 @@
-
-
-class Token {
-
-	private:
-     int value;
-     char symbol;
-	 
-	public:
-     Token();  
-     Token(char);
-	 Token(int);
-	~Token() {} 
-    int getValue();
-	char getSymbol();
-	void set(char);
-	void set(int);
-};
-
-
+#include "token.h"
 
 Token::Token() {
-	value = 0;
-	symbol = ' ';
+    value = 0;
+    symbol = ' ';
 }
 
 Token::Token(char t) {
-	set(t);
+    set(t);
 }
 
 Token::Token(int t) {
-	set(t);
+    set(t);
 }
 
 int Token::getValue() {
-	return value; 
-	}
+    return value;
+}
 char Token::getSymbol() {
-	return symbol;
+    return symbol;
 }
 
 void Token::set(char t) {
-	value = (int)t; 
-	symbol = t;
+    value = (int)t;
+    symbol = t;
 }
 
 void Token::set(int t) {
-	value = t;
-	symbol = (char)t;
+    value = t;
+    symbol = (char)t;
 }

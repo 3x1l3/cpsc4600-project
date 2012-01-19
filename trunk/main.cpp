@@ -1,25 +1,29 @@
-#define NUM 256
-#define ID 257
-#define TRUE 258
-#define FALSE 259
-
 #include <string>
 #include <ctype.h>
-#include <stdlib.h>
+
+
 #include <iostream>
-#include "token.cpp"
-#include "scanner.cpp"
-#include "number.cpp"
+#include "token.h"
+#include "word.h"
+#include "scanner.h"
+#include "number.h"
 
 
 
 
+using std::string;
+using std::cout;
+using std::endl;
 
 int main() {
-	
-	Scanner* scan = new Scanner();
-	scan->loadSource("This is a source");
-	scan->nextToken();
-	return 0;
-	
+
+    Scanner* scan = new Scanner();
+    std::string source = "This is a new source";
+    scan->loadSource(source);
+    scan->nextToken();
+    return 0;
+
+
+
+
 }
