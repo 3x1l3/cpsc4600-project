@@ -3,7 +3,7 @@
 Scanner::Scanner() {
     line = 0;
     //Source index, per character
-    src_i = -1;
+    src_i = 0;
     source = NULL;
     peek = ' ';
  
@@ -16,7 +16,7 @@ Scanner::Scanner() {
 void Scanner::loadSource(std::string& src) {
     source = &src;
     //set ch to the first item in the source
-    if((source->size()-1) > 0 )
+    if((source->size()) > 0 )
     {
       readCharacter();
     }
@@ -27,10 +27,22 @@ void Scanner::loadSource(std::string& src) {
 /**
  * set the peek value to the next character if not out of bounds.
  */
-void Scanner::readCharacter() {
-    if (src_i + 1 < (source->size()-1)) {
-        peek = source->at(src_i+1);
+void Scanner::readCharacter() 
+{
+    if(src_i == 0)
+    {
+      peek = source->at(0);
+      src_i ++;
+    }
+    else if ((src_i) < (source->size())) {
+        peek = source->at(src_i);
         src_i++;
+    }
+    else
+    {
+      std::cout<<"out of bounds read"<<std::endl;
+      std::cout<<"peek = " <<peek<<std::endl;
+      std::cout<<"src_i = "<<src_i<<std::endl;
     }
 }
 
@@ -56,16 +68,20 @@ Token Scanner::nextToken() {
       {
         if ( peek == ' ' || peek == '\t')
 	{
+	  std::cout<<"peek in whitespace1 = "<<peek<<std::endl;
+	  std::cout<<"whitespace1"<<std::endl;
 	  readCharacter();
 	  continue;
 	}
         else if (peek == '\n') 
 	{ 
+	  std::cout<<"whitespace2"<<std::endl;
 	  readCharacter();
 	  line++; 
 	}
         else
 	{
+	  std::cout<<"whitespace3"<<std::endl;
 	  break;
 	}
       }while(peek == ' ' || peek == '\t' || peek == '\n') ;
@@ -84,8 +100,8 @@ Token Scanner::nextToken() {
     //Handle Digits
     if (isdigit(peek)) 
     {
-      std::cout<<"isdigit"<<std::endl;
-      handleNumber();
+      Token temp = handleNumber();
+      return temp;
    
     }
 //         int v = 0;
@@ -108,14 +124,26 @@ Token Scanner::nextToken() {
 }
 Token Scanner::handleNumber()
 {
+  bool isNum = true;
   int v = 0;
   do {
     v = 10 * v + atoi(&peek);
-    src_i++;
-    readCharacter(); 
-  } while (isdigit(peek) && src_i <= (source->size()-1));//peek == '0' || peek == '1' || peek == '2' || peek == '3' || peek == '4' || peek == '5' || peek == '6'|| peek == '7'|| peek == '8'|| peek == '9' );
-
-  return Token();
+    
+    readCharacter();
+       
+    if(isdigit(peek) )
+    {
+      isNum = true;
+    }
+    else
+    {
+      isNum = false;
+      break;
+    }
+  } while (isNum == true && src_i < (source->size()-1));
+  
+  Token *newToken = new Token("NUM", v);
+  return *newToken;
   
 }
 Token Scanner::handleSymbol()
@@ -126,5 +154,3 @@ Token Scanner::handleCharString()
 {
   return Token();
 }
-
-

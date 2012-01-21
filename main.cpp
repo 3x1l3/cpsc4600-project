@@ -12,7 +12,6 @@ using std::endl;
 
 int main() {
 
-  cout<<"herer"<<endl;
     Scanner* scan = new Scanner();
     std::string source = "123 45678 9";
     scan->loadSource(source);
