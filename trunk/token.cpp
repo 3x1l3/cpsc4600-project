@@ -2,31 +2,34 @@
 
 Token::Token() {
     value = 0;
-    symbol = ' ';
+    name = ' ';
 }
 
-Token::Token(char t) {
-    set(t);
+Token::Token(std::string t) {
+    setName(t);
 }
 
 Token::Token(int t) {
-    set(t);
+    setValue(t);
 }
 
+Token::Token(std::string newName, int newValue)
+{
+  name = newName;
+  value = newValue;
+}
 int Token::getValue() {
     return value;
 }
-char Token::getSymbol() {
-    return symbol;
+std::string Token::getName() {
+    return name;
 }
 
-void Token::set(char t) {
-    value = (int)t;
-    symbol = t;
+void Token::setName(std::string t) {
+    name = t;
 }
 
-void Token::set(int t) {
+void Token::setValue(int t) {
     value = t;
-    symbol = (char)t;
 }
 
