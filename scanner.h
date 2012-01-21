@@ -19,8 +19,11 @@ private:
     int line, src_i;
     std::string* source;
     char peek;
-    void readch();
-    bool readch(char);
+    void readCharacter();
+    bool readCharacter(char);
+    Token handleNumber();
+    Token handleSymbol();
+    Token handleCharString();
 
 public:
     Scanner();

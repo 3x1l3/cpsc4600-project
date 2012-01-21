@@ -9,17 +9,18 @@ protected:
     int value;
 
 private:
-    char symbol;
+    std::string name;
 
 public:
     Token();
-    Token(char);
+    Token(std::string);
     Token(int);
+    Token(std::string, int);
     ~Token() {}
     int getValue();
-    char getSymbol();
-    void set(char);
-    void set(int);
+    std::string getName();
+    void setName(std::string);
+    void setValue(int);
     
 };
 
