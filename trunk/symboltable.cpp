@@ -13,10 +13,22 @@ SymbolTable::SymbolTable()
  * attribute to an empty string.
  * @param name
  */
-void SymbolTable::makeEntry(std::string name)
+int SymbolTable::makeEntry(std::string name)
 {
     table[index][name][""] ="";
+    int i = index;
     index++;
+    return i;
+}
+
+int SymbolTable::makeEntry(std::string name, std::string attribute,
+std::string value) {
+
+    table[index][name][attribute] = value;
+    int i = index;
+    index++;
+    return i;
+    
 }
 
 /**
@@ -97,4 +109,14 @@ bool SymbolTable::attributeValueExists(int index, std::string name, std::string 
         return false;
     }
     return false;
+}
+
+std::string SymbolTable::getAttributeWhere(int index, std::string tokenName,
+std::string attribute)
+{
+  if (attributeExists(index, tokenName, attribute)) {
+    return table[index][tokenName][attribute];
+  }
+  
+  return "";
 }

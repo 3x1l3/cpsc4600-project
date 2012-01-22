@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "token.h"
+#include "symboltable.h"
 
 
 class Scanner {
@@ -24,12 +25,14 @@ private:
     Token handleNumber();
     Token handleSymbol();
     Token handleCharString();
+    SymbolTable* table;
 
 public:
-    Scanner();
+    Scanner(SymbolTable*);
     ~Scanner() { };
     Token nextToken();
     void loadSource(std::string&);
+    void scan();
 };
 
 #endif

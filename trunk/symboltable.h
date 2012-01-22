@@ -32,13 +32,15 @@ private:
 
 public:
     SymbolTable();
-    void makeEntry(std::string);
+    int makeEntry(std::string);
+    int makeEntry(std::string, std::string, std::string);
     void addAttribute(int, std::string, std::string, std::string);
     std::map<int, std::map<std::string, std::map<std::string, std::string> > > get();
     bool attributeExists(int, std::string, std::string);
     std::string findAttributeWhere(std::string, std::string);
     int findIndexWhere(std::string, std::string);
     bool attributeValueExists(int, std::string, std::string, std::string);
+    std::string getAttributeWhere(int, std::string, std::string);
 };
 
 #endif
