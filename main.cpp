@@ -14,7 +14,7 @@ int main() {
 
     SymbolTable* table = new SymbolTable();
     Scanner* scan = new Scanner(table);
-    std::string source = "int;";
+    std::string source = "$comment line \n foo bar ";
     scan->loadSource(source);
     scan->scan();
     cout << scan->getTokenizedString() << endl;
