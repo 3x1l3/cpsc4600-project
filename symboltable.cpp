@@ -18,6 +18,7 @@ int SymbolTable::makeEntry(std::string name)
     table[index][name][""] ="";
     int i = index;
     index++;
+    
     return i;
 }
 
@@ -27,6 +28,7 @@ std::string value) {
     table[index][name][attribute] = value;
     int i = index;
     index++;
+    
     return i;
     
 }

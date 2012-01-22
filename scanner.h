@@ -11,6 +11,7 @@
 #include <string>
 #include <unistd.h>
 #include <stdlib.h>
+#include <vector>
 #include "token.h"
 #include "symboltable.h"
 
@@ -26,6 +27,9 @@ private:
     Token handleSymbol();
     Token handleCharString();
     SymbolTable* table;
+    std::string tokenizedString;
+    std::vector<char> symbols;
+    std::vector<std::string> symbolStrings;
 
 public:
     Scanner(SymbolTable*);
@@ -33,6 +37,7 @@ public:
     Token nextToken();
     void loadSource(std::string&);
     void scan();
+    std::string getTokenizedString();
 };
 
 #endif
