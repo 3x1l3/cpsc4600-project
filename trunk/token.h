@@ -1,7 +1,10 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <iostream>
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 class Token {
 
@@ -17,11 +20,15 @@ public:
     Token(int);
     Token(std::string, int);
     ~Token() {}
-    int getValue();
-    std::string getName();
+    const int getValue() const;
+    const std::string getName() const;
     void setName(std::string);
     void setValue(int);
+    std::string toString();
     
+ bool operator==(const Token&) const;
+ bool operator!=(const Token&) const;
+   
 };
 
 #endif

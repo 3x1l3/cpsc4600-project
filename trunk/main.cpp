@@ -14,11 +14,11 @@ int main() {
 
     SymbolTable* table = new SymbolTable();
     Scanner* scan = new Scanner(table);
-    std::string source = "word df g";
+    std::string source = "int x = 22; ";
     scan->loadSource(source);
-    Token first = scan->nextToken();
+    scan->scan();
+    cout << scan->getTokenizedString() << endl;
   
-    cout << table->getAttributeWhere(0, "ID", "lexeme") << endl;
     return 0;
 
 }

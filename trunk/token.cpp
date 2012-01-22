@@ -18,10 +18,10 @@ Token::Token(std::string newName, int newValue)
   name = newName;
   value = newValue;
 }
-int Token::getValue() {
+const int Token::getValue() const {
     return value;
 }
-std::string Token::getName() {
+const std::string Token::getName() const {
     return name;
 }
 
@@ -31,5 +31,33 @@ void Token::setName(std::string t) {
 
 void Token::setValue(int t) {
     value = t;
+}
+
+std::string Token::toString()
+{
+    char val [10];
+    sprintf(val,"%d", value); 
+    std::cout << value << std::endl;
+    std::string str;
+    str = "<";
+    str += name;
+    str += ",";
+    str += val;
+    str += ">";
+    return str;
+}
+
+ bool Token::operator==(const Token& first) const
+{
+  if (this->getName() == first.getName() && this->getValue() == first.getValue())
+    return true;
+  return false;
+  
+}
+
+ bool Token::operator!=(const Token& temp) const
+{
+  return !(*this == temp);
+
 }
 
