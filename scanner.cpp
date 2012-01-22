@@ -70,20 +70,16 @@ Token Scanner::nextToken() {
     {
         if ( peek == ' ' || peek == '\t')
         {
-            std::cout<<"peek in whitespace1 = "<<peek<<std::endl;
-            std::cout<<"whitespace1"<<std::endl;
             readCharacter();
             continue;
         }
         else if (peek == '\n')
         {
-            std::cout<<"whitespace2"<<std::endl;
             readCharacter();
             line++;
         }
         else
         {
-            std::cout<<"whitespace3"<<std::endl;
             break;
         }
     } while (peek == ' ' || peek == '\t' || peek == '\n');
@@ -94,8 +90,7 @@ Token Scanner::nextToken() {
     //Handle Digits
     if (isdigit(peek))
     {
-        Token temp = handleNumber();
-        return temp;
+        return handleNumber();
 
     }
     //Handle Letters
@@ -104,22 +99,6 @@ Token Scanner::nextToken() {
     }
     
 
-
-//         int v = 0;
-//         do {
-//             v = 10 * v + atoi(&peek);
-//             src_i++;
-//             readCharacter();
-//         } while (isdigit(peek) && src_i <= (source->size()-1));//peek == '0' || peek == '1' || peek == '2' || peek == '3' || peek == '4' || peek == '5' || peek == '6'|| peek == '7'|| peek == '8'|| peek == '9' );
-// 	std::cout<<"after isdigit"<<std::endl;
-//
-// 	//instead of pasing in v to the token, we might have to pass in a index to the symbol table
-// 	//but im not sure how to create an entry into the symbol table right now.
-// 	//but this is where we add our tokens attributes to the symbol table, and v would be the index of
-// 	//this token.
-// 	Token *newToken = new Token("NUM", v);
-// 	return *newToken;
-    //}
 
     return Token();
 }
