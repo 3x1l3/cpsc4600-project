@@ -14,7 +14,7 @@ int main() {
 
     SymbolTable* table = new SymbolTable();
     Scanner* scan = new Scanner(table);
-    std::string source = "int x = 22;";
+    std::string source = "int;";
     scan->loadSource(source);
     scan->scan();
     cout << scan->getTokenizedString() << endl;

@@ -23,7 +23,7 @@ Scanner::Scanner(SymbolTable* symtable) {
 void Scanner::loadSource(std::string& src) {
     source = &src;
     //set ch to the first item in the source
-    if ((source->size()) > 0 )
+    if (source->size() > 0 )
     {
         readCharacter();
     }
@@ -36,7 +36,8 @@ void Scanner::loadSource(std::string& src) {
  */
 void Scanner::readCharacter()
 {
-    if ((src_i) < (source->size())) {
+    if (src_i < (source->size())) 
+    {
         peek = source->at(src_i);
         src_i++;
     }
@@ -77,6 +78,7 @@ Token Scanner::nextToken() {
         {
             readCharacter();
             line++;
+	    continue;
         }
         else
         {
@@ -91,7 +93,6 @@ Token Scanner::nextToken() {
     if (isdigit(peek))
     {
         return handleNumber();
-
     }
     //Handle Letters
     if (isalpha(peek)) {
@@ -100,7 +101,7 @@ Token Scanner::nextToken() {
     
 
 
-    return Token();
+    return Token("UNKNOWN" -20);
 }
 Token Scanner::handleNumber()
 {
@@ -148,7 +149,7 @@ Token Scanner::handleCharString()
         readCharacter();
     } while ((isalnum(peek) || peek == '_') && src_i < source->size()-1);
 
-// std::cout << "String: " << str << std::endl;
+ std::cout << "String: " << str << std::endl;
     int index = table->makeEntry("ID","lexeme", str);
 
     return Token("ID", index);
