@@ -4,7 +4,7 @@
 #include "token.h"
 
 #include "scanner.h"
-
+#include "symboltable.h"
 
 using std::string;
 using std::cout;
@@ -12,20 +12,13 @@ using std::endl;
 
 int main() {
 
-    Scanner* scan = new Scanner();
-    std::string source = "123 45678 9";
+    SymbolTable* table = new SymbolTable();
+    Scanner* scan = new Scanner(table);
+    std::string source = "word df g";
     scan->loadSource(source);
     Token first = scan->nextToken();
-    cout << first.getValue() << endl;
-    cout<< first.getName() <<endl;
-    
-    first = scan->nextToken();
-    cout << first.getValue() << endl;
-    cout<< first.getName() <<endl;
-    
-    first = scan->nextToken();
-    cout << first.getValue() << endl;
-    cout<< first.getName() <<endl;
+  
+    cout << table->getAttributeWhere(0, "ID", "lexeme") << endl;
     return 0;
 
 }

@@ -1,11 +1,12 @@
 #include "scanner.h"
 
-Scanner::Scanner() {
+Scanner::Scanner(SymbolTable* symtable) {
     line = 0;
     //Source index, per character
     src_i = 0;
     source = NULL;
     peek = ' ';
+    table = symtable;
  
 }
 
@@ -29,12 +30,7 @@ void Scanner::loadSource(std::string& src) {
  */
 void Scanner::readCharacter() 
 {
-    if(src_i == 0)
-    {
-      peek = source->at(0);
-      src_i ++;
-    }
-    else if ((src_i) < (source->size())) {
+     if ((src_i) < (source->size())) {
         peek = source->at(src_i);
         src_i++;
     }
@@ -84,7 +80,7 @@ Token Scanner::nextToken() {
 	  std::cout<<"whitespace3"<<std::endl;
 	  break;
 	}
-      }while(peek == ' ' || peek == '\t' || peek == '\n') ;
+      } while(peek == ' ' || peek == '\t' || peek == '\n') ;
 
     //Handle Special Symbols
 /*
@@ -103,6 +99,11 @@ Token Scanner::nextToken() {
       Token temp = handleNumber();
       return temp;
    
+    }
+    //Handle Letters
+    if (isalpha(peek)) {
+      
+      return handleCharString();
     }
 //         int v = 0;
 //         do {
@@ -152,5 +153,14 @@ Token Scanner::handleSymbol()
 }
 Token Scanner::handleCharString()
 {
-  return Token();
+  std::string str = "";
+  do {
+    str.append(&peek);
+    readCharacter();
+  } while((isalnum(peek) || peek == '_') && src_i < source->size()-1);
+    
+ // std::cout << "String: " << str << std::endl;
+  int index = table->makeEntry("ID","lexeme", str);
+    
+  return Token("ID", index);
 }
