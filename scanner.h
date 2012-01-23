@@ -18,7 +18,7 @@
 
 class Scanner {
 private:
-    int line, src_i;
+    int line, src_i, currentCharacter;
     std::string* source;
     char peek;
     bool readCharacter();

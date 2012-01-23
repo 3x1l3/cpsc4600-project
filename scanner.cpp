@@ -2,6 +2,7 @@
 
 Scanner::Scanner(SymbolTable* symtable) {
     line = 0;
+    currentCharacter = 0;
     //Source index, per character
     src_i = 0;
     source = NULL;
@@ -22,6 +23,7 @@ Scanner::Scanner(SymbolTable* symtable) {
  */
 void Scanner::loadSource(std::string& src) {
     source = &src;
+
     //set ch to the first item in the source
     if (source->size() > 0 )
     {
@@ -78,20 +80,22 @@ Token Scanner::nextToken() {
         std::cout << peek << std::endl;
         if ( peek == ' ' || peek == '\t')
         {
-            //
+            currentCharacter ++;
         }
         else if (peek == '\n')
         {
 
 
             line++;
+	    currentCharacter = 0;
             comment = false;
 
 
         }
         else if (peek == '$') {
 
-            comment = true;
+	  currentCharacter ++; //TODO is this needed ?!?!?! :O
+          comment = true;
         }
         else
         {
@@ -105,9 +109,9 @@ Token Scanner::nextToken() {
         }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' || comment == true));
 
-    if (ispunct(peek)) {
+    if (ispunct(peek)) 
+    {
         return handleSymbol();
-
     }
 
     //Handle Digits
@@ -116,7 +120,8 @@ Token Scanner::nextToken() {
         return handleNumber();
     }
     //Handle Letters
-    if (isalpha(peek)) {
+    if (isalpha(peek)) 
+    {
         return handleCharString();
     }
 
