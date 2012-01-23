@@ -11,9 +11,13 @@ Scanner::Scanner(SymbolTable* symtable) {
 
     char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
     std::string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
+    std::string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
+    "write", "call", "if", "do", "fi", "od", "false", "true"};
+
 
     symbols.insert(symbols.begin(), symbolarray, symbolarray+sizeof(symbolarray));
     symbolStrings.insert(symbolStrings.begin(), symbolStrArray, symbolStrArray+(sizeof(symbolStrArray) / sizeof(std::string)));
+    reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(std::string)));
 
 }
 
@@ -97,13 +101,10 @@ Token Scanner::nextToken() {
         }
         else
         {
-
-            if (comment == false) {
-
+            if (comment == false) 
+	    {
                 break;
             }
-
-
         }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
 
@@ -195,6 +196,7 @@ return Token("UNKNOWN", -2);
 
 
         int index = table->makeEntry("ID","lexeme", str);
+	std::cout<<"word = " <<str<<std::endl;
 
         return Token("ID", index);
     }

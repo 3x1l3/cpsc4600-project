@@ -30,6 +30,7 @@ private:
     std::string tokenizedString;
     std::vector<char> symbols;
     std::vector<std::string> symbolStrings;
+    std::vector<std::string> reservedWords;
     bool inRange();
     int checkSymbol(char symbol);
 
