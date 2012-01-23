@@ -84,16 +84,14 @@ Token Scanner::nextToken() {
         }
         else if (peek == '\n')
         {
-
-
+	    std::cout<<"NEW LINE symbol found "<<std::endl;
             line++;
 	    currentCharacter = 0;
             comment = false;
-
-
         }
-        else if (peek == '$') {
-
+        else if (peek == '$') 
+	{
+	  std::cout<<"COMMENT"<<std::endl;
 	  currentCharacter ++; //TODO is this needed ?!?!?! :O
           comment = true;
         }
@@ -107,7 +105,7 @@ Token Scanner::nextToken() {
 
 
         }
-    } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' || comment == true));
+    } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
 
     if (ispunct(peek)) 
     {
@@ -168,6 +166,7 @@ Token Scanner::handleNumber()
  */
 Token Scanner::handleSymbol()
 {
+  std::cout<<"in handle symbol peek = "<<peek<<std::endl;
   int index = checkSymbol(peek);
   if (index > -1) {
     readCharacter();

@@ -2,5 +2,5 @@ $comment line \n
 int x = 101;
 int lil_franky = 2987 * testVal;
 int x = 101;
-$comment line \n
-$comment line ;
+$comment line
+$comment line;
