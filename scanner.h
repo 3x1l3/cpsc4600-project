@@ -21,7 +21,7 @@ private:
     int line, src_i;
     std::string* source;
     char peek;
-    void readCharacter();
+    bool readCharacter();
     bool readCharacter(char);
     Token handleNumber();
     Token handleSymbol();
@@ -30,6 +30,8 @@ private:
     std::string tokenizedString;
     std::vector<char> symbols;
     std::vector<std::string> symbolStrings;
+    bool inRange();
+    int checkSymbol(char symbol);
 
 public:
     Scanner(SymbolTable*);
