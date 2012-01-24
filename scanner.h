@@ -14,11 +14,12 @@
 #include <vector>
 #include "token.h"
 #include "symboltable.h"
+#include "admin.h"
 
 
 class Scanner {
 private:
-    int line, src_i, currentCharacter;
+    int line, src_i, currentCharacter, col;
     std::string* source;
     char peek;
     bool readCharacter();
@@ -33,6 +34,7 @@ private:
     std::vector<std::string> reservedWords;
     bool inRange();
     int checkSymbol(char symbol);
+    Admin* log;
 
 public:
     Scanner(SymbolTable*);

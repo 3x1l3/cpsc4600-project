@@ -1,24 +1,28 @@
 #include "scanner.h"
 
 Scanner::Scanner(SymbolTable* symtable) {
-    line = 0;
+    line = 1;
     currentCharacter = 0;
     //Source index, per character
     src_i = 0;
     source = NULL;
     peek = ' ';
     table = symtable;
+    col = 0;
 
     char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
     std::string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
     std::string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
-    "write", "call", "if", "do", "fi", "od", "false", "true"};
+                                        "write", "call", "if", "do", "fi", "od", "false", "true"
+                                       };
 
 
     symbols.insert(symbols.begin(), symbolarray, symbolarray+sizeof(symbolarray));
     symbolStrings.insert(symbolStrings.begin(), symbolStrArray, symbolStrArray+(sizeof(symbolStrArray) / sizeof(std::string)));
     reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(std::string)));
-
+    
+    
+    log = new Admin();
 }
 
 /**
@@ -46,6 +50,7 @@ bool Scanner::readCharacter()
     {
         peek = source->at(src_i);
         src_i++;
+	col++;
         return true;
     }
     else
@@ -88,29 +93,38 @@ Token Scanner::nextToken() {
         }
         else if (peek == '\n')
         {
-	    std::cout<<"NEW LINE symbol found "<<std::endl;
+            std::cout<<"NEW LINE symbol found "<<std::endl;
             line++;
-	    currentCharacter = 0;
+	    col = 0;
+            currentCharacter = 0;
             comment = false;
         }
-        else if (peek == '$') 
-	{
-	  std::cout<<"COMMENT"<<std::endl;
-	  currentCharacter ++; //TODO is this needed ?!?!?! :O
-          comment = true;
+        else if (peek == '$')
+        {
+            std::cout<<"COMMENT"<<std::endl;
+            currentCharacter ++; //TODO is this needed ?!?!?! :O
+            comment = true;
         }
         else
         {
-            if (comment == false) 
-	    {
+            if (comment == false)
+            {
                 break;
             }
         }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
 
-    if (ispunct(peek)) 
+    if (ispunct(peek))
     {
-        return handleSymbol();
+        int index = checkSymbol(peek);
+        if (index > -1) {
+            readCharacter();
+            return Token(symbolStrings.at(index), -1);
+        } else {
+	    //Record Error Here.
+	    log->recordError("Invalid character found: ", line, col);
+	    readCharacter();
+	}
     }
 
     //Handle Digits
@@ -119,7 +133,7 @@ Token Scanner::nextToken() {
         return handleNumber();
     }
     //Handle Letters
-    if (isalpha(peek)) 
+    if (isalpha(peek))
     {
         return handleCharString();
     }
@@ -167,88 +181,88 @@ Token Scanner::handleNumber()
  */
 Token Scanner::handleSymbol()
 {
-  std::cout<<"in handle symbol peek = "<<peek<<std::endl;
-  int index = checkSymbol(peek);
-  if (index > -1) {
-    readCharacter();
-      return Token(symbolStrings.at(index), -1);
-  }
+    std::cout<<"in handle symbol peek = "<<peek<<std::endl;
+    int index = checkSymbol(peek);
+    if (index > -1) {
+        readCharacter();
+        return Token(symbolStrings.at(index), -1);
+    }
 
-return Token("UNKNOWN", -2);
+    return Token("UNKNOWN", -2);
 }
-    /**
-     * Handle a regular character string. Though these strings must start with an alpha character, but can
-     * have underscores and numbers.
-     *
-     * TODO: we need to check for reserved words in here.
-     *
-     * @return Token
-     */
-    Token Scanner::handleCharString()
-    {
-        std::string str = "";
-        do {
-            str.append(&peek);
-            std::cout << peek << std::endl;
+/**
+ * Handle a regular character string. Though these strings must start with an alpha character, but can
+ * have underscores and numbers.
+ *
+ * TODO: we need to check for reserved words in here.
+ *
+ * @return Token
+ */
+Token Scanner::handleCharString()
+{
+    std::string str = "";
+    do {
+        str.append(&peek);
+        std::cout << peek << std::endl;
 
 
-        } while ((isalnum(peek) || peek == '_') && readCharacter());
+    } while ((isalnum(peek) || peek == '_') && readCharacter());
 
 
-        int index = table->makeEntry("ID","lexeme", str);
-	std::cout<<"word = " <<str<<std::endl;
+    int index = table->makeEntry("ID","lexeme", str);
+    std::cout<<"word = " <<str<<std::endl;
 
-        return Token("ID", index);
+    return Token("ID", index);
+}
+
+/**
+ * Main running function for the scanner, this returns tokens and then contatinates the token to a
+ * string for output later.
+ */
+void Scanner::scan()
+{
+    Token temp;
+    Token blank;
+    do {
+        temp = nextToken();
+        std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
+        tokenizedString += temp.toString();
     }
+    while (inRange());
 
-    /**
-     * Main running function for the scanner, this returns tokens and then contatinates the token to a
-     * string for output later.
-     */
-    void Scanner::scan()
-    {
-        Token temp;
-        Token blank;
-        do {
-            temp = nextToken();
-            std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
-            tokenizedString += temp.toString();
-        }
-        while (inRange());
+}
+
+
+/**
+ * Return the tokenized string, in human readable form. This function will not be used once
+ * we get further into the project.
+ * @return std::string
+ */
+std::string Scanner::getTokenizedString()
+{
+    return tokenizedString;
+}
+
+/**
+ * Range check to consolidate all the checks to see if src_i is below the size of the source
+ * @return bool
+ */
+bool Scanner::inRange() {
+    return src_i < source->size();
+}
+
+/**
+ * Lets check to see if the passed symbol exists in our symbol vector.This will return the index
+ * if it is found so > 0 and -1 if it doesn't find one
+ * @return int
+ */
+int Scanner::checkSymbol(char symbol) {
+
+    for (int i = 0; i < symbols.size(); i++) {
+        if (symbols.at(i) == symbol)
+            return i;
 
     }
-
-
-    /**
-     * Return the tokenized string, in human readable form. This function will not be used once
-     * we get further into the project.
-     * @return std::string
-     */
-    std::string Scanner::getTokenizedString()
-    {
-        return tokenizedString;
-    }
-
-    /**
-     * Range check to consolidate all the checks to see if src_i is below the size of the source
-     * @return bool
-     */
-    bool Scanner::inRange() {
-        return src_i < source->size();
-    }
-
-    /**
-     * Lets check to see if the passed symbol exists in our symbol vector.This will return the index 
-     * if it is found so > 0 and -1 if it doesn't find one
-     * @return int
-     */
-    int Scanner::checkSymbol(char symbol) {
-
-      for (int i = 0; i < symbols.size(); i++) {
-	if (symbols.at(i) == symbol)
-	   return i;
-	
-      }
-      return -1;
-    }
+    return -1;
+}
 
