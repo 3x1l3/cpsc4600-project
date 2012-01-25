@@ -1,13 +1,13 @@
 #include "scanner.h"
 
-Scanner::Scanner(SymbolTable* symtable) {
+Scanner::Scanner() {
     line = 1;
     currentCharacter = 0;
     //Source index, per character
     src_i = 0;
     source = NULL;
     peek = ' ';
-    table = symtable;
+    
     col = 0;
 
     char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
@@ -20,9 +20,7 @@ Scanner::Scanner(SymbolTable* symtable) {
     symbols.insert(symbols.begin(), symbolarray, symbolarray+sizeof(symbolarray));
     symbolStrings.insert(symbolStrings.begin(), symbolStrArray, symbolStrArray+(sizeof(symbolStrArray) / sizeof(std::string)));
     reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(std::string)));
-    
-    
-    log = new Admin();
+
 }
 
 /**
@@ -31,7 +29,7 @@ Scanner::Scanner(SymbolTable* symtable) {
  */
 void Scanner::loadSource(std::string& src) {
     source = &src;
-
+   
     //set ch to the first item in the source
     if (source->size() > 0 )
     {
@@ -86,14 +84,14 @@ Token Scanner::nextToken() {
     //Skip Whitespaces
     do
     {
-        std::cout << peek << std::endl;
+       
         if ( peek == ' ' || peek == '\t')
         {
             currentCharacter ++;
         }
         else if (peek == '\n')
         {
-            std::cout<<"NEW LINE symbol found "<<std::endl;
+           
             line++;
 	    col = 0;
             currentCharacter = 0;
@@ -101,7 +99,7 @@ Token Scanner::nextToken() {
         }
         else if (peek == '$')
         {
-            std::cout<<"COMMENT"<<std::endl;
+           
             currentCharacter ++; //TODO is this needed ?!?!?! :O
             comment = true;
         }
@@ -122,7 +120,7 @@ Token Scanner::nextToken() {
             return Token(symbolStrings.at(index), -1);
         } else {
 	    //Record Error Here.
-	    log->recordError("Invalid character found: ", line, col);
+	    //log->recordError("Invalid character found: ", line, col);
 	    readCharacter();
 	}
     }
@@ -181,7 +179,7 @@ Token Scanner::handleNumber()
  */
 Token Scanner::handleSymbol()
 {
-    std::cout<<"in handle symbol peek = "<<peek<<std::endl;
+   
     int index = checkSymbol(peek);
     if (index > -1) {
         readCharacter();
@@ -203,14 +201,13 @@ Token Scanner::handleCharString()
     std::string str = "";
     do {
         str.append(&peek);
-        std::cout << peek << std::endl;
+       
+    } while (readCharacter() && (isalnum(peek) || peek == '_'));
 
 
-    } while ((isalnum(peek) || peek == '_') && readCharacter());
-
-
-    int index = table->makeEntry("ID","lexeme", str);
-    std::cout<<"word = " <<str<<std::endl;
+    //int index = table->makeEntry("ID","lexeme", str);
+    int index = 1;
+   
 
     return Token("ID", index);
 }
@@ -225,7 +222,7 @@ void Scanner::scan()
     Token blank;
     do {
         temp = nextToken();
-        std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
+       // std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
         tokenizedString += temp.toString();
     }
     while (inRange());

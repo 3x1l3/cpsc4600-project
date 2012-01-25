@@ -37,7 +37,7 @@ std::string Token::toString()
 {
     char val [10];
     sprintf(val,"%d", value); 
-    std::cout << value << std::endl;
+   
     std::string str;
     str = "<";
     str += name;
