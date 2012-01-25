@@ -8,18 +8,23 @@
 #include "scanner.h"
 #include "symboltable.h"
 
+using std::string;
+using std::cout;
+using std::endl;
+
 class Admin {
 private:
-  std::vector<std::string> error_msgs;
+  std::vector<string> error_msgs;
   std::vector<int> error_line;
   int current_line;
   int column;
   SymbolTable* table;
   Scanner* scanner;
+  int symTIndex;
   
 public:
-  Admin(std::string&);
-  void recordError(std::string, int, int);
+  Admin(string&);
+  void recordError(string, int, int);
   void scan();
 
 };

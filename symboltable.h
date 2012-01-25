@@ -5,6 +5,8 @@
 #include <map>
 #include <iostream>
 
+using std::string;
+using std::map;
 
 class SymbolTable {
 
@@ -22,7 +24,7 @@ private:
      *
      * Might be considered to be implimented using vectors instead.
      */
-    std::map<int, std::map<std::string, std::map<std::string, std::string> > > table;
+     map<int, map<string, map<string, string> > > table;
 
     /**
      * Lets say we auto increment an index so for each make entry we'll just used an auto assigned
@@ -32,15 +34,15 @@ private:
 
 public:
     SymbolTable();
-    int makeEntry(std::string);
-    int makeEntry(std::string, std::string, std::string);
-    void addAttribute(int, std::string, std::string, std::string);
-    std::map<int, std::map<std::string, std::map<std::string, std::string> > > get();
-    bool attributeExists(int, std::string, std::string);
-    std::string findAttributeWhere(std::string, std::string);
-    int findIndexWhere(std::string, std::string);
-    bool attributeValueExists(int, std::string, std::string, std::string);
-    std::string getAttributeWhere(int, std::string, std::string);
+    int makeEntry(string);
+    int makeEntry(string, string, string);
+    void addAttribute(int, string, string, string);
+    map<int, map<string, map<string, string> > > get();
+    bool attributeExists(int, string, string);
+    string findAttributeWhere(string, string);
+    int findIndexWhere(string, string);
+    bool attributeValueExists(int, string, string, string);
+    string getAttributeWhere(int, string, string);
 };
 
 #endif

@@ -1,14 +1,14 @@
 #include "scanner.h"
 
-Scanner::Scanner() {
-    line = 1;
+Scanner::Scanner(SymbolTable& table) {
+    
     currentCharacter = 0;
     //Source index, per character
     src_i = 0;
     source = NULL;
     peek = ' ';
+    symTable = &table; 
     
-    col = 0;
 
     char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
     std::string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
@@ -48,7 +48,6 @@ bool Scanner::readCharacter()
     {
         peek = source->at(src_i);
         src_i++;
-	col++;
         return true;
     }
     else
@@ -91,9 +90,6 @@ Token Scanner::nextToken() {
         }
         else if (peek == '\n')
         {
-           
-            line++;
-	    col = 0;
             currentCharacter = 0;
             comment = false;
         }
@@ -205,9 +201,7 @@ Token Scanner::handleCharString()
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
 
 
-    //int index = table->makeEntry("ID","lexeme", str);
-    int index = 1;
-   
+    int index = symTable->makeEntry("ID","lexeme", str);
 
     return Token("ID", index);
 }
