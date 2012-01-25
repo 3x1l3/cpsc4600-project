@@ -6,8 +6,8 @@
 #include <istream>
 #include <ostream>
 
-#include "scanner.h"
-#include "symboltable.h"
+#include "admin.h"
+
 
 using std::string;
 using std::cout;
@@ -15,8 +15,7 @@ using std::endl;
 
 int main() {
 
-    SymbolTable* table = new SymbolTable();
-    Scanner* scan = new Scanner(table);
+    
     //////////////////////////////////////////
     
     string line;
@@ -27,7 +26,6 @@ int main() {
       while ( myfile.good() )
       {
 	getline (myfile,line);
-	cout << line << endl;
 	line+='\n';
 	file += line;
       }
@@ -38,10 +36,9 @@ int main() {
     myfile.close();
     
     ///////////////////////////////////////
-    std::string source = file;//"$comment line \n int x = 101; ";
-    scan->loadSource(source);
-    scan->scan();
-    cout << scan->getTokenizedString() << endl;
+   
+    Admin* admin = new Admin(file);
+    admin->scan();
   
     return 0;
 

@@ -14,7 +14,7 @@
 #include <vector>
 #include "token.h"
 #include "symboltable.h"
-#include "admin.h"
+
 
 
 class Scanner {
@@ -27,22 +27,21 @@ private:
     Token handleNumber();
     Token handleSymbol();
     Token handleCharString();
-    SymbolTable* table;
     std::string tokenizedString;
     std::vector<char> symbols;
     std::vector<std::string> symbolStrings;
     std::vector<std::string> reservedWords;
-    bool inRange();
+    
     int checkSymbol(char symbol);
-    Admin* log;
 
 public:
-    Scanner(SymbolTable*);
+    Scanner();
     ~Scanner() { };
     Token nextToken();
     void loadSource(std::string&);
     void scan();
     std::string getTokenizedString();
+    bool inRange();
 };
 
 #endif
