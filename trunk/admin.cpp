@@ -1,19 +1,22 @@
 #include "admin.h"
 
 
-Admin::Admin(std::string& src)
+Admin::Admin(string& src)
 {
   current_line = 1;
   column = 1;
-  scanner = new Scanner();
+  symTIndex = 0;
   table = new SymbolTable();
+  scanner = new Scanner(*table);
+  
   scanner->loadSource(src);
+  
 }
 
-void Admin::recordError(std::string msg, int line, int col)
+void Admin::recordError(string msg, int line, int col)
 {
 
-    std::cout << msg << " Line: " << line << " Col: " << col << std::endl;
+    cout << msg << " Line: " << line << " Col: " << col << endl;
     error_line.push_back(line);
     error_msgs.push_back(msg);
   
@@ -24,7 +27,7 @@ void Admin::scan()
   Token tok;
   do { 
     tok = scanner->nextToken();
-   std::cout << tok.toString() << std::endl;
+   cout << tok.toString() << endl;
   }
   while(scanner->inRange()) ;
 

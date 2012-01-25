@@ -19,7 +19,7 @@
 
 class Scanner {
 private:
-    int line, src_i, currentCharacter, col;
+    int src_i, currentCharacter;
     std::string* source;
     char peek;
     bool readCharacter();
@@ -31,11 +31,11 @@ private:
     std::vector<char> symbols;
     std::vector<std::string> symbolStrings;
     std::vector<std::string> reservedWords;
-    
+    SymbolTable* symTable;
     int checkSymbol(char symbol);
 
 public:
-    Scanner();
+    Scanner(SymbolTable&);
     ~Scanner() { };
     Token nextToken();
     void loadSource(std::string&);
