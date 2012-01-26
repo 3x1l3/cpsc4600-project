@@ -11,8 +11,8 @@ Scanner::Scanner(SymbolTable& table) {
     
 
     char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
-    std::string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
-    std::string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
+    string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
+    string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
                                         "write", "call", "if", "do", "fi", "od", "false", "true"
                                        };
 
@@ -27,7 +27,7 @@ Scanner::Scanner(SymbolTable& table) {
  * Load the source of the function, or rather the address of the source to conserve memory
  * @param src
  */
-void Scanner::loadSource(std::string& src) {
+void Scanner::loadSource(string& src) {
     source = &src;
    
     //set ch to the first item in the source
@@ -142,23 +142,10 @@ Token Scanner::nextToken() {
  */
 Token Scanner::handleNumber()
 {
-    bool isNum = true;
     int v = 0;
     do {
         v = 10 * v + atoi(&peek);
-
-
-
-        if (isdigit(peek) )
-        {
-            isNum = true;
-        }
-        else
-        {
-            isNum = false;
-            break;
-        }
-    } while (isNum == true && readCharacter());
+    } while (readCharacter() && isdigit(peek));
 
     Token *newToken = new Token("NUM", v);
     return *newToken;
@@ -194,16 +181,21 @@ Token Scanner::handleSymbol()
  */
 Token Scanner::handleCharString()
 {
-    std::string str = "";
+    string str = "";
     do {
         str.append(&peek);
-       
+   
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
-
-
-    int index = symTable->makeEntry("ID","lexeme", str);
-
-    return Token("ID", index);
+    
+    
+    //Check to see if the token exists
+    int existing_token = symTable->findLexeme(str);
+    if (existing_token == -1) {
+      int index = symTable->makeEntry("ID","lexeme", str);
+      return Token("ID", index);
+    } else {
+      return Token("ID", existing_token);
+    }
 }
 
 /**
