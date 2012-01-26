@@ -10,15 +10,11 @@ Scanner::Scanner(SymbolTable& table) {
     symTable = &table; 
     
 
-    char symbolarray[] = { '}', '{', '=', '+', '-', '/', ';', '*' };
-    string symbolStrArray[] = { "CB", "OB", "EQ", "PLUS", "MINUS", "DIV", "SC", "MPLY" };
-    string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
+    string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "boolean", "proc", "skip", "read",
                                         "write", "call", "if", "do", "fi", "od", "false", "true"
                                        };
 
 
-    symbols.insert(symbols.begin(), symbolarray, symbolarray+sizeof(symbolarray));
-    symbolStrings.insert(symbolStrings.begin(), symbolStrArray, symbolStrArray+(sizeof(symbolStrArray) / sizeof(std::string)));
     reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(std::string)));
 
 }
@@ -108,17 +104,9 @@ Token Scanner::nextToken() {
         }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
 
-    if (ispunct(peek))
+    if (isSpecial(peek))
     {
-        int index = checkSymbol(peek);
-        if (index > -1) {
-            readCharacter();
-            return Token(symbolStrings.at(index), -1);
-        } else {
-	    //Record Error Here.
-	    //log->recordError("Invalid character found: ", line, col);
-	    readCharacter();
-	}
+      return handleSymbol();
     }
 
     //Handle Digits
@@ -134,7 +122,7 @@ Token Scanner::nextToken() {
 
 
 
-    return Token("UNKNOWN" -20);
+    return Token(UNKNOWN, -1, "unknown character");
 }
 
 /**
@@ -143,11 +131,13 @@ Token Scanner::nextToken() {
 Token Scanner::handleNumber()
 {
     int v = 0;
+    string lexeme = "";
     do {
         v = 10 * v + atoi(&peek);
+	lexeme += peek;
     } while (readCharacter() && isdigit(peek));
 
-    Token *newToken = new Token("NUM", v);
+    Token *newToken = new Token(NUMERAL, v, lexeme);
     return *newToken;
 
 }
@@ -162,14 +152,84 @@ Token Scanner::handleNumber()
  */
 Token Scanner::handleSymbol()
 {
-   
-    int index = checkSymbol(peek);
-    if (index > -1) {
-        readCharacter();
-        return Token(symbolStrings.at(index), -1);
-    }
-
-    return Token("UNKNOWN", -2);
+   Token tempToken;
+   Type newType = BADSYMBOL;
+   switch (peek) {
+      case ';':
+	 newType = SC;
+         tempToken = Token(newType, -1, ";");
+	 break;
+      case '.':
+	 newType = PERIOD;
+         tempToken = Token(newType, -1, ".");
+	 break;
+      case ',':
+	 newType = COMMA;
+         tempToken = Token(newType, -1, ",");
+	 break;
+      case '[':
+	 newType = LSB;
+         tempToken = Token(newType, -1, "[");
+	 break;
+      case ']':
+	 newType = RSB;
+         tempToken = Token(newType, -1, "]");
+	 break;
+      case '&':
+	 newType = AND;
+         tempToken = Token(newType, -1, "&");
+	 break;
+      case '|':
+	 newType = PIPE;
+         tempToken = Token(newType, -1, "|");
+	 break;
+      case '~':
+	 newType = TILDA;
+         tempToken = Token(newType, -1, "~");
+	 break;
+      case '<':
+	 newType = LT;
+         tempToken = Token(newType, -1, "<");
+	 break;
+      case '=':
+	 newType = EQUALS;
+         tempToken = Token(newType, -1, "=");
+	 break;
+      case '>':
+	 newType = GT;
+         tempToken = Token(newType, -1, ">");
+	 break;
+      case '\\':
+	 newType = FORSLASH;
+         tempToken = Token(newType, -1, "\\");
+	 break;
+      case '+':
+	 newType = PLUS;
+         tempToken = Token(newType, -1, "+");
+	 break;
+      case '-':
+         newType = MINUS;
+         tempToken = Token(newType, -1, "-");
+         break;
+      case '*':
+	 newType = TIMES;
+         tempToken = Token(newType, -1, "*");
+	 break;
+      case '/':
+	 newType = DIVIDE;
+         tempToken = Token(newType, -1, "/");
+	 break;
+      case '(':
+	 newType = LB;
+         tempToken = Token(newType, -1, "(");
+	 break;
+      case ')':
+	 newType = RB;
+         tempToken = Token(newType, -1, ")");
+	 break;
+   }
+   readCharacter();
+   return tempToken;
 }
 /**
  * Handle a regular character string. Though these strings must start with an alpha character, but can
@@ -187,16 +247,81 @@ Token Scanner::handleCharString()
    
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
     
-    
     //Check to see if the token exists
     int existing_token = symTable->findLexeme(str);
     if (existing_token == -1) {
       int index = symTable->makeEntry("ID","lexeme", str);
-      return Token("ID", index);
+      return Token(IDENTIFIER, index, str);
     } else {
-      return Token("ID", existing_token);
+      return Token(IDENTIFIER, existing_token, str);
     }
 }
+
+bool Scanner::isSpecial(char ch)
+{
+ // . < , = ; > [ + ] - & * | / ~ \ ( ) := [] ->
+
+   switch (ch) {
+      case '.':
+	 return true;
+	 break;
+      case '<':
+	 return true;
+	 break;
+      case ',':
+	 return true;
+	 break;
+      case '=':
+	 return true;
+	 break;
+      case ';':
+	 return true;
+	 break;
+      case '>':
+	 return true;
+	 break;
+      case '[':
+	 return true;
+	 break;
+      case '+':
+	 return true;
+	 break;
+      case ']':
+	 return true;
+	 break;
+      case '-':
+	 return true;
+	 break;
+      case '&':
+	 return true;
+	 break;
+      case '*':
+	 return true;
+	 break;
+      case '|':
+	 return true;
+	 break;
+      case '/':
+	 return true;
+	 break;
+      case '~':
+	 return true;
+	 break;
+      case '\\':
+	 return true;
+	 break;
+      case '(':
+	 return true;
+	 break;
+      case ')':
+	 return true;
+	 break;
+      default:
+	 return false;
+	 //TODO := [] -> double symbols
+   }
+}
+
 
 /**
  * Main running function for the scanner, this returns tokens and then contatinates the token to a
@@ -234,18 +359,6 @@ bool Scanner::inRange() {
     return src_i < source->size();
 }
 
-/**
- * Lets check to see if the passed symbol exists in our symbol vector.This will return the index
- * if it is found so > 0 and -1 if it doesn't find one
- * @return int
- */
-int Scanner::checkSymbol(char symbol) {
 
-    for (int i = 0; i < symbols.size(); i++) {
-        if (symbols.at(i) == symbol)
-            return i;
 
-    }
-    return -1;
-}
 
