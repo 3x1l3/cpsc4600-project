@@ -113,12 +113,25 @@ bool SymbolTable::attributeValueExists(int index, std::string name, std::string 
     return false;
 }
 
-std::string SymbolTable::getAttributeWhere(int index, std::string tokenName,
-std::string attribute)
+std::string SymbolTable::getAttributeWhere(int index, std::string tokenName, std::string attribute)
 {
   if (attributeExists(index, tokenName, attribute)) {
     return table[index][tokenName][attribute];
   }
   
   return "";
+}
+
+/**
+ * Find a table entry with the lexeme. This assumes ID and attribute = lexeme. It will return the
+ * index of the found entry, -1 if not found.
+ * @return int
+ */
+int SymbolTable::findLexeme(string lexeme)
+{
+    for(int i=0; i < index; i++) {
+	if (table[i]["ID"]["lexeme"] == lexeme)
+	  return i;
+    }
+    return -1;
 }

@@ -43,6 +43,7 @@ public:
     int findIndexWhere(string, string);
     bool attributeValueExists(int, string, string, string);
     string getAttributeWhere(int, string, string);
+    int findLexeme(string);
 };
 
 #endif

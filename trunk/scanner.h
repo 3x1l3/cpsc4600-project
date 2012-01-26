@@ -15,22 +15,24 @@
 #include "token.h"
 #include "symboltable.h"
 
+using std::string;
+using std::vector;
 
 
 class Scanner {
 private:
     int src_i, currentCharacter;
-    std::string* source;
+    string* source;
     char peek;
     bool readCharacter();
     bool readCharacter(char);
     Token handleNumber();
     Token handleSymbol();
     Token handleCharString();
-    std::string tokenizedString;
-    std::vector<char> symbols;
-    std::vector<std::string> symbolStrings;
-    std::vector<std::string> reservedWords;
+    string tokenizedString;
+    vector<char> symbols;
+    vector<string> symbolStrings;
+    vector<string> reservedWords;
     SymbolTable* symTable;
     int checkSymbol(char symbol);
 
@@ -38,9 +40,9 @@ public:
     Scanner(SymbolTable&);
     ~Scanner() { };
     Token nextToken();
-    void loadSource(std::string&);
+    void loadSource(string&);
     void scan();
-    std::string getTokenizedString();
+    string getTokenizedString();
     bool inRange();
 };
 
