@@ -5,25 +5,38 @@
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std; 
+enum Type {IDENTIFIER=256, NUMERAL, BADNUMERAL, BADNAME,           // 255 - 259
+             BADSYMBOL, BADCHAR, NEWLINE,NONAME,            // 260 - 263
+             ENDOFFILE, DIV, MOD,                // 264 - 267
+             PLUS, MINUS, TIMES, DIVIDE, UNKNOWN,                    // 268 - 271
+             PERIOD, COMMA, SC, LSB, RSB, AND, PIPE, TILDA, //272 - 281
+	     LT, GT, EQUALS, FORSLASH, LB, RB, COLONEQUALS, BOTHSQUAREBRACKETS, ARROW}; //282 - 290     
+string spellOutTypeName(Type);
+	     
+ 
 class Token {
 
 protected:
     int value;
+    Type type;
+    string lexeme;
 
 private:
-    std::string name;
+
 
 public:
     Token();
-    Token(std::string);
-    Token(int);
-    Token(std::string, int);
+    Token(Type, int, std::string);
     ~Token() {}
     const int getValue() const;
-    const std::string getName() const;
-    void setName(std::string);
+    const Type getType() const;
+    const std::string getLexeme() const;
+    void setType(Type);
     void setValue(int);
+    void setLexeme(std::string);
     std::string toString();
     
  bool operator==(const Token&) const;

@@ -30,11 +30,8 @@ private:
     Token handleSymbol();
     Token handleCharString();
     string tokenizedString;
-    vector<char> symbols;
-    vector<string> symbolStrings;
     vector<string> reservedWords;
     SymbolTable* symTable;
-    int checkSymbol(char symbol);
 
 public:
     Scanner(SymbolTable&);
@@ -44,6 +41,7 @@ public:
     void scan();
     string getTokenizedString();
     bool inRange();
+    bool isSpecial(char);
 };
 
 #endif
