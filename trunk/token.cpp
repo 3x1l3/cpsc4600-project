@@ -88,7 +88,7 @@ string spellOutTypeName(Type name){
      else if (name == MOD)
         return "MOD";
      else if (name == SC)
-        return "SEMICOLON";
+        return "SC";
      else if (name == PLUS)
         return "PLUS";
      else if (name == MINUS)
@@ -98,9 +98,9 @@ string spellOutTypeName(Type name){
      else if (name == DIVIDE)
         return "DIVIDE";
      else if (name == LB)
-        return "L.BRACKET";
+        return "LB";
      else if (name == RB)
-        return "R.BRACKET";
+        return "RB";
      else if (name == UNKNOWN)
         return "UNKNOWN";
      else if (name == PERIOD)
@@ -108,9 +108,9 @@ string spellOutTypeName(Type name){
      else if (name == COMMA)
         return "COMMA";
      else if (name == LSB)
-        return "L.SQUAREBRACKET";
+        return "LSB";
      else if (name == RSB)
-        return "R.SQUAREBRACKET";
+        return "RSB";
      else if (name == AND)
         return "AND";
      else if (name == PIPE)
@@ -118,17 +118,17 @@ string spellOutTypeName(Type name){
      else if (name == TILDA)
         return "TILDA";
      else if (name == LT)
-        return "LESSTHAN";
+        return "LT";
      else if (name == GT)
-        return "GREATERTHAN";
+        return "GT";
      else if (name == EQUALS)
         return "EQUALS";
      else if (name == FORSLASH)
-        return "FORWARDSLASH";
+        return "FORSLASH";
      else if (name == COLONEQUALS)
         return "COLONEQUALS";
      else if (name == BOTHSQUAREBRACKETS)
-        return "BOTH.S.BRACKETS";
+        return "BOTHSQUAREBRACKETS";
      else if (name == ARROW)
         return "ARROW";
 
