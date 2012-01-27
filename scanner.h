@@ -1,11 +1,9 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#define NUM 256
-#define ID 257
-#define TRUE 258
-#define FALSE 259
-#define ASSIGN 260
+#define NUMERAL_UPPER_BOUND 260000
+#define NUMERAL_LOWER_BOUND 0
+#define MAX_STRING_LENGTH 80
 
 #include <iostream>
 #include <string>

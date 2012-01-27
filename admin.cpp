@@ -16,7 +16,7 @@ Admin::Admin(string& src)
 void Admin::recordError(string msg, int line, int col)
 {
 
-    cout << msg << " Line: " << line << " Col: " << col << endl;
+    cerr << msg << " Line: " << line << " Col: " << col << endl;
     error_line.push_back(line);
     error_msgs.push_back(msg);
   
