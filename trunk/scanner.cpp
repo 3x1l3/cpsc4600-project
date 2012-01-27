@@ -145,9 +145,6 @@ Token Scanner::handleNumber()
 /**
  * Function to handle symbols from the source string. Uses the symbol vector that
  * is defined in the constructor.
- *
- * TODO: there needs to be only one return from this function. Still have to figure out how to do that
- *
  * @return Token
  */
 Token Scanner::handleSymbol()
@@ -234,9 +231,6 @@ Token Scanner::handleSymbol()
 /**
  * Handle a regular character string. Though these strings must start with an alpha character, but can
  * have underscores and numbers.
- *
- * TODO: we need to check for reserved words in here.
- *
  * @return Token
  */
 Token Scanner::handleCharString()
@@ -252,7 +246,14 @@ Token Scanner::handleCharString()
     if (existing_token == -1) {
       int index = symTable->makeEntry("ID","lexeme", str);
       return Token(IDENTIFIER, index, str);
-    } else {
+    } 
+    else 
+    {
+      //TODO do we handle reserved words any differntly?
+      if(existing_token < symTable->getNumOfReservedWords())
+      {
+	  cout<<"RESERVED WORD FOUND"<<endl;
+      }
       return Token(IDENTIFIER, existing_token, str);
     }
 }

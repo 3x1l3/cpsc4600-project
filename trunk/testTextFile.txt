@@ -1,2 +1,2 @@
-int x = 10;
-int w = 10;
+true x = 10;
+integer x = 10;
