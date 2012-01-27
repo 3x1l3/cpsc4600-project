@@ -8,6 +8,8 @@
 #include "scanner.h"
 #include "symboltable.h"
 
+#define MAX_ERRORS 10
+
 using std::string;
 using std::cout;
 using std::endl;
@@ -21,11 +23,15 @@ private:
   SymbolTable* table;
   Scanner* scanner;
   int symTIndex;
+  bool correctLine;
   
 public:
   Admin(string&);
-  void recordError(string, int, int);
+  void recordError(string);
   void scan();
+  void newLine();
+  void increaseColumn();
+  void resetColumn();
 
 };
 
