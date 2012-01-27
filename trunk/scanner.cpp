@@ -92,7 +92,7 @@ Token Scanner::nextToken() {
         }
         else if (peek == '$')
         {
-           
+            cout<<"found comment"<<endl;
             currentCharacter ++; //TODO is this needed ?!?!?! :O
             comment = true;
         }
@@ -122,7 +122,7 @@ Token Scanner::nextToken() {
     }
 
 
-
+    cout<<peek<<endl;
     return Token(UNKNOWN, -1, "unknown character");
 }
 
