@@ -105,10 +105,7 @@ Token Scanner::nextToken() {
         }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
 
-    if (isSpecial(peek))
-    {
-      return handleSymbol();
-    }
+
 
     //Handle Digits
     if (isdigit(peek))
@@ -119,6 +116,17 @@ Token Scanner::nextToken() {
     if (isalpha(peek))
     {
         return handleCharString();
+    }
+    //handles special symbols
+    if (isSpecial(peek))
+    {
+      return handleSymbol();
+    }
+    else
+    {
+      string peekChar = &peek;
+      readCharacter();
+      return Token(BADSYMBOL, -1, peekChar);
     }
 
 
