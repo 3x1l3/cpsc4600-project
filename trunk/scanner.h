@@ -10,16 +10,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <vector>
+#include "admin.h"
 #include "token.h"
 #include "symboltable.h"
 
 using std::string;
 using std::vector;
 
+class Admin;
 
 class Scanner {
 private:
-    int src_i, currentCharacter;
+    int src_i;
     string* source;
     char peek;
     bool readCharacter();
@@ -30,9 +32,10 @@ private:
     string tokenizedString;
     vector<string> reservedWords;
     SymbolTable* symTable;
+    Admin* adminPtr;
 
 public:
-    Scanner(SymbolTable&);
+    Scanner(SymbolTable&, Admin&);
     ~Scanner() { };
     Token nextToken();
     void loadSource(string&);

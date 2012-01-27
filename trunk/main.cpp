@@ -39,8 +39,13 @@ int main() {
     ///////////////////////////////////////
    
     Admin* admin = new Admin(file);
-    admin->scan();
+    int status = admin->scan();
   
+    if (status == 0)
+	cout << "Scanning successful" << endl;
+    else
+       cout << "Program contains scan errors" << endl;
+    
     return 0;
 
 }
