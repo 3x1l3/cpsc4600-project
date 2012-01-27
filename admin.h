@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <sstream>
 
 #include "scanner.h"
 #include "symboltable.h"
@@ -13,7 +14,7 @@
 using std::string;
 using std::cout;
 using std::endl;
-
+class Scanner;
 class Admin {
 private:
   std::vector<string> error_msgs;
@@ -24,11 +25,12 @@ private:
   Scanner* scanner;
   int symTIndex;
   bool correctLine;
+  int errorCount;
   
 public:
   Admin(string&);
   void recordError(string);
-  void scan();
+  int scan();
   void newLine();
   void increaseColumn();
   void resetColumn();

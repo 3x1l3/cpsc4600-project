@@ -1,8 +1,8 @@
 #include "scanner.h"
 
-Scanner::Scanner(SymbolTable& table) {
+Scanner::Scanner(SymbolTable& table, Admin& admin) {
     
-    currentCharacter = 0;
+   
     
     //Source index, per character
     src_i = 0;
@@ -10,7 +10,7 @@ Scanner::Scanner(SymbolTable& table) {
     peek = ' ';
     symTable = &table; 
     
-
+    adminPtr = &admin;
     string reservedWordsArray[] = {"begin", "end", "const", "array", "integer", "boolean", "proc", "skip", "read",
                                         "write", "call", "if", "do", "fi", "od", "false", "true"
                                        };
@@ -45,6 +45,7 @@ bool Scanner::readCharacter()
     {
         peek = source->at(src_i);
         src_i++;
+	adminPtr->increaseColumn();
         return true;
     }
     else
@@ -83,17 +84,20 @@ Token Scanner::nextToken() {
        
         if ( peek == ' ' || peek == '\t')
         {
-            currentCharacter ++;
+            
         }
         else if (peek == '\n')
         {
-            currentCharacter = 0;
+          
+	    adminPtr->resetColumn();
             comment = false;
+	    readCharacter();
+	    return Token(NEWLINE, -1, "NL");
         }
         else if (peek == '$')
         {
             cout<<"found comment"<<endl;
-            currentCharacter ++; //TODO is this needed ?!?!?! :O
+            
             comment = true;
         }
         else
