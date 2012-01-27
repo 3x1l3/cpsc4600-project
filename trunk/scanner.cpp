@@ -3,6 +3,7 @@
 Scanner::Scanner(SymbolTable& table) {
     
     currentCharacter = 0;
+    
     //Source index, per character
     src_i = 0;
     source = NULL;
@@ -137,7 +138,17 @@ Token Scanner::handleNumber()
 	lexeme += peek;
     } while (readCharacter() && isdigit(peek));
 
-    Token *newToken = new Token(NUMERAL, v, lexeme);
+    Token *newToken;
+    if(v >= NUMERAL_LOWER_BOUND && v <= NUMERAL_UPPER_BOUND)
+    {
+      newToken = new Token(NUMERAL, v, lexeme);
+    }
+    else
+    {
+      newToken = new Token(BADNUMERAL, v, spellOutTypeName(BADNUMERAL));
+      //TODO change the error handling to the admin class
+      cerr<<"Bad Numeral - Overflow - "<<endl;
+    }
     return *newToken;
 
 }
@@ -241,20 +252,31 @@ Token Scanner::handleCharString()
    
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
     
-    //Check to see if the token exists
-    int existing_token = symTable->findLexeme(str);
-    if (existing_token == -1) {
-      int index = symTable->makeEntry("ID","lexeme", str);
-      return Token(IDENTIFIER, index, str);
-    } 
-    else 
+    
+    //check if token's lexeme is too long
+    if(str.size() > 80)
     {
-      //TODO do we handle reserved words any differntly?
-      if(existing_token < symTable->getNumOfReservedWords())
+      cerr<<"Bad Name - Overflow"<<endl;
+      return Token (BADNAME, -1, str);
+    }
+    else
+    {
+      //Check to see if the token exists
+      int existing_token = symTable->findLexeme(str);
+      if (existing_token == -1) 
       {
-	  cout<<"RESERVED WORD FOUND"<<endl;
+	int index = symTable->makeEntry("ID","lexeme", str);
+	return Token(IDENTIFIER, index, str);
+      } 
+      else 
+      {
+	//TODO do we handle reserved words any differntly?
+	if(existing_token < symTable->getNumOfReservedWords())
+	{
+	    cout<<"RESERVED WORD FOUND"<<endl;
+	}
+	return Token(IDENTIFIER, existing_token, str);
       }
-      return Token(IDENTIFIER, existing_token, str);
     }
 }
 
