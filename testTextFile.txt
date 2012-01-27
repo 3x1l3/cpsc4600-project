@@ -2,3 +2,5 @@ true x = 456456;
 integer x = 10;
 asd_dsa34hjtyfhg_pole__1234rturedf_gkf4rasd_dsa34hjtyfhg_pole__1234rturedf_gkf4r;
 asd_dsa34hjtyfhg_pole__1234rturedf_gkf4rasd_dsa34hjtyfhg_pole__1234rturedf_gkf4r1;
+$comment blah blah 45+45
++
