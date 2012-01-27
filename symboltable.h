@@ -44,6 +44,8 @@ public:
     bool attributeValueExists(int, string, string, string);
     string getAttributeWhere(int, string, string);
     int findLexeme(string);
+    int numberOfReservedWords;
+    int getNumOfReservedWords();
 };
 
 #endif

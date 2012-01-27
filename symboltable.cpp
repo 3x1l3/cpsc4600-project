@@ -6,6 +6,29 @@
 SymbolTable::SymbolTable()
 {
     index = 0;
+    numberOfReservedWords = 17;
+    makeEntry("ID","lexeme", "begin");
+    makeEntry("ID","lexeme", "end");
+    makeEntry("ID","lexeme", "const");
+    makeEntry("ID","lexeme", "array");
+    makeEntry("ID","lexeme", "integer");
+    makeEntry("ID","lexeme", "boolean");
+    makeEntry("ID","lexeme", "proc");
+    makeEntry("ID","lexeme", "skip");
+    makeEntry("ID","lexeme", "read");
+    makeEntry("ID","lexeme", "write");
+    makeEntry("ID","lexeme", "call");
+    makeEntry("ID","lexeme", "if");
+    makeEntry("ID","lexeme", "do");
+    makeEntry("ID","lexeme", "fi");
+    makeEntry("ID","lexeme", "od");
+    makeEntry("ID","lexeme", "false");
+    makeEntry("ID","lexeme", "true");
+}
+
+int SymbolTable::getNumOfReservedWords()
+{
+  return numberOfReservedWords;
 }
 
 /**
