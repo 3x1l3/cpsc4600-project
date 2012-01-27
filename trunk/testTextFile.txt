@@ -5,4 +5,4 @@ asd_dsa34hjtyfhg_pole__1234rturedf_gkf4rasd_dsa34hjtyfhg_pole__1234rturedf_gkf4r
 $comment blah blah 45+45
 +
 ^
-#$comment
+$comment
