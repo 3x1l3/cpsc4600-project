@@ -87,10 +87,8 @@ Token Scanner::nextToken() {
         }
         else if (peek == '\n')
         {
-	    readCharacter();
             currentCharacter = 0;
             comment = false;
-	    return Token(NEWLINE, -1, "NL");
         }
         else if (peek == '$')
         {
