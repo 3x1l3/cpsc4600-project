@@ -4,7 +4,7 @@
 Admin::Admin(string& src)
 {
     current_line = 1;
-    column = 1;
+    column = 0;
     symTIndex = 0;
     table = new SymbolTable();
     scanner = new Scanner(*table, *this);
@@ -26,23 +26,48 @@ void Admin::recordError(string msg)
 
 int Admin::scan()
 {
-
+    //if file is empty, it will return 0, casue no errors were found
+    if(scanner->inRange() == false)
+      return 0;
+  
     stringstream error_str;
     Token tok;
     do {
         tok = scanner->nextToken();
+	//if token is a new line token, then we call our newline funciton and reset the 1 error per line boolean
         if (tok.getType() == NEWLINE) {
             newLine();
         }
-        else if (tok.getType() == BADCHAR) {
-            error_str << "Illegal character " << current_line << ":" << column << endl;
-            recordError(error_str.str());
-        } else if (tok.getType() == BADNUMERAL) {
-            error_str << "Numeral overflow on " << current_line << ":" << column << endl;
-            recordError(error_str.str());
-        } else if (tok.getType() == BADNAME) {
+        //program will only report one error per line at the moment
+        else if (tok.getType() == BADCHAR) 
+	{
+	  error_str << "Illegal character " << current_line << ":" << column << endl;
+	  recordError(error_str.str());
+	  if(errorCount >= MAXERRORS)
+	  {
+	    cerr<<"Error threashold limit reached"<<endl;
+	    return errorCount;
+	  }
+        } 
+        else if (tok.getType() == BADNUMERAL) 
+	{
+	  error_str << "Numeral overflow on " << current_line << ":" << column << endl;
+	  recordError(error_str.str());
+	  if(errorCount >= MAXERRORS)
+	  {
+	    cerr<<"Error threashold limit reached"<<endl;
+	    return errorCount;
+	  }
+        } 
+        else if (tok.getType() == BADNAME) 
+	{
 	  error_str << "Identifier cannot exceed 80 characters " << current_line << ":" << column << endl;
 	  recordError(error_str.str());
+	  if(errorCount >= MAXERRORS)
+	  {
+	    cerr<<"Error threashold limit reached"<<endl;
+	    return errorCount;
+	  }
 	}
 
         cout << tok.toString() << endl;

@@ -88,11 +88,18 @@ Token Scanner::nextToken() {
         }
         else if (peek == '\n')
         {
-          
 	    adminPtr->resetColumn();
-            comment = false;
 	    readCharacter();
-	    return Token(NEWLINE, -1, "NL");
+            if(comment == true)
+	    {
+	      comment = false;
+	      return Token (COMMENT, -1, spellOutTypeName(COMMENT));
+	    }
+	    else
+	    {
+	      comment = false;
+	      return Token(NEWLINE, -1, "NL");
+	    }
         }
         else if (peek == '$')
         {
