@@ -98,13 +98,11 @@ Token Scanner::nextToken() {
 	    else
 	    {
 	      comment = false;
-	      return Token(NEWLINE, -1, "NL");
+	      return Token(NEWLINE, -1, spellOutTypeName(NEWLINE));
 	    }
         }
         else if (peek == '$')
         {
-            cout<<"found comment"<<endl;
-            
             comment = true;
         }
         else
@@ -173,8 +171,7 @@ Token Scanner::handleNumber()
 }
 
 /**
- * Function to handle symbols from the source string. Uses the symbol vector that
- * is defined in the constructor.
+ * Function to handle symbols from the source string.
  * @return Token
  */
 Token Scanner::handleSymbol()
@@ -197,6 +194,16 @@ Token Scanner::handleSymbol()
       case '[':
 	 newType = LSB;
          tempToken = Token(newType, -1, "[");
+	 //handling the dual symbol both square brackets "[]"
+	 readCharacter();
+	 if(peek == ']')
+	 {
+	   tempToken = Token(BOTHSQUAREBRACKETS, -1, "[]");
+	 }
+	 else
+	 {
+	   src_i--;
+	 }
 	 break;
       case ']':
 	 newType = RSB;
@@ -237,6 +244,16 @@ Token Scanner::handleSymbol()
       case '-':
          newType = MINUS;
          tempToken = Token(newType, -1, "-");
+	 //handling the dual symbol arrow "->"
+	 readCharacter();
+	 if(peek == '>')
+	 {
+	   tempToken = Token(ARROW, -1, "->");
+	 }
+	 else
+	 {
+	   src_i--;
+	 }
          break;
       case '*':
 	 newType = TIMES;
@@ -254,6 +271,20 @@ Token Scanner::handleSymbol()
 	 newType = RB;
          tempToken = Token(newType, -1, ")");
 	 break;
+      case ':':
+         newType = UNKNOWN;
+         tempToken = Token(newType, -1, ":");
+	 //handling the dual symbol Colon Equlas ":="
+	 readCharacter();
+	 if(peek == '=')
+	 {
+	   tempToken = Token(COLONEQUALS, -1, ":=");
+	 }
+	 else
+	 {
+	   src_i--;
+	 }
+         break;
    }
    readCharacter();
    return tempToken;
@@ -358,9 +389,13 @@ bool Scanner::isSpecial(char ch)
       case ')':
 	 return true;
 	 break;
+      //adding in special case for the colonequals double sign ":="
+      //see function HandleSymbol for more information
+      case ':':
+	 return true;
+	 break;
       default:
 	 return false;
-	 //TODO := [] -> double symbols
    }
 }
 
