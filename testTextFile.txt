@@ -1,9 +1,30 @@
-true x = 456456;
-integer x = 10;
-asd_dsa34hjtyfhg_pole__1234rturedf_gkf4rasd_dsa34hjtyfhg_pole__1234rturedf_gkf4r;
-asd_dsa34hjtyfhg_pole__1234rturedf_gkf4rasd_dsa34hjtyfhg_pole__1234rturedf_gkf4r1;
-$comment blah blah 45+45
-+
-^
-$comment
-frank
+$ PL Program: Linear Search
+begin
+  const n = 10; 
+  integer array A[n];
+  integer x, i; 
+  Boolean found;
+  proc Search
+  begin integer m;
+      i,m := l,n;
+    do i<m ->
+      if A[i] = x -> m := i; []
+	~(A[i] = x) -> i := i + 1;
+      fi;
+    od;
+    found := A[i) = x;
+  end;
+
+  $ Input Table:
+  i := 1;
+  do ~(i > n) ->read A[i]; i := i+1;od
+    $Test Search:
+    read x;
+    do-(x=O)->
+      call Search;
+      if found -> write x, i; []
+	~found -> write x;
+      fi;
+    read x;
+  od;
+end.
