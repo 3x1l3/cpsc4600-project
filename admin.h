@@ -9,7 +9,7 @@
 #include "scanner.h"
 #include "symboltable.h"
 
-#define MAX_ERRORS 10
+#define MAXERRORS 10
 
 using std::string;
 using std::cout;
