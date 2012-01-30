@@ -1,0 +1,353 @@
+\hypertarget{classAdmin}{
+\section{Admin Class Reference}
+\label{classAdmin}\index{Admin@{Admin}}
+}
+
+
+This is the main administrator class that manages the different compiler functions.  
+
+
+
+
+{\ttfamily \#include $<$admin.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}{Admin} (string \&)
+\begin{DoxyCompactList}\small\item\em Base constructor for the Administrator. \end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_a6519bde7fd1ffd997a66987c2417d7bd}{recordError} (string)
+\begin{DoxyCompactList}\small\item\em Records the Error Message string into the Error vector. \end{DoxyCompactList}\item 
+int \hyperlink{classAdmin_aaa4f711e8151dceab8d90c5f127c6820}{scan} ()
+\begin{DoxyCompactList}\small\item\em Executes the scanner function and returns an integer count of the errors found. \end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_ae121a9ce2a34ac4075d074c2d1f306c5}{newLine} ()
+\begin{DoxyCompactList}\small\item\em A newline operation is performed as our current line is valid. \end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_a89653dd68c51b51d9003a2518a56175f}{increaseColumn} ()
+\begin{DoxyCompactList}\small\item\em Our column count management functions allow us to report exact error locations. \end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_a62813e5c17636eeef43524ad40cdaab8}{resetColumn} ()
+\begin{DoxyCompactList}\small\item\em The default \char`\"{}left-\/aligned\char`\"{} column is 1, we reset it when we reach the end of a line. \end{DoxyCompactList}\item 
+bool \hyperlink{classAdmin_af5cd211ee7891ec1fec719bace4b678b}{checkMaxErrors} ()
+\begin{DoxyCompactList}\small\item\em Checks if we have reached the maximum number of errors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::vector$<$ string $>$ \hyperlink{classAdmin_ad8c946fbb7ed32ad1f73a24eaf422c53}{error\_\-msgs}
+\begin{DoxyCompactList}\small\item\em Vectors used to store error details. \end{DoxyCompactList}\item 
+std::vector$<$ int $>$ \hyperlink{classAdmin_a2070f3b7ce2f309da1b080c3d3f07ecf}{error\_\-line}
+\item 
+int \hyperlink{classAdmin_a77039c04350669e25d604593a77bea36}{current\_\-line}
+\begin{DoxyCompactList}\small\item\em We track the current line and column locations while reading through our File string. \end{DoxyCompactList}\item 
+int \hyperlink{classAdmin_ae6bcb0d3aa08b938197a332c5af5a456}{column}
+\item 
+\hyperlink{classSymbolTable}{SymbolTable} $\ast$ \hyperlink{classAdmin_afb5161f047f166b985257447b9c47f22}{table}
+\begin{DoxyCompactList}\small\item\em Symbol Table and \hyperlink{classScanner}{Scanner} object pointers. \end{DoxyCompactList}\item 
+\hyperlink{classScanner}{Scanner} $\ast$ \hyperlink{classAdmin_a6846c5ec5e565001a18a20167ff7b3cf}{scanner}
+\item 
+int \hyperlink{classAdmin_ae1c48226f950c3e470785785aff4d536}{symTIndex}
+\begin{DoxyCompactList}\small\item\em The Index integer for our symbol table. \end{DoxyCompactList}\item 
+bool \hyperlink{classAdmin_a18dd34f91c28721e9ba9ec9370ae5f98}{correctLine}
+\begin{DoxyCompactList}\small\item\em If a line cannot be scanned/parsed, this boolean is used to indicate such. \end{DoxyCompactList}\item 
+int \hyperlink{classAdmin_ae29edcd0464b203b35f72caba6af7295}{errorCount}
+\begin{DoxyCompactList}\small\item\em Simple tracking of the number of errors encountered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the main administrator class that manages the different compiler functions. 
+
+This class mediates between the different analytical portions of the compiler. The Administrator class ensures that the \hyperlink{classScanner}{Scanner} and Parser communicate using the same set of data, such as the same Symbol Table(s), same line/column count, and the same error data.
+
+As of now, the Administrator executes the scanning and parsing functions when needed and supplies the correct data for each. It may also mediate for the Error Handling classes. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}{
+\index{Admin@{Admin}!Admin@{Admin}}
+\index{Admin@{Admin}!Admin@{Admin}}
+\subsubsection[{Admin}]{\setlength{\rightskip}{0pt plus 5cm}Admin::Admin (
+\begin{DoxyParamCaption}
+\item[{string \&}]{src}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}
+
+
+Base constructor for the Administrator. 
+
+Constructor for the \hyperlink{classAdmin}{Admin} class.
+
+The constructor takes in the finalized File string object pointer from the Main file. 
+\begin{DoxyParams}{Parameters}
+{\em string} & variable\\
+\hline
+\end{DoxyParams}
+Sets the default values of our class variables, then creates the symbol table and scanner.
+
+Uses the source string \char`\"{}src\char`\"{}, which is the File string reference containing the entire PL program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & The PL program in the File string. \\
+\hline
+\end{DoxyParams}
+
+
+correctLine could technically be used a constructor sentinel in the future.
+
+We send the symbol table to the \hyperlink{classScanner}{Scanner}, along with a reference to the Administrator.
+
+The reference to the \char`\"{}File\char`\"{} string is sent to the scanner. 
+
+
+
+References column, correctLine, current\_\-line, errorCount, Scanner::loadSource(), scanner, symTIndex, and table.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classAdmin_af5cd211ee7891ec1fec719bace4b678b}{
+\index{Admin@{Admin}!checkMaxErrors@{checkMaxErrors}}
+\index{checkMaxErrors@{checkMaxErrors}!Admin@{Admin}}
+\subsubsection[{checkMaxErrors}]{\setlength{\rightskip}{0pt plus 5cm}bool Admin::checkMaxErrors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_af5cd211ee7891ec1fec719bace4b678b}
+
+
+Checks if we have reached the maximum number of errors. 
+
+If we have reached the maximum number of errors, we return a true statement as well as letting the operator/user know this has happened. Used to shorten code above.
+
+\begin{DoxyReturn}{Returns}
+A boolean indicating if we have too many errors. 
+\end{DoxyReturn}
+
+
+References errorCount, and MAXERRORS.
+
+\hypertarget{classAdmin_a89653dd68c51b51d9003a2518a56175f}{
+\index{Admin@{Admin}!increaseColumn@{increaseColumn}}
+\index{increaseColumn@{increaseColumn}!Admin@{Admin}}
+\subsubsection[{increaseColumn}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::increaseColumn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_a89653dd68c51b51d9003a2518a56175f}
+
+
+Our column count management functions allow us to report exact error locations. 
+
+Our column count is increased.
+
+We use it to track error and token positions. 
+
+References column.
+
+\hypertarget{classAdmin_ae121a9ce2a34ac4075d074c2d1f306c5}{
+\index{Admin@{Admin}!newLine@{newLine}}
+\index{newLine@{newLine}!Admin@{Admin}}
+\subsubsection[{newLine}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::newLine (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_ae121a9ce2a34ac4075d074c2d1f306c5}
+
+
+A newline operation is performed as our current line is valid. 
+
+Used to adjust the current line, and also for skipping lines (errors, comments, etc.)
+
+\begin{DoxySeeAlso}{See also}
+formal Definition of \hyperlink{classAdmin_ae121a9ce2a34ac4075d074c2d1f306c5}{newLine()} 
+\end{DoxySeeAlso}
+
+
+References correctLine, and current\_\-line.
+
+\hypertarget{classAdmin_a6519bde7fd1ffd997a66987c2417d7bd}{
+\index{Admin@{Admin}!recordError@{recordError}}
+\index{recordError@{recordError}!Admin@{Admin}}
+\subsubsection[{recordError}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::recordError (
+\begin{DoxyParamCaption}
+\item[{string}]{msg}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_a6519bde7fd1ffd997a66987c2417d7bd}
+
+
+Records the Error Message string into the Error vector. 
+
+Function outputs the error and adjusts vars proceedingly.
+
+recordError is passed a string describing a recorded error that has occured.
+
+The function adjusts internal values accordingly, and outputs the given message to the screen. As of now, only one error per line is recorded, then we dump the line.
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & The error message to be recorded. \\
+\hline
+\end{DoxyParams}
+
+
+References correctLine, and errorCount.
+
+\hypertarget{classAdmin_a62813e5c17636eeef43524ad40cdaab8}{
+\index{Admin@{Admin}!resetColumn@{resetColumn}}
+\index{resetColumn@{resetColumn}!Admin@{Admin}}
+\subsubsection[{resetColumn}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::resetColumn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_a62813e5c17636eeef43524ad40cdaab8}
+
+
+The default \char`\"{}left-\/aligned\char`\"{} column is 1, we reset it when we reach the end of a line. 
+
+
+
+References column.
+
+\hypertarget{classAdmin_aaa4f711e8151dceab8d90c5f127c6820}{
+\index{Admin@{Admin}!scan@{scan}}
+\index{scan@{scan}!Admin@{Admin}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}int Admin::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classAdmin_aaa4f711e8151dceab8d90c5f127c6820}
+
+
+Executes the scanner function and returns an integer count of the errors found. 
+
+The \hyperlink{classAdmin}{Admin} function that operates the \hyperlink{classScanner}{Scanner} and details errors as necessary.
+
+We check for the various heuristics of the scanner, and then call its functions (such as nextToken()) as needed to read through a file and construct the symbol
+
+Essentially, we keep running the scanner (advancing by char/column) and recording any errors we enounter and we abort the entire process if our error threshold is reached.
+
+We output the token, and ensure that we stay within \char`\"{}file\char`\"{} range (string, technically).
+
+Finally, we return an integer that counts the number of errors. Thus, if a 0 means our scanner has scanned successfully.
+
+\begin{DoxyPrecond}{Precondition}
+We have a file string of a PL program and an empty symbol table. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+We will have a complete symbol table and have scanned our PL file. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+An integer count of errors encountered. 
+\end{DoxyReturn}
+
+
+An empty file has no errors, so we return a 0 (successful scan of nothing).
+
+We store our errors in a StringStream for easy manipulation and conversion.
+
+We create an internal \hyperlink{classToken}{Token} \char`\"{}tok\char`\"{} and could store this in an array or the symbol table if desired. In this case, it is a temporary one for Administrative purposes. We use this specific token instance to check its type and if it represents an error.
+
+Type enum used to save on function calls, \begin{DoxySeeAlso}{See also}
+\hyperlink{token_8h}{token.h} \char`\"{}enum type\{\}\char`\"{}
+\end{DoxySeeAlso}
+Keep scanning and check for errors until we reach the end of the file.
+
+This do-\/while loop sends the scanner to the next char in the file until the scanner reports that it is out of range (at the end of the file). This is done by telling the scanner to advance to the next token per instance, and since we verified that the file is not empty (see above), we do this at least once.
+
+If we have encountered a \char`\"{}new line\char`\"{} token, we account for it and reset the line-\/error boolean.
+
+We check if the current token is an error token, and report it to the user. At the moment, the program only reports one error per line. The code is boilerplate for the rest of these, so they could be a switch statement.
+
+This outputs the \hyperlink{classToken}{Token} to the Screen in a $<$ \_\-\_\-\_\-,\_\-\_\-\_\-,\_\-\_\-\_\-$>$ format.
+
+We return an \char`\"{}all clear\char`\"{} digit of 0 if there were no errors. The rest is handled in the main. 
+
+
+
+References BADCHAR, BADNAME, BADNUMERAL, BADSYMBOL, checkMaxErrors(), column, current\_\-line, errorCount, Token::getType(), Scanner::inRange(), newLine(), NEWLINE, Scanner::nextToken(), recordError(), scanner, and Token::toString().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classAdmin_ae6bcb0d3aa08b938197a332c5af5a456}{
+\index{Admin@{Admin}!column@{column}}
+\index{column@{column}!Admin@{Admin}}
+\subsubsection[{column}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Admin::column}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_ae6bcb0d3aa08b938197a332c5af5a456}
+\hypertarget{classAdmin_a18dd34f91c28721e9ba9ec9370ae5f98}{
+\index{Admin@{Admin}!correctLine@{correctLine}}
+\index{correctLine@{correctLine}!Admin@{Admin}}
+\subsubsection[{correctLine}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Admin::correctLine}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a18dd34f91c28721e9ba9ec9370ae5f98}
+
+
+If a line cannot be scanned/parsed, this boolean is used to indicate such. 
+
+\hypertarget{classAdmin_a77039c04350669e25d604593a77bea36}{
+\index{Admin@{Admin}!current\_\-line@{current\_\-line}}
+\index{current\_\-line@{current\_\-line}!Admin@{Admin}}
+\subsubsection[{current\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Admin::current\_\-line}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a77039c04350669e25d604593a77bea36}
+
+
+We track the current line and column locations while reading through our File string. 
+
+\hypertarget{classAdmin_a2070f3b7ce2f309da1b080c3d3f07ecf}{
+\index{Admin@{Admin}!error\_\-line@{error\_\-line}}
+\index{error\_\-line@{error\_\-line}!Admin@{Admin}}
+\subsubsection[{error\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$int$>$ {\bf Admin::error\_\-line}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a2070f3b7ce2f309da1b080c3d3f07ecf}
+\hypertarget{classAdmin_ad8c946fbb7ed32ad1f73a24eaf422c53}{
+\index{Admin@{Admin}!error\_\-msgs@{error\_\-msgs}}
+\index{error\_\-msgs@{error\_\-msgs}!Admin@{Admin}}
+\subsubsection[{error\_\-msgs}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$string$>$ {\bf Admin::error\_\-msgs}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_ad8c946fbb7ed32ad1f73a24eaf422c53}
+
+
+Vectors used to store error details. 
+
+We store any strings of error messages that may occur, and where they occur. \hypertarget{classAdmin_ae29edcd0464b203b35f72caba6af7295}{
+\index{Admin@{Admin}!errorCount@{errorCount}}
+\index{errorCount@{errorCount}!Admin@{Admin}}
+\subsubsection[{errorCount}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Admin::errorCount}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_ae29edcd0464b203b35f72caba6af7295}
+
+
+Simple tracking of the number of errors encountered. 
+
+We abandon compilatiuon if this matches or exceeds the MAXERRORS definition. \begin{DoxySeeAlso}{See also}
+\hyperlink{admin_8h_abfea00ff3da8375f9fdd7a6608632e42}{MAXERRORS} 
+\end{DoxySeeAlso}
+\hypertarget{classAdmin_a6846c5ec5e565001a18a20167ff7b3cf}{
+\index{Admin@{Admin}!scanner@{scanner}}
+\index{scanner@{scanner}!Admin@{Admin}}
+\subsubsection[{scanner}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scanner}$\ast$ {\bf Admin::scanner}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a6846c5ec5e565001a18a20167ff7b3cf}
+\hypertarget{classAdmin_ae1c48226f950c3e470785785aff4d536}{
+\index{Admin@{Admin}!symTIndex@{symTIndex}}
+\index{symTIndex@{symTIndex}!Admin@{Admin}}
+\subsubsection[{symTIndex}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Admin::symTIndex}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_ae1c48226f950c3e470785785aff4d536}
+
+
+The Index integer for our symbol table. 
+
+Increases per entry, removing the need to use the Symbol Table's iterator functions. \hypertarget{classAdmin_afb5161f047f166b985257447b9c47f22}{
+\index{Admin@{Admin}!table@{table}}
+\index{table@{table}!Admin@{Admin}}
+\subsubsection[{table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SymbolTable}$\ast$ {\bf Admin::table}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_afb5161f047f166b985257447b9c47f22}
+
+
+Symbol Table and \hyperlink{classScanner}{Scanner} object pointers. 
+
+This allows us to send symbol tables and scanners to and from other objects, and makes it easier to manage memory and overflows. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{admin_8h}{admin.h}\item 
+\hyperlink{admin_8cpp}{admin.cpp}\end{DoxyCompactItemize}

@@ -1,7 +1,26 @@
+/**
+ * @brief The formal definition for our SymbolTable (symboltable).
+ *
+ * @file symboltable.cpp
+ * 
+ *	We create a symbol table using a cascading order of Maps.
+ * This table structure object provides a variety of ways to access
+ * and alter entries in the table, and to make new ones and verify
+ * the integrity of old ones.
+ *
+ * @see SymbolTable{};
+ * @author Jordan Peoples, Chad Klassen, Adam Shepley
+ * @date January 9th to 31st, 2011
+ **/
+
 #include "symboltable.h"
 
 /**
- * Default constructor for symboltable, just initialize index to 0.
+ * @brief Default constructor for symboltable, initializes index to 0 and sets reserved words.
+ * 
+ * We create a bunch of entries in our symbol table to reflect Reserved Words of the PL Language.
+ * The language specifies 17 particular reserved words, which we also store as an integer count.
+ * We set our index before making these entries.
  */
 SymbolTable::SymbolTable()
 {
@@ -26,17 +45,19 @@ SymbolTable::SymbolTable()
     makeEntry("ID","lexeme", "true");
 }
 
+/** Returns the reserved word count. */
 int SymbolTable::getNumOfReservedWords()
 {
   return numberOfReservedWords;
 }
 
 /**
- * Simply make an entry with the token name using the index variable and setting an empty string 
- * attribute to an empty string.
+ * @brief An entry to the table is made with no information other than an input Name variable.
+ * The index variable is used for the index location of the new entry, and the rest of the entry is empty.
+ * Our index is increased and the former index is returned.
  * @param name
  */
-int SymbolTable::makeEntry(std::string name)
+int SymbolTable::makeEntry(string name)
 {
     table[index][name][""] ="";
     int i = index;
@@ -45,46 +66,56 @@ int SymbolTable::makeEntry(std::string name)
     return i;
 }
 
-int SymbolTable::makeEntry(std::string name, std::string attribute,
-std::string value) {
-
+/** 
+ * A new table entry is made with a predetermined name, lexeme/attribute and value of said attribute. 
+ * @param name
+ * @param attribute
+ * @param value
+ */
+int SymbolTable::makeEntry(string name, string attribute, string value) 
+{
     table[index][name][attribute] = value;
     int i = index;
     index++;
     
     return i;
-    
 }
 
 /**
- * Add attribute knowing index, token name, attribute
+ * Adds/Alters an attribute at a specific index, specifying token name, attribute and value.
  * @param index
  * @param name
  * @param attribute
  * @param value
  */
-void SymbolTable::addAttribute(int index, std::string name, std::string attribute, std::string value) {
+void SymbolTable::addAttribute(int index, string name, string attribute, string value) 
+{
     table[index][name][attribute] = value;
 }
 
 /**
- * Simple get function to return the table
- * @return std::map<int, std::map<std::string, std::map<std::string, std::string> > >
+ * This function returns a copy of the Table.
+ * @return std::map<int, std::map<std::string, std::map<std::string, std::string> > > Symbol Table.
  */
-std::map<int, std::map<std::string, std::map<std::string, std::string> > > SymbolTable::get()
+map<int, map<string, map<string, string> > > SymbolTable::get()
 {
     return table;
 }
 
 /**
- * See if a given attribute exists based on index and name.
+ * Checks if a given attribute location exists based on an index and name.
+ *
+ * It is important to note that this is not checking to see if that attribute
+ * has an actual value assigned to it, but merely that an entry that can house
+ * a value exists.
  * @param index
  * @param name
  * @param attribute
  * @return bool
  */
-bool SymbolTable::attributeExists(int index, std::string name, std::string attribute) {
-    std::string value = table[index][name][attribute];
+bool SymbolTable::attributeExists(int index, string name, string attribute) 
+{
+    string value = table[index][name][attribute];
     return !value.empty();
 }
 
@@ -96,7 +127,7 @@ bool SymbolTable::attributeExists(int index, std::string name, std::string attri
  * @param attribute
  * @return attribute value on success, empty string on fail.
  */
-std::string SymbolTable::findAttributeWhere(std::string tokenName, std::string attribute) {
+string SymbolTable::findAttributeWhere(string tokenName, string attribute) {
     for (int i = 0; i < index; i++) {
         if ( attributeExists(i, tokenName, attribute) )
             return table[i][tokenName][attribute];
@@ -110,7 +141,7 @@ std::string SymbolTable::findAttributeWhere(std::string tokenName, std::string a
  * @param attribute
  * @return index of found attribute, -1 on fail
  */
-int SymbolTable::findIndexWhere(std::string tokenName, std::string attribute) {
+int SymbolTable::findIndexWhere(string tokenName, string attribute) {
     for (int i=0; i < index; i++) {
         if (attributeExists(i, tokenName, attribute))
             return i;
@@ -126,9 +157,9 @@ int SymbolTable::findIndexWhere(std::string tokenName, std::string attribute) {
  * @param value
  * @return bool
  */
-bool SymbolTable::attributeValueExists(int index, std::string name, std::string attribute, std::string value) {
+bool SymbolTable::attributeValueExists(int index, string name, string attribute, string value) {
     if (attributeExists(index, name, attribute)) {
-        std::string str = table[index][name][attribute];
+        string str = table[index][name][attribute];
         if ( str.compare(value) == 0)
             return true;
         return false;
@@ -136,7 +167,14 @@ bool SymbolTable::attributeValueExists(int index, std::string name, std::string 
     return false;
 }
 
-std::string SymbolTable::getAttributeWhere(int index, std::string tokenName, std::string attribute)
+/** 
+ * Returns a value at a given location if it exists.
+ * Otherwise, we return the empty string.
+ * @param index
+ * @param tokenName
+ * @param attribute
+ */
+string SymbolTable::getAttributeWhere(int index, string tokenName, string attribute)
 {
   if (attributeExists(index, tokenName, attribute)) {
     return table[index][tokenName][attribute];
@@ -146,9 +184,11 @@ std::string SymbolTable::getAttributeWhere(int index, std::string tokenName, std
 }
 
 /**
- * Find a table entry with the lexeme. This assumes ID and attribute = lexeme. It will return the
- * index of the found entry, -1 if not found.
- * @return int
+ * Finds a table entry with the given lexeme. 
+ * This assumes the entry is an ID and attribute is a lexeme. 
+ * It will return the index of the found entry, or
+ * a -1 if an entry is not found.
+ * @return int Integer representing the index of the found lexeme.
  */
 int SymbolTable::findLexeme(string lexeme)
 {

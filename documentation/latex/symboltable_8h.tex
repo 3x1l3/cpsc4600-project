@@ -1,0 +1,34 @@
+\hypertarget{symboltable_8h}{
+\section{symboltable.h File Reference}
+\label{symboltable_8h}\index{symboltable.h@{symboltable.h}}
+}
+
+
+The Interface/Specification for our \hyperlink{classSymbolTable}{SymbolTable} (symboltable).  
+
+
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$map$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classSymbolTable}{SymbolTable}
+\begin{DoxyCompactList}\small\item\em symboltable object that stores lexemes, IDentifiers and Locations as keys. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The Interface/Specification for our \hyperlink{classSymbolTable}{SymbolTable} (symboltable). The Symbol Table (symboltable) object is a core object used by the \hyperlink{classScanner}{Scanner} and Parser and the majority of the compiler altogether.
+
+We impliment the symbol table as a Map of a Map of a Map. The reason behind this is that it allows any given component of the table to have multiple values if needed. Additionally, the nested Map structure allows for fast searching and direct access as well.
+
+Traditionally, a Symbol Table will be constructed for each \char`\"{}block\char`\"{} of nesting we enter.
+
+It should be noted that \char`\"{}lexeme\char`\"{} is used frequently but in most cases the given function / table entry may not be a traditional lexeme at all. We provide functions to find a symbol table entry with any 2 given entry values.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to 31st, 2011 
+\end{DoxyDate}

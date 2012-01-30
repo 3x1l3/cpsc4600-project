@@ -1,0 +1,53 @@
+\hypertarget{admin_8h}{
+\section{admin.h File Reference}
+\label{admin_8h}\index{admin.h@{admin.h}}
+}
+
+
+The specification for the \hyperlink{classAdmin}{Admin} Class Object.  
+
+
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include \char`\"{}scanner.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}symboltable.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classAdmin}{Admin}
+\begin{DoxyCompactList}\small\item\em This is the main administrator class that manages the different compiler functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{admin_8h_abfea00ff3da8375f9fdd7a6608632e42}{MAXERRORS}~10
+\begin{DoxyCompactList}\small\item\em Standard headers used by the Administrator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification for the \hyperlink{classAdmin}{Admin} Class Object. The Administration Class is used to manage the overall compiler components and inter-\/connected objects.
+
+It also manages the error parent reporting, and tracks various information such as column locations in order to accomodate said reporting.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to 31st, 2011 
+\end{DoxyDate}
+
+
+\subsection{Define Documentation}
+\hypertarget{admin_8h_abfea00ff3da8375f9fdd7a6608632e42}{
+\index{admin.h@{admin.h}!MAXERRORS@{MAXERRORS}}
+\index{MAXERRORS@{MAXERRORS}!admin.h@{admin.h}}
+\subsubsection[{MAXERRORS}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAXERRORS~10}}
+\label{admin_8h_abfea00ff3da8375f9fdd7a6608632e42}
+
+
+Standard headers used by the Administrator. 
+
+Object definitions needed by the \hyperlink{classAdmin}{Admin} This predefined is the maximum amount of errors the compiler will tolerate.
+
+Once this number is reached, the compiler \char`\"{}bails out\char`\"{}. We will make use of this later with our error handling. 
