@@ -258,7 +258,7 @@ Token Scanner::handleNumber()
     {
       newToken = new Token(BADNUMERAL, v, spellOutTypeName(BADNUMERAL));
       //TODO change the error handling to the admin class
-      cerr<<"Bad Numeral - Overflow - "<<endl;
+      cerr<<"Bad Numeral - Overflow / Underflow "<<endl;
     }
     return *newToken;
 }

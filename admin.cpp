@@ -129,8 +129,9 @@ int Admin::scan()
 		 * At the moment, the program only reports one error per line. 
 		 * The code is boilerplate for the rest of these, so they could be a switch statement.
 		 */
-        else if (currentTokenType == BADCHAR || currentTokenType == BADSYMBOL) 
+        else if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
 		{
+		  errorCount++;
 		  error_str << "Illegal character " << current_line << ":" << column << endl;
 		  recordError(error_str.str());
 		  
@@ -140,6 +141,7 @@ int Admin::scan()
 
         else if (currentTokenType == BADNUMERAL) 
 		{
+		  errorCount++;
 		  error_str << "Numeral overflow on " << current_line << ":" << column << endl;
 		  recordError(error_str.str());
 		  
@@ -149,6 +151,7 @@ int Admin::scan()
 
         else if (currentTokenType == BADNAME) 
 		{
+		  errorCount++;
 		  error_str << "Identifier cannot exceed 80 characters " << current_line << ":" << column << endl;
 		  recordError(error_str.str());
 		  
