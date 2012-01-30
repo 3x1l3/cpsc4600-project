@@ -1,0 +1,62 @@
+\hypertarget{token_8cpp}{
+\section{token.cpp File Reference}
+\label{token_8cpp}\index{token.cpp@{token.cpp}}
+}
+
+
+The Definition(s) for the \hyperlink{classToken}{Token} Object Class.  
+
+
+{\ttfamily \#include \char`\"{}token.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{token_8cpp_a2f708764931dd554ebf5a60b56b9455d}{spellOutTypeName} (\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} name)
+\begin{DoxyCompactList}\small\item\em Returns a string representation of a token Data Type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The Definition(s) for the \hyperlink{classToken}{Token} Object Class. A token object provides three valuable pieces of information. These are, a Type, a Value, and a Lexeme. These are a Type enum, an integer and a string, respectively.
+
+The token object represents a single PL Symbol -\/ this can be up to two characters in a row -\/ or it represents a data type, or an identifier, etc.
+
+The \hyperlink{classToken}{Token} is used primarily by the \hyperlink{classScanner}{Scanner}, and by proxy, by the Administrator in its functions revolving around the scanner.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to 31st, 2011 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{token_8cpp_a2f708764931dd554ebf5a60b56b9455d}{
+\index{token.cpp@{token.cpp}!spellOutTypeName@{spellOutTypeName}}
+\index{spellOutTypeName@{spellOutTypeName}!token.cpp@{token.cpp}}
+\subsubsection[{spellOutTypeName}]{\setlength{\rightskip}{0pt plus 5cm}string spellOutTypeName (
+\begin{DoxyParamCaption}
+\item[{{\bf Type}}]{name}
+\end{DoxyParamCaption}
+)}}
+\label{token_8cpp_a2f708764931dd554ebf5a60b56b9455d}
+
+
+Returns a string representation of a token Data Type. 
+
+Returns the corresponding string label for a given Type value.
+
+We return a string for an enumerated type, divined by subtracting the base assignment amount (256) and using that number as an index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & A Type that is to be returned in string format. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string version of the given type. 
+\end{DoxyReturn}
+
+
+References typeSpelling.
+

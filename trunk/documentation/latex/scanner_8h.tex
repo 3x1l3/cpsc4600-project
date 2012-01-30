@@ -1,0 +1,66 @@
+\hypertarget{scanner_8h}{
+\section{scanner.h File Reference}
+\label{scanner_8h}\index{scanner.h@{scanner.h}}
+}
+
+
+The specification header for the overall \hyperlink{classScanner}{Scanner} component object.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$unistd.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include \char`\"{}admin.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}token.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}symboltable.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classScanner}{Scanner}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classScanner}{Scanner} object reads chars, constructs tokens and contributes to parser/symboltable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{scanner_8h_a2ee8366bd4b8dd122d95b263803ae053}{NUMERAL\_\-UPPER\_\-BOUND}~260000
+\begin{DoxyCompactList}\small\item\em Predefined constants that control the allowed range for our variables and types. \end{DoxyCompactList}\item 
+\#define \hyperlink{scanner_8h_a2cacf0b1cf9bdda48de6af98e5cc8fcc}{NUMERAL\_\-LOWER\_\-BOUND}~0
+\item 
+\#define \hyperlink{scanner_8h_a6789ebc0df71a8ef76bfbb4fb5f74aad}{MAX\_\-STRING\_\-LENGTH}~80
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification header for the overall \hyperlink{classScanner}{Scanner} component object. The \hyperlink{classScanner}{Scanner} is responsible for the direction of the peek and for smart construction of the tokens to be inserted into the symbol table.
+
+At that, the \hyperlink{classScanner}{Scanner} makes the appropriate entries into the symbol table for a given token, and also does the requisite checks to ensure that a token or symbol is valid.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to 31st, 2011 
+\end{DoxyDate}
+
+
+\subsection{Define Documentation}
+\hypertarget{scanner_8h_a6789ebc0df71a8ef76bfbb4fb5f74aad}{
+\index{scanner.h@{scanner.h}!MAX\_\-STRING\_\-LENGTH@{MAX\_\-STRING\_\-LENGTH}}
+\index{MAX\_\-STRING\_\-LENGTH@{MAX\_\-STRING\_\-LENGTH}!scanner.h@{scanner.h}}
+\subsubsection[{MAX\_\-STRING\_\-LENGTH}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-STRING\_\-LENGTH~80}}
+\label{scanner_8h_a6789ebc0df71a8ef76bfbb4fb5f74aad}
+\hypertarget{scanner_8h_a2cacf0b1cf9bdda48de6af98e5cc8fcc}{
+\index{scanner.h@{scanner.h}!NUMERAL\_\-LOWER\_\-BOUND@{NUMERAL\_\-LOWER\_\-BOUND}}
+\index{NUMERAL\_\-LOWER\_\-BOUND@{NUMERAL\_\-LOWER\_\-BOUND}!scanner.h@{scanner.h}}
+\subsubsection[{NUMERAL\_\-LOWER\_\-BOUND}]{\setlength{\rightskip}{0pt plus 5cm}\#define NUMERAL\_\-LOWER\_\-BOUND~0}}
+\label{scanner_8h_a2cacf0b1cf9bdda48de6af98e5cc8fcc}
+\hypertarget{scanner_8h_a2ee8366bd4b8dd122d95b263803ae053}{
+\index{scanner.h@{scanner.h}!NUMERAL\_\-UPPER\_\-BOUND@{NUMERAL\_\-UPPER\_\-BOUND}}
+\index{NUMERAL\_\-UPPER\_\-BOUND@{NUMERAL\_\-UPPER\_\-BOUND}!scanner.h@{scanner.h}}
+\subsubsection[{NUMERAL\_\-UPPER\_\-BOUND}]{\setlength{\rightskip}{0pt plus 5cm}\#define NUMERAL\_\-UPPER\_\-BOUND~260000}}
+\label{scanner_8h_a2ee8366bd4b8dd122d95b263803ae053}
+
+
+Predefined constants that control the allowed range for our variables and types. 
+

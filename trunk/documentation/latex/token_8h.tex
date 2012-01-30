@@ -1,0 +1,307 @@
+\hypertarget{token_8h}{
+\section{token.h File Reference}
+\label{token_8h}\index{token.h@{token.h}}
+}
+
+
+The specification/apparatus for the base \hyperlink{classToken}{Token} object.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classToken}{Token}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classToken}{Token} object that is made up of a lexeme (string), a value (integer) and a Type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} \{ \par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a84f8ae2490f9e4bd2321fd21f4b0e807}{IDENTIFIER} =  256, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0ccf77ee568461b693f8983c5d0577ac}{NUMERAL}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a244ec821084aa8e8d6c675518259c352}{BADNUMERAL}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a945ef05d5fbd25e5c43ac755d756139e}{BADNAME}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7acac39c8e1ce22a84a473f6a898fb72a8}{BADSYMBOL}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a93018a9618fdad6db34f7a65bef5b4c0}{BADCHAR}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a59d02b47a666732cc6577f158272b099}{NEWLINE}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac0145e0c31cc73ea4e622e6ba34b1368}{NONAME}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7abcead2403f4bee72dbe53f6c3711751b}{ENDOFFILE}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a8565f0d60c3ba6d468661c49d86e9744}{DIV}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a140fcc89db148e5975f1486e794675ba}{MOD}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a87fe59ef12c3d13dc2a4d14c9b16c1f9}{PLUS}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af613d73b4e7b570ffd967df4a13c4225}{MINUS}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a17bf78adaa676d402dfe64d4513475e4}{TIMES}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0cb86713ee09fe297dde9ab03d50d5da}{DIVIDE}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a6ce26a62afab55d7606ad4e92428b30c}{UNKNOWN}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af65a8a7e47ca896d414e6c098e100038}{PERIOD}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af81277bcd86412fe04bb68718ea09392}{COMMA}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9b691ca253b009f6c549a080f2442754}{SC}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac8bd62065abff19ea8ce3ec18cf3d6fe}{LSB}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a1c03efb20082e397c67e1b95c87af195}{RSB}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a865555c9f2e0458a7078486aa1b3254f}{AND}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9bc832fa28809fb974f6ce5bb0cc7117}{PIPE}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a05fa2808959522bb35e29c16f8934bac}{TILDA}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a486aa221ceeeac475326e85d3d37f571}{LT}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a12f5476fa04803e6cc72f2198730d892}{GT}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a949310f9cb536c15919e133f7e7316f3}{EQUALS}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0bff1617a077fe6f2e0c2901d5e238b3}{FORSLASH}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aec61e49978c3f59c943a3c0dc00ce94c}{LB}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a61a9f34490f65d533fe6e1343b8ecc9e}{RB}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0367307703d34d41995af3aec1105a62}{COLONEQUALS}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ab3cd2d6fd3e6d151725e0aa62662d26e}{BOTHSQUAREBRACKETS}, 
+\par
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a546eccfedc4dcc8623ed0668f77ef982}{ARROW}, 
+\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aae696377c19e507b64e16be78ce3bbdb}{COMMENT}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum for our token types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}{spellOutTypeName} (\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type})
+\begin{DoxyCompactList}\small\item\em Returns the corresponding string label for a given Type value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static string \hyperlink{token_8h_a760c2571b6ff185f819314db3d61dbe2}{typeSpelling} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em A string representation of enumerated types, for printing purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification/apparatus for the base \hyperlink{classToken}{Token} object. The \hyperlink{classToken}{Token} class is the core object used by our scanner. The \hyperlink{classToken}{Token} is an object that contains the base information and value and type and symbol data for a given character or rather, for a given PL symbol/lexeme/type/etc.
+
+The \hyperlink{classToken}{Token} is used primarily by the \hyperlink{classScanner}{Scanner}, and by proxy, by the Administrator in its functions revolving around the scanner.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to 31st, 2011 
+\end{DoxyDate}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{
+\index{token.h@{token.h}!Type@{Type}}
+\index{Type@{Type}!token.h@{token.h}}
+\subsubsection[{Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Type}}}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}
+
+
+Enum for our token types. 
+
+Enumerated type \char`\"{}Type\char`\"{} that descrives the $\ast$type$\ast$ of token being dealt with. We go from enumerated values of 256 to 289 (after 255, the last of ASCII). \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{IDENTIFIER@{IDENTIFIER}!token.h@{token.h}}\index{token.h@{token.h}!IDENTIFIER@{IDENTIFIER}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a84f8ae2490f9e4bd2321fd21f4b0e807}{
+IDENTIFIER}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a84f8ae2490f9e4bd2321fd21f4b0e807}
+}]\index{NUMERAL@{NUMERAL}!token.h@{token.h}}\index{token.h@{token.h}!NUMERAL@{NUMERAL}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0ccf77ee568461b693f8983c5d0577ac}{
+NUMERAL}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0ccf77ee568461b693f8983c5d0577ac}
+}]\index{BADNUMERAL@{BADNUMERAL}!token.h@{token.h}}\index{token.h@{token.h}!BADNUMERAL@{BADNUMERAL}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a244ec821084aa8e8d6c675518259c352}{
+BADNUMERAL}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a244ec821084aa8e8d6c675518259c352}
+}]\index{BADNAME@{BADNAME}!token.h@{token.h}}\index{token.h@{token.h}!BADNAME@{BADNAME}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a945ef05d5fbd25e5c43ac755d756139e}{
+BADNAME}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a945ef05d5fbd25e5c43ac755d756139e}
+}]\index{BADSYMBOL@{BADSYMBOL}!token.h@{token.h}}\index{token.h@{token.h}!BADSYMBOL@{BADSYMBOL}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7acac39c8e1ce22a84a473f6a898fb72a8}{
+BADSYMBOL}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7acac39c8e1ce22a84a473f6a898fb72a8}
+}]\index{BADCHAR@{BADCHAR}!token.h@{token.h}}\index{token.h@{token.h}!BADCHAR@{BADCHAR}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a93018a9618fdad6db34f7a65bef5b4c0}{
+BADCHAR}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a93018a9618fdad6db34f7a65bef5b4c0}
+}]\index{NEWLINE@{NEWLINE}!token.h@{token.h}}\index{token.h@{token.h}!NEWLINE@{NEWLINE}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a59d02b47a666732cc6577f158272b099}{
+NEWLINE}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a59d02b47a666732cc6577f158272b099}
+}]\index{NONAME@{NONAME}!token.h@{token.h}}\index{token.h@{token.h}!NONAME@{NONAME}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac0145e0c31cc73ea4e622e6ba34b1368}{
+NONAME}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac0145e0c31cc73ea4e622e6ba34b1368}
+}]\index{ENDOFFILE@{ENDOFFILE}!token.h@{token.h}}\index{token.h@{token.h}!ENDOFFILE@{ENDOFFILE}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7abcead2403f4bee72dbe53f6c3711751b}{
+ENDOFFILE}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7abcead2403f4bee72dbe53f6c3711751b}
+}]\index{DIV@{DIV}!token.h@{token.h}}\index{token.h@{token.h}!DIV@{DIV}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a8565f0d60c3ba6d468661c49d86e9744}{
+DIV}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a8565f0d60c3ba6d468661c49d86e9744}
+}]\index{MOD@{MOD}!token.h@{token.h}}\index{token.h@{token.h}!MOD@{MOD}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a140fcc89db148e5975f1486e794675ba}{
+MOD}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a140fcc89db148e5975f1486e794675ba}
+}]\index{PLUS@{PLUS}!token.h@{token.h}}\index{token.h@{token.h}!PLUS@{PLUS}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a87fe59ef12c3d13dc2a4d14c9b16c1f9}{
+PLUS}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a87fe59ef12c3d13dc2a4d14c9b16c1f9}
+}]\index{MINUS@{MINUS}!token.h@{token.h}}\index{token.h@{token.h}!MINUS@{MINUS}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af613d73b4e7b570ffd967df4a13c4225}{
+MINUS}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af613d73b4e7b570ffd967df4a13c4225}
+}]\index{TIMES@{TIMES}!token.h@{token.h}}\index{token.h@{token.h}!TIMES@{TIMES}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a17bf78adaa676d402dfe64d4513475e4}{
+TIMES}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a17bf78adaa676d402dfe64d4513475e4}
+}]\index{DIVIDE@{DIVIDE}!token.h@{token.h}}\index{token.h@{token.h}!DIVIDE@{DIVIDE}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0cb86713ee09fe297dde9ab03d50d5da}{
+DIVIDE}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0cb86713ee09fe297dde9ab03d50d5da}
+}]\index{UNKNOWN@{UNKNOWN}!token.h@{token.h}}\index{token.h@{token.h}!UNKNOWN@{UNKNOWN}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a6ce26a62afab55d7606ad4e92428b30c}{
+UNKNOWN}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a6ce26a62afab55d7606ad4e92428b30c}
+}]\index{PERIOD@{PERIOD}!token.h@{token.h}}\index{token.h@{token.h}!PERIOD@{PERIOD}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af65a8a7e47ca896d414e6c098e100038}{
+PERIOD}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af65a8a7e47ca896d414e6c098e100038}
+}]\index{COMMA@{COMMA}!token.h@{token.h}}\index{token.h@{token.h}!COMMA@{COMMA}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af81277bcd86412fe04bb68718ea09392}{
+COMMA}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7af81277bcd86412fe04bb68718ea09392}
+}]\index{SC@{SC}!token.h@{token.h}}\index{token.h@{token.h}!SC@{SC}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9b691ca253b009f6c549a080f2442754}{
+SC}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9b691ca253b009f6c549a080f2442754}
+}]\index{LSB@{LSB}!token.h@{token.h}}\index{token.h@{token.h}!LSB@{LSB}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac8bd62065abff19ea8ce3ec18cf3d6fe}{
+LSB}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ac8bd62065abff19ea8ce3ec18cf3d6fe}
+}]\index{RSB@{RSB}!token.h@{token.h}}\index{token.h@{token.h}!RSB@{RSB}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a1c03efb20082e397c67e1b95c87af195}{
+RSB}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a1c03efb20082e397c67e1b95c87af195}
+}]\index{AND@{AND}!token.h@{token.h}}\index{token.h@{token.h}!AND@{AND}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a865555c9f2e0458a7078486aa1b3254f}{
+AND}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a865555c9f2e0458a7078486aa1b3254f}
+}]\index{PIPE@{PIPE}!token.h@{token.h}}\index{token.h@{token.h}!PIPE@{PIPE}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9bc832fa28809fb974f6ce5bb0cc7117}{
+PIPE}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a9bc832fa28809fb974f6ce5bb0cc7117}
+}]\index{TILDA@{TILDA}!token.h@{token.h}}\index{token.h@{token.h}!TILDA@{TILDA}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a05fa2808959522bb35e29c16f8934bac}{
+TILDA}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a05fa2808959522bb35e29c16f8934bac}
+}]\index{LT@{LT}!token.h@{token.h}}\index{token.h@{token.h}!LT@{LT}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a486aa221ceeeac475326e85d3d37f571}{
+LT}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a486aa221ceeeac475326e85d3d37f571}
+}]\index{GT@{GT}!token.h@{token.h}}\index{token.h@{token.h}!GT@{GT}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a12f5476fa04803e6cc72f2198730d892}{
+GT}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a12f5476fa04803e6cc72f2198730d892}
+}]\index{EQUALS@{EQUALS}!token.h@{token.h}}\index{token.h@{token.h}!EQUALS@{EQUALS}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a949310f9cb536c15919e133f7e7316f3}{
+EQUALS}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a949310f9cb536c15919e133f7e7316f3}
+}]\index{FORSLASH@{FORSLASH}!token.h@{token.h}}\index{token.h@{token.h}!FORSLASH@{FORSLASH}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0bff1617a077fe6f2e0c2901d5e238b3}{
+FORSLASH}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0bff1617a077fe6f2e0c2901d5e238b3}
+}]\index{LB@{LB}!token.h@{token.h}}\index{token.h@{token.h}!LB@{LB}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aec61e49978c3f59c943a3c0dc00ce94c}{
+LB}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aec61e49978c3f59c943a3c0dc00ce94c}
+}]\index{RB@{RB}!token.h@{token.h}}\index{token.h@{token.h}!RB@{RB}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a61a9f34490f65d533fe6e1343b8ecc9e}{
+RB}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a61a9f34490f65d533fe6e1343b8ecc9e}
+}]\index{COLONEQUALS@{COLONEQUALS}!token.h@{token.h}}\index{token.h@{token.h}!COLONEQUALS@{COLONEQUALS}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0367307703d34d41995af3aec1105a62}{
+COLONEQUALS}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a0367307703d34d41995af3aec1105a62}
+}]\index{BOTHSQUAREBRACKETS@{BOTHSQUAREBRACKETS}!token.h@{token.h}}\index{token.h@{token.h}!BOTHSQUAREBRACKETS@{BOTHSQUAREBRACKETS}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ab3cd2d6fd3e6d151725e0aa62662d26e}{
+BOTHSQUAREBRACKETS}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7ab3cd2d6fd3e6d151725e0aa62662d26e}
+}]\index{ARROW@{ARROW}!token.h@{token.h}}\index{token.h@{token.h}!ARROW@{ARROW}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a546eccfedc4dcc8623ed0668f77ef982}{
+ARROW}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a546eccfedc4dcc8623ed0668f77ef982}
+}]\index{COMMENT@{COMMENT}!token.h@{token.h}}\index{token.h@{token.h}!COMMENT@{COMMENT}}\item[{\em 
+\hypertarget{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aae696377c19e507b64e16be78ce3bbdb}{
+COMMENT}
+\label{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aae696377c19e507b64e16be78ce3bbdb}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}{
+\index{token.h@{token.h}!spellOutTypeName@{spellOutTypeName}}
+\index{spellOutTypeName@{spellOutTypeName}!token.h@{token.h}}
+\subsubsection[{spellOutTypeName}]{\setlength{\rightskip}{0pt plus 5cm}string spellOutTypeName (
+\begin{DoxyParamCaption}
+\item[{{\bf Type}}]{name}
+\end{DoxyParamCaption}
+)}}
+\label{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}
+
+
+Returns the corresponding string label for a given Type value. 
+
+User inputs one of our Type enums, and receives a String version of it. 
+\begin{DoxyParams}{Parameters}
+{\em Type} & enum. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string String version of a Type.
+\end{DoxyReturn}
+Returns the corresponding string label for a given Type value.
+
+We return a string for an enumerated type, divined by subtracting the base assignment amount (256) and using that number as an index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & A Type that is to be returned in string format. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string version of the given type. 
+\end{DoxyReturn}
+
+
+References typeSpelling.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{token_8h_a760c2571b6ff185f819314db3d61dbe2}{
+\index{token.h@{token.h}!typeSpelling@{typeSpelling}}
+\index{typeSpelling@{typeSpelling}!token.h@{token.h}}
+\subsubsection[{typeSpelling}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf typeSpelling}\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{token_8h_a760c2571b6ff185f819314db3d61dbe2}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ 
+{ 
+        "IDENTIFIER", "NUMERAL", "BADNUMERAL", "BADNAME", 
+        "BADSYMBOL", "BADCHAR", "NEWLINE", "NONAME", "ENDOFFILE",
+        "DIV", "MOD", "PLUS", "MINUS", "TIMES", "DIVIDE", "UKNOWN",
+        "PERIOD", "COMMA", "SC", "LSB", "RSB", "AND", "PIPE", "TILDA",
+        "LT", "GT", "EQUALS", "FORSLASH", "LB", "RB", "COLONEQUALS",
+        "BOTHSQUAREBRACKETS", "ARROW", "COMMENT"
+}
+\end{DoxyCode}
+
+
+A string representation of enumerated types, for printing purposes. 
+

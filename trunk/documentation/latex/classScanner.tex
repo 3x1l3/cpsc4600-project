@@ -1,0 +1,498 @@
+\hypertarget{classScanner}{
+\section{Scanner Class Reference}
+\label{classScanner}\index{Scanner@{Scanner}}
+}
+
+
+\hyperlink{classScanner}{Scanner} object reads chars, constructs tokens and contributes to parser/symboltable.  
+
+
+
+
+{\ttfamily \#include $<$scanner.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classScanner_afeff639ac96107cdd8f439a09ebceb1f}{Scanner} (\hyperlink{classSymbolTable}{SymbolTable} \&, \hyperlink{classAdmin}{Admin} \&)
+\begin{DoxyCompactList}\small\item\em There should only be this one kind of constructor. \end{DoxyCompactList}\item 
+\hyperlink{classScanner_a39f85e20f3ca942fd0a8e4bce88c27c7}{$\sim$Scanner} ()
+\begin{DoxyCompactList}\small\item\em Basic, empty destructor. \end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classScanner_ab43ce10667c1f695a396844449d3ab7d}{nextToken} ()
+\begin{DoxyCompactList}\small\item\em Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate handler. \end{DoxyCompactList}\item 
+void \hyperlink{classScanner_a7fb5a6640567b85bd3b9dab76751dbb0}{loadSource} (string \&)
+\begin{DoxyCompactList}\small\item\em Links the Scanner's \char`\"{}source\char`\"{} string to the original PL source code File from main. \end{DoxyCompactList}\item 
+void \hyperlink{classScanner_a83df585ae4ba0622b9b6c107b0581a1c}{scan} ()
+\begin{DoxyCompactList}\small\item\em Unused internal Scanning function. \end{DoxyCompactList}\item 
+string \hyperlink{classScanner_ad538231c15e7577c026a10be9b17f373}{getTokenizedString} ()
+\begin{DoxyCompactList}\small\item\em Returns the tokenized string. \end{DoxyCompactList}\item 
+bool \hyperlink{classScanner_a8c4ee8c91d2e7d9ab06c8dc6e86c4ca4}{inRange} ()
+\begin{DoxyCompactList}\small\item\em Checks to see if we have reached the end of the range of the input string. \end{DoxyCompactList}\item 
+bool \hyperlink{classScanner_afd047e2ead94064418395668a2c85253}{isSpecial} (char)
+\begin{DoxyCompactList}\small\item\em Checks if a character is a \char`\"{}special\char`\"{} (parsable) character. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classScanner_a061b8284e974b60bece52e2758626c5c}{readCharacter} ()
+\begin{DoxyCompactList}\small\item\em Used to move the peek and index and to increase the \hyperlink{classAdmin}{Admin} column var. \end{DoxyCompactList}\item 
+bool \hyperlink{classScanner_a7a3f12786edc746328451403aaa94288}{readCharacter} (char)
+\begin{DoxyCompactList}\small\item\em Reads a character AND determines if it satisfies a desired value. \end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classScanner_a7e893ad25781c012e020998b327828bd}{handleNumber} ()
+\begin{DoxyCompactList}\small\item\em Functions for handling the given types of valid symbols encountered. \end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classScanner_a245e35355ef6e5e9206faa99f3ddc9d5}{handleSymbol} ()
+\begin{DoxyCompactList}\small\item\em Function handles symbols read from the source PL program string. \end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classScanner_a5c9ba68f3ad81f1c95d42e0edcada347}{handleCharString} ()
+\begin{DoxyCompactList}\small\item\em Handles the scanning duties for a regular character string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classScanner_ae8004b082846221da9bbd8affc02bf2b}{src\_\-i}
+\begin{DoxyCompactList}\small\item\em Used in the general parsing of the source file. \end{DoxyCompactList}\item 
+char \hyperlink{classScanner_a43b06598feabe08732abf86997cafa68}{peek}
+\item 
+string $\ast$ \hyperlink{classScanner_ab440d28734316634c3e957771468e7db}{source}
+\begin{DoxyCompactList}\small\item\em Eventually refers to a PL source code string. \end{DoxyCompactList}\item 
+string \hyperlink{classScanner_ab9502fbbd4851a25aec126093247ec6e}{tokenizedString}
+\begin{DoxyCompactList}\small\item\em A string of tokenized variables. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \hyperlink{classScanner_afebea0f2ae1f1d0df1036a3a9c1a42df}{reservedWords}
+\begin{DoxyCompactList}\small\item\em A vector of reserved words. \end{DoxyCompactList}\item 
+\hyperlink{classSymbolTable}{SymbolTable} $\ast$ \hyperlink{classScanner_a9b0471200485b0ab6d368c93ad718229}{symTable}
+\begin{DoxyCompactList}\small\item\em Pointers to necessary Main objects needed by the \hyperlink{classScanner}{Scanner}. \end{DoxyCompactList}\item 
+\hyperlink{classAdmin}{Admin} $\ast$ \hyperlink{classScanner_a05dbf851548561062953e9b1f235a349}{adminPtr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classScanner}{Scanner} object reads chars, constructs tokens and contributes to parser/symboltable. 
+
+It uses a collection of switches to handle certain symbols and mediations, but has a swath of functions dedicated to particular handling of certain types of input symbols.
+
+The \hyperlink{classScanner}{Scanner} keeps track of its Peek and Index locations (relative to the PL source column) and provides a suite of tokenization functions.
+
+Note in Advance: \char`\"{}src\char`\"{} and \char`\"{}source\char`\"{} often refer to the SOURCE File string passed all the way (by reference or pointer) from Main. This is the PL program being loaded. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classScanner_afeff639ac96107cdd8f439a09ebceb1f}{
+\index{Scanner@{Scanner}!Scanner@{Scanner}}
+\index{Scanner@{Scanner}!Scanner@{Scanner}}
+\subsubsection[{Scanner}]{\setlength{\rightskip}{0pt plus 5cm}Scanner::Scanner (
+\begin{DoxyParamCaption}
+\item[{{\bf SymbolTable} \&}]{table, }
+\item[{{\bf Admin} \&}]{admin}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_afeff639ac96107cdd8f439a09ebceb1f}
+
+
+There should only be this one kind of constructor. 
+
+Constructs the \hyperlink{classScanner}{Scanner} object using a symboltable and admin reference.
+
+The scanner is given necessary Symbol Table and \hyperlink{classAdmin}{Admin} class object references, and assigns a class-\/local pointer to each of them.
+
+Default/beginning values are assigned to the index, the peek variable and the source string ptr.
+
+We insert a predefined list of reserved words into a vector for future use and easy expansion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em table} & A reference to the Symbol table from the Administrator object. \\
+\hline
+{\em admin} & A reference to the Administrator class object in main. \\
+\hline
+\end{DoxyParams}
+
+
+References adminPtr, peek, reservedWords, source, src\_\-i, and symTable.
+
+\hypertarget{classScanner_a39f85e20f3ca942fd0a8e4bce88c27c7}{
+\index{Scanner@{Scanner}!$\sim$Scanner@{$\sim$Scanner}}
+\index{$\sim$Scanner@{$\sim$Scanner}!Scanner@{Scanner}}
+\subsubsection[{$\sim$Scanner}]{\setlength{\rightskip}{0pt plus 5cm}Scanner::$\sim$Scanner (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classScanner_a39f85e20f3ca942fd0a8e4bce88c27c7}
+
+
+Basic, empty destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classScanner_ad538231c15e7577c026a10be9b17f373}{
+\index{Scanner@{Scanner}!getTokenizedString@{getTokenizedString}}
+\index{getTokenizedString@{getTokenizedString}!Scanner@{Scanner}}
+\subsubsection[{getTokenizedString}]{\setlength{\rightskip}{0pt plus 5cm}string Scanner::getTokenizedString (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_ad538231c15e7577c026a10be9b17f373}
+
+
+Returns the tokenized string. 
+
+Returns the tokenized string, in human readable form.
+
+This function is for temporary use and debugging and will be dropped further into the project. \begin{DoxyReturn}{Returns}
+std::string 
+\end{DoxyReturn}
+
+
+References tokenizedString.
+
+\hypertarget{classScanner_a5c9ba68f3ad81f1c95d42e0edcada347}{
+\index{Scanner@{Scanner}!handleCharString@{handleCharString}}
+\index{handleCharString@{handleCharString}!Scanner@{Scanner}}
+\subsubsection[{handleCharString}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} Scanner::handleCharString (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a5c9ba68f3ad81f1c95d42e0edcada347}
+
+
+Handles the scanning duties for a regular character string. 
+
+Creates a string based off of whether the input line (until an atomic terminator) is a valid, full string. A string is valid so long as it starts with an alphabetic character. A valid alpha string can contain numbers and underscores. It finally returns a token of a type determined by the characters read. \begin{DoxyReturn}{Returns}
+\hyperlink{classToken}{Token} A type of token based on the kind of character symbol found. 
+\end{DoxyReturn}
+
+
+References BADNAME, SymbolTable::findLexeme(), IDENTIFIER, SymbolTable::makeEntry(), peek, readCharacter(), and symTable.
+
+\hypertarget{classScanner_a7e893ad25781c012e020998b327828bd}{
+\index{Scanner@{Scanner}!handleNumber@{handleNumber}}
+\index{handleNumber@{handleNumber}!Scanner@{Scanner}}
+\subsubsection[{handleNumber}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} Scanner::handleNumber (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a7e893ad25781c012e020998b327828bd}
+
+
+Functions for handling the given types of valid symbols encountered. 
+
+Handles the scanning procedure(s) when we have encountered a digit.
+
+If we encounter a digit, other digits (or symbols) may follow after. Thus, we account for this by peeking at the next \mbox{[}char\mbox{]}acter and converting it to a digit. We add this to a total Integer by a simple base10 method.
+
+The lexeme itself is constructed from the peek chars in their raw form, but only when the numeral is valid. An invalid numeral gets an INVALID lexeme, though we could easily give it a \char`\"{}real\char`\"{} lexeme if preferred.
+
+\begin{DoxyReturn}{Returns}
+\hyperlink{classToken}{Token} A token representing the valid or invalid numeral found. 
+\end{DoxyReturn}
+
+
+We peek ahead at the next character, and add it by base10 multiples until the next peek is no longer a digit/numeral.
+
+The numeral becomes a token only if it satisfies our lexicon.
+
+Otherwise, we create an error token and allow it to be handled as appropriate. 
+
+
+
+References BADNUMERAL, NUMERAL, NUMERAL\_\-LOWER\_\-BOUND, NUMERAL\_\-UPPER\_\-BOUND, peek, readCharacter(), and spellOutTypeName().
+
+\hypertarget{classScanner_a245e35355ef6e5e9206faa99f3ddc9d5}{
+\index{Scanner@{Scanner}!handleSymbol@{handleSymbol}}
+\index{handleSymbol@{handleSymbol}!Scanner@{Scanner}}
+\subsubsection[{handleSymbol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} Scanner::handleSymbol (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a245e35355ef6e5e9206faa99f3ddc9d5}
+
+
+Function handles symbols read from the source PL program string. 
+
+We create a temporary token and a Type to reflect a symbol that does not match ours. We construct the token based off of the appropriate Type and return it when completed.
+
+Certain symbols require special handling (dual symbols, such as \char`\"{}-\/$>$\char`\"{}) and are accomodated for by peeking for a possible following symbol. If none are found, we reverse the peek and continue.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{token_8h}{token.h} 
+
+enum \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}\{\}; 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+\hyperlink{classToken}{Token} A token that represents the symbol we handled. 
+\end{DoxyReturn}
+
+
+An '\mbox{[}' symbol can be followed by an '\mbox{]}' symbol.
+
+An '-\/' symbol can be followed by an '$>$' symbol.
+
+An ':' symbol can be followed by an '=' symbol. 
+
+
+
+References AND, ARROW, BADSYMBOL, BOTHSQUAREBRACKETS, COLONEQUALS, COMMA, DIVIDE, EQUALS, FORSLASH, GT, LB, LSB, LT, MINUS, peek, PERIOD, PIPE, PLUS, RB, readCharacter(), RSB, SC, src\_\-i, TILDA, TIMES, and UNKNOWN.
+
+\hypertarget{classScanner_a8c4ee8c91d2e7d9ab06c8dc6e86c4ca4}{
+\index{Scanner@{Scanner}!inRange@{inRange}}
+\index{inRange@{inRange}!Scanner@{Scanner}}
+\subsubsection[{inRange}]{\setlength{\rightskip}{0pt plus 5cm}bool Scanner::inRange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_a8c4ee8c91d2e7d9ab06c8dc6e86c4ca4}
+
+
+Checks to see if we have reached the end of the range of the input string. 
+
+Checks to see if the Index of the \hyperlink{classScanner}{Scanner} is within the input PL source file string size.
+
+Essentially, EOF().
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classAdmin_aaa4f711e8151dceab8d90c5f127c6820}{Admin::scan()} 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+bool False if we are out of range. 
+\end{DoxyReturn}
+
+
+References source, and src\_\-i.
+
+\hypertarget{classScanner_afd047e2ead94064418395668a2c85253}{
+\index{Scanner@{Scanner}!isSpecial@{isSpecial}}
+\index{isSpecial@{isSpecial}!Scanner@{Scanner}}
+\subsubsection[{isSpecial}]{\setlength{\rightskip}{0pt plus 5cm}bool Scanner::isSpecial (
+\begin{DoxyParamCaption}
+\item[{char}]{ch}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_afd047e2ead94064418395668a2c85253}
+
+
+Checks if a character is a \char`\"{}special\char`\"{} (parsable) character. 
+
+Checks to see if a given input char is a special character.
+
+If the character is an accepted special character, it will trip one of the following switch cases. Otherwise, it will hit the default case and return false. 
+\begin{DoxyParams}{Parameters}
+{\em ch} & Input Character to compare. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean True if it's a special character. 
+\end{DoxyReturn}
+\hypertarget{classScanner_a7fb5a6640567b85bd3b9dab76751dbb0}{
+\index{Scanner@{Scanner}!loadSource@{loadSource}}
+\index{loadSource@{loadSource}!Scanner@{Scanner}}
+\subsubsection[{loadSource}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner::loadSource (
+\begin{DoxyParamCaption}
+\item[{string \&}]{src}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_a7fb5a6640567b85bd3b9dab76751dbb0}
+
+
+Links the Scanner's \char`\"{}source\char`\"{} string to the original PL source code File from main. 
+
+Load the source into a local string pointer/reference, saving memory and time on larger source files.
+
+If the source file isn't empty, we then kick off our indexes by reading a character for our scanner. 
+\begin{DoxyParams}{Parameters}
+{\em src} & \\
+\hline
+\end{DoxyParams}
+
+
+References readCharacter(), and source.
+
+\hypertarget{classScanner_ab43ce10667c1f695a396844449d3ab7d}{
+\index{Scanner@{Scanner}!nextToken@{nextToken}}
+\index{nextToken@{nextToken}!Scanner@{Scanner}}
+\subsubsection[{nextToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} Scanner::nextToken (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_ab43ce10667c1f695a396844449d3ab7d}
+
+
+Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate handler. 
+
+Handles the \hyperlink{classToken}{Token} reading, mediation and assignment(s).
+
+This function is currently represents the core functionality of the scanner. It mediates input string by choosing the appropriate token handler such as \char`\"{}handleNumber\char`\"{}.
+
+Additionally, it makes sure that whitespace, tabs, comments, and newlines are appropriately parsed.
+
+This latter mediation is handled by reading a new character until an appropriate \char`\"{}non-\/skippable\char`\"{} character/possible token is encountered.
+
+Ultimately, it creates a \hyperlink{classToken}{Token} to return to its caller.
+
+\begin{DoxyPrecond}{Precondition}
+A \hyperlink{classToken}{Token} is expected, we are at the start of a statement block. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+A \hyperlink{classToken}{Token} has been created and the peek/index are at the start of a new statement. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+\hyperlink{classToken}{Token} The next token read from the PL Source File. 
+\end{DoxyReturn}
+
+
+This block is used to skip the whitespaces and associated formatting characters such as tab.
+
+We've reached a newline, so the column will now go back to left/'1'. We read this character to check if it's a comment. If it's a comment, we can skip this line and make a Comment token. Otherwise, we construct a Newline token.
+
+Nothing above was found, but it could be a special character within a comment.
+
+But if it's not in a comment, then that means we must handle it.
+
+We've encountered a broken symbol. Increment our index' and return an error token.
+
+An unknown symbol has been encountered. This should almost never happen. 
+
+
+
+References adminPtr, BADSYMBOL, COMMENT, handleCharString(), handleNumber(), handleSymbol(), isSpecial(), NEWLINE, peek, readCharacter(), Admin::resetColumn(), spellOutTypeName(), and UNKNOWN.
+
+\hypertarget{classScanner_a7a3f12786edc746328451403aaa94288}{
+\index{Scanner@{Scanner}!readCharacter@{readCharacter}}
+\index{readCharacter@{readCharacter}!Scanner@{Scanner}}
+\subsubsection[{readCharacter}]{\setlength{\rightskip}{0pt plus 5cm}bool Scanner::readCharacter (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a7a3f12786edc746328451403aaa94288}
+
+
+Reads a character AND determines if it satisfies a desired value. 
+
+Verifies that the next character matches a desired character.
+
+Overload of readch, checks to see if the next peeked character matches the parameter Its prime difference is that the return var is based off of a parameter, rather than off of whether the range end has been reached.
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & A character that we expect to find (ie a '$>$' after a '-\/') \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool A boolean for if the peeked character matches the parameter character. 
+\end{DoxyReturn}
+
+
+References peek, and readCharacter().
+
+\hypertarget{classScanner_a061b8284e974b60bece52e2758626c5c}{
+\index{Scanner@{Scanner}!readCharacter@{readCharacter}}
+\index{readCharacter@{readCharacter}!Scanner@{Scanner}}
+\subsubsection[{readCharacter}]{\setlength{\rightskip}{0pt plus 5cm}bool Scanner::readCharacter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a061b8284e974b60bece52e2758626c5c}
+
+
+Used to move the peek and index and to increase the \hyperlink{classAdmin}{Admin} column var. 
+
+Sets the peek value to the next character if not out of bounds.
+
+Sets our peek to the value at our index (so, the offset is +1) This is one in front of src\_\-i itself. We increase src\_\-i to accomodate the next read and peek. \begin{DoxyReturn}{Returns}
+bool A boolean indicating if we're out of range after reading. 
+\end{DoxyReturn}
+
+
+References adminPtr, Admin::increaseColumn(), inRange(), peek, source, and src\_\-i.
+
+\hypertarget{classScanner_a83df585ae4ba0622b9b6c107b0581a1c}{
+\index{Scanner@{Scanner}!scan@{scan}}
+\index{scan@{scan}!Scanner@{Scanner}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classScanner_a83df585ae4ba0622b9b6c107b0581a1c}
+
+
+Unused internal Scanning function. 
+
+Presently unused/for future use Scan function for the \hyperlink{classScanner}{Scanner} itelf.
+
+Will be rewritten and used in the future.
+
+This could be called from the \hyperlink{classAdmin}{Admin} or Parser as needed.
+
+Main running function for the scanner, this returns tokens and then concatinates the token to a string for output later. 
+
+References inRange(), nextToken(), tokenizedString, and Token::toString().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classScanner_a05dbf851548561062953e9b1f235a349}{
+\index{Scanner@{Scanner}!adminPtr@{adminPtr}}
+\index{adminPtr@{adminPtr}!Scanner@{Scanner}}
+\subsubsection[{adminPtr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Admin}$\ast$ {\bf Scanner::adminPtr}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a05dbf851548561062953e9b1f235a349}
+\hypertarget{classScanner_a43b06598feabe08732abf86997cafa68}{
+\index{Scanner@{Scanner}!peek@{peek}}
+\index{peek@{peek}!Scanner@{Scanner}}
+\subsubsection[{peek}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf Scanner::peek}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a43b06598feabe08732abf86997cafa68}
+\hypertarget{classScanner_afebea0f2ae1f1d0df1036a3a9c1a42df}{
+\index{Scanner@{Scanner}!reservedWords@{reservedWords}}
+\index{reservedWords@{reservedWords}!Scanner@{Scanner}}
+\subsubsection[{reservedWords}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ {\bf Scanner::reservedWords}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_afebea0f2ae1f1d0df1036a3a9c1a42df}
+
+
+A vector of reserved words. 
+
+Currently not used, but will be useful later. \hypertarget{classScanner_ab440d28734316634c3e957771468e7db}{
+\index{Scanner@{Scanner}!source@{source}}
+\index{source@{source}!Scanner@{Scanner}}
+\subsubsection[{source}]{\setlength{\rightskip}{0pt plus 5cm}string$\ast$ {\bf Scanner::source}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_ab440d28734316634c3e957771468e7db}
+
+
+Eventually refers to a PL source code string. 
+
+\hypertarget{classScanner_ae8004b082846221da9bbd8affc02bf2b}{
+\index{Scanner@{Scanner}!src\_\-i@{src\_\-i}}
+\index{src\_\-i@{src\_\-i}!Scanner@{Scanner}}
+\subsubsection[{src\_\-i}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Scanner::src\_\-i}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_ae8004b082846221da9bbd8affc02bf2b}
+
+
+Used in the general parsing of the source file. 
+
+\hypertarget{classScanner_a9b0471200485b0ab6d368c93ad718229}{
+\index{Scanner@{Scanner}!symTable@{symTable}}
+\index{symTable@{symTable}!Scanner@{Scanner}}
+\subsubsection[{symTable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SymbolTable}$\ast$ {\bf Scanner::symTable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_a9b0471200485b0ab6d368c93ad718229}
+
+
+Pointers to necessary Main objects needed by the \hyperlink{classScanner}{Scanner}. 
+
+\hypertarget{classScanner_ab9502fbbd4851a25aec126093247ec6e}{
+\index{Scanner@{Scanner}!tokenizedString@{tokenizedString}}
+\index{tokenizedString@{tokenizedString}!Scanner@{Scanner}}
+\subsubsection[{tokenizedString}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf Scanner::tokenizedString}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classScanner_ab9502fbbd4851a25aec126093247ec6e}
+
+
+A string of tokenized variables. 
+
+Currently unused. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{scanner_8h}{scanner.h}\item 
+\hyperlink{scanner_8cpp}{scanner.cpp}\end{DoxyCompactItemize}
