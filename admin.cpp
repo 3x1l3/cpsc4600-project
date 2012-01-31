@@ -62,7 +62,8 @@ void Admin::recordError(string msg)
 {
     if (correctLine) {
         correctLine = false;
-        cerr << msg << endl;
+	error_str.str("");
+        error_msgs.push_back(msg);
     }
 
 }
@@ -93,8 +94,7 @@ int Admin::scan()
     if(scanner->inRange() == false)
       return 0;
   
-	/** We store our errors in a StringStream for easy manipulation and conversion. */
-    stringstream error_str;
+	
     
 	/** 
 	 * We create an internal Token "tok" and could store this in an array or the symbol table
@@ -129,7 +129,7 @@ int Admin::scan()
         if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
 		{
 		  errorCount++;
-		  error_str << "Illegal character " << current_line << ":" << column << endl;
+		  error_str << "Illegal character at line " << current_line << " and column " << column << endl;
 		  recordError(error_str.str());
 		  
 		  if(checkMaxErrors())
@@ -139,7 +139,7 @@ int Admin::scan()
         else if (currentTokenType == BADNUMERAL) 
 		{
 		  errorCount++;
-		  error_str << "Numeral overflow on " << current_line << ":" << column << endl;
+		  error_str << "Numeral overflow found at line " << current_line << " and column " << column << endl;
 		  recordError(error_str.str());
 		  
 		  if(checkMaxErrors())
@@ -149,7 +149,7 @@ int Admin::scan()
         else if (currentTokenType == BADNAME) 
 		{
 		  errorCount++;
-		  error_str << "Identifier cannot exceed 80 characters " << current_line << ":" << column << endl;
+		  error_str << "Identifier cannot exceed 80 characters. Check line " << current_line << " and column " << column << endl;
 		  recordError(error_str.str());
 		  
 		  if(checkMaxErrors())
@@ -165,7 +165,13 @@ int Admin::scan()
 	if (errorCount == 0)
 		return 0;
 	else
-		cerr << "\nEncountered: " << errorCount << " errors." << endl;
+	{
+	  cerr << "\nEncountered: " << errorCount << " errors." << endl;
+	  for(unsigned int i = 0; i < error_msgs.size(); i++)
+	  {
+	     cerr << "Error " << i+1 << ": " << error_msgs.at(i) << endl;
+	  }
+	}
     return -1;
 }
 
@@ -203,7 +209,7 @@ bool Admin::checkMaxErrors()
 {
 	if(errorCount >= MAXERRORS)
 	{
-	  cerr<<"Error threashold limit reached"<<endl;
+	  cerr << "Error threashold limit reached. Bailing out of scanning." << endl;
 	  return true;
 	}
 	else

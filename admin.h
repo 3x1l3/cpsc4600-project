@@ -39,6 +39,7 @@
 using std::string;
 using std::cout;
 using std::endl;
+using std::stringstream;
 
 /** Used to avoid circular declaration problems.*/
 class Scanner;
@@ -68,7 +69,8 @@ private:
 
 	/** We track the current line and column locations while reading through our File string. */
 	int current_line;
-	
+	/** We store our errors in a StringStream for easy manipulation and conversion. */
+	stringstream error_str;
 
 	/** 
 	 * Symbol Table and Scanner object pointers.
