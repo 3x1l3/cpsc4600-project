@@ -217,10 +217,12 @@ Token Scanner::nextToken()
 	 */
     else
     {
-      char test = peek;
-      string peekChar = &peek;
+      //originally, we return a &temp == peek character.
+      //this gets us garbage.
+      string peekChar = "";
+      peekChar += peek;
       readCharacter();
-      return Token(BADSYMBOL, -1, &test);
+      return Token(BADSYMBOL, -1, peekChar);
     }
 
 	/** An unknown symbol has been encountered. This should almost never happen. */
