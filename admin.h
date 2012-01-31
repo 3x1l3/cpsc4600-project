@@ -68,7 +68,7 @@ private:
 
 	/** We track the current line and column locations while reading through our File string. */
 	int current_line;
-	int column;
+	
 
 	/** 
 	 * Symbol Table and Scanner object pointers.
@@ -122,6 +122,7 @@ public:
 	void increaseColumn();
 	void resetColumn();
 	bool checkMaxErrors();
+	int column;
 
 };
 

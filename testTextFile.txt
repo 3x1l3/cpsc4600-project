@@ -1,5 +1,6 @@
 $ PL Program: Linear Search
-begin
+begin ?
+?
   const n = 10; 
   integer array A[n];
   integer x, i; 
