@@ -428,8 +428,7 @@ Token Scanner::handleCharString()
 	//isalnum is an std function found in <cctype> and returns 0 if a char is not alphanumeric.
     string str = "";
     do {
-	char temp = peek;
-        str.append(&temp);
+	str += peek;
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
     
     
