@@ -30,7 +30,8 @@
 Admin::Admin(string& src)
 {
     current_line = 1;
-    column = 0;
+    //start at negative one casue there is always one more column than actualy charcter
+    column = -1;
     symTIndex = 0;
 	errorCount = 0;
 	/** correctLine could technically be used a constructor sentinel in the future. */
@@ -62,7 +63,6 @@ void Admin::recordError(string msg)
     if (correctLine) {
         correctLine = false;
         cerr << msg << endl;
-        errorCount++;
     }
 
 }
@@ -186,7 +186,7 @@ void Admin::increaseColumn()
 /** The default "left-aligned" column is 1, we reset it when we reach the end of a line. */
 void Admin::resetColumn()
 {
-    column = 0;
+    column = -1;
 }
 
 
