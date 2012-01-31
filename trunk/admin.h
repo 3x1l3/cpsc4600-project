@@ -33,7 +33,7 @@
  * Once this number is reached, the compiler "bails out".
  * We will make use of this later with our error handling.
  */
-#define MAXERRORS 10
+#define MAXERRORS 100
 
 /** Shorthand Namespaces for keeping the code neat. */
 using std::string;
