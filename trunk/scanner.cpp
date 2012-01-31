@@ -211,9 +211,10 @@ Token Scanner::nextToken()
 	 */
     else
     {
+      char test = peek;
       string peekChar = &peek;
       readCharacter();
-      return Token(BADSYMBOL, -1, peekChar);
+      return Token(BADSYMBOL, -1, &test);
     }
 
 	/** An unknown symbol has been encountered. This should almost never happen. */
@@ -427,7 +428,8 @@ Token Scanner::handleCharString()
 	//isalnum is an std function found in <cctype> and returns 0 if a char is not alphanumeric.
     string str = "";
     do {
-        str.append(&peek);
+	char temp = peek;
+        str.append(&temp);
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
     
     

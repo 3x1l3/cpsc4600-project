@@ -145,3 +145,4 @@ string spellOutTypeName(Type name)
   int index = name-256;
   return typeSpelling[index];
 }
+
