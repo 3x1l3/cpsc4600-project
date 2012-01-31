@@ -86,7 +86,7 @@ bool Scanner::readCharacter()
     {
         peek = source->at(src_i);
         src_i++;
-		adminPtr->increaseColumn();
+	adminPtr->increaseColumn();
         return true;
     }
     else
@@ -149,6 +149,7 @@ Token Scanner::nextToken()
     {
         if ( peek == ' ' || peek == '\t')
         {
+	 
            //do nothing if it's a tab or whitespace.
 		   //the While check will increment the peek/index.
         }
@@ -161,7 +162,9 @@ Token Scanner::nextToken()
 			 * Otherwise, we construct a Newline token.
 			 */
 			adminPtr->resetColumn();
+			adminPtr->newLine();
 			readCharacter();
+			
 			if(comment == true)
 			{
 				comment = false;
@@ -176,12 +179,15 @@ Token Scanner::nextToken()
         else if (peek == '$')
         {
             comment = true;
-        }
+	   
+	  
+	}
 		/** Nothing above was found, but it could be a special character within a comment. */
         else
         {
 			/** But if it's not in a comment, then that means we must handle it. */
-            if (comment == false)
+          
+	if (comment == false)
             {
                 break;
             }
@@ -442,6 +448,7 @@ Token Scanner::handleCharString()
     {
       //Check to see if the token exists
       int existing_token = symTable->findLexeme(str);
+      
       if (existing_token == -1) 
       {
 		int index = symTable->makeEntry("ID","lexeme", str);

@@ -119,17 +119,14 @@ int Admin::scan()
         tok = scanner->nextToken();
 		currentTokenType = tok.getType();
 
-		/** If we have encountered a "new line" token, we account for it and reset the line-error boolean. */
-        if (tok.getType() == NEWLINE) {
-            newLine();
-        }
+
 
 		/**
 		 * We check if the current token is an error token, and report it to the user.
 		 * At the moment, the program only reports one error per line. 
 		 * The code is boilerplate for the rest of these, so they could be a switch statement.
 		 */
-        else if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
+        if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
 		{
 		  errorCount++;
 		  error_str << "Illegal character " << current_line << ":" << column << endl;
@@ -189,7 +186,7 @@ void Admin::increaseColumn()
 /** The default "left-aligned" column is 1, we reset it when we reach the end of a line. */
 void Admin::resetColumn()
 {
-    column = 1;
+    column = 0;
 }
 
 
