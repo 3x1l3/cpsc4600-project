@@ -17,7 +17,8 @@
 #define SCANNER_H
 
 /** Predefined constants that control the allowed range for our variables and types. */
-#define NUMERAL_UPPER_BOUND 260000
+// we have a upper bound of 2^16 so we can handle numbers for a 16 bit machine
+#define NUMERAL_UPPER_BOUND 65536
 #define NUMERAL_LOWER_BOUND 0
 #define MAX_STRING_LENGTH 80
 
