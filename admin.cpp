@@ -129,7 +129,7 @@ int Admin::scan()
       if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
       {
 	errorCount++;
-	error_str << "Illegal character at line " << current_line << " and column " << column << endl;
+	error_str << "Illegal ' "<<tok.getLexeme()<<" ' character detected. Check line " << current_line << ", column " << column <<"."<< endl;
 	recordError(error_str.str());
 		  
 	if(checkMaxErrors())
@@ -138,7 +138,7 @@ int Admin::scan()
       else if (currentTokenType == BADNUMERAL) 
       {
 	errorCount++;
-	error_str << "Numeral overflow found at line " << current_line << " and column " << column << endl;
+	error_str << "Numeral overflow found. Numerals cannot exceed 65536. Check line " << current_line << ", column " << column <<"."<< endl;
 	recordError(error_str.str());
 		  
 	if(checkMaxErrors())
@@ -147,7 +147,7 @@ int Admin::scan()
       else if (currentTokenType == BADNAME) 
       {
 	errorCount++;
-	error_str << "Identifier cannot exceed 80 characters. Check line " << current_line << " and column " << column << endl;
+	error_str << "Identifier cannot exceed 80 characters. Check line " << current_line << ", column " << column <<"."<< endl;
 	recordError(error_str.str());
 		  
 	if(checkMaxErrors())
@@ -155,7 +155,7 @@ int Admin::scan()
 	
       }
       /** This outputs the Token to the Screen in a < ___,___,___> format. */
-      cout << tok.toString() << endl;
+      cout << tok.toString() <<" \t\t Found at line "<<current_line<<", column "<<column<<"."<< endl;
     }
     while (scanner->inRange()) ;
     
