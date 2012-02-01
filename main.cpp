@@ -53,9 +53,40 @@ int main( int argc, char* argv[]) {
 
     string line;
     string file;
-    std::ifstream myfile ("testTextFile.txt");
+    
+    /* //DISPLAY ALL INPUT STRINGS
+      // [1] IS THE ACTUAL FIRST PARAMETER! [0] IS THE BINARY NAME!
+    if(argc > 0)
+      for(int i = 0; i < argc; i++)
+      {
+	cout << "\n\nMAXIMUM TEST " <<  argv[i] << "\n\n" << endl;
+      }
+  */
+    
+    /**
+     * We check to see if there was an input parameter, and use that as the filename.
+     * We do NOT accept multiple inputs (yet?).
+     * Choose the first one if multiple detected. If none, then ask for a file name.
+     */
+    string inputFileString = "";
+    if(argc == 1)
+    {
+      cout << "\nYou did not specify an input file. Please type the name of a file in this local/root folder: " << endl;
+      cin >> inputFileString;
+    }
+    else
+    {
+      if(argc > 2)
+	cout << "\nMultiple inputs detected. Using the first input: " << argv[1] << " ONLY." << endl;
+      
+      inputFileString.append(argv[1]);
+      cout << endl << "\nFilename " << inputFileString << " Found.\nBeginning Scanning.\n" << endl;
+    }
+    std::ifstream myfile (inputFileString.c_str());
   
-	if ( myfile.is_open() )
+    
+    
+    if ( myfile.is_open() )
     {
       while ( myfile.good() )
       {
@@ -67,7 +98,10 @@ int main( int argc, char* argv[]) {
     }
 	/** We could incorporate an error class here, but for now, it is not necessary as this is not a compiler operation */
     else 
-		cout << "Unable to open file"<<endl;
+    {
+		cout << "Unable to open file: " << inputFileString << " . Please recheck your filename and try again." << endl;
+		return 0;
+    }
     
     myfile.close();
     

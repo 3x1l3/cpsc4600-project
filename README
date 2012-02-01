@@ -25,6 +25,10 @@ Source Files:
 Test Files:
 -testTextFile.txt
 
+Official Documentation:
+README (ascii file)
+"Technical Documentation (ASCII).txt" - ASCII Documentation
+
 Other Files:
 DoxyFile (doxygen documentation generator file)
 MakeFile (makefile for the actual project)
@@ -32,13 +36,36 @@ MakeFile (makefile for the actual project)
 ==========================
 
 How To Compile
+-------------
 
-Run "Make" in the root directory. This should compile the actual project;
+Run "make" in the root directory. This should compile the actual project;
 from there, run the "main" binary to execute the project.
 
-To create documentation, run "doxygen DoxyFile".
+Alternatively, run "make -f MakeFile" to compile the scanner/compiler.
+
+To create fresh doxygen documentation, run "doxygen DoxyFile".
 No syntactic or compiling or run time errors found as of writing.
 
+=========================
+
+How To Run
+-----------
+
+After compiling, you will have a "main" program (or main.exe on Windows).
+Execute the Binary (using "./main") with one argument.
+
+The argument used is the name of the test PL file/directory-to-file you would like to use.
+
+i.e. for our base test case, the command would be:
+
+./main testTextFile.txt
+
+and our program would itnerpret the argument as the test file argument.
+If multiple arguments are present, only the first one will be used.
+
+This name *can* contain a directory path, but only if represented by forward slashes.
+As such, we will not support a Test directory as of yet, and test files will be located
+in the root directory.
 
 ============================
 
@@ -48,5 +75,13 @@ Approximate Hours Spent:
 
 ===========================
 
-The Documentation can be viewed by opening index.html in the "documentation" folder.
-Alternatively, a TeX representation is availabble.
+The Documentation is divided up into three components:
+
+1) A technical documentation file, called "Technical Documentation (ASCII).txt", which has a high level run-through and explanation of our scanner and its various components.
+Located in /documentation/
+
+2) A Doxygen-generated HTML and LaTeX documentation of the actual code and functions, at a granular level.
+Located in /documentation/html/index.html and /documentation/latex/
+
+3) Heavily commented code in the Class specification and Implimentation files. In and of itself, these comments are designed to explain
+the nuances of the compiler.

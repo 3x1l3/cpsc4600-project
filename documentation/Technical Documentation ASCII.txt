@@ -1,0 +1,221 @@
+=============================================
+C++ PL COMPILER PROJECT
+
+Scanner for the Programming Language PL
+
+Written for 
+CPSC 4600 - Compiler Design
+
+Written in C++.
+
+Written By:
+-Chad Klassen
+-Jordan Peoples
+-Adam Shepley
+
+Version 1 - Scanner Revision
+Created between January 9th and January 31st
+
+=============================================
+
+
+As specified in the README, there are multiple test PL programs that can be read by the Binary file to test this Scanner/Compiler.
+Please refer to the README for testing and compilation heuristics.
+
+Please note that the complete Functional documentation can be viewed in the HTML Doxygen documentation files, located in a sister directory. These pages will explain the atomic data manipulations related to the functions and objects and classes. 
+
+This documentation, while technical, is more of an informal, explanative guide to the Compiler, and the breakdowns here are only those so far as necessary to understand the functionality of the PL Compiler, and the methods through which this functionality is achieved.
+
+References to specific functions have been avoided, in so far as the Class Specification/Interface doxy comments provide a much, much better explanation of their purpose and role in a given class and even in the overall project. 
+
+Thus, this documentation refers to "the objects Accessor function" instead of " object.dataAccessor(values){} " as that seems to muddle the line between interpretation/understanding and simply rewriting the code itself.
+
+Which is to say, the code comments and outlines detailed in the Specification / header / .h class files goes in-depth into explaining the nuances and purposes of the given variables and functions, and to reprint that in this file would be simply repeating code as a whole.
+
+=============================================
+
+INDEX
+-----
+The following can be quickly located by using a Search function with the appropriate letter code (such as, say, <ZZ26>).
+
+The overview provides a brief flow through the program and its interconnecting components.
+The individual technical guides detail prompt specification and explanation of the important functions and actual functional mechanics of the core Compiler components.
+
+<A1> Overview
+	(A1.1) Component Overview
+<B2> Main Function
+<C3> Admin Object
+<D4> Scanner Object
+<E5> Token Object
+<F6> Symbol Table Object
+<G7> Final Notes
+
+
+=========================================
+
+
+<A1> - OVERVIEW
+----------------------
+
+The PL Scanner component of the overall PL compiler performs the basic functional role of reading a PL source program/file and creating a Tokenized output and lexically processed Symbol Table to be later integrated into the Parsing and symantic analysis and processing phase of the overall compiler.
+
+Which is to say, it currently generates and outputs a direct string of token objects along with scanning information (errors and similar). At a later point in the project, it will provide bi-directional tokenizing services for the Parser.
+
+At the current moment, our compiler simply tokenizes the input characters/symbols and abides by the simple guidelines of the PL programming language as specified by Per Brinch Hansen's description of the PL language in "Brinch Hansen on Pascal Compilers."
+
+
+----
+----
+(A1.1) Component Overview
+-------------------------
+
+The following set of documentation is a bit lengthy, so I will provide here a brief guide to the flow of the Scanner portion of the compiler:
+
+The Main program function reads in a source PL file and sends it to a string. It then creates an Admin object and passes it the PL file string, then instructs the Admin to begin the Scan function.
+
+The Admin object then sets its heuristic variables and creates a Symbol Table object and a Scanner object. It passes a reference to itself and the symbol table, to the Scanner object during its creation, then gives the Scanner a reference to the original PL source string.
+
+From the start of the file string until the end, the Admin then uses the Scanner[1] to retrieve Tokens until a max error count or the end of the file string is reached. For now, the Admin merely prints these tokens to the screen and records any error information.
+
+The Scanner's core operation, which happens in the Admin loop (see [1]), reads a character ahead in the file (so long as the end is not reached) and then determines what type of Token should be constructed, or if special scanning (i.e. for special tokens) is needed (and then performs it).
+It then constructs a Token object [2] to return to the Admin class to use.
+
+A Token Object is a tri-variable object that reflects a kind of symbol or symbol-set in the PL source file. When created, a Token object provides access and manipulation options (such as string representations) for outside actors such as the Admin object. Its core operation, of storing variable data such as Type or Value, occurs when it is constructed.
+
+The Scanner may also at certain points need to access the Symbol Table, which is a data structure that is used to store lexemetic data and information retrieved from the source PL File. A data value is stored at a location identified by Index, Name and Attribute.
+
+The core purpose of the Symbol Table will be shown when the Parsing and syntactic and semantic analysis and critique is performed by later components of the compiler.
+
+=========================================
+
+<B2> Main Function
+--------------------
+
+Files: main.cpp
+Accesses: admin.h, token.h
+Uses various STL libraries and Functions
+
+--------------------
+
+Our compiler is driven by the Main C++ function, which receives a (premade) PL source code file - of any language-conformant format - and sends the file character by character to a File string.
+
+The File string will represent the entire source code file. For this project, we are assuming that the PL source files will be small enough to fit in a C++ STL String.
+
+We read the file and add it to the string line by line. Between each read, we append a '\n' character/delimiter set to distinguish between lines.
+While not technically needed by the compiler, this allows us to later pinpoint (relative to the originally formatted file) the exact location of an error or user-desired heuristic.
+
+The Main function then creates an Admin object on the heap, which is passed the (PL source code) File string in its construction. After that, the Admin object is told to begin the scanning.
+
+The Admin object will later return a code that indicates whether the scan failed or not.
+(Optimally, it will return a code indicating how and when and why the Parser failed as well)
+
+==========================================
+
+<C3> Admin Object
+------------------
+
+Files: admin.h, admin.cpp
+Accesses: scanner.h, symboltable.h
+Uses various Vector, String and IO operations.
+
+------------------
+
+When created, the Admin object creates a Scanner object and a Symbol Table object (this will change in the future) and sets a few internal values to a predefined state.
+
+The scanner is created with a pointer to the Admin object, and a pointer to the Symbol Table.
+In the final stages of its construction, the Admin object passes the Scanner a reference to the original PL File string and is told to load said source.
+
+From a hierarchical standpoint, the Admin object then directs the Scanning process (and later, the Parsing process) until it reaches the end of the source file.
+
+This is accomplished in and through the Admin's main Scan() function, which retrieves a (the next) Token using the Scanner and then decides what to do with it, based off of whether it is an error or not.
+
+******* At the moment, the Admin class only outputs the Token to the screen. This process happens per each token, and as such we could easily create a data structure of tokens of the Parser, or provide bidirectional access and control of/to the tokens.*******
+
+If it encounters a Token representing an error of some sort, it records the information related to that error and then uses assorted helper functions to facilitate the next Token retrieval from the Scanner. The Admin will also "bail out" of the compilation process when an error threshold has been reached (currently, this is set to 100 errors.)
+
+Finally, the Admin outputs the appropriate data for the Tokens and returns control to the Main function.
+
+=============================================
+
+<D4> Scanner Object
+--------------------
+
+Files: scanner.cpp, scanner.h
+Accesses: admin.h, token.h, symboltable.h
+Uses vector and various output STL library functions
+
+--------------------
+
+We backtrack a little, as everything following takes place within the lifetime of the Admin object outlined above.
+
+When created, the Scanner is given a reference to a Symbol Table object and an Administrator object. For future use, it uses an initialization list to create a vector of reserved words (See PL Specification).
+Apart from this, it sets variety internal indexes to empty/start states, and awaits the input or direction of the Admin object.
+
+When the Admin calls the LoadSource function, a local string pointer is given the address of the original source PL File string from the Admin. If the string is not empty (indicating that the file had some text) then it attempts to read a character.
+
+If the file is not empty, the "peek" variable is given the character seen at the location of the Index variable (src_i) within the original File string. It then increases its index, and instructs the Admin to adjust its variables (column number) accordingly.
+
+When the Admin's Scan function is then called, the Scanner is instructed to return the "next" token until the end of the File string (or an error threshold) has been reached.
+
+The Scanner's prime Token function (nextToken) then uses the peek variable to examine what the next symbol in the source File string is. It uses a special set of heuristics to continue reading and pushing its peek until it finds a non-whitespace and non-comment character (and returns a Token Object of the appropriate Token type when it encounters a comment or newline).
+
+The Scanner then uses special Handlers if it has encountered a Number, Alphabetical Character, or Special character - otherwise, it constructs a Bad Symbol token to return to the admin. A sentinal condition is in place to construct an UNKNOWN token as well.
+
+Each of the specialized handlers (such as HandleNumber) use a special set of heuristics to determine which kind of token to create and return to the admin, and in the case of Special symbols, it uses the Peek variable/functionality to check for continued/multichar symbols and constructs a token appropriately.
+
+In the case of alphabetical characters, the Scanner checks the Symbol Table object and determines whether to create a new entry in it for a new identifier, or not to do so.
+
+At the "end of the day", the Scanner will return a Token of some sort to the Admin.
+
+===============================================
+
+<E5> Token Object
+------------------
+
+Files: token.h, token.cpp
+Accesses: None
+The Token Class utilizes the standard input and output and string operations, but also utilizes a proprietary Enumerated Type called Type, and provides an interface for it. These represent arbitrary types after the ASCII set, to represent PL language Token types (BADSYMBOL, NEWLINE, COMMA, etc.)
+
+-----------------
+
+The Token Object is created at various points by the Scanner, and returned to the Admin for further vivisection, user presentation and (in future revisions) proper syntactic and semantic analysis.
+
+The Token Object is simple and, when created, contains three core variables:
+A Type, a Value, and a lexeme.
+These variables are specified at creation of the Token object, which is an object tasked with no particular objective beyond maintaining a representation of a logical object.
+
+The "Type" is an enumerated type that describes one of 34 "types" of tokens - from an Identifier to a BadSymbol to a PLUS operator type. The "Value" is an integral integer value representation, and the "Lexeme" is a human-readable and human-parsable representation of the entire token - it may be the Name of a variable declared, for instance.
+
+The Token object provides capacities for creating, returning and altering any of these variables as well as basic comparative operations.
+
+
+================================================
+
+<F6> The Symbol Table
+----------------------
+
+Files: symboltable.h, symboltable.cpp
+Accesses: None.
+The symbol table 
+
+The Symbol Table is first created by the Admin, but in future revisions, there will likely be multiple symbol tables, each made to reflect a particular scope and block of code within the Compiler as a whole, linked together to allow proper nesting of scopes.
+
+When created by the Admin, the Symbol Table initializes an index, and makes a swath of initial entries into itself; these entries reflect the "reserved words" of the language, and prevent duplicates of themselves from being created later on (while also providing quick access to themselves.)
+
+The Symbol Table then, at the current moment, provides functional access to its core data structure, allowing its outside actors (the Admin object and the Tokens) to add or view or manipulate entries.
+
+The symbol table provides a variety of functions to find entries based off of any given set of criteria, and currently acts as a form of representative repository for a logical representation of a set of data - essentially, a name, attribute and value.
+
+The data structure itself is represented as a Map of a Map of a Map, which provides us with an Array-type direct/linear access mechanism[4] - essentially we can get an item's lexeme by using the following - table[34]["ID"]["lexeme"].
+This provides us with the ability to store any number of attributes pertaining to a symbol or symbol set.
+
+
+[4] - Refer to symboltable.h source file and doxy documentation.
+=================================================
+
+<G7> Final Notes
+----------------
+
+As mentioned above, we do not go "deep" into the code-level semantics of the functions and their names and express purpose and so on. This is outlined in and of itself, near where they are actually used.
+
+Instead, we expressly take a high-level representation of the Scanner components, and provide a subsection of documentation within the source files (and abstracted to the external HTML files) to avoid clutter and functional and meaningful obfuscation.
