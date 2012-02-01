@@ -44,7 +44,8 @@ from there, run the "main" binary to execute the project.
 Alternatively, run "make -f MakeFile" to compile the scanner/compiler.
 
 To create fresh doxygen documentation, run "doxygen DoxyFile".
-No syntactic or compiling or run time errors found as of writing.
+
+No syntactic or compiling or run time errors were found as of writing.
 
 =========================
 
@@ -71,7 +72,12 @@ in the root directory.
 
 Approximate Hours Spent:
 
+Jordan Peoples - ~20 to ~25 hours
+Adam Shepley - ~15 to ~23 hours
+Chad Klassen - ~22 to ~27 hours
 
+Note that these do not account for certain individual endeavours that were not known to the group.
+These are also rough estimates of hours spent.
 
 ===========================
 
