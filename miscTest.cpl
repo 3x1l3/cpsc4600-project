@@ -34,6 +34,12 @@ $newlines with white space followed by code
    
 insert code here 12345 4321;
 
+$testing numerica and underscore name with numerals
+nam_e3;
+na34me;
+na_34;
+n_3_m_3_5_name;
+
 $testing variables names with underscores
 this_has_underscores = 45;
 
