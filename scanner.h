@@ -58,57 +58,57 @@ class Scanner {
 
 private:
     
-	/** Used in the general parsing of the source file. */
-	int src_i;
+    /** Used in the general parsing of the source file. */
+    int src_i;
     char peek;
 
-	/** Eventually refers to a PL source code string. */
-	string* source;
+    /** Eventually refers to a PL source code string. */
+    string* source;
     
-	/** Used to move the peek and index and to increase the Admin column var. */
-	bool readCharacter();
-	/** Reads a character AND determines if it satisfies a desired value. */
+    /** Used to move the peek and index and to increase the Admin column var. */
+    bool readCharacter();
+    /** Reads a character AND determines if it satisfies a desired value. */
     bool readCharacter(char);
 
-	/** Functions for handling the given types of valid symbols encountered. */
+    /** Functions for handling the given types of valid symbols encountered. */
     Token handleNumber();
     Token handleSymbol();
     Token handleCharString();
     
-	/** A string of tokenized variables. Currently unused. */
-	string tokenizedString;
+    /** A string of tokenized variables. Currently unused. */
+    string tokenizedString;
 
-	/** A vector of reserved words. Currently not used, but will be useful later. */
+    /** A vector of reserved words. Currently not used, but will be useful later. */
     vector<string> reservedWords;
     
-	/** Pointers to necessary Main objects needed by the Scanner. */
-	SymbolTable* symTable;
+    /** Pointers to necessary Main objects needed by the Scanner. */
+    SymbolTable* symTable;
     Admin* adminPtr;
 
 public:
-	/** There should only be this one kind of constructor. */
+    /** There should only be this one kind of constructor. */
     Scanner(SymbolTable&, Admin&);
 
-	/** Basic, empty destructor. */
+    /** Basic, empty destructor. */
     ~Scanner() { };
     
-	/** Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate handler. */
-	Token nextToken();
+    /** Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate handler. */
+    Token nextToken();
     
 
-	void loadSource(string&);
+    void loadSource(string&);
 
-	/** Unused internal Scanning function. Will be rewritten and used in the future. */
+    /** Unused internal Scanning function. Will be rewritten and used in the future. */
     void scan();
     
-	/** Returns the tokenized string. */
-	string getTokenizedString();
+    /** Returns the tokenized string. */
+    string getTokenizedString();
     
-	/** Checks to see if we have reached the end of the range of the input string. Essentially, EOF(). */
-	bool inRange();
+    /** Checks to see if we have reached the end of the range of the input string. Essentially, EOF(). */
+    bool inRange();
     
-	/** Checks if a character is a "special" (parsable) character. */
-	bool isSpecial(char);
+    /** Checks if a character is a "special" (parsable) character. */
+    bool isSpecial(char);
 };
 
 #endif

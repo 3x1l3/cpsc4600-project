@@ -41,15 +41,15 @@ using std::cout;
 using std::endl;
 
 /** Argc and Argv for later expansion. */
-int main( int argc, char* argv[]) {
+int main( int argc, char* argv[]) 
+{
 
-    
-	/**	
-	 * Read the file to a stream, then send each line to a String.
-	 * We append our own newline and attach this to our whole File string.
-	 * Repeat until we reach the end of the file.
-	 * This might have scaling issues.
-	 */
+    /**	
+     * Read the file to a stream, then send each line to a String.
+     * We append our own newline and attach this to our whole File string.
+     * Repeat until we reach the end of the file.
+     * This might have scaling issues.
+     */
 
     string line;
     string file;
@@ -64,7 +64,7 @@ int main( int argc, char* argv[]) {
   */
     
     /**
-     * We check to see if there was an input parameter, and use that as the filename.
+     * We check to see if there was an input parameter, and use that as the filename
      * We do NOT accept multiple inputs (yet?).
      * Choose the first one if multiple detected. If none, then ask for a file name.
      */
@@ -80,8 +80,8 @@ int main( int argc, char* argv[]) {
 	cout << "\nMultiple inputs detected. Using the first input: " << argv[1] << " ONLY." << endl;
       
       inputFileString.append(argv[1]);
-      cout << endl << "\nFilename " << inputFileString << " Found.\nBeginning Scanning.\n" << endl;
     }
+    cout << endl << "\nAttempting to scan Filename: " << inputFileString << endl;
     std::ifstream myfile (inputFileString.c_str());
   
     
@@ -90,36 +90,34 @@ int main( int argc, char* argv[]) {
     {
       while ( myfile.good() )
       {
-		getline (myfile, line);
-		line += '\n';
-		file += line;
+	getline (myfile, line);
+	line += '\n';
+	file += line;
       }
       myfile.close();
     }
 	/** We could incorporate an error class here, but for now, it is not necessary as this is not a compiler operation */
     else 
     {
-		cout << "Unable to open file: " << inputFileString << " . Please recheck your filename and try again." << endl;
-		return 0;
+      cout << "Unable to open file: " << inputFileString << " . Please recheck your filename and try again." << endl;
+      return 0;
     }
     
     myfile.close();
     
-   
-	/**
-	 * We create our administration object with our file string.
-	 * It then begins the Scanning process.
-	 * We could also have some error handling here, but that is not required.
-	 * @see Admin()
-	 */
+    /**
+     * We create our administration object with our file string.
+     * It then begins the Scanning process.
+     * We could also have some error handling here, but that is not required.
+     * @see Admin()
+     */
     Admin* admin = new Admin(file);
     int status = admin->scan();
 
     if (status == 0)
-	   cout << "Scanning successful" << endl;
+      cout << "Scanning successful" << endl;
     else
-       cout << "Program contains scan errors" << endl;
+      cout << "Program contains scan errors" << endl;
 
     return 0;
-
 }

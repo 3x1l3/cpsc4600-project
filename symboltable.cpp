@@ -48,7 +48,7 @@ SymbolTable::SymbolTable()
 /** Returns the reserved word count. */
 int SymbolTable::getNumOfReservedWords()
 {
-  return numberOfReservedWords;
+    return numberOfReservedWords;
 }
 
 /**
@@ -127,10 +127,12 @@ bool SymbolTable::attributeExists(int index, string name, string attribute)
  * @param attribute
  * @return attribute value on success, empty string on fail.
  */
-string SymbolTable::findAttributeWhere(string tokenName, string attribute) {
-    for (int i = 0; i < index; i++) {
-        if ( attributeExists(i, tokenName, attribute) )
-            return table[i][tokenName][attribute];
+string SymbolTable::findAttributeWhere(string tokenName, string attribute) 
+{
+    for (int i = 0; i < index; i++) 
+    {
+      if ( attributeExists(i, tokenName, attribute) )
+	return table[i][tokenName][attribute];
     }
     return "";
 }
@@ -141,10 +143,12 @@ string SymbolTable::findAttributeWhere(string tokenName, string attribute) {
  * @param attribute
  * @return index of found attribute, -1 on fail
  */
-int SymbolTable::findIndexWhere(string tokenName, string attribute) {
-    for (int i=0; i < index; i++) {
-        if (attributeExists(i, tokenName, attribute))
-            return i;
+int SymbolTable::findIndexWhere(string tokenName, string attribute) 
+{
+    for (int i=0; i < index; i++) 
+    {
+      if (attributeExists(i, tokenName, attribute))
+	return i;
     }
     return -1;
 }
@@ -157,11 +161,13 @@ int SymbolTable::findIndexWhere(string tokenName, string attribute) {
  * @param value
  * @return bool
  */
-bool SymbolTable::attributeValueExists(int index, string name, string attribute, string value) {
-    if (attributeExists(index, name, attribute)) {
-        string str = table[index][name][attribute];
-        if ( str.compare(value) == 0)
-            return true;
+bool SymbolTable::attributeValueExists(int index, string name, string attribute, string value) 
+{
+    if (attributeExists(index, name, attribute)) 
+    {
+      string str = table[index][name][attribute];
+      if ( str.compare(value) == 0)
+	return true;
         return false;
     }
     return false;
@@ -176,11 +182,12 @@ bool SymbolTable::attributeValueExists(int index, string name, string attribute,
  */
 string SymbolTable::getAttributeWhere(int index, string tokenName, string attribute)
 {
-  if (attributeExists(index, tokenName, attribute)) {
-    return table[index][tokenName][attribute];
-  }
+    if (attributeExists(index, tokenName, attribute)) 
+    {
+      return table[index][tokenName][attribute];
+    }
   
-  return "";
+    return "";
 }
 
 /**
@@ -192,9 +199,10 @@ string SymbolTable::getAttributeWhere(int index, string tokenName, string attrib
  */
 int SymbolTable::findLexeme(string lexeme)
 {
-    for(int i=0; i < index; i++) {
-	if (table[i]["ID"]["lexeme"] == lexeme)
-	  return i;
+    for(int i=0; i < index; i++) 
+    {
+      if (table[i]["ID"]["lexeme"] == lexeme)
+	return i;
     }
     return -1;
 }

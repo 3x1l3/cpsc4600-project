@@ -60,73 +60,72 @@ class Scanner;
 class Admin {
 
 private:
-	/** 
-	 * Vectors used to store error details.
-	 * We store any strings of error messages that may occur, and where they occur.
-	 */
-	std::vector<string> error_msgs;
-	std::vector<int> error_line;
+    /** 
+     * Vectors used to store error details.
+     * We store any strings of error messages that may occur, and where they occur.
+     */
+    std::vector<string> error_msgs;
+    std::vector<int> error_line;
 
-	/** We track the current line and column locations while reading through our File string. */
-	int current_line;
-	/** We store our errors in a StringStream for easy manipulation and conversion. */
-	stringstream error_str;
+    /** We track the current line and column locations while reading through our File string. */
+    int current_line;
+    /** We store our errors in a StringStream for easy manipulation and conversion. */
+    stringstream error_str;
 
-	/** 
-	 * Symbol Table and Scanner object pointers.
-	 * This allows us to send symbol tables and scanners to and from other objects,
-	 * and makes it easier to manage memory and overflows.
-	 */
-	SymbolTable* table;
-	Scanner* scanner;
+    /** 
+     * Symbol Table and Scanner object pointers.
+     * This allows us to send symbol tables and scanners to and from other objects,
+     * and makes it easier to manage memory and overflows.
+     */
+    SymbolTable* table;
+    Scanner* scanner;
 
-	/**
-	 * The Index integer for our symbol table.
-	 * Increases per entry, removing the need to use the Symbol Table's iterator
-	 * functions.
-	 */
-	int symTIndex;
+    /**
+     * The Index integer for our symbol table.
+     * Increases per entry, removing the need to use the Symbol Table's iterator
+     * functions.
+     */
+    int symTIndex;
 
-	/** If a line cannot be scanned/parsed, this boolean is used to indicate such. */
-	bool correctLine;
+    /** If a line cannot be scanned/parsed, this boolean is used to indicate such. */
+    bool correctLine;
 
-	/** 
-	 * Simple tracking of the number of errors encountered.
-	 * We abandon compilatiuon if this matches or exceeds the MAXERRORS definition.
-	 * @see MAXERRORS
-	 */
-	int errorCount;
+    /** 
+     * Simple tracking of the number of errors encountered.
+     * We abandon compilatiuon if this matches or exceeds the MAXERRORS definition.
+     * @see MAXERRORS
+     */
+    int errorCount;
   
 public:
 
-	/**
-	 * @brief Base constructor for the Administrator.
-	 * 
-	 * The constructor takes in the finalized File string object pointer
-	 * from the Main file.
-	 * @param string variable
-	 */
-	Admin(string&);
+    /**
+     * @brief Base constructor for the Administrator.
+     * 
+     * The constructor takes in the finalized File string object pointer
+     * from the Main file.
+     * @param string variable
+     */
+    Admin(string&);
 
-	/** Records the Error Message string into the Error vector. */
-	void recordError(string);
+    /** Records the Error Message string into the Error vector. */
+    void recordError(string);
 
-	/** Executes the scanner function and returns an integer count of the errors found */
-	int scan();
+    /** Executes the scanner function and returns an integer count of the errors found */
+    int scan();
 
-	/** 
-	 * A newline operation is performed as our current line is valid.
-	 * @see formal Definition of newLine()
-	 */
-	void newLine();
+    /** 
+     * A newline operation is performed as our current line is valid.
+     * @see formal Definition of newLine()
+     */
+    void newLine();
 
-	/** Our column count management functions allow us to report exact error locations */
-	void increaseColumn();
-	void resetColumn();
-	bool checkMaxErrors();
-	int column;
+    /** Our column count management functions allow us to report exact error locations */
+    void increaseColumn();
+    void resetColumn();
+    bool checkMaxErrors();
+    int column;
 
 };
-
 
 #endif
