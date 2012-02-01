@@ -23,7 +23,13 @@ Source Files:
 -token.h
 
 Test Files:
--testTextFile.txt
+Our test files are given the extension ".cpl".
+-errorTokenTest.cpl
+-blankSpaceTest.cpl
+-linearSearch.cpl
+-miscTest.cpl
+-randomTest.cpl
+
 
 Official Documentation:
 README (ascii file)
@@ -59,7 +65,7 @@ The argument used is the name of the test PL file/directory-to-file you would li
 
 i.e. for our base test case, the command would be:
 
-./main testTextFile.txt
+./main errorTokenTest.cpl
 
 and our program would itnerpret the argument as the test file argument.
 If multiple arguments are present, only the first one will be used.
