@@ -31,7 +31,7 @@ SymbolTable::SymbolTable()
     makeEntry("ID","lexeme", "const");
     makeEntry("ID","lexeme", "array");
     makeEntry("ID","lexeme", "integer");
-    makeEntry("ID","lexeme", "boolean");
+    makeEntry("ID","lexeme", "Boolean");
     makeEntry("ID","lexeme", "proc");
     makeEntry("ID","lexeme", "skip");
     makeEntry("ID","lexeme", "read");

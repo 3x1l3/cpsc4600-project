@@ -42,10 +42,11 @@ Scanner::Scanner(SymbolTable& table, Admin& admin)
     peek = ' ';
     symTable = &table; 
     adminPtr = &admin;
-    
-    string reservedWordsArray[] = { "begin", "end", "const", "array", "integer", "boolean", "proc", "skip", "read",
-                                     "write", "call", "if", "do", "fi", "od", "false", "true" };
 
+    //is not used currently, may be usefule later
+    string reservedWordsArray[] = { "begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",
+                                     "write", "call", "if", "do", "fi", "od", "false", "true" };
+    //not used now, may be useful later
     reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(string)));
 }
 
@@ -254,7 +255,7 @@ Token Scanner::handleNumber()
 
     /** The numeral becomes a token only if it satisfies our lexicon. */
     Token *newToken;
-    
+
     if(v >= NUMERAL_LOWER_BOUND && v <= NUMERAL_UPPER_BOUND)
     {
       newToken = new Token(NUMERAL, v, lexeme);
@@ -264,8 +265,8 @@ Token Scanner::handleNumber()
     else
     {
       newToken = new Token(BADNUMERAL, v, spellOutTypeName(BADNUMERAL));
-      //TODO change the error handling to the admin class
-      cerr<<"Bad Numeral - Overflow / Underflow "<<endl;
+      //commented out -this is / was for debuggin.
+      //cerr<<"Bad Numeral - Overflow / Underflow "<<endl;
     }
     return *newToken;
 }
@@ -460,7 +461,8 @@ Token Scanner::handleCharString()
 	//TODO do we handle reserved words any differntly?
 	if(existing_token < symTable->getNumOfReservedWords())
 	{
-	  cout<<"RESERVED WORD FOUND"<<endl;
+	  //commented out - it was/is for debugging. useful :D for future? maybe :?
+	  //cout<<"RESERVED WORD FOUND"<<endl;
 	  
 	}
 	return Token(IDENTIFIER, existing_token, str);
