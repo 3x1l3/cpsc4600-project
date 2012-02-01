@@ -1,7 +1,6 @@
 $ PL Program: Linear Search?
-begin ?
-?
-integer q; q = 232323232323232323232323232323232323232323232;
+begin
+integer q;
 
   const n = 10; 
   integer array A[n];
@@ -29,6 +28,5 @@ integer q; q = 232323232323232323232323232323232323232323232;
 	~found -> write x;
       fi;
     read x;
-?
   od;
 end.
