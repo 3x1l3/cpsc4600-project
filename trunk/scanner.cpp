@@ -43,9 +43,8 @@ Scanner::Scanner(SymbolTable& table, Admin& admin)
     symTable = &table; 
     adminPtr = &admin;
     
-	string reservedWordsArray[] = { "begin", "end", "const", "array", "integer", "boolean", "proc", "skip", "read",
-                                     "write", "call", "if", "do", "fi", "od", "false", "true"
-                                  };
+    string reservedWordsArray[] = { "begin", "end", "const", "array", "integer", "boolean", "proc", "skip", "read",
+                                     "write", "call", "if", "do", "fi", "od", "false", "true" };
 
     reservedWords.insert(reservedWords.begin(), reservedWordsArray, reservedWordsArray+(sizeof(reservedWordsArray) / sizeof(string)));
 }
@@ -68,7 +67,7 @@ void Scanner::loadSource(string& src)
     //set ch to the first item in the source
     if (source->size() > 0 )
     {
-        readCharacter();
+      readCharacter();
     }
 }
 
@@ -84,17 +83,17 @@ bool Scanner::readCharacter()
 {
     if (inRange())
     {
-        peek = source->at(src_i);
-        src_i++;
-	adminPtr->increaseColumn();
-        return true;
+      peek = source->at(src_i);
+      src_i++;
+      adminPtr->increaseColumn();
+      return true;
     }
     else
     {
         /* std::cout << "out of bounds read" << std::endl;
          std::cout << "peek = " << peek <<std::endl;
          std::cout << "src_i = "<< src_i <<std::endl;*/
-        return false;
+      return false;
     }
 }
 
@@ -113,7 +112,7 @@ bool Scanner::readCharacter(char c)
 {
     readCharacter();
     if (peek != c) 
-		return false;
+      return false;
     peek = ' ';
     return true;
 }
@@ -142,59 +141,55 @@ Token Scanner::nextToken()
     bool comment = false;
 
     /** 
-	 * This block is used to skip the whitespaces and associated formatting
-	 * characters such as tab.
-	 */
+     * This block is used to skip the whitespaces and associated formatting
+     * characters such as tab.
+     */
     do
     {
-        if ( peek == ' ' || peek == '\t')
-        {
+      if ( peek == ' ' || peek == '\t')
+      {
 	 
            //do nothing if it's a tab or whitespace.
 		   //the While check will increment the peek/index.
-        }
-        else if (peek == '\n')
-        {
-			/**
-			 * We've reached a newline, so the column will now go back to left/'1'.
-			 * We read this character to check if it's a comment.
-			 * If it's a comment, we can skip this line and make a Comment token.
-			 * Otherwise, we construct a Newline token.
-			 */
-			adminPtr->resetColumn();
-			adminPtr->newLine();
-			readCharacter();
+      }
+      else if (peek == '\n')
+      {
+	/**
+	 * We've reached a newline, so the column will now go back to left/'1'.
+	 * We read this character to check if it's a comment.
+	 * If it's a comment, we can skip this line and make a Comment token.
+	 * Otherwise, we construct a Newline token.
+	 */
+	adminPtr->resetColumn();
+	adminPtr->newLine();
+	readCharacter();
 			
-			if(comment == true)
-			{
-				comment = false;
-				return Token (COMMENT, -1, spellOutTypeName(COMMENT));
-			}
-			else
-			{
-				comment = false;
-				return Token(NEWLINE, -1, spellOutTypeName(NEWLINE));
-			}
-		}
-        else if (peek == '$')
-        {
-            comment = true;
-	   
+	if(comment == true)
+	{
+	  comment = false;
+	  return Token (COMMENT, -1, spellOutTypeName(COMMENT));
 	  
 	}
-		/** Nothing above was found, but it could be a special character within a comment. */
-        else
-        {
-			/** But if it's not in a comment, then that means we must handle it. */
-          
+	else
+	{
+	  comment = false;
+	  return Token(NEWLINE, -1, spellOutTypeName(NEWLINE));
+	}
+      }
+      else if (peek == '$')
+      {
+	comment = true;   
+      }
+      /** Nothing above was found, but it could be a special character within a comment. */
+      else
+      {
+	/** But if it's not in a comment, then that means we must handle it. */
 	if (comment == false)
-            {
-                break;
-            }
+	{
+	  break;
         }
+      }
     } while (readCharacter() && ( peek == ' ' || peek == '\t' || peek == '\n' ||peek == '$' || comment == true));
-
-
 
     //Handle Digits
     if (isdigit(peek))
@@ -211,10 +206,10 @@ Token Scanner::nextToken()
     {
       return handleSymbol();
     }
-	/** 
-	 * We've encountered a broken symbol.
-	 * Increment our index' and return an error token.
-	 */
+    /** 
+     * We've encountered a broken symbol.
+     * Increment our index' and return an error token.
+     */
     else
     {
       //originally, we return a &temp == peek character.
@@ -225,7 +220,7 @@ Token Scanner::nextToken()
       return Token(BADSYMBOL, -1, peekChar);
     }
 
-	/** An unknown symbol has been encountered. This should almost never happen. */
+    /** An unknown symbol has been encountered. This should almost never happen. */
     cout<< peek <<endl;
     return Token(UNKNOWN, -1, "unknown character");
 }
@@ -248,21 +243,24 @@ Token Scanner::handleNumber()
     int v = 0;
     string lexeme = "";
     
-	/** We peek ahead at the next character, and add it by base10 multiples until the next peek
-	 *  is no longer a digit/numeral.
-	 */
-	do {
-        v = 10 * v + atoi(&peek);
-		lexeme += peek;
+    /** We peek ahead at the next character, and add it by base10 multiples until the next peek
+     *  is no longer a digit/numeral.
+     */
+    do 
+    {
+      v = 10 * v + atoi(&peek);
+      lexeme += peek;
     } while (readCharacter() && isdigit(peek));
 
-	/** The numeral becomes a token only if it satisfies our lexicon. */
+    /** The numeral becomes a token only if it satisfies our lexicon. */
     Token *newToken;
+    
     if(v >= NUMERAL_LOWER_BOUND && v <= NUMERAL_UPPER_BOUND)
     {
       newToken = new Token(NUMERAL, v, lexeme);
     }
-	/** Otherwise, we create an error token and allow it to be handled as appropriate. */
+    
+    /** Otherwise, we create an error token and allow it to be handled as appropriate. */
     else
     {
       newToken = new Token(BADNUMERAL, v, spellOutTypeName(BADNUMERAL));
@@ -291,134 +289,134 @@ Token Scanner::handleNumber()
  */
 Token Scanner::handleSymbol()
 {
-   Token tempToken;
-   Type newType = BADSYMBOL;
+    Token tempToken;
+    Type newType = BADSYMBOL;
 
-   switch (peek) {
-      case ';':
-		 newType = SC;
+    switch (peek) 
+    {
+       case ';':
+ 	 newType = SC;
          tempToken = Token(newType, -1, ";");
-		 break;
-      case '.':
-		newType = PERIOD;
-        tempToken = Token(newType, -1, ".");
-		break;
-      case ',':
-		newType = COMMA;
-        tempToken = Token(newType, -1, ",");
-		break;
+	 break;
+       case '.':
+	 newType = PERIOD;
+         tempToken = Token(newType, -1, ".");
+	 break;
+       case ',':
+	 newType = COMMA;
+         tempToken = Token(newType, -1, ",");
+	 break;
 
-	  /** An '[' symbol can be followed by an ']' symbol. */
-      case '[':
-		newType = LSB;
-        tempToken = Token(newType, -1, "[");
-		//handling the dual symbol both square brackets "[]"
-		readCharacter();
-		if(peek == ']')
-		{
-			tempToken = Token(BOTHSQUAREBRACKETS, -1, "[]");
-		}
-		//we reverse the indexing operations that took place;
-		//a possible following symbol ']' was not found.
-		else
-		{
-			src_i--;
-		}
-		break;
+       /** An '[' symbol can be followed by an ']' symbol. */
+       case '[':
+	 newType = LSB;
+         tempToken = Token(newType, -1, "[");
+	 //handling the dual symbol both square brackets "[]"
+	 readCharacter();
+	 if(peek == ']')
+	 {
+	   tempToken = Token(BOTHSQUAREBRACKETS, -1, "[]"); 
+	 }
+	 //we reverse the indexing operations that took place;
+	 //a possible following symbol ']' was not found.
+	 else
+	 {
+	   src_i--;
+	 }
+	 break;
 
-      case ']':
-		newType = RSB;
-        tempToken = Token(newType, -1, "]");
-		break;
-      case '&':
-		newType = AND;
-        tempToken = Token(newType, -1, "&");
-		break;
-      case '|':
-		newType = PIPE;
-        tempToken = Token(newType, -1, "|");
-		break;
-      case '~':
-		newType = TILDA;
-        tempToken = Token(newType, -1, "~");
-		break;
-      case '<':
-		newType = LT;
-        tempToken = Token(newType, -1, "<");
-		break;
-      case '=':
-		newType = EQUALS;
-        tempToken = Token(newType, -1, "=");
-		break;
-      case '>':
-		newType = GT;
-        tempToken = Token(newType, -1, ">");
-		break;
-      case '\\':
-		newType = FORSLASH;
-        tempToken = Token(newType, -1, "\\");
-		break;
-      case '+':
-		newType = PLUS;
-        tempToken = Token(newType, -1, "+");
-		break;
+       case ']':
+	 newType = RSB;
+         tempToken = Token(newType, -1, "]");
+	 break;
+       case '&':
+	 newType = AND;
+         tempToken = Token(newType, -1, "&");
+	 break;
+       case '|':
+	 newType = PIPE;
+         tempToken = Token(newType, -1, "|");
+	 break;
+       case '~':
+	 newType = TILDA;
+	 tempToken = Token(newType, -1, "~");
+	 break;
+       case '<':
+	 newType = LT;
+         tempToken = Token(newType, -1, "<");
+	 break;
+       case '=':
+	 newType = EQUALS;
+         tempToken = Token(newType, -1, "=");
+	 break;
+       case '>':
+	 newType = GT;
+         tempToken = Token(newType, -1, ">");
+	 break;
+       case '\\':
+	 newType = FORSLASH;
+         tempToken = Token(newType, -1, "\\");
+	 break;
+       case '+':
+	 newType = PLUS;
+         tempToken = Token(newType, -1, "+");
+	 break;
 	  
-	  /** An '-' symbol can be followed by an '>' symbol. */
-      case '-':
-        newType = MINUS;
-        tempToken = Token(newType, -1, "-");
-		//handling the dual symbol arrow "->"
-		readCharacter();
-		if(peek == '>')
-		{
-			tempToken = Token(ARROW, -1, "->");
-		}
-		//we reverse the indexing operations that took place;
-		//a possible following symbol '>' was not found.
-		else
-		{
-			src_i--;
-		}	
-         break;
+       /** An '-' symbol can be followed by an '>' symbol. */
+       case '-':
+         newType = MINUS;
+         tempToken = Token(newType, -1, "-");
+	 //handling the dual symbol arrow "->"
+	 readCharacter();
+	 if(peek == '>')
+	 {
+	   tempToken = Token(ARROW, -1, "->");
+	 }
+	 //we reverse the indexing operations that took place;
+	 //a possible following symbol '>' was not found.
+	 else
+	 {
+	   src_i--;
+	 }	
+	 break;
 
-      case '*':
-		newType = TIMES;
-        tempToken = Token(newType, -1, "*");
-		break;
-      case '/':
-		newType = DIVIDE;
-        tempToken = Token(newType, -1, "/");
-		break;
-      case '(':
-		newType = LB;
-        tempToken = Token(newType, -1, "(");
-		break;
+       case '*':
+	 newType = TIMES;
+	 tempToken = Token(newType, -1, "*");
+	 break;
+       case '/':
+	 newType = DIVIDE;
+         tempToken = Token(newType, -1, "/");
+	 break;
+       case '(':
+	 newType = LB;
+         tempToken = Token(newType, -1, "(");
+	 break;
       case ')':
-		newType = RB;
-        tempToken = Token(newType, -1, ")");
-		break;
+	 newType = RB;
+         tempToken = Token(newType, -1, ")");
+	 break;
 
-	  /** An ':' symbol can be followed by an '=' symbol. */
+      /** An ':' symbol can be followed by an '=' symbol. */
       case ':':
-        newType = UNKNOWN;
-        tempToken = Token(newType, -1, ":");
-		//handling the dual symbol Colon-Equals ":="
-		readCharacter();
-		if(peek == '=')
-		{
-			tempToken = Token(COLONEQUALS, -1, ":=");
-		}
-		//we reverse the indexing operations that took place;
-		//a possible following symbol '=' was not found.
-		else
-		{
-			src_i--;
-		}
-        break;
-   }
-   readCharacter();
-
-   return tempToken;
+         newType = UNKNOWN;
+         tempToken = Token(newType, -1, ":");
+	 //handling the dual symbol Colon-Equals ":="
+	 readCharacter();
+	 if(peek == '=')
+	 {
+	   tempToken = Token(COLONEQUALS, -1, ":=");
+	 }
+	 //we reverse the indexing operations that took place;
+	 //a possible following symbol '=' was not found.
+	 else
+	 {
+	   src_i--;
+	 }
+         break; 
+     }
+     readCharacter();
+     return tempToken;
 }
 
 
@@ -433,10 +431,11 @@ Token Scanner::handleSymbol()
  */
 Token Scanner::handleCharString()
 {
-	//isalnum is an std function found in <cctype> and returns 0 if a char is not alphanumeric.
+    //isalnum is an std function found in <cctype> and returns 0 if a char is not alphanumeric.
     string str = "";
-    do {
-	str += peek;
+    do 
+    {
+      str += peek;
     } while (readCharacter() && (isalnum(peek) || peek == '_'));
     
     
@@ -453,17 +452,18 @@ Token Scanner::handleCharString()
       
       if (existing_token == -1) 
       {
-		int index = symTable->makeEntry("ID","lexeme", str);
-		return Token(IDENTIFIER, index, str);
+	int index = symTable->makeEntry("ID","lexeme", str);
+	return Token(IDENTIFIER, index, str);
       } 
       else 
       {
-		//TODO do we handle reserved words any differntly?
-		if(existing_token < symTable->getNumOfReservedWords())
-		{
-		   cout<<"RESERVED WORD FOUND"<<endl;
-		}
-		return Token(IDENTIFIER, existing_token, str);
+	//TODO do we handle reserved words any differntly?
+	if(existing_token < symTable->getNumOfReservedWords())
+	{
+	  cout<<"RESERVED WORD FOUND"<<endl;
+	  
+	}
+	return Token(IDENTIFIER, existing_token, str);
       }
     }
 }
@@ -479,69 +479,70 @@ Token Scanner::handleCharString()
  */
 bool Scanner::isSpecial(char ch)
 {
- // . < , = ; > [ + ] - & * | / ~ \ ( ) := [] ->
-   switch (ch) {
+    // . < , = ; > [ + ] - & * | / ~ \ ( ) := [] ->
+    switch (ch) 
+    {
       case '.':
-		return true;
-		break;
+	return true;
+	break;
       case '<':
-		return true;
-		break;
+	return true;
+	break;
       case ',':
-		return true;
-		break;
+	return true;
+	break;
       case '=':
-		return true;
-		break;
+	return true;
+	break;
       case ';':
-		return true;
-		break;
+	return true;
+	break;
       case '>':
-		return true;
-		break;
+	return true;
+	break;
       case '[':
-		return true;
-		break;
+	return true;
+	break;
       case '+':
-		return true;
-		break;
+	return true;
+	break;
       case ']':
-		return true;
-		break;
+	return true;
+	break;
       case '-':
-		return true;
-		break;
+	return true;
+	break;
       case '&':
-		return true;
-		break;
+	return true;
+	break;
       case '*':
-		return true;
-		break;
+	return true;
+	break;
       case '|':
-		return true;
-		break;
+	return true;
+	break;
       case '/':
-		return true;
-		break;
+	return true;
+	break;
       case '~':
-		return true;
-		break;
+	return true;
+	break;
       case '\\':
-		return true;
-		break;
+	return true;
+	break;
       case '(':
-		return true;
-		break;
+	return true;
+	break;
       case ')':
-		return true;
-		break;
+	return true;
+	break;
       //adding in special case for the colonequals double sign ":="
       //see function HandleSymbol for more information
       case ':':
-		return true;
-		break;
+	return true;
+	break;
       default:
-		return false;
+	return false;
    }
 }
 
@@ -557,10 +558,11 @@ void Scanner::scan()
     Token temp;
     Token blank;
 
-    do {
-        temp = nextToken();
-        // std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
-        tokenizedString += temp.toString();
+    do 
+    {
+      temp = nextToken();
+      // std::cout << table->getAttributeWhere(temp.getValue(), "ID", "lexeme") << std::endl;
+      tokenizedString += temp.toString();
     }
     while (inRange());
 }

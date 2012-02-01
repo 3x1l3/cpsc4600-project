@@ -41,9 +41,9 @@ Token::Token()
  */
 Token::Token(Type newType, int newValue, string newLexeme)
 {
-  type = newType;
-  value = newValue;
-  lexeme = newLexeme;
+    type = newType;
+    value = newValue;
+    lexeme = newLexeme;
 }
 
 /** Return Functions give access to atomic Token data to outside actors. */
@@ -87,19 +87,19 @@ void Token::setLexeme(string newLexeme)
  */
 string Token::toString()
 {
-  string newString  = "";
-  char val [10];
-  sprintf(val,"%d", value);
+    string newString  = "";
+    char val [10];
+    sprintf(val,"%d", value);
 
-  newString += "<";
-  newString += spellOutTypeName(type);
-  newString += ",";
-  newString += val;
-  newString += ",";
-  newString += lexeme;
-  newString += ">";
+    newString += "<";
+    newString += spellOutTypeName(type);
+    newString += ",";
+    newString += val;
+    newString += ",";
+    newString += lexeme;
+    newString += ">";
 
-  return newString;
+    return newString;
 }
 
 /**
@@ -113,9 +113,13 @@ string Token::toString()
  */
 bool Token::operator==(const Token& first) const
 {
-  if ((this->getLexeme() == first.getLexeme()) && (this->getValue() == first.getValue()) && (this->getType() == first.getType()))
-	  return true;
-  return false;
+    if ((this->getLexeme() == first.getLexeme()) 
+       && (this->getValue() == first.getValue()) 
+        && (this->getType() == first.getType()))
+    {
+      return true;
+    }
+    return false;
 }
 
 /**
@@ -128,7 +132,7 @@ bool Token::operator==(const Token& first) const
  */
 bool Token::operator!=(const Token& temp) const
 {
-  return !(*this == temp);
+    return !(*this == temp);
 }
 
 /**
@@ -142,7 +146,7 @@ bool Token::operator!=(const Token& temp) const
  */
 string spellOutTypeName(Type name)
 {
-  int index = name-256;
-  return typeSpelling[index];
+    int index = name-256;
+    return typeSpelling[index];
 }
 

@@ -52,80 +52,80 @@ class SymbolTable {
 
 private:
     /**
-	 * @brief Our symbol table is a Map with a Map with a Map, called "table".
-	 * 
+     * @brief Our symbol table is a Map with a Map with a Map, called "table".
+     * 
      * We define the symbol table using a map, the key being an integer index. 
-	 * The second value is another map, its key being the name of the token and the
-	 * value being yet another map with its key being any attribute such as "lexeme" 
-	 * or "type" and that map's value is the value for that attribute.
+     * The second value is another map, its key being the name of the token and the
+     * value being yet another map with its key being any attribute such as "lexeme" 
+     * or "type" and that map's value is the value for that attribute.
      *
      * So essentially we can get an item's lexeme by using the following:
      * table[34]["ID"]["lexeme"]
      *
      * This will allow us to store any number of attributes that we need to store in the symbol table.
-	 * So it would be possible to add multiple lexemes for a given word.
-	 * Essentially, this is akin to storing a linked list of attribute sets
-	 * in a hashmap using linear probing.
+     * So it would be possible to add multiple lexemes for a given word.
+     * Essentially, this is akin to storing a linked list of attribute sets
+     * in a hashmap using linear probing.
      *
      * This could also be accomplished with a Vector, but Vectors scale at a worse rate than a Map.
      */
-     map< int, map< string, map< string, string > > > table;
+    map< int, map< string, map< string, string > > > table;
 	 
 
     /**
-	 * @brief An integer to index our symbol table easier.
-	 *
-	 * We use an automatically incrementing index for each entry we make, so we'll just store an
-	 * auto-assigned integer within this symbol table.
+     * @brief An integer to index our symbol table easier.
+     *
+     * We use an automatically incrementing index for each entry we make, so we'll just store an
+     * auto-assigned integer within this symbol table.
      */
     int index;
 
 public:
 
-	/** Basic constructor. */
+    /** Basic constructor. */
     SymbolTable();
 
-	/** Adds another entry to table and increases the index then returning the previous index value. */
+    /** Adds another entry to table and increases the index then returning the previous index value. */
     int makeEntry(string);
     int makeEntry(string, string, string);
     
-	/** Assigns a new value to the lexeme at the specified location. */
-	void addAttribute(int, string, string, string);
+    /** Assigns a new value to the lexeme at the specified location. */
+    void addAttribute(int, string, string, string);
     
-	/** Returns a copy of the current symbol table. */
-	map<int, map<string, map<string, string> > > get();
+    /** Returns a copy of the current symbol table. */
+    map<int, map<string, map<string, string> > > get();
     
-	/** Checks if a given entry/lexeme actually exists or not. This is separate from the lexeme's value. */
-	bool attributeExists(int, string, string);
+    /** Checks if a given entry/lexeme actually exists or not. This is separate from the lexeme's value. */
+    bool attributeExists(int, string, string);
 
-	/** 
-	 * @brief Verify that the attribute value at the given entry matches the one the caller is examining.
-	 * We check if the given lexeme exists, then check if the Value of it is equivalent to 
-	 * the one sent by the caller (the final String "value").
-	 * Could be used for Macro shorthands, will likely be used by the Parser.
-	 */
+    /** 
+     * @brief Verify that the attribute value at the given entry matches the one the caller is examining.
+     * We check if the given lexeme exists, then check if the Value of it is equivalent to 
+     * the one sent by the caller (the final String "value").
+     * Could be used for Macro shorthands, will likely be used by the Parser.
+     */
     bool attributeValueExists(int, string, string, string);
 
-	/** 
-	 * @brief Searches the table for an entry with a matching lexeme and token name. 
-	 * Returns nothing if the attribute is not found.
-	 * Otherwise it returns the attribute string at that specific lexemetic location.
-	 */
+    /** 
+     * @brief Searches the table for an entry with a matching lexeme and token name. 
+     * Returns nothing if the attribute is not found.
+     * Otherwise it returns the attribute string at that specific lexemetic location.
+     */
     string findAttributeWhere(string, string);
 
-	/** Returns the value at the given Attribute location if it exists. */
-	string getAttributeWhere(int, string, string);
+    /** Returns the value at the given Attribute location if it exists. */
+    string getAttributeWhere(int, string, string);
 
-	/** We find the Index of a token entry using its name and attribute. */
+    /** We find the Index of a token entry using its name and attribute. */
     int findIndexWhere(string, string);
 
-	/** 
-	 * Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme. 
-	 * Otherwise, it returns -1.
-	 */
+    /** 
+     * Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme. 
+     * Otherwise, it returns -1.
+     */
     int findLexeme(string);
 
-	/**  We store and return the number of possible reserved words. This is static and specified by the language. */
+    /**  We store and return the number of possible reserved words. This is static and specified by the language. */
     int numberOfReservedWords;
     int getNumOfReservedWords();
 };

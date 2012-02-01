@@ -40,12 +40,12 @@ using std::stringstream;
  */
 enum Type 
 {
-	IDENTIFIER = 256, NUMERAL, BADNUMERAL, BADNAME,	// 256 - 259
-    BADSYMBOL, BADCHAR, NEWLINE, NONAME, ENDOFFILE, // 260 - 264
-	DIV, MOD, PLUS, MINUS, TIMES, DIVIDE, UNKNOWN,	// 265 - 271
+    IDENTIFIER = 256, NUMERAL, BADNUMERAL, BADNAME,	// 256 - 259
+    BADSYMBOL, BADCHAR, NEWLINE, NONAME, ENDOFFILE,	// 260 - 264
+    DIV, MOD, PLUS, MINUS, TIMES, DIVIDE, UNKNOWN,	// 265 - 271
     PERIOD, COMMA, SC, LSB, RSB, AND, PIPE, TILDA,	// 272 - 279
-	LT, GT, EQUALS, FORSLASH, LB, RB, COLONEQUALS,	// 280 - 286
-	BOTHSQUAREBRACKETS, ARROW, COMMENT				// 287 - 289
+    LT, GT, EQUALS, FORSLASH, LB, RB, COLONEQUALS,	// 280 - 286
+    BOTHSQUAREBRACKETS, ARROW, COMMENT			// 287 - 289
 };
 
 /** @brief A string representation of enumerated types, for printing purposes. */
@@ -81,7 +81,7 @@ string spellOutTypeName(Type);
 class Token {
 
 protected:
-	/** We put the core Token values in a protected state in case we wish to subclass token. */
+    /** We put the core Token values in a protected state in case we wish to subclass token. */
     int value;
     Type type;
     string lexeme;
@@ -91,34 +91,34 @@ private:
 
 public:
 	
-	/** A base constructor for the Token class. Destructor unspecified. @see Token::Token() Definition. */
+    /** A base constructor for the Token class. Destructor unspecified. @see Token::Token() Definition. */
     Token();
     ~Token() {}
 
-	/** 
-	 * @brief A special Token constructor, which we give it the Token data immediately.
-	 * Used when reconstructing the tokens.
-	 */
+    /** 
+     * @brief A special Token constructor, which we give it the Token data immediately.
+     * Used when reconstructing the tokens.
+     */
     Token(Type, int, string);
 	
 
 
-	/** A set of accessors for returning the bare lexical data of the Token. */
+    /** A set of accessors for returning the bare lexical data of the Token. */
     const int getValue() const;
     const Type getType() const;
     const string getLexeme() const;
 
-	/** A set of modifiers to change the Token's atomic data types. */
+    /** A set of modifiers to change the Token's atomic data types. */
     void setType(Type);
     void setValue(int);
     void setLexeme(string);
 
-	/** Converts the Token to a String in the form of <_,_,_> @see Token{};. */
+    /** Converts the Token to a String in the form of <_,_,_> @see Token{};. */
     string toString();
     
-	/** Overloaded operators to allow easy comparison between two tokens. */
-	bool operator==(const Token&) const;
-	bool operator!=(const Token&) const;
+    /** Overloaded operators to allow easy comparison between two tokens. */
+    bool operator==(const Token&) const;
+    bool operator!=(const Token&) const;
    
 };
 
