@@ -40,6 +40,7 @@ Admin::Admin(string& src)
     /** We send the symbol table to the Scanner, along with a reference to the Administrator. */
     table = new SymbolTable();
     scanner = new Scanner(*table, *this);
+    parser = new Parser(*this);
 
     /** The reference to the "File" string is sent to the scanner. */
     scanner->loadSource(src);
@@ -91,86 +92,81 @@ void Admin::recordError(string msg)
 
 int Admin::scan()
 {
-    /** An empty file has no errors, so we return a 0 (successful scan of nothing). */
-    if(scanner->inRange() == false)
-      return 0;
+  if(scanner->inRange() == false)
+    return 0;
   
-	
-    
-    /** 
-     * We create an internal Token "tok" and could store this in an array or the symbol table
-     * if desired. In this case, it is a temporary one for Administrative purposes.
-     * We use this specific token instance to check its type and if it represents an error.
-     */
+  
+
+  parser->run();
+  
+  /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
+  if (errorCount == 0)
+    return 0;
+  else
+  {
+    cerr << "\nEncountered: " << errorCount << " errors." << endl;
+    for(unsigned int i = 0; i < error_msgs.size(); i++)
+    {
+      cerr << "Error " << i+1 << ": " << error_msgs.at(i) << endl;
+    }
+  }
+  return -1;
+  
+  
+}
+
+Token Admin::nextToken()
+{
+    if(!scanner->inRange())
+    {
+      return Token(ENDOFFILE, -1, "$");
+    }
+  
     Token tok;
 
-    /** Type enum used to save on function calls, @see token.h "enum type{}" */
     Type currentTokenType;
 
+    tok = scanner->nextToken();
+    currentTokenType = tok.getType();
 
     /**
-     * @brief Keep scanning and check for errors until we reach the end of the file.
-     *
-     * This do-while loop sends the scanner to the next char in the file until the scanner
-     * reports that it is out of range (at the end of the file).
-     * This is done by telling the scanner to advance to the next token per instance,
-     * and since we verified that the file is not empty (see above), we do this at least once.
-     */
-    do 
+      * We check if the current token is an error token, and report it to the user.
+      * At the moment, the program only reports one error per line. 
+      * The code is boilerplate for the rest of these, so they could be a switch statement.
+      */
+    if (currentTokenType == BADSYMBOL) 
     {
-      tok = scanner->nextToken();
-      currentTokenType = tok.getType();
+      errorCount++;
+      error_str << "Illegal ' "<<tok.getLexeme()<<" ' character detected. Check line " << current_line << ", column " << column <<"."<< endl;
+      recordError(error_str.str());
+		
+      if(checkMaxErrors())
+	return Token(ENDOFFILE, -1, "$");
+    } 
+    else if (currentTokenType == BADNUMERAL) 
+    {
+      errorCount++;
+      error_str << "Numeral overflow found. Numerals cannot exceed 65536. Check line " << current_line << ", column " << column <<"."<< endl;
+      recordError(error_str.str());
+		
+      if(checkMaxErrors())
+	return Token(ENDOFFILE, -1, "$");
+    }
+    else if (currentTokenType == BADNAME) 
+    {
+      errorCount++;
+      error_str << "Identifier cannot exceed 80 characters. Check line " << current_line << ", column " << column <<"."<< endl;
+      recordError(error_str.str());
+		
+      if(checkMaxErrors())
+	return Token(ENDOFFILE, -1, "$");
+      
+    }
+    /** This outputs the Token to the Screen in a < ___,___,___> format. */
+    cout << tok.toString() <<" \t\t Found at line "<<current_line<<", column "<<column<<"."<< endl;
 
-      /**
-       * We check if the current token is an error token, and report it to the user.
-       * At the moment, the program only reports one error per line. 
-       * The code is boilerplate for the rest of these, so they could be a switch statement.
-       */
-      if (/*currentTokenType == BADCHAR ||*/ currentTokenType == BADSYMBOL) 
-      {
-	errorCount++;
-	error_str << "Illegal ' "<<tok.getLexeme()<<" ' character detected. Check line " << current_line << ", column " << column <<"."<< endl;
-	recordError(error_str.str());
-		  
-	if(checkMaxErrors())
-	  return errorCount;
-      } 
-      else if (currentTokenType == BADNUMERAL) 
-      {
-	errorCount++;
-	error_str << "Numeral overflow found. Numerals cannot exceed 65536. Check line " << current_line << ", column " << column <<"."<< endl;
-	recordError(error_str.str());
-		  
-	if(checkMaxErrors())
-	  return errorCount;
-      }
-      else if (currentTokenType == BADNAME) 
-      {
-	errorCount++;
-	error_str << "Identifier cannot exceed 80 characters. Check line " << current_line << ", column " << column <<"."<< endl;
-	recordError(error_str.str());
-		  
-	if(checkMaxErrors())
-	  return errorCount;
-	
-      }
-      /** This outputs the Token to the Screen in a < ___,___,___> format. */
-      cout << tok.toString() <<" \t\t Found at line "<<current_line<<", column "<<column<<"."<< endl;
-    }
-    while (scanner->inRange()) ;
-    
-    /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
-    if (errorCount == 0)
-      return 0;
-    else
-    {
-      cerr << "\nEncountered: " << errorCount << " errors." << endl;
-      for(unsigned int i = 0; i < error_msgs.size(); i++)
-      {
-	cerr << "Error " << i+1 << ": " << error_msgs.at(i) << endl;
-      }
-    }
-    return -1;
+    return tok;
+
 }
 
 
