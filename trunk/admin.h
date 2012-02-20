@@ -26,6 +26,7 @@
 /** Object definitions needed by the Admin */
 #include "scanner.h"
 #include "symboltable.h"
+#include "parser.h"
 
 /**
  * @brief This predefined is the maximum amount of errors the compiler will tolerate.
@@ -43,6 +44,7 @@ using std::stringstream;
 
 /** Used to avoid circular declaration problems.*/
 class Scanner;
+class Parser;
 
 
 /**
@@ -79,6 +81,7 @@ private:
      */
     SymbolTable* table;
     Scanner* scanner;
+    Parser* parser;
 
     /**
      * The Index integer for our symbol table.
@@ -113,6 +116,8 @@ public:
 
     /** Executes the scanner function and returns an integer count of the errors found */
     int scan();
+    
+    Token nextToken();
 
     /** 
      * A newline operation is performed as our current line is valid.
