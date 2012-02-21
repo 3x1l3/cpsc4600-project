@@ -12,6 +12,7 @@
 
 #include "token.h"
 #include "admin.h"
+#include "set.h"
 
 using std::string;
 using std::cout;
@@ -77,6 +78,7 @@ public:
   ~Parser();
   void run();
   Token nextToken();
+  void match(string, Set);
 };
 
 #endif

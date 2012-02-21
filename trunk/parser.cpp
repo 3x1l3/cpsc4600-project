@@ -13,8 +13,9 @@ Parser::~Parser()
 /////////////////////////////////////////////////////////////////////////////
 void Parser::run()
 { 
+    Set* temp = new Set("$");
   //sedn in money sign
-  Program();
+  this->Program(*temp);
 }
 /////////////////////////////////////////////////////////////////////////////
 Token Parser::nextToken()
@@ -32,7 +33,7 @@ Token Parser::nextToken()
   return tok;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::match(String matchMe, Set validNextCharacters)
+void Parser::match(string matchMe, Set validNextCharacters)
 {
   if (lookAheadToken.getLexeme() == matchMe) 
   {
@@ -45,7 +46,7 @@ void Parser::match(String matchMe, Set validNextCharacters)
   SyntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::SyntaxError( Set validNextCharcters)
+void Parser::syntaxError( Set validNextCharcters)
 {
   error("Syntax Error");
   
@@ -55,7 +56,7 @@ void Parser::SyntaxError( Set validNextCharcters)
   }
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::SyntaxCheck(Set validNextCharcters)
+void Parser::syntaxCheck(Set validNextCharcters)
 {
   if (! member(lookAheadToken.getLexeme(), validNextCharacters))
   {
@@ -67,15 +68,18 @@ void Parser::SyntaxCheck(Set validNextCharcters)
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
-void Program(Set sts)
+void Parser::Program(Set sts)
 {
   Set* temp = new Set(".");
   
   Block(sts.munion(temp)); 
   match(".", sts);
+  
+  syntaxCheck(sts);
+  
 }
 /////////////////////////////////////////////////////////////////////////////
-void Block(Set sts)
+void Parser::Block(Set sts)
 {
   Set* temp = new Set("end");
 
@@ -84,9 +88,13 @@ void Block(Set sts)
   DefinitionPart(sts.munion(First::StatementPart()).munion(*end)); 
   StatementPart (sts.munion(*end)); 
   match         ("end", sts);
+  
+  syntaxCheck(sts);
+  
+  
 }
 /////////////////////////////////////////////////////////////////////////////
-void DefinitionPart(Set sts)
+void Parser::DefinitionPart(Set sts)
 {
   Set* temp = new Set(";");
   set* first = First::Definition();
@@ -101,69 +109,87 @@ void DefinitionPart(Set sts)
     match(";", sts);
   }
   
-  
+  syntaxCheck(sts);
   
 }
 /////////////////////////////////////////////////////////////////////////////
-void Definition(Set sts)
+void Parser::Definition(Set sts)
 {
-  if(lookAheadToken.getLexeme() exists in First::ConstantDefintion())
+  if(First::ConstantDefinition().isMember(lookAheadToken.getLexeme()))
   {
     ConstantDefinition();
   }
-  if(lookAheadToken.getLexeme() exists in First::VariableDefinition())
+  if(First::VariableDefinition().isMember(lookAheadToken.getLexeme()))
   {
     VariableDefinition();
   }
-  if(lookAheadToken.getLexeme() exists in First::ProcedureDefintion())
+  if(First::ProcedureDefinition().isMember(lookAheadToken.getLexeme()))
   {
     ProcedureDefintion();
   }
+  
+  syntaxCheck(sts);
+  
+  
 }
 /////////////////////////////////////////////////////////////////////////////
-void ConstantDefinition(Set sts)
+void Parser::ConstantDefinition(Set sts)
 {
   match("const"); ConstantName(); match("="); Constant();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableDefinition(Set sts)
+void Parser::VariableDefinition(Set sts)
 {
   TypeSymbol(); VariableDefinitionPart();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableDefinitionPart(Set sts)
+void Parser::VariableDefinitionPart(Set sts)
 {
   VariableList();
   or
   match("array"); VariableList(); match("["); Constant(); match("]");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void TypeSymbol(Set sts)
+void Parser::TypeSymbol(Set sts)
 {
   match("integer");
   or
   match("Boolean");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableList(Set sts)
+void Parser::VariableList(Set sts)
 {
   VariableName();
   //optional part
   match(","); VariableName();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void ProcedureDefintion(Set sts)
+void Parser::ProcedureDefintion(Set sts)
 {
   match("proc"); ProcedureName(); Block();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void StatementPart(Set sts)
+void Parser::StatementPart(Set sts)
 {
   //optional
   Statement(); match(";");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Statement(Set sts)
+void Parser::Statement(Set sts)
 {
   EmptyStatement();
   or
@@ -179,100 +205,135 @@ void Statement(Set sts)
   or
   DoStatement();
   
+  syntaxCheck(sts);
+  
 }
 /////////////////////////////////////////////////////////////////////////////
-void EmptyStatement(Set sts)
+void Parser::EmptyStatement(Set sts)
 {
     match("skip");
+    
+    syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void ReadStatement(Set sts)
+void Parser::ReadStatement(Set sts)
 {
   match("read"); VariableAccessList();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableAccessList(Set sts)
+void Parser::VariableAccessList(Set sts)
 {
   VariableAccess();
   //optional
   match(","); VariableAccess();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void WriteStatement(Set sts)
+void Parser::WriteStatement(Set sts)
 {
   match("write"); ExpressionList();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void ExpressionList(Set sts)
+void Parser::ExpressionList(Set sts)
 {
   Expression();
   //optional
   match(","); Expression();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void AssignmentStatement(Set sts)
+void Parser::AssignmentStatement(Set sts)
 {
   VariableAccessList(); match(":="); ExpressionList();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void ProcedureStatement(Set sts)
+void Parser::ProcedureStatement(Set sts)
 {
   match("call");  ProcedureName();
+  
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void IfStatement(Set sts)
+void Parser::IfStatement(Set sts)
 {
   match("if"); GuardedCommandList(); match("fi");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void DoStatement(Set sts)
+void Parser::DoStatement(Set sts)
 {
   match("do"); GuardedCommandList(); match("od");
+  
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void GuardedCommandList(Set sts)
+void Parser::GuardedCommandList(Set sts)
 {
   GuardedCommand();
   //optional
   match("[]"); GuardedCommand();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void GuardedCommand(Set sts)
+void Parser::GuardedCommand(Set sts)
 {
   Expression(); match("->"); StatementPart();
+  
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Expression(Set sts)
+void Parser::Expression(Set sts)
 {
   PrimaryExpression();
   //optional
   PrimaryOperator(); PrimaryExpression();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void PrimaryOperator(Set sts)
+void Parser::PrimaryOperator(Set sts)
 {
   match("&");
   or
   match("|");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void PrimaryExpression(Set sts)
+void Parser::PrimaryExpression(Set sts)
 {
   SimpleExpression();
   //1 or zero of the follwing
   RelationalOperator(); SimpleExpression();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void RelationalOperator(Set sts)
+void Parser::RelationalOperator(Set sts)
 {
   match("<");
   or
   match("=");
   or
   match(">");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void SimpleExpression(Set sts)
+void Parser::SimpleExpression(Set sts)
 {
   //1 or zero of the following
   match("-");
@@ -280,32 +341,41 @@ void SimpleExpression(Set sts)
   Term();
   //OPtional
   AddingOperator(); Term();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void AddingOperator(Set sts)
+void Parser::AddingOperator(Set sts)
 {
   match("+");
   or 
   match("");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Term(Set sts)
+void Parser::Term(Set sts)
 {
   Factor();
   //optinal
   MultiplyingOperator(); Factor();
+  
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void MultiplyingOperator(Set sts)
+void Parser::MultiplyingOperator(Set sts)
 {
   match("*");
   or
   match("/");
   or
   match("\\");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Factor(Set sts)
+void Parser::Factor(Set sts)
 {
   Constant();
   or
@@ -314,48 +384,65 @@ void Factor(Set sts)
   match("("); Expression(); match(")");
   or
   match("~"); Factor();
+  
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableAccess(Set sts)
+void Parser::VariableAccess(Set sts)
 {
   VariableName();
   //one or zero of thefollowing
   IndexedSelector();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void IndexedSelector(Set sts)
+void Parser::IndexedSelector(Set sts)
 {
   match("["); Expression(); match("]");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Constant(Set sts)
+void Parser::Constant(Set sts)
 {
   Numeral();
   or
   BooleanSymbol();
   or
   ConstantName();
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Numeral(Set sts)
+void Parser::Numeral(Set sts)
 {
   //token must be a numeral
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void BooleanSymbol(Set sts)
+void Parser::BooleanSymbol(Set sts)
 {
   match("false");
   or
   match("true");
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void ConstantName(Set sts)
+void Parser::ConstantName(Set sts)
 {
   //token must be a reserved word
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableName(Set sts)
+void Parser::VariableName(Set sts)
 {
   //token must be a user defined word
+  
+  syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
