@@ -18,6 +18,9 @@ public:
 	static Set ConstantDefinition();
 	static Set VariableDefinition();
 	static Set VariableDefinitionPart();
+	
+	
+	
 	static Set TypeSymbol();
 	static Set VariableList();
 	static Set ProcedureDefinition();
