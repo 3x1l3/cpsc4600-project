@@ -13,6 +13,7 @@
 #include "token.h"
 #include "admin.h"
 #include "set.h"
+#include "first.h"
 
 using std::string;
 using std::cout;
@@ -20,6 +21,7 @@ using std::endl;
 using std::stringstream;
 
 class Admin;
+class First;
 
 class Parser {
 
@@ -69,6 +71,7 @@ private:
   void BooleanSymbol(Set sts);
   void ConstantName(Set sts);
   void VariableName(Set sts);
+  void ProcedureName(Set sts);
 
 
   
