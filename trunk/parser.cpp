@@ -41,12 +41,12 @@ void Parser::match(string matchMe, Set validNextCharacters)
   }
   else
   {
-    SyntaxError(validNextCharacters);
+    syntaxError(validNextCharacters);
   }
-  SyntaxCheck(validNextCharacters);
+  syntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::syntaxError( Set validNextCharcters)
+void Parser::syntaxError( Set validNextCharacters)
 {
   error("Syntax Error");
   
@@ -135,7 +135,13 @@ void Parser::Definition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ConstantDefinition(Set sts)
 {
-  match("const"); ConstantName(); match("="); Constant();
+  Set* temp = new Set("=");
+  
+  
+  match("const", sts.munion(First::ConstantName()).munion(temp).munion(First::Constant())); 
+  ConstantName(sts.munion(temp).munion(First::Constant())); 
+  match("=", sts.munion(First::Constant())); 
+  Constant();
   
   syntaxCheck(sts);
 }
