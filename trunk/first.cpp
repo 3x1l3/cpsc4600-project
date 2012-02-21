@@ -3,6 +3,7 @@
 First::First() {
 
 	//Something	
+	//nothing
 	
 }
 
@@ -35,98 +36,182 @@ Set First::Definition() {
 
 Set First::StatementPart()
 {
-  return *new Set();
+  Set* set = new Set();
+  set->add("");
+  set->munion(Statement());  //TODO does this actually change set anymore? casue we made it so it didnt change the oroiginal set
+  //so maybe this is not working right anymore, as sets original set is no changed, but rather a ducpliate variable is changed.
+  return *set;
 }
 
 Set First::Statement()
 {
-  return *new Set();
+  return EmptyStatement().munion(ReadStatement()).munion(WriteStatement()).munion(AssignmentStatement()).munion(ProcedureStatement())
+  .munion(IfStatement()).munion(DoStatement());
 }
 
 Set First::Constant()
 {
-  return *new Set();
+  return Numeral().munion(BooleanSymbol()).munion(ConstantName());
 }
 
 Set First::ProcedureName()
-{return *new Set();}
+{
+  Set *set = new Set("name");
+  return *set;
+  
+}
 Set First::EmptyStatement()
-{return *new Set();
+{
+  Set* set = new Set("skip");
+  return *set;
 }
 Set First::ReadStatement()
-{return *new Set();
+{
+  Set* set = new Set("read");
+  return *set;
 }
 Set First::WriteStatement()
-{return *new Set();
+{
+  Set * set = new Set("write");
+  return *set;
 }
 Set First::AssignmentStatement()
-{return *new Set();
+{
+  return VariableAccessList();
 }
 Set First::ProcedureStatement()
-{return *new Set();
+{
+  Set * set = new Set("call");
+  return *set;
 }
 Set First::IfStatement()
-{return *new Set();
+{
+  return *new Set("if");
 }
 Set First::DoStatement()
-{return *new Set();
+{
+  return *new Set("do");
 }
 Set First::VariableAccessList()
-{return *new Set();}
+{
+  return VariableAccess();
+  
+}
 
 Set First::VariableAccess()
-{return *new Set();}
+{
+  return VariableName();
+  
+}
 
 Set First::ExpressionList()
-{return *new Set();}
+{
+  return Expression();
+  
+}
 
 Set First::Expression()
-{return *new Set();}
+{
+  return PrimaryExpression();
+  
+}
 
 
 Set First::GuardedCommandList()
-{return *new Set();}
+{
+  return GuardedCommand();
+  
+}
 
 Set First::GuardedCommand()
-{return *new Set();}
+{
+  return Expression();
+  
+}
 
 Set First::PrimaryExpression()
-{return *new Set();}
+{
+  return SimpleExpression();
+  
+}
 
 Set First::PrimaryOperator()
-{return *new Set();}
+{
+  Set* set = new Set("&");
+  set->add("|");
+  return *set;
+  
+}
 
 Set First::SimpleExpression()
-{return *new Set();}
+{
+  //TODO this may not be right.  setting the set pointer to the vector passed back from set->munion()
+  Set* set = new Set("-");
+  *set = set->munion(Term());
+  return *set;
+  
+}
 
 Set First::RelationalOperator()
-{return *new Set();}
+{
+  Set* set = new Set("<");
+  set->add(">");
+  set->add("=");
+  return *set;
+  
+}
 Set First::AddingOperator()
-{return *new Set();}
+{
+  Set* set = new Set("+");
+  set->add("-");
+  return *set;
+  
+}
 Set First::Term()
-{return *new Set();}
+{
+  return Factor();
+  
+}
 Set First::Factor()
-{return *new Set();}
+{
+  Set *set = new Set("(");
+  set->add("~");
+  return Constant.munion(VariableAccess()).munion(*set);
+  
+}
 Set First::MultiplyingOperator()
-{return *new Set();}
+{
+  Set* set = new Set("*");
+  set->add("/");
+  set->add("\\");
+  return *set;
+  
+}
 Set First::IndexedSelector()
-{return *new Set();}
+{
+  return *new Set("[");
+  
+}
 Set First::Numeral()
 {
-  //TODO
-  //THis should be "num".
   //First::Numeral() == {"num"}
-  return *new Set();
+  return *new Set("num");
   
 }
 Set First::BooleanSymbol()
-{return *new Set();}
+{
+  Set* set = new Set("true");
+  set->add("false");
+  
+  return *set;
+  
+}
 
 
-//redundant?
 Set First::ConstantName()
 {
-  return ConstantDefinition();
+  Set *set = new Set("name");
+  return *set;
 }
 
 /////////////////////////////////////////////////
@@ -162,6 +247,6 @@ Set First::ProcedureDefinition() {
 }
 
 Set First::VariableName() {
-	Set* set = new Set("ID");
+	Set* set = new Set("name");
 	return *set;	
 }
