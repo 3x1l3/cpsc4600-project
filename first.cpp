@@ -35,18 +35,81 @@ Set First::Definition() {
 
 Set First::StatementPart()
 {
-  
+  return *new Set();
 }
 
 Set First::Statement()
 {
-  
+  return *new Set();
 }
 
 Set First::Constant()
 {
-  
+  return *new Set();
 }
+
+Set First::ProcedureName()
+{return *new Set();}
+Set First::EmptyStatement()
+{return *new Set();
+}
+Set First::ReadStatement()
+{return *new Set();
+}
+Set First::WriteStatement()
+{return *new Set();
+}
+Set First::AssignmentStatement()
+{return *new Set();
+}
+Set First::ProcedureStatement()
+{return *new Set();
+}
+Set First::IfStatement()
+{return *new Set();
+}
+Set First::DoStatement()
+{return *new Set();
+}
+Set First::VariableAccessList()
+{return *new Set();}
+
+Set First::VariableAccess()
+{return *new Set();}
+
+Set First::ExpressionList()
+{return *new Set();}
+
+Set First::Expression()
+{return *new Set();}
+
+
+Set First::GuardedCommandList()
+{return *new Set();}
+
+Set First::GuardedCommand()
+{return *new Set();}
+
+Set First::PrimaryExpression()
+{return *new Set();}
+
+Set First::PrimaryOperator()
+{return *new Set();}
+
+Set First::SimpleExpression()
+{return *new Set();}
+
+Set First::RelationalOperator()
+{return *new Set();}
+Set First::AddingOperator()
+{return *new Set();}
+Set First::Term()
+{return *new Set();}
+Set First::Factor()
+{return *new Set();}
+Set First::MultiplyingOperator()
+{return *new Set();}
+
 
 //redundant?
 Set First::ConstantName()
