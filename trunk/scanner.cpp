@@ -258,7 +258,7 @@ Token Scanner::handleNumber()
 
     if(v >= NUMERAL_LOWER_BOUND && v <= NUMERAL_UPPER_BOUND)
     {
-      newToken = new Token(NUMERAL, v, lexeme);
+      newToken = new Token(NUMERAL, v, "num");
     }
     
     /** Otherwise, we create an error token and allow it to be handled as appropriate. */
@@ -454,7 +454,7 @@ Token Scanner::handleCharString()
       if (existing_token == -1) 
       {
 	int index = symTable->makeEntry("ID","lexeme", str);
-	return Token(IDENTIFIER, index, str);
+	return Token(IDENTIFIER, index, "name");
       } 
       else 
       {
@@ -463,9 +463,10 @@ Token Scanner::handleCharString()
 	{
 	  //commented out - it was/is for debugging. useful :D for future? maybe :?
 	  //cout<<"RESERVED WORD FOUND"<<endl;
+	  return Token(IDENTIFIER, existing_token, str);
 	  
 	}
-	return Token(IDENTIFIER, existing_token, str);
+	return Token(IDENTIFIER, existing_token, "name");
       }
     }
 }
