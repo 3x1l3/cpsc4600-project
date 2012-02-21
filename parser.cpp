@@ -538,16 +538,36 @@ void Parser::MultiplyingOperator(Set sts)
   
   syntaxCheck(sts);
 }
-///////////////////////////////////////////////////////////////////////////// herejordan
+///////////////////////////////////////////////////////////////////////////// 
 void Parser::Factor(Set sts)
 {
-  Constant(sts);
+  Set constant = First::Constant();
+  Set varacc = First::VariableAccess();
+  Set *temp = new Set(")");
+  
+  
+  if(constant.isMember(lookAheadToken.getLexeme()))
+  {
+    Constant(sts);
+  }
   //or
-  VariableAccess(sts);
+  else if(varacc.isMember(lookAheadToken.getLexeme()))
+  {
+    VariableAccess(sts);
+  }
   //or
-  match("(",sts); Expression(sts); match(")",sts);
+  else if (lookAheadToken.getLexeme() == "(")
+  {
+    match("(",sts.munion(First::Expression()).munion(*temp)); 
+    Expression(sts.munion(*temp)); 
+    match(")",sts);
+  }
   //or
-  match("~",sts); Factor(sts);
+  else if ( lookAheadToken.getLexeme() == "~")
+  {
+    match("~",sts.munion(First::Factor())); 
+    Factor(sts);
+  }
   
   
   syntaxCheck(sts);
@@ -555,27 +575,49 @@ void Parser::Factor(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableAccess(Set sts)
 {
-  VariableName(sts);
+  Set indsel = First::IndexedSelector();
+  
+  VariableName(sts.munion(First::IndexedSelector()));
   //one or zero of thefollowing
-  IndexedSelector(sts);
+  if(indsel.isMember(lookAheadToken.getLexeme()))
+  {
+    IndexedSelector(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::IndexedSelector(Set sts)
 {
-  match("[", sts); Expression(sts); match("]", sts);
+  Set *temp = new Set("]");
+  
+  match("[", sts.munion(First::Expression()).munion(*temp)); 
+  Expression(sts.munion(*temp)); 
+  match("]", sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Constant(Set sts)
 {
-  Numeral(sts);
+  Set num = First::Numeral();
+  Set bol = First::BooleanSymbol();
+  Set con = First::ConstantName();
+  
+  if(num.isMember(lookAheadToken.getLexeme()))
+  {
+    Numeral(sts);
+  }
   //or
-  BooleanSymbol(sts);
+  else if (bol.isMember(lookAheadToken.getLexeme()))
+  {
+    BooleanSymbol(sts);
+  }
   //or
-  ConstantName(sts);
+  else if (con.isMember(lookAheadToken.getLexeme()))
+  {
+    ConstantName(sts);
+  }
   
   syntaxCheck(sts);
 }

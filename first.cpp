@@ -109,6 +109,12 @@ Set First::Factor()
 {return *new Set();}
 Set First::MultiplyingOperator()
 {return *new Set();}
+Set First::IndexedSelector()
+{return *new Set();}
+Set First::Numeral()
+{return *new Set();}
+Set First::BooleanSymbol()
+{return *new Set();}
 
 
 //redundant?
