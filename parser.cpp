@@ -646,14 +646,8 @@ void Parser::BooleanSymbol(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ConstantName(Set sts)
 {
-  //token must be a reserved word
-  //TODO somehow grab the number of resvered words from the symboltable,
-  //then check the toke.index() < reserved words total.
-  //if true, send match"name" so program can continue.
-  //if NOT true, force a syntax error here. maybe with a call to match"asdasd".
-  //TODO also, THIS MIGHT NOT EVEN MEAN RESERVED WORDS
-  //might just handle it like a normal name.
-  //so procname, constname and varnam will be the same thing.
+  //token must be a reserved word TODO - might not be a reserved word.
+  VariableName(sts);
   
   syntaxCheck(sts);
 }
@@ -661,6 +655,7 @@ void Parser::ConstantName(Set sts)
 void Parser::VariableName(Set sts)
 {
   //token must be a user defined word
+  match("name", sts);
   
   syntaxCheck(sts);
 }

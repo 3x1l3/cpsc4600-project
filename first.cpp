@@ -112,7 +112,13 @@ Set First::MultiplyingOperator()
 Set First::IndexedSelector()
 {return *new Set();}
 Set First::Numeral()
-{return *new Set();}
+{
+  //TODO
+  //THis should be "num".
+  //First::Numeral() == {"num"}
+  return *new Set();
+  
+}
 Set First::BooleanSymbol()
 {return *new Set();}
 
