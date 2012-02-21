@@ -40,10 +40,13 @@ Admin::Admin(string& src)
     /** We send the symbol table to the Scanner, along with a reference to the Administrator. */
     table = new SymbolTable();
     scanner = new Scanner(*table, *this);
-    parser = new Parser(*this);
-
+    
     /** The reference to the "File" string is sent to the scanner. */
     scanner->loadSource(src);
+    
+    
+    parser = new Parser(*this);
+
 
 }
 
@@ -123,7 +126,6 @@ Token Admin::nextToken()
     }
   
     Token tok;
-
     Type currentTokenType;
 
     tok = scanner->nextToken();

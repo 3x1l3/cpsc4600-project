@@ -3,7 +3,9 @@
 
 Parser::Parser(Admin& adminObject)
 {
-  this->admin = &adminObject;
+  admin = &adminObject;
+  
+
   lookAheadToken = nextToken();
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -106,7 +108,7 @@ void Parser::DefinitionPart(Set sts)
   while(first.isMember(lookAheadToken.getLexeme()))
   {
     Definition(sts.munion(*temp)); 
-    match(";", sts);
+    match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
   }
   
   syntaxCheck(sts);
@@ -148,7 +150,7 @@ void Parser::ConstantDefinition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableDefinition(Set sts)
 {
-  TypeSymbol(sts); 
+  TypeSymbol(sts.munion(First::VariableDefinitionPart())); 
   VariableDefinitionPart(sts);
   
   syntaxCheck(sts);
@@ -156,61 +158,119 @@ void Parser::VariableDefinition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableDefinitionPart(Set sts)
 {
-  VariableList(sts);
-  //or
-  match("array",sts); VariableList(sts); match("[",sts); Constant(sts); match("]",sts);
+  Set* temp = new Set("[");
+  Set* temp2 = new Set("]");
+  
+  if(First::VariableList().isMember(lookAheadToken.getLexeme()))
+  {
+    VariableList(sts);
+  }
+  else if (lookAheadToken.getLexeme() == "array");
+  {
+    match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
+    VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2)); 
+    match("[",sts.munion(First::Constant()).munion(*temp2)); 
+    Constant(sts.munion(*temp2)); 
+    match("]",sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::TypeSymbol(Set sts)
 {
-  match("integer", sts);
-  //or
-  match("Boolean", sts);
+  if(lookAheadToken.getLexeme() == "integer")
+  {
+    match("integer", sts);
+  }
+  else if (lookAheadToken.getLexeme() == "Boolean")
+  {
+    match("Boolean", sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableList(Set sts)
 {
-  VariableName(sts);
+  Set *temp = new Set(",");
+  
+  
+  VariableName(sts.munion(*temp).munion(First::VariableName()));
   //optional part
-  match(",",sts); VariableName(sts);
+  while(temp->isMember(lookAheadToken.getLexeme()))
+  {
+    match(",",sts.munion(First::VariableName())); 
+    VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureDefintion(Set sts)
 {
-  match("proc",sts); ProcedureName(sts); Block(sts);
+  
+  match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
+  ProcedureName(sts.munion(First::Block())); 
+  Block(sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::StatementPart(Set sts)
 {
+  Set *temp = new Set(";");
+  
   //optional
-  Statement(sts); match(";",sts);
+  while(First::Statement().isMember(lookAheadToken.getLexeme()))
+  {
+    Statement(sts.munion(*temp)); 
+    match(";",sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Statement(Set sts)
 {
-  EmptyStatement(sts);
-  //or
-  ReadStatement(sts);
-  //or
-  WriteStatement(sts);
-  //or
-  AssignmentStatement(sts);
-  //or
-  ProcedureStatement(sts);
-  //or
-  IfStatement(sts);
-  //or
-  DoStatement(sts);
+  Set empty = First::EmptyStatement();
+  Set read = First::ReadStatement();
+  Set write = First::WriteStatement();
+  Set assignment = First::AssignmentStatement();
+  Set procedure = First::ProcedureDefinition() ;
+  Set iff = First::IfStatement();
+  Set doo = First::DoStatement();
+  
+  
+  if(empty.isMember(lookAheadToken.getLexeme()))
+  {
+    EmptyStatement(sts);
+  }
+  else if(read.isMember(lookAheadToken.getLexeme()))
+  {
+    ReadStatement(sts);
+  }
+  else if(write.isMember(lookAheadToken.getLexeme()))
+  {
+    WriteStatement(sts);
+  }
+  else if(assignment.isMember(lookAheadToken.getLexeme()))
+  {
+    AssignmentStatement(sts);
+  }
+  else if(procedure.isMember(lookAheadToken.getLexeme()))
+  {
+    ProcedureStatement(sts);
+  }
+  else if(iff.isMember(lookAheadToken.getLexeme()))
+  {
+    IfStatement(sts);
+  }
+  else if(doo.isMember(lookAheadToken.getLexeme()))
+  {
+    DoStatement(sts);
+  }
+  
   
   syntaxCheck(sts);
   
@@ -225,46 +285,67 @@ void Parser::EmptyStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ReadStatement(Set sts)
 {
-  match("read",sts); VariableAccessList(sts);
+  match("read",sts.munion(First::VariableAccessList())); 
+  VariableAccessList(sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableAccessList(Set sts)
 {
-  VariableAccess(sts);
+  Set *temp = new Set(",");
+  
+  VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
   //optional
-  match(",",sts); VariableAccess(sts);
+  while(lookAheadToken.getLexeme() == ",")
+  {
+    match(",",sts.munion(First::VariableAccess())); 
+    VariableAccess(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::WriteStatement(Set sts)
 {
-  match("write",sts); ExpressionList(sts);
+  
+  match("write",sts.munion(First::ExpressionList())); 
+  ExpressionList(sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ExpressionList(Set sts)
 {
-  Expression(sts);
+  Set *temp = new Set(",");
+  
+  Expression(sts.munion(*temp).munion(First::Expression()));
   //optional
-  match(",",sts); Expression(sts);
+  while(lookAheadToken.getLexeme() == ",")
+  {
+    match(",",sts.munion(First::Expression())); 
+    Expression(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AssignmentStatement(Set sts)
 {
-  VariableAccessList(sts); match(":=",sts); ExpressionList(sts);
+  Set *temp = new Set(":=");
+  
+  VariableAccessList(sts.munion(*temp).munion(First::ExpressionList())); 
+  match(":=",sts.munion(First::ExpressionList())); 
+  ExpressionList(sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureStatement(Set sts)
 {
-  match("call",sts);  ProcedureName(sts);
+  
+  match("call",sts.munion(First::ProcedureName()));  
+  ProcedureName(sts);
   
   
   syntaxCheck(sts);
@@ -272,14 +353,22 @@ void Parser::ProcedureStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::IfStatement(Set sts)
 {
-  match("if",sts); GuardedCommandList(sts); match("fi",sts);
+  Set *temp = new Set("fi");
+  
+  match("if",sts.munion(First::GuardedCommandList()).munion(*temp)); 
+  GuardedCommandList(sts.munion(*temp)); 
+  match("fi",sts);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::DoStatement(Set sts)
 {
-  match("do",sts); GuardedCommandList(sts); match("od",sts);
+  Set *temp = new Set("od");
+  
+  match("do",sts.munion(First::GuardedCommandList()).munion(*temp)); 
+  GuardedCommandList(sts.munion(*temp)); 
+  match("od",sts);
   
   
   syntaxCheck(sts);
@@ -287,16 +376,26 @@ void Parser::DoStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::GuardedCommandList(Set sts)
 {
-  GuardedCommand(sts);
+  Set *temp = new Set("[]");
+  
+  GuardedCommand(sts.munion(*temp).munion(First::GuardedCommand()));
   //optional
-  match("[]",sts); GuardedCommand(sts);
+  while(lookAheadToken.getLexeme() == "[]")
+  {
+    match("[]",sts.munion(First::GuardedCommand())); 
+    GuardedCommand(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::GuardedCommand(Set sts)
 {
-  Expression(sts); match("->",sts); StatementPart(sts);
+  Set *temp = new Set("->");
+  
+  Expression(sts.munion(*temp).munion(First::StatementPart())); 
+  match("->",sts.munion(First::StatementPart())); 
+  StatementPart(sts);
   
   
   syntaxCheck(sts);
@@ -304,38 +403,61 @@ void Parser::GuardedCommand(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Expression(Set sts)
 {
-  PrimaryExpression(sts);
+  PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
   //optional
-  PrimaryOperator(sts); PrimaryExpression(sts);
+  while(First::PrimaryOperator().isMember(lookAheadToken.getLexeme()))
+  {
+    PrimaryOperator(sts.munion(First::PrimaryExpression())); 
+    PrimaryExpression(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryOperator(Set sts)
 {
-  match("&",sts);
+  if(lookAheadToken.getLexeme() == "&")
+  {
+    match("&",sts);
+  }
   //or
-  match("|",sts);
+  else if (lookAheadToken.getLexeme() == "|")
+  {
+    match("|",sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryExpression(Set sts)
 {
-  SimpleExpression(sts);
+  SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
   //1 or zero of the follwing
-  RelationalOperator(sts); SimpleExpression(sts);
+  if(First::RelationalOperator().isMember(lookAheadToken.getLexeme()))
+  {
+    RelationalOperator(sts.munion(First::SimpleExpression())); 
+    SimpleExpression(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::RelationalOperator(Set sts)
 {
-  match("<",sts);
+  if(lookAheadToken.getLexeme() == "<")
+  {
+    match("<",sts);
+  }
   //or
-  match("=",sts);
+  else if(lookAheadToken.getLexeme() == "=")
+  {
+    match("=",sts);
+  }
   //or
-  match(">",sts);
+  else if(lookAheadToken.getLexeme() == ">")
+  {
+    match(">",sts);
+  }
   
   syntaxCheck(sts);
 }
@@ -343,29 +465,54 @@ void Parser::RelationalOperator(Set sts)
 void Parser::SimpleExpression(Set sts)
 {
   //1 or zero of the following
-  match("-",sts);
+  if(lookAheadToken.getLexeme() == "-")
+  {
+    match("-",sts.munion(First::Term()).munion(First::AddingOperator()));
+  }
+  
   //required
-  Term(sts);
-  //OPtional
-  AddingOperator(sts); Term(sts);
+  Term(sts.munion(First::AddingOperator()).munion(First::Term()));
+  
+  //Optional
+  while(First::AddingOperator().isMember(lookAheadToken.getLexeme()))
+  {
+    AddingOperator(sts.munion(First::Term())); 
+    Term(sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AddingOperator(Set sts)
 {
-  match("+",sts);
-  //or 
-  match("-",sts);
+  if(lookAheadToken.getLexeme() == "+")
+  {
+    match("+",sts);
+  }
+  //or
+  else if(lookAheadToken.getLexeme()=="-")
+  {
+    match("-",sts);
+  }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Term(Set sts)
 {
-  Factor(sts);
+  Factor(sts.munion(First::MultiplyingOperator()).munion(First::Factor()));
+  //redundant check for if it is in factor?
+  //casue below we have a while statement that chceks only for if it is in multilpfying opertor.
+  //so program could come back here thinking first of factor is correct, but then we dont use it here,
+  //only use first of multpiying operator......? TODO
+  
+  
   //optinal
-  MultiplyingOperator(sts); Factor(sts);
+  while(First::MultiplyingOperator().isMember(lookAheadToken.getLexeme()))
+  {
+    MultiplyingOperator(sts.munion(First::Factor()));  
+    Factor(sts);
+  }
   
   
   syntaxCheck(sts);
@@ -373,15 +520,25 @@ void Parser::Term(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::MultiplyingOperator(Set sts)
 {
-  match("*",sts);
+  if(lookAheadToken.getLexeme() == "*")
+  {  
+    match("*",sts);
+  }
   //or
-  match("/",sts);
+  if(lookAheadToken.getLexeme() == "/")
+  {
+    match("/",sts);
+  }
   //or
-  match("\\",sts);
+  if(lookAheadToken.getLexeme() == "\\")
+  {
+    match("\\",sts);
+  }
+  
   
   syntaxCheck(sts);
 }
-/////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////// herejordan
 void Parser::Factor(Set sts)
 {
   Constant(sts);

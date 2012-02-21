@@ -53,6 +53,7 @@ public:
 	static Set BooleanSymbol();
 	static Set ConstantName();
 	static Set VariableName();
+	static Set ProcedureName();
 	
 	
 };

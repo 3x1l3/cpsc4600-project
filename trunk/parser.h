@@ -21,7 +21,7 @@ using std::endl;
 using std::stringstream;
 
 class Admin;
-class First;
+
 
 class Parser {
 
@@ -29,7 +29,8 @@ private:
   
   Token currentToken;
   Token lookAheadToken;
-  Admin * admin;
+  Admin* admin;
+
   
 
   void Program(Set sts);
