@@ -13,6 +13,7 @@ Parser::~Parser()
 /////////////////////////////////////////////////////////////////////////////
 void Parser::run()
 { 
+  //sedn in money sign
   Program();
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -64,89 +65,105 @@ void Parser::SyntaxCheck(Set validNextCharcters)
 
 
 
-
+/////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 void Program(Set sts)
 {
-  Block(sts.munion(First::Block()); match(".");
+  Set* temp = new Set(".");
+  
+  Block(sts.munion(temp)); 
+  match(".", sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Block(Set sts)
 {
-  Set* end = new Set();
-  end->add("end");
+  Set* temp = new Set("end");
+
   
-  Set* one = new Set();
-  Set* two = new Set();
-  Set* three = new Set();
-  Set* four = new Set();
-  
-  match("begin", sts.munion(First::DefinitionPart().munion(First::StatementPart()).munion(*end)); 
-  DefinitionPart(); 
-  StatementPart(); 
-  match("end");
+  match         ("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*end));
+  DefinitionPart(sts.munion(First::StatementPart()).munion(*end)); 
+  StatementPart (sts.munion(*end)); 
+  match         ("end", sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void DefinitionPart()
+void DefinitionPart(Set sts)
 {
+  Set* temp = new Set(";");
+  set* first = First::Definition();
+  
   //optional part
   //can be one or more, or nothing here
-  //have to check if the lookahead is in the first of definition, and if not, then check if it is in the first of statement part from block
-  Definition(); match(";");
+  //have to check if the lookahead is in the first of definition, and if not, 
+  //then check if it is in the first of statement part from block
+  while(First::Definition().isMember(lookAheadToken.getLexeme()))
+  {
+    Definition(sts.munion(temp)); 
+    match(";", sts);
+  }
+  
+  
+  
 }
 /////////////////////////////////////////////////////////////////////////////
-void Definition()
+void Definition(Set sts)
 {
-  ConstantDefinition();
-  or
-  VariableDefinition();
-  or
-  ProcedureDefintion();
+  if(lookAheadToken.getLexeme() exists in First::ConstantDefintion())
+  {
+    ConstantDefinition();
+  }
+  if(lookAheadToken.getLexeme() exists in First::VariableDefinition())
+  {
+    VariableDefinition();
+  }
+  if(lookAheadToken.getLexeme() exists in First::ProcedureDefintion())
+  {
+    ProcedureDefintion();
+  }
 }
 /////////////////////////////////////////////////////////////////////////////
-void ConstantDefinition()
+void ConstantDefinition(Set sts)
 {
   match("const"); ConstantName(); match("="); Constant();
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableDefinition()
+void VariableDefinition(Set sts)
 {
   TypeSymbol(); VariableDefinitionPart();
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableDefinitionPart()
+void VariableDefinitionPart(Set sts)
 {
   VariableList();
   or
   match("array"); VariableList(); match("["); Constant(); match("]");
 }
 /////////////////////////////////////////////////////////////////////////////
-void TypeSymbol()
+void TypeSymbol(Set sts)
 {
   match("integer");
   or
   match("Boolean");
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableList()
+void VariableList(Set sts)
 {
   VariableName();
   //optional part
   match(","); VariableName();
 }
 /////////////////////////////////////////////////////////////////////////////
-void ProcedureDefintion()
+void ProcedureDefintion(Set sts)
 {
   match("proc"); ProcedureName(); Block();
 }
 /////////////////////////////////////////////////////////////////////////////
-void StatementPart()
+void StatementPart(Set sts)
 {
   //optional
   Statement(); match(";");
 }
 /////////////////////////////////////////////////////////////////////////////
-void Statement()
+void Statement(Set sts)
 {
   EmptyStatement();
   or
@@ -164,89 +181,89 @@ void Statement()
   
 }
 /////////////////////////////////////////////////////////////////////////////
-void EmptyStatement()
+void EmptyStatement(Set sts)
 {
     match("skip");
 }
 /////////////////////////////////////////////////////////////////////////////
-void ReadStatement()
+void ReadStatement(Set sts)
 {
   match("read"); VariableAccessList();
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableAccessList()
+void VariableAccessList(Set sts)
 {
   VariableAccess();
   //optional
   match(","); VariableAccess();
 }
 /////////////////////////////////////////////////////////////////////////////
-void WriteStatement()
+void WriteStatement(Set sts)
 {
   match("write"); ExpressionList();
 }
 /////////////////////////////////////////////////////////////////////////////
-void ExpressionList()
+void ExpressionList(Set sts)
 {
   Expression();
   //optional
   match(","); Expression();
 }
 /////////////////////////////////////////////////////////////////////////////
-void AssignmentStatement()
+void AssignmentStatement(Set sts)
 {
   VariableAccessList(); match(":="); ExpressionList();
 }
 /////////////////////////////////////////////////////////////////////////////
-void ProcedureStatement()
+void ProcedureStatement(Set sts)
 {
   match("call");  ProcedureName();
 }
 /////////////////////////////////////////////////////////////////////////////
-void IfStatement()
+void IfStatement(Set sts)
 {
   match("if"); GuardedCommandList(); match("fi");
 }
 /////////////////////////////////////////////////////////////////////////////
-void DoStatement()
+void DoStatement(Set sts)
 {
   match("do"); GuardedCommandList(); match("od");
 }
 /////////////////////////////////////////////////////////////////////////////
-void GuardedCommandList()
+void GuardedCommandList(Set sts)
 {
   GuardedCommand();
   //optional
   match("[]"); GuardedCommand();
 }
 /////////////////////////////////////////////////////////////////////////////
-void GuardedCommand()
+void GuardedCommand(Set sts)
 {
   Expression(); match("->"); StatementPart();
 }
 /////////////////////////////////////////////////////////////////////////////
-void Expression()
+void Expression(Set sts)
 {
   PrimaryExpression();
   //optional
   PrimaryOperator(); PrimaryExpression();
 }
 /////////////////////////////////////////////////////////////////////////////
-void PrimaryOperator()
+void PrimaryOperator(Set sts)
 {
   match("&");
   or
   match("|");
 }
 /////////////////////////////////////////////////////////////////////////////
-void PrimaryExpression()
+void PrimaryExpression(Set sts)
 {
   SimpleExpression();
   //1 or zero of the follwing
   RelationalOperator(); SimpleExpression();
 }
 /////////////////////////////////////////////////////////////////////////////
-void RelationalOperator()
+void RelationalOperator(Set sts)
 {
   match("<");
   or
@@ -255,7 +272,7 @@ void RelationalOperator()
   match(">");
 }
 /////////////////////////////////////////////////////////////////////////////
-void SimpleExpression()
+void SimpleExpression(Set sts)
 {
   //1 or zero of the following
   match("-");
@@ -265,21 +282,21 @@ void SimpleExpression()
   AddingOperator(); Term();
 }
 /////////////////////////////////////////////////////////////////////////////
-void AddingOperator()
+void AddingOperator(Set sts)
 {
   match("+");
   or 
   match("");
 }
 /////////////////////////////////////////////////////////////////////////////
-void Term()
+void Term(Set sts)
 {
   Factor();
   //optinal
   MultiplyingOperator(); Factor();
 }
 /////////////////////////////////////////////////////////////////////////////
-void MultiplyingOperator()
+void MultiplyingOperator(Set sts)
 {
   match("*");
   or
@@ -288,7 +305,7 @@ void MultiplyingOperator()
   match("\\");
 }
 /////////////////////////////////////////////////////////////////////////////
-void Factor()
+void Factor(Set sts)
 {
   Constant();
   or
@@ -299,19 +316,19 @@ void Factor()
   match("~"); Factor();
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableAccess()
+void VariableAccess(Set sts)
 {
   VariableName();
   //one or zero of thefollowing
   IndexedSelector();
 }
 /////////////////////////////////////////////////////////////////////////////
-void IndexedSelector()
+void IndexedSelector(Set sts)
 {
   match("["); Expression(); match("]");
 }
 /////////////////////////////////////////////////////////////////////////////
-void Constant()
+void Constant(Set sts)
 {
   Numeral();
   or
@@ -320,24 +337,24 @@ void Constant()
   ConstantName();
 }
 /////////////////////////////////////////////////////////////////////////////
-void Numeral()
+void Numeral(Set sts)
 {
   //token must be a numeral
 }
 /////////////////////////////////////////////////////////////////////////////
-void BooleanSymbol()
+void BooleanSymbol(Set sts)
 {
   match("false");
   or
   match("true");
 }
 /////////////////////////////////////////////////////////////////////////////
-void ConstantName()
+void ConstantName(Set sts)
 {
   //token must be a reserved word
 }
 /////////////////////////////////////////////////////////////////////////////
-void VariableName()
+void VariableName(Set sts)
 {
   //token must be a user defined word
 }
