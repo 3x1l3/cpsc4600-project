@@ -79,6 +79,8 @@ public:
   void run();
   Token nextToken();
   void match(string, Set);
+  void syntaxError(Set);
+  void syntaxCheck(Set);
 };
 
 #endif
