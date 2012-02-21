@@ -1,7 +1,7 @@
 ## definitions
 CC = g++
 CCFLAGS = -Wall
-OBJS1 = scanner.o token.o main.o symboltable.o admin.o parser.o
+OBJS1 = scanner.o token.o main.o symboltable.o admin.o parser.o first.o set.o
 
 ## targets and prerequisites
 .PHONY : all
