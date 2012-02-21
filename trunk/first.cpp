@@ -29,6 +29,34 @@ Set First::Definition() {
 	return ConstantDefinition().munion(VariableDefinition()).munion(ProcedureDefinition());
 }
 
+///////////////////////////////////////////////////
+////Prototypical Functions Start
+/// I don't know what we want or need in these functions. But MAKE now works.
+
+Set First::StatementPart()
+{
+  
+}
+
+Set First::Statement()
+{
+  
+}
+
+Set First::Constant()
+{
+  
+}
+
+//redundant?
+Set First::ConstantName()
+{
+  return ConstantDefinition();
+}
+
+/////////////////////////////////////////////////
+
+
 Set First::ConstantDefinition() {
 	Set* set = new Set("const");
 	return *set;	
