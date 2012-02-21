@@ -624,16 +624,22 @@ void Parser::Constant(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Numeral(Set sts)
 {
-  //token must be a numeral
+  match("num", sts);//TODO change token creation to make lexeme of a number = "num"
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::BooleanSymbol(Set sts)
 {
-  match("false", sts);
+  if(lookAheadToken.getLexeme() == "false")
+  {
+    match("false", sts);
+  }
   //or
-  match("true", sts);
+  else if ( lookAheadToken.getLexeme() == "true")
+  {
+    match("true", sts);
+  }
   
   syntaxCheck(sts);
 }
@@ -641,6 +647,13 @@ void Parser::BooleanSymbol(Set sts)
 void Parser::ConstantName(Set sts)
 {
   //token must be a reserved word
+  //TODO somehow grab the number of resvered words from the symboltable,
+  //then check the toke.index() < reserved words total.
+  //if true, send match"name" so program can continue.
+  //if NOT true, force a syntax error here. maybe with a call to match"asdasd".
+  //TODO also, THIS MIGHT NOT EVEN MEAN RESERVED WORDS
+  //might just handle it like a normal name.
+  //so procname, constname and varnam will be the same thing.
   
   syntaxCheck(sts);
 }
