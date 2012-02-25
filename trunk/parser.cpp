@@ -4,7 +4,7 @@
 Parser::Parser(Admin& adminObject)
 {
   admin = &adminObject;
-  
+  debugflag = true;
 
   lookAheadToken = nextToken();
 }
@@ -19,6 +19,15 @@ void Parser::run()
   //sedn in money sign
   this->Program(*temp);
 }
+
+void Parser::debug(string functionName, Set sts, Token nextToken) {
+		if (debugflag == true) {
+			//cout << "In function: " << functionName << ", Next Token:  " << nextToken.getLexeme() << ", Valid next Characters: " << sts.toString() << endl;		
+			cout << "In function:" << functionName << endl;
+		}
+}
+
+
 /////////////////////////////////////////////////////////////////////////////
 Token Parser::nextToken()
 {
@@ -37,21 +46,23 @@ Token Parser::nextToken()
 /////////////////////////////////////////////////////////////////////////////
 void Parser::match(string matchMe, Set validNextCharacters)
 {
+	
   if (lookAheadToken.getLexeme() == matchMe) 
   {
+  	
     lookAheadToken = nextToken();
   }
   else
   {
-    syntaxError(validNextCharacters);
+  	    syntaxError(validNextCharacters);
   }
   syntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-  cout<<"Syntax Error"<<endl;
-  
+  cout<<"Syntax Error on token: " << lookAheadToken.getLexeme() << " "<< validNextCharacters.toString() << endl;
+//	cout <<"Syntax Error on Token: " << lookAheadToken.getLexeme() << endl;
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
     lookAheadToken = nextToken();
@@ -72,6 +83,7 @@ void Parser::syntaxCheck(Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Program(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(".");
   
   Block(sts.munion(*temp)); 
@@ -83,6 +95,7 @@ void Parser::Program(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Block(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("end");
 
   
@@ -98,6 +111,7 @@ void Parser::Block(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::DefinitionPart(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(";");
   Set first = First::Definition();
   
@@ -117,6 +131,7 @@ void Parser::DefinitionPart(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Definition(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(First::ConstantDefinition().isMember(lookAheadToken.getLexeme()))
   {
     ConstantDefinition(sts);
@@ -137,6 +152,7 @@ void Parser::Definition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ConstantDefinition(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("=");
   
   
@@ -150,6 +166,7 @@ void Parser::ConstantDefinition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableDefinition(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   TypeSymbol(sts.munion(First::VariableDefinitionPart())); 
   VariableDefinitionPart(sts);
   
@@ -158,14 +175,15 @@ void Parser::VariableDefinition(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableDefinitionPart(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("[");
   Set* temp2 = new Set("]");
   
   if(First::VariableList().isMember(lookAheadToken.getLexeme()))
   {
     VariableList(sts);
-  }
-  else if (lookAheadToken.getLexeme() == "array");
+         }
+  else if (lookAheadToken.getLexeme() == "array")
   {
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
     VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2)); 
@@ -175,10 +193,13 @@ void Parser::VariableDefinitionPart(Set sts)
   }
   
   syntaxCheck(sts);
+  
+
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::TypeSymbol(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "integer")
   {
     match("integer", sts);
@@ -193,6 +214,7 @@ void Parser::TypeSymbol(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableList(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
   
   
@@ -200,16 +222,18 @@ void Parser::VariableList(Set sts)
   //optional part
   while(temp->isMember(lookAheadToken.getLexeme()))
   {
+  	
     match(",",sts.munion(First::VariableName())); 
     VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
   }
   
   syntaxCheck(sts);
+
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureDefintion(Set sts)
 {
-  
+  debug(__func__, sts, lookAheadToken);
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
   ProcedureName(sts.munion(First::Block())); 
   Block(sts);
@@ -219,6 +243,7 @@ void Parser::ProcedureDefintion(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::StatementPart(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(";");
   
   //optional
@@ -233,6 +258,7 @@ void Parser::StatementPart(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Statement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set empty = First::EmptyStatement();
   Set read = First::ReadStatement();
   Set write = First::WriteStatement();
@@ -278,6 +304,7 @@ void Parser::Statement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::EmptyStatement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
     match("skip",sts);
     
     syntaxCheck(sts);
@@ -285,6 +312,7 @@ void Parser::EmptyStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ReadStatement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   match("read",sts.munion(First::VariableAccessList())); 
   VariableAccessList(sts);
   
@@ -293,6 +321,7 @@ void Parser::ReadStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableAccessList(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
   
   VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
@@ -308,7 +337,7 @@ void Parser::VariableAccessList(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::WriteStatement(Set sts)
 {
-  
+ debug(__func__, sts, lookAheadToken); 
   match("write",sts.munion(First::ExpressionList())); 
   ExpressionList(sts);
   
@@ -317,6 +346,7 @@ void Parser::WriteStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ExpressionList(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
   
   Expression(sts.munion(*temp).munion(First::Expression()));
@@ -332,6 +362,7 @@ void Parser::ExpressionList(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AssignmentStatement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(":=");
   
   VariableAccessList(sts.munion(*temp).munion(First::ExpressionList())); 
@@ -343,7 +374,7 @@ void Parser::AssignmentStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureStatement(Set sts)
 {
-  
+  debug(__func__, sts, lookAheadToken);
   match("call",sts.munion(First::ProcedureName()));  
   ProcedureName(sts);
   
@@ -353,6 +384,7 @@ void Parser::ProcedureStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::IfStatement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("fi");
   
   match("if",sts.munion(First::GuardedCommandList()).munion(*temp)); 
@@ -364,6 +396,7 @@ void Parser::IfStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::DoStatement(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("od");
   
   match("do",sts.munion(First::GuardedCommandList()).munion(*temp)); 
@@ -376,6 +409,7 @@ void Parser::DoStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::GuardedCommandList(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("[]");
   
   GuardedCommand(sts.munion(*temp).munion(First::GuardedCommand()));
@@ -391,6 +425,7 @@ void Parser::GuardedCommandList(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::GuardedCommand(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
   
   Expression(sts.munion(*temp).munion(First::StatementPart())); 
@@ -403,6 +438,7 @@ void Parser::GuardedCommand(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Expression(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
   //optional
   while(First::PrimaryOperator().isMember(lookAheadToken.getLexeme()))
@@ -416,6 +452,7 @@ void Parser::Expression(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryOperator(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "&")
   {
     match("&",sts);
@@ -431,6 +468,7 @@ void Parser::PrimaryOperator(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryExpression(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
   //1 or zero of the follwing
   if(First::RelationalOperator().isMember(lookAheadToken.getLexeme()))
@@ -444,6 +482,7 @@ void Parser::PrimaryExpression(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::RelationalOperator(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "<")
   {
     match("<",sts);
@@ -464,6 +503,7 @@ void Parser::RelationalOperator(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::SimpleExpression(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   //1 or zero of the following
   if(lookAheadToken.getLexeme() == "-")
   {
@@ -485,6 +525,7 @@ void Parser::SimpleExpression(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AddingOperator(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "+")
   {
     match("+",sts);
@@ -500,6 +541,7 @@ void Parser::AddingOperator(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Term(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Factor(sts.munion(First::MultiplyingOperator()).munion(First::Factor()));
   //redundant check for if it is in factor?
   //casue below we have a while statement that chceks only for if it is in multilpfying opertor.
@@ -520,6 +562,7 @@ void Parser::Term(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::MultiplyingOperator(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "*")
   {  
     match("*",sts);
@@ -541,6 +584,7 @@ void Parser::MultiplyingOperator(Set sts)
 ///////////////////////////////////////////////////////////////////////////// 
 void Parser::Factor(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
   Set *temp = new Set(")");
@@ -575,10 +619,13 @@ void Parser::Factor(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableAccess(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
+	cout << "XXX" << sts.toString() << endl;
+
   Set indsel = First::IndexedSelector();
-  
   VariableName(sts.munion(First::IndexedSelector()));
   //one or zero of thefollowing
+  
   if(indsel.isMember(lookAheadToken.getLexeme()))
   {
     IndexedSelector(sts);
@@ -589,6 +636,7 @@ void Parser::VariableAccess(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::IndexedSelector(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("]");
   
   match("[", sts.munion(First::Expression()).munion(*temp)); 
@@ -600,6 +648,7 @@ void Parser::IndexedSelector(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Constant(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   Set num = First::Numeral();
   Set bol = First::BooleanSymbol();
   Set con = First::ConstantName();
@@ -624,6 +673,7 @@ void Parser::Constant(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Numeral(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   match("num", sts);//TODO change token creation to make lexeme of a number = "num"
   
   syntaxCheck(sts);
@@ -631,6 +681,7 @@ void Parser::Numeral(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::BooleanSymbol(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "false")
   {
     match("false", sts);
@@ -646,6 +697,7 @@ void Parser::BooleanSymbol(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ConstantName(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   //token must be a reserved word TODO - might not be a reserved word.
   VariableName(sts);
   
@@ -654,7 +706,9 @@ void Parser::ConstantName(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableName(Set sts)
 {
-  //token must be a user defined word
+		
+  debug(__func__, sts, lookAheadToken);
+	  //token must be a user defined word
   match("name", sts);
   
   syntaxCheck(sts);
@@ -662,6 +716,7 @@ void Parser::VariableName(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureName(Set sts)
 {
+	debug(__func__, sts, lookAheadToken);
   VariableName(sts);
   
   

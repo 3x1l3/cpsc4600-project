@@ -14,15 +14,15 @@ integer q;
 	~(A[i] = x) -> i := i + 1;
       fi;
     od;
-    found := A[i) = x;
+    found := A[i] = x;
   end;
 
   $ Input Table:
   i := 1;
-  do ~(i > n) ->read A[i]; i := i+1;od
+  do ~(i > n) ->read A[i]; i := i+1;od;
     $Test Search:
     read x;
-    do-(x=O)->
+    do ~(x=O)->
       call Search;
       if found -> write x, i; []
 	~found -> write x;

@@ -75,6 +75,12 @@ private:
   void ProcedureName(Set sts);
 
 
+	//Helper function, debug
+	void debug(string, Set, Token);
+	
+
+	bool debugflag;
+
   
 public:
   
