@@ -37,15 +37,18 @@ string Set::toString() {
 		str += set.at(i);
 		str += "', ";
 	}
-	str += "}\n";
+	str += "}";
 	
 	return str;
 	
 }
 
 bool Set::isMember(string str) {
-		if (find(set.begin(), set.end(), str) == set.end())
-			return false;
-		else
-			return true;
+	
+	for(int i=0; i < set.size(); i++) {
+		if (set.at(i) == str) {
+			return true;	
+		}
+	}
+	return false;
 }

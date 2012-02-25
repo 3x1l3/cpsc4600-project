@@ -12,18 +12,13 @@ Set First::Program() {
 }
 
 Set First::Block() {
-	Set* set = new Set();
-	set->add("begin");
-	return *set;	
+	return Set("begin");	
 }
 
 Set First::DefinitionPart() {
-	
-	Set* set = new Set();
-	set->add("");
-	set->munion(Definition());
-	return *set;
-		
+	Set set = Set("");
+	Set set2 = set.munion(Definition());
+	return set2;
 }
 
 Set First::Definition() {
@@ -36,11 +31,11 @@ Set First::Definition() {
 
 Set First::StatementPart()
 {
-  Set* set = new Set();
-  set->add("");
-  set->munion(Statement());  //TODO does this actually change set anymore? casue we made it so it didnt change the oroiginal set
+  Set set = Set("");
+  Set set2 = set.munion(Statement());  //TODO does this actually change set anymore? casue we made it so it didnt change the oroiginal set
   //so maybe this is not working right anymore, as sets original set is no changed, but rather a ducpliate variable is changed.
-  return *set;
+  //Should work now.
+  return set2;
 }
 
 Set First::Statement()
@@ -56,24 +51,19 @@ Set First::Constant()
 
 Set First::ProcedureName()
 {
-  Set *set = new Set("name");
-  return *set;
-  
+  return Set("name");
 }
 Set First::EmptyStatement()
 {
-  Set* set = new Set("skip");
-  return *set;
+  return Set("skip");
 }
 Set First::ReadStatement()
 {
-  Set* set = new Set("read");
-  return *set;
+  return Set("read");
 }
 Set First::WriteStatement()
 {
-  Set * set = new Set("write");
-  return *set;
+  return Set("write");
 }
 Set First::AssignmentStatement()
 {
@@ -81,16 +71,15 @@ Set First::AssignmentStatement()
 }
 Set First::ProcedureStatement()
 {
-  Set * set = new Set("call");
-  return *set;
+  return Set("call");
 }
 Set First::IfStatement()
 {
-  return *new Set("if");
+  return Set("if");
 }
 Set First::DoStatement()
 {
-  return *new Set("do");
+  return Set("do");
 }
 Set First::VariableAccessList()
 {
@@ -137,34 +126,34 @@ Set First::PrimaryExpression()
 
 Set First::PrimaryOperator()
 {
-  Set* set = new Set("&");
-  set->add("|");
-  return *set;
+  Set set = Set("&");
+  set.add("|");
+  return set;
   
 }
 
 Set First::SimpleExpression()
 {
   //TODO this may not be right.  setting the set pointer to the vector passed back from set->munion()
-  Set* set = new Set("-");
-  *set = set->munion(Term());
-  return *set;
+  Set set = Set("-");
+  Set set2 = set.munion(Term());
+  return set2;
   
 }
 
 Set First::RelationalOperator()
 {
-  Set* set = new Set("<");
-  set->add(">");
-  set->add("=");
-  return *set;
+  Set set = Set("<");
+  set.add(">");
+  set.add("=");
+  return set;
   
 }
 Set First::AddingOperator()
 {
-  Set* set = new Set("+");
-  set->add("-");
-  return *set;
+  Set set = Set("+");
+  set.add("-");
+  return set;
   
 }
 Set First::Term()
@@ -174,52 +163,52 @@ Set First::Term()
 }
 Set First::Factor()
 {
-  Set *set = new Set("(");
-  set->add("~");
-  return Constant.munion(VariableAccess()).munion(*set);
+  Set set = Set("(");
+  set.add("~");
+  return set.munion(VariableAccess()).munion(Constant());
   
 }
 Set First::MultiplyingOperator()
 {
-  Set* set = new Set("*");
-  set->add("/");
-  set->add("\\");
-  return *set;
+  Set set = Set("*");
+  set.add("/");
+  set.add("\\");
+  return set;
   
 }
 Set First::IndexedSelector()
 {
-  return *new Set("[");
+  return Set("[");
   
 }
 Set First::Numeral()
 {
   //First::Numeral() == {"num"}
-  return *new Set("num");
+  return Set("num");
   
 }
 Set First::BooleanSymbol()
 {
-  Set* set = new Set("true");
-  set->add("false");
+  Set set = Set("true");
+  set.add("false");
   
-  return *set;
+  return set;
   
 }
 
 
 Set First::ConstantName()
 {
-  Set *set = new Set("name");
-  return *set;
+  Set set = Set("name");
+  return set;
 }
 
 /////////////////////////////////////////////////
 
 
 Set First::ConstantDefinition() {
-	Set* set = new Set("const");
-	return *set;	
+	Set set = Set("const");
+	return set;	
 }
 
 Set First::VariableDefinition() {
@@ -227,14 +216,16 @@ Set First::VariableDefinition() {
 }
 
 Set First::VariableDefinitionPart() {
-	Set* set = new Set("array");
-	return set->munion(VariableList());	
+	Set set = Set("array");
+	return set.munion(VariableList());	
 }
 
 Set First::TypeSymbol() {
-	Set* set = new Set("integer");
-	set->add("Boolean");
-	return *set;	
+	
+	Set set = Set("integer");
+	set.add("Boolean");
+	
+	return set;	
 }
 
 Set First::VariableList() {
@@ -242,11 +233,11 @@ Set First::VariableList() {
 }
 
 Set First::ProcedureDefinition() {
-	Set* set = new Set("proc");
-	return *set;	
+	Set set = Set("proc");
+	return set;	
 }
 
 Set First::VariableName() {
-	Set* set = new Set("name");
-	return *set;	
+	Set set = Set("name");
+	return set;	
 }
