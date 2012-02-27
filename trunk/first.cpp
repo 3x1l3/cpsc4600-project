@@ -89,7 +89,7 @@ Set First::VariableAccessList()
 
 Set First::VariableAccess()
 {
-  return VariableName();
+  return VariableName().munion(IndexedSelector());
   
 }
 
@@ -240,4 +240,8 @@ Set First::ProcedureDefinition() {
 Set First::VariableName() {
 	Set set = Set("name");
 	return set;	
+}
+
+Set First::FactorName() {
+	return Set("name");	
 }

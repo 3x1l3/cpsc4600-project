@@ -61,7 +61,8 @@ void Parser::match(string matchMe, Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-  cout<<"Syntax Error on token: " << lookAheadToken.getLexeme() << " "<< validNextCharacters.toString() << endl;
+
+  cout<<"Syntax Error on token:" << lookAheadToken.getLexeme() << ""<< validNextCharacters.toString() << endl;
 //	cout <<"Syntax Error on Token: " << lookAheadToken.getLexeme() << endl;
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
@@ -588,22 +589,18 @@ void Parser::Factor(Set sts)
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
   Set *temp = new Set(")");
-  
-  
-  if(constant.isMember(lookAheadToken.getLexeme()))
-  {
-    Constant(sts);
-  }
-  //or
-  else if(varacc.isMember(lookAheadToken.getLexeme()))
-  {
-    VariableAccess(sts);
-  }
-  //or
+  bool perror = false;
+    
+    if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
+    {
+        FactorName(sts);
+    }
+    else if (First::Constant().isMember(lookAheadToken.getLexeme()))
+        Constant(sts);
   else if (lookAheadToken.getLexeme() == "(")
   {
-    match("(",sts.munion(First::Expression()).munion(*temp)); 
-    Expression(sts.munion(*temp)); 
+    match("(",sts.munion(First::Expression()).munion(Set(")"))); 
+    Expression(sts.munion(Set(")"))); 
     match(")",sts);
   }
   //or
@@ -612,16 +609,47 @@ void Parser::Factor(Set sts)
     match("~",sts.munion(First::Factor())); 
     Factor(sts);
   }
+  else
+  	perror = true;
+  
+  Set tempset = Set().munion(First::Constant()).munion(First::VariableAccess()).munion(Set("(")).munion(Set("~"));
+  if (!tempset.isMember("") && perror)
+  	syntaxError(sts);
   
   
   syntaxCheck(sts);
 }
+
+
+void Parser::FactorName(Set sts) {
+    
+    match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
+    
+    if (First::Constant().isMember(lookAheadToken.getLexeme())) {
+     
+        if(First::Numeral().isMember(lookAheadToken.getLexeme()))
+        {
+            Numeral(sts);
+        }
+        //or
+        else if (First::BooleanSymbol().isMember(lookAheadToken.getLexeme()))
+        {
+            BooleanSymbol(sts);
+        }
+        
+    }
+    else if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
+        IndexedSelector(sts);
+    
+    syntaxCheck(sts);
+    
+}
+
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableAccess(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-	cout << "XXX" << sts.toString() << endl;
-
+	
   Set indsel = First::IndexedSelector();
   VariableName(sts.munion(First::IndexedSelector()));
   //one or zero of thefollowing
@@ -706,7 +734,6 @@ void Parser::ConstantName(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::VariableName(Set sts)
 {
-		
   debug(__func__, sts, lookAheadToken);
 	  //token must be a user defined word
   match("name", sts);

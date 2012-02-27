@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <sstream>
+
 
 using std::vector;
 using std::string;
@@ -25,6 +27,8 @@ class Set {
 		Set munion(Set);
 		string toString();
 		bool isMember(string);
+		Set remove(string);
+		int indexAt(string);
 	
 		
 	
