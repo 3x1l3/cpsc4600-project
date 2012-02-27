@@ -73,6 +73,7 @@ private:
   void ConstantName(Set sts);
   void VariableName(Set sts);
   void ProcedureName(Set sts);
+  void FactorName(Set sts);
 
 
 	//Helper function, debug

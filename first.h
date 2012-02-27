@@ -54,6 +54,7 @@ public:
 	static Set ConstantName();
 	static Set VariableName();
 	static Set ProcedureName();
+	static Set FactorName();
 	
 	
 };
