@@ -453,6 +453,7 @@ Token Scanner::handleCharString()
       
       if (existing_token == -1) 
       {
+	/** Quintessentially, we have a new Token with the String since this one could not be found. */
 	int index = symTable->makeEntry("ID","lexeme", str);
 	return Token(IDENTIFIER, index, "name");
       } 
@@ -461,11 +462,11 @@ Token Scanner::handleCharString()
 	//TODO do we handle reserved words any differntly?
 	if(existing_token < symTable->getNumOfReservedWords())
 	{
-	  //commented out - it was/is for debugging. useful :D for future? maybe :?
-	  //cout<<"RESERVED WORD FOUND"<<endl;
+	  /** We return a Token of the str, as the token already exists in our table, as a reserved word. */
 	  return Token(IDENTIFIER, existing_token, str);
 	  
 	}
+	/** Finally, we know that this symbol was found, and thus exists, so we return it as a token. */
 	return Token(IDENTIFIER, existing_token, "name");
       }
     }

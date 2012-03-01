@@ -75,7 +75,7 @@ private:
     stringstream error_str;
 
     /** 
-     * Symbol Table and Scanner object pointers.
+     * Symbol Table, Parser and Scanner object pointers.
      * This allows us to send symbol tables and scanners to and from other objects,
      * and makes it easier to manage memory and overflows.
      */
@@ -117,6 +117,7 @@ public:
     /** Executes the scanner function and returns an integer count of the errors found */
     int scan();
     
+    /** The primary tokenizing function that can be called for scanning and parsing. */
     Token nextToken();
 
     /** 
