@@ -1,3 +1,26 @@
+/**
+ * @brief The definition file for the Parser component object.
+ *
+ * @file parser.cpp
+ * 
+ * The Parser is responsible for properly syntactically verifying that the
+ * input is correct, and (virtually) forming a syntax and grammatical tree
+ * from the scanned input.
+ *
+ * It accomplishes this by linking back to the Scanner through the Admin,
+ * using it to grab a given Token, then intelligently proceeding to the next
+ * set of proper steps in the Grammatical structure of the PL Language. 
+ *
+ * Each of the following functions represents a grammatical rule and 
+ * fulfills the corresponding set of productions via function calls;
+ * a recursive descent stack is created implicitly by the function calls,
+ * and the "tree" of function calls is the end logical representation
+ * of the Parse tree for the grammar.
+ *
+ * @author Jordan Peoples, Chad Klassen, Adam Shepley
+ * @date January 9th to February 29th, 2011
+ **/
+
 #include "parser.h"
 
 
@@ -20,11 +43,13 @@ void Parser::run()
   this->Program(*temp);
 }
 
-void Parser::debug(string functionName, Set sts, Token nextToken) {
-		if (debugflag == true) {
-			//cout << "In function: " << functionName << ", Next Token:  " << nextToken.getLexeme() << ", Valid next Characters: " << sts.toString() << endl;		
-			cout << "In function:" << functionName << endl;
-		}
+void Parser::debug(string functionName, Set sts, Token nextToken) 
+{
+  if (debugflag == true) 
+  {
+    //cout << "In function: " << functionName << ", Next Token:  " << nextToken.getLexeme() << ", Valid next Characters: " << sts.toString() << endl;		
+    cout << "In function:" << functionName << endl;
+  }
 }
 
 
@@ -46,22 +71,19 @@ Token Parser::nextToken()
 /////////////////////////////////////////////////////////////////////////////
 void Parser::match(string matchMe, Set validNextCharacters)
 {
-	
   if (lookAheadToken.getLexeme() == matchMe) 
   {
-  	
     lookAheadToken = nextToken();
   }
   else
   {
-  	    syntaxError(validNextCharacters);
+    syntaxError(validNextCharacters);
   }
   syntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-
   cout<<"Syntax Error on token:" << lookAheadToken.getLexeme() << ""<< validNextCharacters.toString() << endl;
 //	cout <<"Syntax Error on Token: " << lookAheadToken.getLexeme() << endl;
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
@@ -84,7 +106,7 @@ void Parser::syntaxCheck(Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Program(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(".");
   
   Block(sts.munion(*temp)); 
@@ -96,7 +118,7 @@ void Parser::Program(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Block(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("end");
 
   

@@ -1,4 +1,19 @@
-
+/**
+ * @brief The specification header for the Parser component object.
+ *
+ * @file parser.h
+ * 
+ * The Parser is responsible for properly syntactically verifying that the
+ * input is correct, and (virtually) forming a syntax and grammatical tree
+ * from the scanned input.
+ *
+ * It accomplishes this by linking back to the Scanner through the Admin,
+ * using it to grab a given Token, then intelligently proceeding to the next
+ * set of proper steps in the Grammatical structure of the PL Language. 
+ *
+ * @author Jordan Peoples, Chad Klassen, Adam Shepley
+ * @date January 9th to February 29th, 2011
+ **/
 
 #ifndef PARSER_H
 #define PARSER_H
@@ -76,11 +91,11 @@ private:
   void FactorName(Set sts);
 
 
-	//Helper function, debug
-	void debug(string, Set, Token);
+  //Helper function, debug
+  void debug(string, Set, Token);
 	
 
-	bool debugflag;
+  bool debugflag;
 
   
 public:

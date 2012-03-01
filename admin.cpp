@@ -44,7 +44,7 @@ Admin::Admin(string& src)
     /** The reference to the "File" string is sent to the scanner. */
     scanner->loadSource(src);
     
-    
+    /** Create the base Parser object with a pointer back to here to allow it to access the scanner-> */
     parser = new Parser(*this);
 
 
@@ -76,20 +76,18 @@ void Admin::recordError(string msg)
 /**
  * @brief The Admin function that operates the Scanner and details errors as necessary.
  * 
- * We check for the various heuristics of the scanner, and then call its functions
- * (such as nextToken()) as needed to read through a file and construct the symbol
+ * We check for the various heuristics of the scanner, and then start the Parser.
+ * The parser itself then has direct control fo the scanner, though this
+ * function ensures that the scanner or parser's error thresholds are accounted for.
  * 
- * Essentially, we keep running the scanner (advancing by char/column)
- * and recording any errors we enounter and we abort the entire process 
- * if our error threshold is reached.
  * 
  * We output the token, and ensure that we stay within "file" range (string, technically).
  *
  * Finally, we return an integer that counts the number of errors.
- * Thus, if a 0 means our scanner has scanned successfully.
+ * Thus, if a 0 means our scanner has scanned successfully and the parser has not failed.
  * 
  * @pre We have a file string of a PL program and an empty symbol table.
- * @post We will have a complete symbol table and have scanned our PL file.
+ * @post We will have a complete symbol table and have scanned our PL file. Our file will be parsed.
  * @return An integer count of errors encountered.
  */
 
@@ -98,8 +96,7 @@ int Admin::scan()
   if(scanner->inRange() == false)
     return 0;
   
-  
-
+  /** Run the Parser! The parser itself will also manage the error count. */
   parser->run();
   
   /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
@@ -114,10 +111,19 @@ int Admin::scan()
     }
   }
   return -1;
-  
-  
+
 }
 
+/**
+ * @brief Primary tokenizing management function as used by the Admin to construct and retrieve tokens.
+ * 
+ * This function receives a Token from the scanner and handles errors/exceptions at the same time.
+ * It is called for Scanning and Parsing, respectively.
+ * 
+ * @pre The scanner is at a specific index i
+ * @post The index and lookahead are at i+1 and i+2 and a token has been constructed.
+ * @return A specific token as pertains to the given type from the scanner
+ */
 Token Admin::nextToken()
 {
     if(!scanner->inRange())
@@ -132,10 +138,10 @@ Token Admin::nextToken()
     currentTokenType = tok.getType();
 
     /**
-      * We check if the current token is an error token, and report it to the user.
-      * At the moment, the program only reports one error per line. 
-      * The code is boilerplate for the rest of these, so they could be a switch statement.
-      */
+     * We check if the current token is an error token, and report it to the user.
+     * At the moment, the program only reports one error per line. 
+     * The code is boilerplate for the rest of these, so they could be a switch statement.
+     */
     if (currentTokenType == BADSYMBOL) 
     {
       errorCount++;
