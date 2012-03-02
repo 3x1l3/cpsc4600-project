@@ -17,13 +17,31 @@
  * and the "tree" of function calls is the end logical representation
  * of the Parse tree for the grammar.
  *
+ * We use the output function debug() with the C++ macro "__func__" to output
+ * the current Parsing function - that is, which node in the descent tree our
+ * parsing and scanning is currently in.
+ *
+ * A SET is an object containing a vector lexemic strings. @see set.cpp
+ * The Set "sts" that is passed between objects is the "stop set", which functions 
+ * as a sentinel set indicating the valid next characters; if we see a lexeme that
+ * is not in the (sts) Stop Set, we stop (generate an error).
+ * 
+ * @see /documentation/
+ *
  * @author Jordan Peoples, Chad Klassen, Adam Shepley
  * @date January 9th to February 29th, 2011
  **/
 
 #include "parser.h"
 
-
+/**
+ * @brief Constructor for Parser object class
+ * 
+ * Binds the external admin object locally, controls the debug
+ * status and sets the initial lookahead token/scanner var position.
+ *
+ * @param adminObject a reference to the parent Admin object.
+ */
 Parser::Parser(Admin& adminObject)
 {
   admin = &adminObject;
@@ -31,29 +49,55 @@ Parser::Parser(Admin& adminObject)
 
   lookAheadToken = nextToken();
 }
-/////////////////////////////////////////////////////////////////////////////
+
+/** Base destructor. */
 Parser::~Parser()
 {
 }
-/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief The main Runner for the Parser object.
+ * 
+ * Sets the $ marker for the file as a stopset value.
+ * This ensures that $ does not get recognized as a syntax error
+ * and that any matches that happen to include a $ will be correct.
+ * The initial grammar prod., Program, is parsed (executed with sts).
+ */
 void Parser::run()
 { 
-    Set* temp = new Set("$");
-  //sedn in money sign
+  Set* temp = new Set("$");
+  //send in money sign
+  
   this->Program(*temp);
 }
 
+/**
+ * @brief Parsing Debug information output function.
+ * 
+ * Outputs the current parsing information as a form of
+ * debugging information.
+ * The function name is grabbed from the __func__ C++ macro.
+ *
+ * @param functionName The name of the function caller.
+ * @param sts The current stack's stop set.
+ * @param nextToken The next token being parsed.
+ */
 void Parser::debug(string functionName, Set sts, Token nextToken) 
 {
   if (debugflag == true) 
   {
     //cout << "In function: " << functionName << ", Next Token:  " << nextToken.getLexeme() << ", Valid next Characters: " << sts.toString() << endl;		
-    cout << "In function:" << functionName << endl;
+    cout << "In function: " << functionName << "\t\t to parse line " << admin->getLineNumber() << ", column " << admin->getColumnNumber() << endl;
   }
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Function that advances the scanner until a valid input is found.
+ * Loops the tokenizer until a non-bad/non-newline/non-comment token is
+ * found.
+ * Returns a token, possibly blank.
+ */
 Token Parser::nextToken()
 {
   Token tok;
@@ -68,28 +112,44 @@ Token Parser::nextToken()
   
   return tok;
 }
-/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief The Parser's lexeme Matching function
+ * 
+ * 
+ * @param matchMe A lexeme that we wish to check for a match for validity.
+ * @param validNextCharacters A set of characters that would be a "valid" next input.
+ */
 void Parser::match(string matchMe, Set validNextCharacters)
 {
+  /* Preliminary debug functions.
+  cout << "\nTesting matchMe: " << matchMe << " and la: " << lookAheadToken.getLexeme() << "\n" << validNextCharacters.toString() << "\n" << endl;
+  char a;
+  cin >> a;
+  */
+  
   if (lookAheadToken.getLexeme() == matchMe) 
   {
     lookAheadToken = nextToken();
   }
   else
   {
+    
     syntaxError(validNextCharacters);
   }
+  //cout << "\nHere's the debug data.\n MatchMe is " << matchMe << " and the valset is " << validNextCharacters.toString() << endl;
   syntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-  cout<<"Syntax Error on token:" << lookAheadToken.getLexeme() << ""<< validNextCharacters.toString() << endl;
-//	cout <<"Syntax Error on Token: " << lookAheadToken.getLexeme() << endl;
+  cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << ". Valid set members are: " << validNextCharacters.toString() << "\t linecol " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
+
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
     lookAheadToken = nextToken();
   }
+
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxCheck(Set validNextCharacters)
@@ -101,11 +161,33 @@ void Parser::syntaxCheck(Set validNextCharacters)
 }
 
 
+/**
+ *
+ * The following is a set of Production-Rule functions. Each one has a specific
+ * speciality in regards to how they treat their input and production rules,
+ * but on the whole they follow a key process:
+ *
+ * 1) Output the function name and data.
+ * 2) Choose a production rule to follow based off of the lookahead
+ * 3) Try to Match any prerequisite statements or rules
+ * 4) Append any valid lexemes to the StopSet sts
+ * 5) Choose a production rule and follow it (a non-terminal)
+ * 6) Repeat ~3-5 unless an error is found
+ * 7) Attempt to match the post-requisite statement/lexeme/rule.
+ * 8) Check the validity of the lookahead in regards to the stopset sts
+ *
+ * This implicitly maintains a "stack" of unique stopsets at each function (production)
+ * level, These are allocated on the application stack.
+ *
+ * Thus, we need to be wary of Stack Overflows when using the recursive parser.
+ *
+ */
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 void Parser::Program(Set sts)
 {
+  
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(".");
   
@@ -360,7 +442,7 @@ void Parser::VariableAccessList(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::WriteStatement(Set sts)
 {
- debug(__func__, sts, lookAheadToken); 
+  debug(__func__, sts, lookAheadToken); 
   match("write",sts.munion(First::ExpressionList())); 
   ExpressionList(sts);
   
@@ -419,6 +501,8 @@ void Parser::IfStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::DoStatement(Set sts)
 {
+  
+  cout << "\n\nwhat\n\n";
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("od");
   
@@ -610,15 +694,19 @@ void Parser::Factor(Set sts)
 	debug(__func__, sts, lookAheadToken);
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
-  Set *temp = new Set(")");
+ 
+  //
+  // Do we need this still? It seems like it was supposed to be used in those MUNIONS
+    //Set *temp = new Set(")");
+  //
   bool perror = false;
     
-    if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
-    {
-        FactorName(sts);
-    }
-    else if (First::Constant().isMember(lookAheadToken.getLexeme()))
-        Constant(sts);
+  if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
+  {
+    FactorName(sts);
+  }
+  else if (First::Constant().isMember(lookAheadToken.getLexeme()))
+    Constant(sts);
   else if (lookAheadToken.getLexeme() == "(")
   {
     match("(",sts.munion(First::Expression()).munion(Set(")"))); 
@@ -632,38 +720,38 @@ void Parser::Factor(Set sts)
     Factor(sts);
   }
   else
-  	perror = true;
+    perror = true;
   
   Set tempset = Set().munion(First::Constant()).munion(First::VariableAccess()).munion(Set("(")).munion(Set("~"));
   if (!tempset.isMember("") && perror)
-  	syntaxError(sts);
+    syntaxError(sts);
   
   
   syntaxCheck(sts);
 }
 
 
-void Parser::FactorName(Set sts) {
+void Parser::FactorName(Set sts) 
+{
+  match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
     
-    match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
-    
-    if (First::Constant().isMember(lookAheadToken.getLexeme())) {
-     
-        if(First::Numeral().isMember(lookAheadToken.getLexeme()))
-        {
-            Numeral(sts);
-        }
-        //or
-        else if (First::BooleanSymbol().isMember(lookAheadToken.getLexeme()))
-        {
-            BooleanSymbol(sts);
-        }
-        
+  if (First::Constant().isMember(lookAheadToken.getLexeme())) 
+  {
+    if(First::Numeral().isMember(lookAheadToken.getLexeme()))
+    {
+      Numeral(sts);
     }
-    else if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
-        IndexedSelector(sts);
+    //or
+    else if (First::BooleanSymbol().isMember(lookAheadToken.getLexeme()))
+    {
+      BooleanSymbol(sts);
+    }
+        
+  }
+  else if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
+    IndexedSelector(sts);
     
-    syntaxCheck(sts);
+  syntaxCheck(sts);
     
 }
 
@@ -767,7 +855,5 @@ void Parser::ProcedureName(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   VariableName(sts);
-  
-  
   syntaxCheck(sts);
 }

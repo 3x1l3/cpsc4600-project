@@ -97,6 +97,7 @@ int Admin::scan()
     return 0;
   
   /** Run the Parser! The parser itself will also manage the error count. */
+  cout << "\nParsing Started.\n" << endl;
   parser->run();
   
   /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
@@ -171,7 +172,7 @@ Token Admin::nextToken()
       
     }
     /** This outputs the Token to the Screen in a < ___,___,___> format. */
-    cout << tok.toString() <<" \t\t Found at line "<<current_line<<", column "<<column<<"."<< endl;
+    cout << tok.toString() <<" \t\t Found at line " << current_line << ", column " << column << "."<< endl;
 
     return tok;
 
@@ -216,4 +217,16 @@ bool Admin::checkMaxErrors()
     }
     else
       return false;
+}
+
+/** Retrieve the Column number in raw/unchanged/unmodified form. */
+int Admin::getColumnNumber()
+{
+  return column;
+}
+
+/** Send back the line number without edits. */
+int Admin::getLineNumber()
+{
+  return current_line;
 }
