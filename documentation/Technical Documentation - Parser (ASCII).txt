@@ -1,0 +1,53 @@
+=============================================
+C++ PL COMPILER PROJECT
+
+Parser for the Programming Language PL
+
+Written for 
+CPSC 4600 - Compiler Design
+
+Written in C++.
+
+Written By:
+-Chad Klassen
+-Jordan Peoples
+-Adam Shepley
+
+Version 2 - Parser Revision
+Created between February 1st and March 1st.
+
+=============================================
+
+
+It should be explicitly noted that, as specified in the README, this documentation is
+ created and exists apart from the original Scanner documentation.
+
+The reason for this is that is allows us to maintain the original documentation in an
+unperturbed and accurate version of the original documentation for specific scanner components,
+and allows us to maintain the insights into certain design decisions that may conflict or 
+may result in seemingly confusing design choices for future versions of the compiler.
+
+Which is to say, at the moment, certain components of the Scanner are not explicitly/directly
+used or used differently or altered by the Parser;
+
+The major change in the program structure, apart from adding the Parsing components, is that
+the Parser itself now controls the call to the Scanner's Scan() function through the Admin object.
+
+However, Admin's error handling and various wrappings around the Scanner are still applied, so
+there is not much (at the current stage) in the way of a specific shift in regards to how the 
+Scanning is completed and where and when and why.
+
+While the Scanner is now invoked by the Parser during the (logical) construction of the Parse tree,
+the Scanner's internal representation is near-wholly unchanged apart from corrections to some 
+tokenizing functions and return variables.
+
+The Scanner still performs and functions essentially the same as it had before, which is why it seems
+best to keep the Parser's uniqueness (and the following changes to the other classes such as Admin)
+within this distinct, easier to "parse" Documentation file.
+
+At a later dat, such as the final revision of the Parser, the documentation as a whole may be combined
+or refined into a final format and representation.
+
+
+================================================
+
