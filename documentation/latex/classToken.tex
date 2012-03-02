@@ -15,34 +15,34 @@
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classToken_aa3c5868ba4115f3189df6b2ac5b36f39}{Token} ()
-\begin{DoxyCompactList}\small\item\em A base constructor for the \hyperlink{classToken}{Token} class. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A base constructor for the \hyperlink{classToken}{Token} class. \item\end{DoxyCompactList}\item 
 \hyperlink{classToken_a3d7d59eaac1535df1433357d5d372f84}{$\sim$Token} ()
 \item 
 \hyperlink{classToken_abe7d4640c0784e490bccaa254f11a8d9}{Token} (\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}, int, string)
-\begin{DoxyCompactList}\small\item\em A special \hyperlink{classToken}{Token} constructor, which we give it the \hyperlink{classToken}{Token} data immediately. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A special \hyperlink{classToken}{Token} constructor, which we give it the \hyperlink{classToken}{Token} data immediately. \item\end{DoxyCompactList}\item 
 const int \hyperlink{classToken_a9241d3f6b9174f79cdc74e824a3b8422}{getValue} () const 
-\begin{DoxyCompactList}\small\item\em A set of accessors for returning the bare lexical data of the \hyperlink{classToken}{Token}. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A set of accessors for returning the bare lexical data of the \hyperlink{classToken}{Token}. \item\end{DoxyCompactList}\item 
 const \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} \hyperlink{classToken_ab0fd5697b1b85d91ac491e687a2044f2}{getType} () const 
 \item 
 const string \hyperlink{classToken_af056820e37b409c87f7bb17ea8139a42}{getLexeme} () const 
 \item 
 void \hyperlink{classToken_a693d12716fcbf365e115dde0314ee306}{setType} (\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type})
-\begin{DoxyCompactList}\small\item\em A set of modifiers to change the Token's atomic data types. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A set of modifiers to change the Token's atomic data types. \item\end{DoxyCompactList}\item 
 void \hyperlink{classToken_ab015619f67bf97abb8d00a9037cafd49}{setValue} (int)
 \item 
 void \hyperlink{classToken_aed8a3626e2ef382587f66befa0f5761f}{setLexeme} (string)
 \item 
 string \hyperlink{classToken_a4e0ca338277bccb0f820f5149e82af79}{toString} ()
-\begin{DoxyCompactList}\small\item\em Converts the \hyperlink{classToken}{Token} to a String in the form of $<$\_\-,\_\-,\_\-$>$ \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Converts the \hyperlink{classToken}{Token} to a String in the form of $<$\_\-,\_\-,\_\-$>$ \item\end{DoxyCompactList}\item 
 bool \hyperlink{classToken_afefbe9d487b40b055403fa2c41004d99}{operator==} (const \hyperlink{classToken}{Token} \&) const 
-\begin{DoxyCompactList}\small\item\em Overloaded operators to allow easy comparison between two tokens. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Overloaded operators to allow easy comparison between two tokens. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classToken_a2f5a82fe3f636917336cc5171f4f53c2}{operator!=} (const \hyperlink{classToken}{Token} \&) const 
-\begin{DoxyCompactList}\small\item\em Redefined Non-\/Equivalency Operator for a \hyperlink{classToken}{Token}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Redefined Non-\/Equivalency Operator for a \hyperlink{classToken}{Token}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 int \hyperlink{classToken_a041346a45c6c5571a78a6af3394a2756}{value}
-\begin{DoxyCompactList}\small\item\em We put the core \hyperlink{classToken}{Token} values in a protected state in case we wish to subclass token. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em We put the core \hyperlink{classToken}{Token} values in a protected state in case we wish to subclass token. \item\end{DoxyCompactList}\item 
 \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} \hyperlink{classToken_a7e5e6513d379ca2e388273b23ea1ba4a}{type}
 \item 
 string \hyperlink{classToken_af4c57a4ede01f2040ea4927141f5a661}{lexeme}
@@ -50,9 +50,7 @@ string \hyperlink{classToken_af4c57a4ede01f2040ea4927141f5a661}{lexeme}
 
 
 \subsection{Detailed Description}
-\hyperlink{classToken}{Token} object that is made up of a lexeme (string), a value (integer) and a Type. 
-
-The \hyperlink{classToken}{Token} is the Strong/multivalued base type that is used by our \hyperlink{classScanner}{Scanner}, Parser and their communicable Symbol Table.
+\hyperlink{classToken}{Token} object that is made up of a lexeme (string), a value (integer) and a Type. The \hyperlink{classToken}{Token} is the Strong/multivalued base type that is used by our \hyperlink{classScanner}{Scanner}, \hyperlink{classParser}{Parser} and their communicable Symbol Table.
 
 It provides accessors and mutators for the associated value types. The \hyperlink{classToken}{Token} itself is represented by a \char`\"{}$<$ token-\/type, token-\/value, token-\/lexeme $>$\char`\"{} format. 
 
@@ -60,11 +58,7 @@ It provides accessors and mutators for the associated value types. The \hyperlin
 \hypertarget{classToken_aa3c5868ba4115f3189df6b2ac5b36f39}{
 \index{Token@{Token}!Token@{Token}}
 \index{Token@{Token}!Token@{Token}}
-\subsubsection[{Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::Token (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::Token ()}}
 \label{classToken_aa3c5868ba4115f3189df6b2ac5b36f39}
 
 
@@ -82,22 +76,12 @@ References lexeme, type, UNKNOWN, and value.
 \hypertarget{classToken_a3d7d59eaac1535df1433357d5d372f84}{
 \index{Token@{Token}!$\sim$Token@{$\sim$Token}}
 \index{$\sim$Token@{$\sim$Token}!Token@{Token}}
-\subsubsection[{$\sim$Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::$\sim$Token (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\subsubsection[{$\sim$Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::$\sim$Token ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classToken_a3d7d59eaac1535df1433357d5d372f84}
 \hypertarget{classToken_abe7d4640c0784e490bccaa254f11a8d9}{
 \index{Token@{Token}!Token@{Token}}
 \index{Token@{Token}!Token@{Token}}
-\subsubsection[{Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::Token (
-\begin{DoxyParamCaption}
-\item[{{\bf Type}}]{newType, }
-\item[{int}]{newValue, }
-\item[{string}]{newLexeme}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{Token}]{\setlength{\rightskip}{0pt plus 5cm}Token::Token ({\bf Type} {\em newType}, \/  int {\em newValue}, \/  string {\em newLexeme})}}
 \label{classToken_abe7d4640c0784e490bccaa254f11a8d9}
 
 
@@ -111,13 +95,7 @@ A \hyperlink{classToken}{Token} is constructed from the values given by the cons
 
 
 \begin{DoxyParams}{Parameters}
-{\em newType} & The given Type of token (if known). \\
-\hline
-{\em newValue} & The value of our lexeme (if any). \\
-\hline
-{\em newLexeme} & A string representing our Lexeme name. \\
-\hline
-\end{DoxyParams}
+\item[{\em newType}]The given Type of token (if known). \item[{\em newValue}]The value of our lexeme (if any). \item[{\em newLexeme}]A string representing our Lexeme name. \end{DoxyParams}
 
 
 References lexeme, type, and value.
@@ -128,11 +106,7 @@ References lexeme, type, and value.
 \hypertarget{classToken_af056820e37b409c87f7bb17ea8139a42}{
 \index{Token@{Token}!getLexeme@{getLexeme}}
 \index{getLexeme@{getLexeme}!Token@{Token}}
-\subsubsection[{getLexeme}]{\setlength{\rightskip}{0pt plus 5cm}const string Token::getLexeme (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}
+\subsubsection[{getLexeme}]{\setlength{\rightskip}{0pt plus 5cm}const string Token::getLexeme () const}}
 \label{classToken_af056820e37b409c87f7bb17ea8139a42}
 
 
@@ -141,11 +115,7 @@ References lexeme.
 \hypertarget{classToken_ab0fd5697b1b85d91ac491e687a2044f2}{
 \index{Token@{Token}!getType@{getType}}
 \index{getType@{getType}!Token@{Token}}
-\subsubsection[{getType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Type} Token::getType (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}
+\subsubsection[{getType}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Type} Token::getType () const}}
 \label{classToken_ab0fd5697b1b85d91ac491e687a2044f2}
 
 
@@ -154,11 +124,7 @@ References type.
 \hypertarget{classToken_a9241d3f6b9174f79cdc74e824a3b8422}{
 \index{Token@{Token}!getValue@{getValue}}
 \index{getValue@{getValue}!Token@{Token}}
-\subsubsection[{getValue}]{\setlength{\rightskip}{0pt plus 5cm}const int Token::getValue (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}
+\subsubsection[{getValue}]{\setlength{\rightskip}{0pt plus 5cm}const int Token::getValue () const}}
 \label{classToken_a9241d3f6b9174f79cdc74e824a3b8422}
 
 
@@ -171,11 +137,7 @@ References value.
 \hypertarget{classToken_a2f5a82fe3f636917336cc5171f4f53c2}{
 \index{Token@{Token}!operator!=@{operator!=}}
 \index{operator!=@{operator!=}!Token@{Token}}
-\subsubsection[{operator!=}]{\setlength{\rightskip}{0pt plus 5cm}bool Token::operator!= (
-\begin{DoxyParamCaption}
-\item[{const {\bf Token} \&}]{temp}
-\end{DoxyParamCaption}
-) const}}
+\subsubsection[{operator!=}]{\setlength{\rightskip}{0pt plus 5cm}bool Token::operator!= (const {\bf Token} \& {\em temp}) const}}
 \label{classToken_a2f5a82fe3f636917336cc5171f4f53c2}
 
 
@@ -185,20 +147,14 @@ Returns the inverse of the equivalency operator.
 
 
 \begin{DoxyParams}{Parameters}
-{\em first} & A token reference that we compare this one to. \\
-\hline
-\end{DoxyParams}
+\item[{\em temp}]A token reference that we compare this one to. \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 a boolean indicating that it is equivalent (false) or not. 
 \end{DoxyReturn}
 \hypertarget{classToken_afefbe9d487b40b055403fa2c41004d99}{
 \index{Token@{Token}!operator==@{operator==}}
 \index{operator==@{operator==}!Token@{Token}}
-\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool Token::operator== (
-\begin{DoxyParamCaption}
-\item[{const {\bf Token} \&}]{first}
-\end{DoxyParamCaption}
-) const}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool Token::operator== (const {\bf Token} \& {\em first}) const}}
 \label{classToken_afefbe9d487b40b055403fa2c41004d99}
 
 
@@ -210,9 +166,7 @@ Defines the equivalency operator as a comparison between the lexeme, the value a
 
 
 \begin{DoxyParams}{Parameters}
-{\em first} & A token reference that we compare this one to. \\
-\hline
-\end{DoxyParams}
+\item[{\em first}]A token reference that we compare this one to. \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 a boolean indicating that it is equivalent (true) or not. 
 \end{DoxyReturn}
@@ -223,11 +177,7 @@ References getLexeme(), getType(), and getValue().
 \hypertarget{classToken_aed8a3626e2ef382587f66befa0f5761f}{
 \index{Token@{Token}!setLexeme@{setLexeme}}
 \index{setLexeme@{setLexeme}!Token@{Token}}
-\subsubsection[{setLexeme}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setLexeme (
-\begin{DoxyParamCaption}
-\item[{string}]{newLexeme}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{setLexeme}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setLexeme (string {\em newLexeme})}}
 \label{classToken_aed8a3626e2ef382587f66befa0f5761f}
 
 
@@ -236,11 +186,7 @@ References lexeme.
 \hypertarget{classToken_a693d12716fcbf365e115dde0314ee306}{
 \index{Token@{Token}!setType@{setType}}
 \index{setType@{setType}!Token@{Token}}
-\subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setType (
-\begin{DoxyParamCaption}
-\item[{{\bf Type}}]{newType}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{setType}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setType ({\bf Type} {\em newType})}}
 \label{classToken_a693d12716fcbf365e115dde0314ee306}
 
 
@@ -253,11 +199,7 @@ References type.
 \hypertarget{classToken_ab015619f67bf97abb8d00a9037cafd49}{
 \index{Token@{Token}!setValue@{setValue}}
 \index{setValue@{setValue}!Token@{Token}}
-\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setValue (
-\begin{DoxyParamCaption}
-\item[{int}]{newValue}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void Token::setValue (int {\em newValue})}}
 \label{classToken_ab015619f67bf97abb8d00a9037cafd49}
 
 
@@ -266,11 +208,7 @@ References value.
 \hypertarget{classToken_a4e0ca338277bccb0f820f5149e82af79}{
 \index{Token@{Token}!toString@{toString}}
 \index{toString@{toString}!Token@{Token}}
-\subsubsection[{toString}]{\setlength{\rightskip}{0pt plus 5cm}string Token::toString (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{toString}]{\setlength{\rightskip}{0pt plus 5cm}string Token::toString ()}}
 \label{classToken_a4e0ca338277bccb0f820f5149e82af79}
 
 

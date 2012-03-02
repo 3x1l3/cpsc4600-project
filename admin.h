@@ -107,7 +107,7 @@ public:
      * 
      * The constructor takes in the finalized File string object pointer
      * from the Main file.
-     * @param string variable
+     * @param src variable
      */
     Admin(string&);
 

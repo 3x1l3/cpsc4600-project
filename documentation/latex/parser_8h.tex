@@ -1,0 +1,37 @@
+\hypertarget{parser_8h}{
+\section{parser.h File Reference}
+\label{parser_8h}\index{parser.h@{parser.h}}
+}
+
+
+The specification header for the \hyperlink{classParser}{Parser} component object.  
+
+
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include \char`\"{}token.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}admin.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}set.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}first.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classParser}{Parser}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification header for the \hyperlink{classParser}{Parser} component object. The \hyperlink{classParser}{Parser} is responsible for properly syntactically verifying that the input is correct, and (virtually) forming a syntax and grammatical tree from the scanned input.
+
+It accomplishes this by linking back to the \hyperlink{classScanner}{Scanner} through the \hyperlink{classAdmin}{Admin}, using it to grab a given \hyperlink{classToken}{Token}, then intelligently proceeding to the next set of proper steps in the Grammatical structure of the PL Language.
+
+Note that the Doxygen function documentation for these functions must be referred to from the CPP file as defining them again here would be not just redundant, but horrendously ugly.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to February 29th, 2011 
+\end{DoxyDate}

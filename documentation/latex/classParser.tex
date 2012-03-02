@@ -1,0 +1,679 @@
+\hypertarget{classParser}{
+\section{Parser Class Reference}
+\label{classParser}\index{Parser@{Parser}}
+}
+
+
+{\ttfamily \#include $<$parser.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classParser_a16503336f00dfa74eedd0ad3092d2c05}{Parser} (\hyperlink{classAdmin}{Admin} \&)
+\begin{DoxyCompactList}\small\item\em Base constructor, requires the admin parent object that created it. \item\end{DoxyCompactList}\item 
+\hyperlink{classParser_a3e658b5917a93a3ef648050d060e3a93}{$\sim$Parser} ()
+\begin{DoxyCompactList}\small\item\em Default Destructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a9e8d06d145f534e73a40b38e3f6711a0}{run} ()
+\begin{DoxyCompactList}\small\item\em Runs the \hyperlink{classParser}{Parser} by starting the Parse production(s) tree with the EOL \$ symbol. \item\end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classParser_ab53c98f6ae7ca5a9a48a1eec75fb52bc}{nextToken} ()
+\begin{DoxyCompactList}\small\item\em Uses the \hyperlink{classAdmin}{Admin} object to run the scanner and grab the next token, parsing when valid. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_afd75ba38a886da3930c4a29f5d353a62}{match} (string, \hyperlink{classSet}{Set})
+\begin{DoxyCompactList}\small\item\em Lexeme matching function. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a705ca7e2357f506dc5bea989e40ca11f}{syntaxError} (\hyperlink{classSet}{Set})
+\begin{DoxyCompactList}\small\item\em Outputs a syntax error message followed by the characters that would be correct. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a61a1e512e33d3498f45d1e6f7c7aaf4d}{syntaxCheck} (\hyperlink{classSet}{Set})
+\begin{DoxyCompactList}\small\item\em A function that requests an error check upon finding a character that is invalid. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}{Program} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em The following functions make up the core of our \hyperlink{classParser}{Parser}, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a4d583a4596c19faf368265ec1948a42e}{Block} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a481fd10039485563c664099d5ace6428}{DefinitionPart} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aef0bb75e13a569ffde9f8a56625aeb41}{Definition} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_abb393c5891c5a48e7be396bb6249ee4b}{ConstantDefinition} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a08145dddc145745970fe4849aa667e05}{VariableDefinition} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aca0b05f8805667f5057d695ee157ab74}{VariableDefinitionPart} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a0bb180ec60cb61345a7890c8766f0048}{TypeSymbol} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}{VariableList} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a0f04e446170cd685f2ab8ecb6782025f}{ProcedureDefintion} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}{StatementPart} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a23d5c23531d92c7249034a9e637b4467}{Statement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aa5c2ec1d4c045a6783887bd7453e99ed}{EmptyStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}{ReadStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}{VariableAccessList} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a092a51a38e65c3be07328bfc1e370f0e}{WriteStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a867bebdf8a97af4991fe044b9d7e616b}{ExpressionList} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a472a0dc9ed06ffc3ec260992ae7197ca}{AssignmentStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a7a6c6b63d49340ff06c453ce8954eeff}{ProcedureStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_af7ef9a71f5e821040a16974c4602e23e}{IfStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ae1ced275b4dafa58b751c66333a41f98}{DoStatement} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a00618d906669f1d0908961dc6c6c51e0}{GuardedCommandList} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ab9dbadf49595360da28b8cc77ddec8e7}{GuardedCommand} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a155ac163cd68b4e1b8098b43be1189e1}{Expression} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a7ac200c2e0ac927e115027fb593ac72d}{PrimaryOperator} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_abe6f497eafd870c3e9f28d4c241e280a}{PrimaryExpression} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ab68b61bab0a323b67457d520578cb853}{RelationalOperator} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}{SimpleExpression} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a909c968479dd3bafe797f2409e197179}{AddingOperator} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}{Term} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a0f016865b3ae30a62a06abbb7fca7345}{MultiplyingOperator} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a1310e1db541b2a3b614ec4491b7196ea}{Factor} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ac004c4cc14aeca2512087a692594786b}{VariableAccess} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}{IndexedSelector} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}{Constant} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aadadd3280fa339b1433a8ad665479bc4}{Numeral} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aa4a37b37b244053459fad1a82c7d9491}{BooleanSymbol} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_aec8b7271b672c8d609cf1df8b51cacc9}{ConstantName} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}{VariableName} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a72cc285af2d83a0348a47a78aced1582}{ProcedureName} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a3eeedadd101b70aef097d1ef8f5f8974}{FactorName} (\hyperlink{classSet}{Set} sts)
+\item 
+void \hyperlink{classParser_a862ea4d5a0d322471e3183aa4d51ad4b}{debug} (string, \hyperlink{classSet}{Set}, \hyperlink{classToken}{Token})
+\begin{DoxyCompactList}\small\item\em A function for printing debug parsing information to the screen. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classToken}{Token} \hyperlink{classParser_a8180cecab442c4c7f582bbe1d0682bf1}{currentToken}
+\begin{DoxyCompactList}\small\item\em Tokens retrieved using the scanner and used in parsing heuristics. \item\end{DoxyCompactList}\item 
+\hyperlink{classToken}{Token} \hyperlink{classParser_a4f9e59e89197efefa1feff50f5ea8725}{lookAheadToken}
+\item 
+\hyperlink{classAdmin}{Admin} $\ast$ \hyperlink{classParser_a96a8ee1229f37648e0ee704827b1c4c7}{admin}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classParser}{Parser} uses the \hyperlink{classScanner}{Scanner} to parse the file, through a pointer to the admin class. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classParser_a090a56f54cfd45240a039863b8289581}{debugflag}
+\begin{DoxyCompactList}\small\item\em The Debug function only processes if this Flag is set to True. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classParser_a16503336f00dfa74eedd0ad3092d2c05}{
+\index{Parser@{Parser}!Parser@{Parser}}
+\index{Parser@{Parser}!Parser@{Parser}}
+\subsubsection[{Parser}]{\setlength{\rightskip}{0pt plus 5cm}Parser::Parser ({\bf Admin} \& {\em adminObject})}}
+\label{classParser_a16503336f00dfa74eedd0ad3092d2c05}
+
+
+Base constructor, requires the admin parent object that created it. 
+
+Constructor for \hyperlink{classParser}{Parser} object class.
+
+Binds the external admin object locally, controls the debug status and sets the initial lookahead token/scanner var position.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em adminObject}]a reference to the parent \hyperlink{classAdmin}{Admin} object. \end{DoxyParams}
+
+
+References admin, debugflag, lookAheadToken, and nextToken().
+
+\hypertarget{classParser_a3e658b5917a93a3ef648050d060e3a93}{
+\index{Parser@{Parser}!$\sim$Parser@{$\sim$Parser}}
+\index{$\sim$Parser@{$\sim$Parser}!Parser@{Parser}}
+\subsubsection[{$\sim$Parser}]{\setlength{\rightskip}{0pt plus 5cm}Parser::$\sim$Parser ()}}
+\label{classParser_a3e658b5917a93a3ef648050d060e3a93}
+
+
+Default Destructor. 
+
+Base destructor.
+
+\subsection{Member Function Documentation}
+\hypertarget{classParser_a909c968479dd3bafe797f2409e197179}{
+\index{Parser@{Parser}!AddingOperator@{AddingOperator}}
+\index{AddingOperator@{AddingOperator}!Parser@{Parser}}
+\subsubsection[{AddingOperator}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::AddingOperator ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a909c968479dd3bafe797f2409e197179}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a472a0dc9ed06ffc3ec260992ae7197ca}{
+\index{Parser@{Parser}!AssignmentStatement@{AssignmentStatement}}
+\index{AssignmentStatement@{AssignmentStatement}!Parser@{Parser}}
+\subsubsection[{AssignmentStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::AssignmentStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a472a0dc9ed06ffc3ec260992ae7197ca}
+
+
+References debug(), ExpressionList(), First::ExpressionList(), lookAheadToken, match(), Set::munion(), syntaxCheck(), and VariableAccessList().
+
+\hypertarget{classParser_a4d583a4596c19faf368265ec1948a42e}{
+\index{Parser@{Parser}!Block@{Block}}
+\index{Block@{Block}!Parser@{Parser}}
+\subsubsection[{Block}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Block ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a4d583a4596c19faf368265ec1948a42e}
+
+
+References debug(), DefinitionPart(), First::DefinitionPart(), lookAheadToken, match(), Set::munion(), StatementPart(), First::StatementPart(), and syntaxCheck().
+
+\hypertarget{classParser_aa4a37b37b244053459fad1a82c7d9491}{
+\index{Parser@{Parser}!BooleanSymbol@{BooleanSymbol}}
+\index{BooleanSymbol@{BooleanSymbol}!Parser@{Parser}}
+\subsubsection[{BooleanSymbol}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::BooleanSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aa4a37b37b244053459fad1a82c7d9491}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}{
+\index{Parser@{Parser}!Constant@{Constant}}
+\index{Constant@{Constant}!Parser@{Parser}}
+\subsubsection[{Constant}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Constant ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}
+
+
+References BooleanSymbol(), ConstantName(), debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Numeral(), and syntaxCheck().
+
+\hypertarget{classParser_abb393c5891c5a48e7be396bb6249ee4b}{
+\index{Parser@{Parser}!ConstantDefinition@{ConstantDefinition}}
+\index{ConstantDefinition@{ConstantDefinition}!Parser@{Parser}}
+\subsubsection[{ConstantDefinition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ConstantDefinition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_abb393c5891c5a48e7be396bb6249ee4b}
+
+
+References Constant(), First::Constant(), ConstantName(), First::ConstantName(), debug(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_aec8b7271b672c8d609cf1df8b51cacc9}{
+\index{Parser@{Parser}!ConstantName@{ConstantName}}
+\index{ConstantName@{ConstantName}!Parser@{Parser}}
+\subsubsection[{ConstantName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ConstantName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aec8b7271b672c8d609cf1df8b51cacc9}
+
+
+References debug(), lookAheadToken, syntaxCheck(), and VariableName().
+
+\hypertarget{classParser_a862ea4d5a0d322471e3183aa4d51ad4b}{
+\index{Parser@{Parser}!debug@{debug}}
+\index{debug@{debug}!Parser@{Parser}}
+\subsubsection[{debug}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::debug (string {\em functionName}, \/  {\bf Set} {\em sts}, \/  {\bf Token} {\em nextToken})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a862ea4d5a0d322471e3183aa4d51ad4b}
+
+
+A function for printing debug parsing information to the screen. 
+
+Parsing Debug information output function.
+
+This function takes the Function Name (a string), a given \hyperlink{classSet}{Set} and a \hyperlink{classToken}{Token} as an input, and outputs them in a readable form.
+
+Outputs the current parsing information as a form of debugging information. The function name is grabbed from the \_\-\_\-func\_\-\_\- C++ macro.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em functionName}]The name of the function caller. \item[{\em sts}]The current stack's stop set. \item[{\em nextToken}]The next token being parsed. \end{DoxyParams}
+
+
+References admin, debugflag, Admin::getColumnNumber(), and Admin::getLineNumber().
+
+\hypertarget{classParser_aef0bb75e13a569ffde9f8a56625aeb41}{
+\index{Parser@{Parser}!Definition@{Definition}}
+\index{Definition@{Definition}!Parser@{Parser}}
+\subsubsection[{Definition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Definition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aef0bb75e13a569ffde9f8a56625aeb41}
+
+
+References ConstantDefinition(), First::ConstantDefinition(), debug(), Token::getLexeme(), lookAheadToken, First::ProcedureDefinition(), ProcedureDefintion(), syntaxCheck(), VariableDefinition(), and First::VariableDefinition().
+
+\hypertarget{classParser_a481fd10039485563c664099d5ace6428}{
+\index{Parser@{Parser}!DefinitionPart@{DefinitionPart}}
+\index{DefinitionPart@{DefinitionPart}!Parser@{Parser}}
+\subsubsection[{DefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::DefinitionPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a481fd10039485563c664099d5ace6428}
+
+
+References debug(), First::Definition(), Definition(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_ae1ced275b4dafa58b751c66333a41f98}{
+\index{Parser@{Parser}!DoStatement@{DoStatement}}
+\index{DoStatement@{DoStatement}!Parser@{Parser}}
+\subsubsection[{DoStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::DoStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ae1ced275b4dafa58b751c66333a41f98}
+
+
+References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_aa5c2ec1d4c045a6783887bd7453e99ed}{
+\index{Parser@{Parser}!EmptyStatement@{EmptyStatement}}
+\index{EmptyStatement@{EmptyStatement}!Parser@{Parser}}
+\subsubsection[{EmptyStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::EmptyStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aa5c2ec1d4c045a6783887bd7453e99ed}
+
+
+References debug(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a155ac163cd68b4e1b8098b43be1189e1}{
+\index{Parser@{Parser}!Expression@{Expression}}
+\index{Expression@{Expression}!Parser@{Parser}}
+\subsubsection[{Expression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Expression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a155ac163cd68b4e1b8098b43be1189e1}
+
+
+References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Set::munion(), First::PrimaryExpression(), PrimaryExpression(), PrimaryOperator(), First::PrimaryOperator(), and syntaxCheck().
+
+\hypertarget{classParser_a867bebdf8a97af4991fe044b9d7e616b}{
+\index{Parser@{Parser}!ExpressionList@{ExpressionList}}
+\index{ExpressionList@{ExpressionList}!Parser@{Parser}}
+\subsubsection[{ExpressionList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ExpressionList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a867bebdf8a97af4991fe044b9d7e616b}
+
+
+References debug(), First::Expression(), Expression(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_a1310e1db541b2a3b614ec4491b7196ea}{
+\index{Parser@{Parser}!Factor@{Factor}}
+\index{Factor@{Factor}!Parser@{Parser}}
+\subsubsection[{Factor}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Factor ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a1310e1db541b2a3b614ec4491b7196ea}
+
+
+References First::Constant(), Constant(), debug(), Expression(), First::Expression(), First::Factor(), FactorName(), First::FactorName(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), syntaxError(), First::VariableAccess(), and VariableAccess().
+
+\hypertarget{classParser_a3eeedadd101b70aef097d1ef8f5f8974}{
+\index{Parser@{Parser}!FactorName@{FactorName}}
+\index{FactorName@{FactorName}!Parser@{Parser}}
+\subsubsection[{FactorName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::FactorName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a3eeedadd101b70aef097d1ef8f5f8974}
+
+
+References BooleanSymbol(), First::BooleanSymbol(), First::Constant(), Token::getLexeme(), IndexedSelector(), First::IndexedSelector(), Set::isMember(), lookAheadToken, match(), Set::munion(), Numeral(), First::Numeral(), syntaxCheck(), and First::VariableAccess().
+
+\hypertarget{classParser_ab9dbadf49595360da28b8cc77ddec8e7}{
+\index{Parser@{Parser}!GuardedCommand@{GuardedCommand}}
+\index{GuardedCommand@{GuardedCommand}!Parser@{Parser}}
+\subsubsection[{GuardedCommand}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommand ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ab9dbadf49595360da28b8cc77ddec8e7}
+
+
+References debug(), Expression(), lookAheadToken, match(), Set::munion(), StatementPart(), First::StatementPart(), and syntaxCheck().
+
+\hypertarget{classParser_a00618d906669f1d0908961dc6c6c51e0}{
+\index{Parser@{Parser}!GuardedCommandList@{GuardedCommandList}}
+\index{GuardedCommandList@{GuardedCommandList}!Parser@{Parser}}
+\subsubsection[{GuardedCommandList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommandList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a00618d906669f1d0908961dc6c6c51e0}
+
+
+References debug(), Token::getLexeme(), First::GuardedCommand(), GuardedCommand(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_af7ef9a71f5e821040a16974c4602e23e}{
+\index{Parser@{Parser}!IfStatement@{IfStatement}}
+\index{IfStatement@{IfStatement}!Parser@{Parser}}
+\subsubsection[{IfStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::IfStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_af7ef9a71f5e821040a16974c4602e23e}
+
+
+References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}{
+\index{Parser@{Parser}!IndexedSelector@{IndexedSelector}}
+\index{IndexedSelector@{IndexedSelector}!Parser@{Parser}}
+\subsubsection[{IndexedSelector}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::IndexedSelector ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}
+
+
+References debug(), Expression(), First::Expression(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_afd75ba38a886da3930c4a29f5d353a62}{
+\index{Parser@{Parser}!match@{match}}
+\index{match@{match}!Parser@{Parser}}
+\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::match (string {\em matchMe}, \/  {\bf Set} {\em validNextCharacters})}}
+\label{classParser_afd75ba38a886da3930c4a29f5d353a62}
+
+
+Lexeme matching function. 
+
+The Parser's lexeme Matching function.
+
+Uses a set object consisting of the next possible valid lexemes to check of matched character is valid, and outputs an error otherwise. 
+\begin{DoxyParams}{Parameters}
+\item[{\em matchMe}]The string lexeme to be matched. \item[{\em validNextCharacters}]The set of characters that represent a valid match.\item[{\em matchMe}]A lexeme that we wish to check for a match for validity. \item[{\em validNextCharacters}]A set of characters that would be a \char`\"{}valid\char`\"{} next input. \end{DoxyParams}
+
+
+References Token::getLexeme(), lookAheadToken, nextToken(), syntaxCheck(), and syntaxError().
+
+\hypertarget{classParser_a0f016865b3ae30a62a06abbb7fca7345}{
+\index{Parser@{Parser}!MultiplyingOperator@{MultiplyingOperator}}
+\index{MultiplyingOperator@{MultiplyingOperator}!Parser@{Parser}}
+\subsubsection[{MultiplyingOperator}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::MultiplyingOperator ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a0f016865b3ae30a62a06abbb7fca7345}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_ab53c98f6ae7ca5a9a48a1eec75fb52bc}{
+\index{Parser@{Parser}!nextToken@{nextToken}}
+\index{nextToken@{nextToken}!Parser@{Parser}}
+\subsubsection[{nextToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} Parser::nextToken ()}}
+\label{classParser_ab53c98f6ae7ca5a9a48a1eec75fb52bc}
+
+
+Uses the \hyperlink{classAdmin}{Admin} object to run the scanner and grab the next token, parsing when valid. 
+
+Function that advances the scanner until a valid input is found.
+
+Loops the tokenizer until a non-\/bad/non-\/newline/non-\/comment token is found. Returns a token, possibly blank. 
+
+References admin, BADNUMERAL, BADSYMBOL, COMMENT, Token::getType(), NEWLINE, and Admin::nextToken().
+
+\hypertarget{classParser_aadadd3280fa339b1433a8ad665479bc4}{
+\index{Parser@{Parser}!Numeral@{Numeral}}
+\index{Numeral@{Numeral}!Parser@{Parser}}
+\subsubsection[{Numeral}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Numeral ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aadadd3280fa339b1433a8ad665479bc4}
+
+
+References debug(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_abe6f497eafd870c3e9f28d4c241e280a}{
+\index{Parser@{Parser}!PrimaryExpression@{PrimaryExpression}}
+\index{PrimaryExpression@{PrimaryExpression}!Parser@{Parser}}
+\subsubsection[{PrimaryExpression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::PrimaryExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_abe6f497eafd870c3e9f28d4c241e280a}
+
+
+References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Set::munion(), RelationalOperator(), First::RelationalOperator(), First::SimpleExpression(), SimpleExpression(), and syntaxCheck().
+
+\hypertarget{classParser_a7ac200c2e0ac927e115027fb593ac72d}{
+\index{Parser@{Parser}!PrimaryOperator@{PrimaryOperator}}
+\index{PrimaryOperator@{PrimaryOperator}!Parser@{Parser}}
+\subsubsection[{PrimaryOperator}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::PrimaryOperator ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a7ac200c2e0ac927e115027fb593ac72d}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a0f04e446170cd685f2ab8ecb6782025f}{
+\index{Parser@{Parser}!ProcedureDefintion@{ProcedureDefintion}}
+\index{ProcedureDefintion@{ProcedureDefintion}!Parser@{Parser}}
+\subsubsection[{ProcedureDefintion}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureDefintion ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a0f04e446170cd685f2ab8ecb6782025f}
+
+
+References Block(), First::Block(), debug(), lookAheadToken, match(), Set::munion(), ProcedureName(), First::ProcedureName(), and syntaxCheck().
+
+\hypertarget{classParser_a72cc285af2d83a0348a47a78aced1582}{
+\index{Parser@{Parser}!ProcedureName@{ProcedureName}}
+\index{ProcedureName@{ProcedureName}!Parser@{Parser}}
+\subsubsection[{ProcedureName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a72cc285af2d83a0348a47a78aced1582}
+
+
+References debug(), lookAheadToken, syntaxCheck(), and VariableName().
+
+\hypertarget{classParser_a7a6c6b63d49340ff06c453ce8954eeff}{
+\index{Parser@{Parser}!ProcedureStatement@{ProcedureStatement}}
+\index{ProcedureStatement@{ProcedureStatement}!Parser@{Parser}}
+\subsubsection[{ProcedureStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a7a6c6b63d49340ff06c453ce8954eeff}
+
+
+References debug(), lookAheadToken, match(), Set::munion(), ProcedureName(), First::ProcedureName(), and syntaxCheck().
+
+\hypertarget{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}{
+\index{Parser@{Parser}!Program@{Program}}
+\index{Program@{Program}!Parser@{Parser}}
+\subsubsection[{Program}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Program ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}
+
+
+The following functions make up the core of our \hyperlink{classParser}{Parser}, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions. 
+
+The following is a set of Production-\/Rule functions.
+
+Each one has a specific speciality in regards to how they treat their input and production rules, but on the whole they follow a key process:
+
+1) Output the function name and data. 2) Choose a production rule to follow based off of the lookahead 3) Try to Match any prerequisite statements or rules 4) Append any valid lexemes to the StopSet sts 5) Choose a production rule and follow it (a non-\/terminal) 6) Repeat $\sim$3-\/5 unless an error is found 7) Attempt to match the post-\/requisite statement/lexeme/rule. 8) Check the validity of the lookahead in regards to the stopset sts
+
+This implicitly maintains a \char`\"{}stack\char`\"{} of unique stopsets at each function (production) level, These are allocated on the application stack.
+
+Thus, we need to be wary of Stack Overflows when using the recursive parser. 
+
+References Block(), debug(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}{
+\index{Parser@{Parser}!ReadStatement@{ReadStatement}}
+\index{ReadStatement@{ReadStatement}!Parser@{Parser}}
+\subsubsection[{ReadStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ReadStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}
+
+
+References debug(), lookAheadToken, match(), Set::munion(), syntaxCheck(), VariableAccessList(), and First::VariableAccessList().
+
+\hypertarget{classParser_ab68b61bab0a323b67457d520578cb853}{
+\index{Parser@{Parser}!RelationalOperator@{RelationalOperator}}
+\index{RelationalOperator@{RelationalOperator}!Parser@{Parser}}
+\subsubsection[{RelationalOperator}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::RelationalOperator ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ab68b61bab0a323b67457d520578cb853}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a9e8d06d145f534e73a40b38e3f6711a0}{
+\index{Parser@{Parser}!run@{run}}
+\index{run@{run}!Parser@{Parser}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::run ()}}
+\label{classParser_a9e8d06d145f534e73a40b38e3f6711a0}
+
+
+Runs the \hyperlink{classParser}{Parser} by starting the Parse production(s) tree with the EOL \$ symbol. 
+
+The main Runner for the \hyperlink{classParser}{Parser} object.
+
+Sets the \$ marker for the file as a stopset value. This ensures that \$ does not get recognized as a syntax error and that any matches that happen to include a \$ will be correct. The initial grammar prod., Program, is parsed (executed with sts). 
+
+References Program().
+
+\hypertarget{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}{
+\index{Parser@{Parser}!SimpleExpression@{SimpleExpression}}
+\index{SimpleExpression@{SimpleExpression}!Parser@{Parser}}
+\subsubsection[{SimpleExpression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::SimpleExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}
+
+
+References AddingOperator(), First::AddingOperator(), debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), Term(), and First::Term().
+
+\hypertarget{classParser_a23d5c23531d92c7249034a9e637b4467}{
+\index{Parser@{Parser}!Statement@{Statement}}
+\index{Statement@{Statement}!Parser@{Parser}}
+\subsubsection[{Statement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Statement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a23d5c23531d92c7249034a9e637b4467}
+
+
+References AssignmentStatement(), debug(), DoStatement(), EmptyStatement(), Token::getLexeme(), IfStatement(), Set::isMember(), lookAheadToken, First::ProcedureDefinition(), ProcedureStatement(), ReadStatement(), syntaxCheck(), and WriteStatement().
+
+\hypertarget{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}{
+\index{Parser@{Parser}!StatementPart@{StatementPart}}
+\index{StatementPart@{StatementPart}!Parser@{Parser}}
+\subsubsection[{StatementPart}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::StatementPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), Statement(), First::Statement(), and syntaxCheck().
+
+\hypertarget{classParser_a61a1e512e33d3498f45d1e6f7c7aaf4d}{
+\index{Parser@{Parser}!syntaxCheck@{syntaxCheck}}
+\index{syntaxCheck@{syntaxCheck}!Parser@{Parser}}
+\subsubsection[{syntaxCheck}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::syntaxCheck ({\bf Set} {\em validNextCharacters})}}
+\label{classParser_a61a1e512e33d3498f45d1e6f7c7aaf4d}
+
+
+A function that requests an error check upon finding a character that is invalid. 
+
+This can only happen after having followed a Valid input character. 
+
+References Token::getLexeme(), Set::isMember(), lookAheadToken, and syntaxError().
+
+\hypertarget{classParser_a705ca7e2357f506dc5bea989e40ca11f}{
+\index{Parser@{Parser}!syntaxError@{syntaxError}}
+\index{syntaxError@{syntaxError}!Parser@{Parser}}
+\subsubsection[{syntaxError}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::syntaxError ({\bf Set} {\em validNextCharacters})}}
+\label{classParser_a705ca7e2357f506dc5bea989e40ca11f}
+
+
+Outputs a syntax error message followed by the characters that would be correct. 
+
+syntaxError will loop until it finds the next valid character after finding an error. 
+\begin{DoxyParams}{Parameters}
+\item[{\em validNextCharacters}]The set of valid next characters as indicated by the grammar. \end{DoxyParams}
+
+
+References admin, Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Set::isMember(), lookAheadToken, nextToken(), and Set::toString().
+
+\hypertarget{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}{
+\index{Parser@{Parser}!Term@{Term}}
+\index{Term@{Term}!Parser@{Parser}}
+\subsubsection[{Term}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Term ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}
+
+
+References debug(), First::Factor(), Factor(), Token::getLexeme(), Set::isMember(), lookAheadToken, MultiplyingOperator(), First::MultiplyingOperator(), Set::munion(), and syntaxCheck().
+
+\hypertarget{classParser_a0bb180ec60cb61345a7890c8766f0048}{
+\index{Parser@{Parser}!TypeSymbol@{TypeSymbol}}
+\index{TypeSymbol@{TypeSymbol}!Parser@{Parser}}
+\subsubsection[{TypeSymbol}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::TypeSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a0bb180ec60cb61345a7890c8766f0048}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_ac004c4cc14aeca2512087a692594786b}{
+\index{Parser@{Parser}!VariableAccess@{VariableAccess}}
+\index{VariableAccess@{VariableAccess}!Parser@{Parser}}
+\subsubsection[{VariableAccess}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableAccess ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ac004c4cc14aeca2512087a692594786b}
+
+
+References debug(), Token::getLexeme(), First::IndexedSelector(), IndexedSelector(), Set::isMember(), lookAheadToken, Set::munion(), syntaxCheck(), and VariableName().
+
+\hypertarget{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}{
+\index{Parser@{Parser}!VariableAccessList@{VariableAccessList}}
+\index{VariableAccessList@{VariableAccessList}!Parser@{Parser}}
+\subsubsection[{VariableAccessList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableAccessList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), syntaxCheck(), First::VariableAccess(), and VariableAccess().
+
+\hypertarget{classParser_a08145dddc145745970fe4849aa667e05}{
+\index{Parser@{Parser}!VariableDefinition@{VariableDefinition}}
+\index{VariableDefinition@{VariableDefinition}!Parser@{Parser}}
+\subsubsection[{VariableDefinition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableDefinition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a08145dddc145745970fe4849aa667e05}
+
+
+References debug(), lookAheadToken, Set::munion(), syntaxCheck(), TypeSymbol(), VariableDefinitionPart(), and First::VariableDefinitionPart().
+
+\hypertarget{classParser_aca0b05f8805667f5057d695ee157ab74}{
+\index{Parser@{Parser}!VariableDefinitionPart@{VariableDefinitionPart}}
+\index{VariableDefinitionPart@{VariableDefinitionPart}!Parser@{Parser}}
+\subsubsection[{VariableDefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableDefinitionPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aca0b05f8805667f5057d695ee157ab74}
+
+
+References Constant(), First::Constant(), debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), syntaxCheck(), VariableList(), and First::VariableList().
+
+\hypertarget{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}{
+\index{Parser@{Parser}!VariableList@{VariableList}}
+\index{VariableList@{VariableList}!Parser@{Parser}}
+\subsubsection[{VariableList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}
+
+
+References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), First::VariableName(), and VariableName().
+
+\hypertarget{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}{
+\index{Parser@{Parser}!VariableName@{VariableName}}
+\index{VariableName@{VariableName}!Parser@{Parser}}
+\subsubsection[{VariableName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}
+
+
+References debug(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a092a51a38e65c3be07328bfc1e370f0e}{
+\index{Parser@{Parser}!WriteStatement@{WriteStatement}}
+\index{WriteStatement@{WriteStatement}!Parser@{Parser}}
+\subsubsection[{WriteStatement}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::WriteStatement ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a092a51a38e65c3be07328bfc1e370f0e}
+
+
+References debug(), ExpressionList(), First::ExpressionList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classParser_a96a8ee1229f37648e0ee704827b1c4c7}{
+\index{Parser@{Parser}!admin@{admin}}
+\index{admin@{admin}!Parser@{Parser}}
+\subsubsection[{admin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Admin}$\ast$ {\bf Parser::admin}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a96a8ee1229f37648e0ee704827b1c4c7}
+
+
+The \hyperlink{classParser}{Parser} uses the \hyperlink{classScanner}{Scanner} to parse the file, through a pointer to the admin class. 
+
+\hypertarget{classParser_a8180cecab442c4c7f582bbe1d0682bf1}{
+\index{Parser@{Parser}!currentToken@{currentToken}}
+\index{currentToken@{currentToken}!Parser@{Parser}}
+\subsubsection[{currentToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} {\bf Parser::currentToken}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a8180cecab442c4c7f582bbe1d0682bf1}
+
+
+Tokens retrieved using the scanner and used in parsing heuristics. 
+
+\hypertarget{classParser_a090a56f54cfd45240a039863b8289581}{
+\index{Parser@{Parser}!debugflag@{debugflag}}
+\index{debugflag@{debugflag}!Parser@{Parser}}
+\subsubsection[{debugflag}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Parser::debugflag}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a090a56f54cfd45240a039863b8289581}
+
+
+The Debug function only processes if this Flag is set to True. 
+
+\hypertarget{classParser_a4f9e59e89197efefa1feff50f5ea8725}{
+\index{Parser@{Parser}!lookAheadToken@{lookAheadToken}}
+\index{lookAheadToken@{lookAheadToken}!Parser@{Parser}}
+\subsubsection[{lookAheadToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} {\bf Parser::lookAheadToken}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a4f9e59e89197efefa1feff50f5ea8725}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{parser_8h}{parser.h}\item 
+\hyperlink{parser_8cpp}{parser.cpp}\end{DoxyCompactItemize}

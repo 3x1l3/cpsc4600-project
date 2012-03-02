@@ -21,7 +21,7 @@
  * the current Parsing function - that is, which node in the descent tree our
  * parsing and scanning is currently in.
  *
- * A SET is an object containing a vector lexemic strings. @see set.cpp
+ * A SET is an object containing a vector of lexemic strings. @see set.cpp
  * The Set "sts" that is passed between objects is the "stop set", which functions 
  * as a sentinel set indicating the valid next characters; if we see a lexeme that
  * is not in the (sts) Stop Set, we stop (generate an error).

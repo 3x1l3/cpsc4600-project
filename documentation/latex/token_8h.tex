@@ -15,7 +15,7 @@ The specification/apparatus for the base \hyperlink{classToken}{Token} object.
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classToken}{Token}
-\begin{DoxyCompactList}\small\item\em \hyperlink{classToken}{Token} object that is made up of a lexeme (string), a value (integer) and a Type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classToken}{Token} object that is made up of a lexeme (string), a value (integer) and a Type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -63,17 +63,17 @@ enum \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} \{ \par
 \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7a546eccfedc4dcc8623ed0668f77ef982}{ARROW}, 
 \hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7aae696377c19e507b64e16be78ce3bbdb}{COMMENT}
  \}
-\begin{DoxyCompactList}\small\item\em Enum for our token types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Enum for our token types. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 string \hyperlink{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}{spellOutTypeName} (\hyperlink{token_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type})
-\begin{DoxyCompactList}\small\item\em Returns the corresponding string label for a given Type value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the corresponding string label for a given Type value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 static string \hyperlink{token_8h_a760c2571b6ff185f819314db3d61dbe2}{typeSpelling} \mbox{[}$\,$\mbox{]}
-\begin{DoxyCompactList}\small\item\em A string representation of enumerated types, for printing purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A string representation of enumerated types, for printing purposes. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -247,11 +247,7 @@ COMMENT}
 \hypertarget{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}{
 \index{token.h@{token.h}!spellOutTypeName@{spellOutTypeName}}
 \index{spellOutTypeName@{spellOutTypeName}!token.h@{token.h}}
-\subsubsection[{spellOutTypeName}]{\setlength{\rightskip}{0pt plus 5cm}string spellOutTypeName (
-\begin{DoxyParamCaption}
-\item[{{\bf Type}}]{name}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{spellOutTypeName}]{\setlength{\rightskip}{0pt plus 5cm}string spellOutTypeName ({\bf Type} {\em name})}}
 \label{token_8h_aa870409f62b30e494e63c5a1e4d7ffae}
 
 
@@ -259,9 +255,7 @@ Returns the corresponding string label for a given Type value.
 
 User inputs one of our Type enums, and receives a String version of it. 
 \begin{DoxyParams}{Parameters}
-{\em Type} & enum. \\
-\hline
-\end{DoxyParams}
+\item[{\em name}]enum. \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 string String version of a Type.
 \end{DoxyReturn}
@@ -271,9 +265,7 @@ We return a string for an enumerated type, divined by subtracting the base assig
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & A Type that is to be returned in string format. \\
-\hline
-\end{DoxyParams}
+\item[{\em name}]A Type that is to be returned in string format. \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 A string version of the given type. 
 \end{DoxyReturn}

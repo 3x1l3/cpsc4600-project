@@ -1,0 +1,32 @@
+\hypertarget{first_8cpp}{
+\section{first.cpp File Reference}
+\label{first_8cpp}\index{first.cpp@{first.cpp}}
+}
+
+
+The definition for the \hyperlink{classFirst}{First} set-\/collection object and functions.  
+
+
+{\ttfamily \#include \char`\"{}first.h\char`\"{}}\par
+
+
+\subsection{Detailed Description}
+The definition for the \hyperlink{classFirst}{First} set-\/collection object and functions. This class is a deceptively simple one. The \hyperlink{classFirst}{First} object is really just a collection of functions within an easily modifiable class structure that returns the \char`\"{}First set\char`\"{} of a given Nonterminal.
+
+Which is to say, the \char`\"{}first\char`\"{} terminals of a given Nonterminal (or, in our case, function) is returned.
+
+For each of the following functions, a base set or sets are created with the appropriate set values corresponding to the \hyperlink{classFirst}{First} set for the given nonterminal that each function represents (by name). After this, sets are created using the mUnion of the given function set with the following productions' first sets.
+
+Finally, the static functions return the given sets and are accessible without the calss being instantiated.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{set_8h}{set.h} 
+
+\hyperlink{parser_8cpp}{parser.cpp} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to March 1st, 2011 
+\end{DoxyDate}

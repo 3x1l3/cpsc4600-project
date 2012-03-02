@@ -62,7 +62,7 @@ static string typeSpelling[] =
 /**
  * @brief Returns the corresponding string label for a given Type value.
  * User inputs one of our Type enums, and receives a String version of it.
- * @param Type enum.
+ * @param name enum.
  * @return string String version of a Type.
  */
 string spellOutTypeName(Type);

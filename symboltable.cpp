@@ -156,7 +156,7 @@ int SymbolTable::findIndexWhere(string tokenName, string attribute)
 /**
  * Find if an attribute value exists given the information provided.
  * @param index
- * @param names
+ * @param name
  * @param attribute
  * @param value
  * @return bool

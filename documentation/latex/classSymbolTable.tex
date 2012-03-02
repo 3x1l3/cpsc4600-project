@@ -15,47 +15,45 @@ symboltable object that stores lexemes, IDentifiers and Locations as keys.
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classSymbolTable_a1fbe6cec5594463b766db0ac58c9aa1d}{SymbolTable} ()
-\begin{DoxyCompactList}\small\item\em Basic constructor. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Basic constructor. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a1df7dfc3592c924e8c8a9fea1e13bf89}{makeEntry} (string)
-\begin{DoxyCompactList}\small\item\em Adds another entry to table and increases the index then returning the previous index value. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Adds another entry to table and increases the index then returning the previous index value. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}{makeEntry} (string, string, string)
-\begin{DoxyCompactList}\small\item\em A new table entry is made with a predetermined name, lexeme/attribute and value of said attribute. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A new table entry is made with a predetermined name, lexeme/attribute and value of said attribute. \item\end{DoxyCompactList}\item 
 void \hyperlink{classSymbolTable_ac7a86e820025627863b4277cf84353a0}{addAttribute} (int, string, string, string)
-\begin{DoxyCompactList}\small\item\em Assigns a new value to the lexeme at the specified location. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Assigns a new value to the lexeme at the specified location. \item\end{DoxyCompactList}\item 
 map$<$ int, map$<$ string, map$<$ string, string $>$ $>$ $>$ \hyperlink{classSymbolTable_ad9429553f1aadeade3339e32e4f4c61e}{get} ()
-\begin{DoxyCompactList}\small\item\em Returns a copy of the current symbol table. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Returns a copy of the current symbol table. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classSymbolTable_af93b3c97308b5cfe7661e57b83d8dc35}{attributeExists} (int, string, string)
-\begin{DoxyCompactList}\small\item\em Checks if a given entry/lexeme actually exists or not. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Checks if a given entry/lexeme actually exists or not. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classSymbolTable_a7df0fef90bee097810b553ad2e1c6cec}{attributeValueExists} (int, string, string, string)
-\begin{DoxyCompactList}\small\item\em Verify that the attribute value at the given entry matches the one the caller is examining. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Verify that the attribute value at the given entry matches the one the caller is examining. \item\end{DoxyCompactList}\item 
 string \hyperlink{classSymbolTable_a0b0bdb5b1a6095782c6c4f318737a0a9}{findAttributeWhere} (string, string)
-\begin{DoxyCompactList}\small\item\em Searches the table for an entry with a matching lexeme and token name. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Searches the table for an entry with a matching lexeme and token name. \item\end{DoxyCompactList}\item 
 string \hyperlink{classSymbolTable_aa5e55d23f3b69e48a8e6c385bd9d509f}{getAttributeWhere} (int, string, string)
-\begin{DoxyCompactList}\small\item\em Returns the value at the given Attribute location if it exists. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Returns the value at the given Attribute location if it exists. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a61a3da421ef79fffe47e8e2d3065bb05}{findIndexWhere} (string, string)
-\begin{DoxyCompactList}\small\item\em We find the Index of a token entry using its name and attribute. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em We find the Index of a token entry using its name and attribute. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a33fa9fe363246a0b54e9f58191ad931e}{findLexeme} (string)
-\begin{DoxyCompactList}\small\item\em Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a218f832e3d8b4d37cb3aee7af732a0c6}{getNumOfReservedWords} ()
-\begin{DoxyCompactList}\small\item\em Returns the reserved word count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the reserved word count. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 int \hyperlink{classSymbolTable_ac98627cea258b0931be5286aacb1f478}{numberOfReservedWords}
-\begin{DoxyCompactList}\small\item\em We store and return the number of possible reserved words. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em We store and return the number of possible reserved words. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 map$<$ int, map$<$ string, map$<$ string, string $>$ $>$ $>$ \hyperlink{classSymbolTable_a96f585bb42df3aad2e833e95681f0727}{table}
-\begin{DoxyCompactList}\small\item\em Our symbol table is a Map with a Map with a Map, called \char`\"{}table\char`\"{}. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Our symbol table is a Map with a Map with a Map, called \char`\"{}table\char`\"{}. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a6e85689256b178941b87f51e570a6c1e}{index}
-\begin{DoxyCompactList}\small\item\em An integer to index our symbol table easier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em An integer to index our symbol table easier. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-symboltable object that stores lexemes, IDentifiers and Locations as keys. 
-
-The symbol table stores its values in a Map of a Map of a Map. The values themselves are the specific keys of each kind.
+symboltable object that stores lexemes, IDentifiers and Locations as keys. The symbol table stores its values in a Map of a Map of a Map. The values themselves are the specific keys of each kind.
 
 It provides multiple ways to access and change inner Symbol Table data, and stores said data in a fast access form.
 
@@ -67,11 +65,7 @@ For reference, String Compare returns a 0 if the comparison result is fully \cha
 \hypertarget{classSymbolTable_a1fbe6cec5594463b766db0ac58c9aa1d}{
 \index{SymbolTable@{SymbolTable}!SymbolTable@{SymbolTable}}
 \index{SymbolTable@{SymbolTable}!SymbolTable@{SymbolTable}}
-\subsubsection[{SymbolTable}]{\setlength{\rightskip}{0pt plus 5cm}SymbolTable::SymbolTable (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{SymbolTable}]{\setlength{\rightskip}{0pt plus 5cm}SymbolTable::SymbolTable ()}}
 \label{classSymbolTable_a1fbe6cec5594463b766db0ac58c9aa1d}
 
 
@@ -89,14 +83,7 @@ References index, makeEntry(), and numberOfReservedWords.
 \hypertarget{classSymbolTable_ac7a86e820025627863b4277cf84353a0}{
 \index{SymbolTable@{SymbolTable}!addAttribute@{addAttribute}}
 \index{addAttribute@{addAttribute}!SymbolTable@{SymbolTable}}
-\subsubsection[{addAttribute}]{\setlength{\rightskip}{0pt plus 5cm}void SymbolTable::addAttribute (
-\begin{DoxyParamCaption}
-\item[{int}]{index, }
-\item[{string}]{name, }
-\item[{string}]{attribute, }
-\item[{string}]{value}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{addAttribute}]{\setlength{\rightskip}{0pt plus 5cm}void SymbolTable::addAttribute (int {\em index}, \/  string {\em name}, \/  string {\em attribute}, \/  string {\em value})}}
 \label{classSymbolTable_ac7a86e820025627863b4277cf84353a0}
 
 
@@ -106,29 +93,15 @@ Adds/Alters an attribute at a specific index, specifying token name, attribute a
 
 
 \begin{DoxyParams}{Parameters}
-{\em index} & \\
-\hline
-{\em name} & \\
-\hline
-{\em attribute} & \\
-\hline
-{\em value} & \\
-\hline
-\end{DoxyParams}
+\item[{\em index}]\item[{\em name}]\item[{\em attribute}]\item[{\em value}]\end{DoxyParams}
 
 
-References index, and table.
+References table.
 
 \hypertarget{classSymbolTable_af93b3c97308b5cfe7661e57b83d8dc35}{
 \index{SymbolTable@{SymbolTable}!attributeExists@{attributeExists}}
 \index{attributeExists@{attributeExists}!SymbolTable@{SymbolTable}}
-\subsubsection[{attributeExists}]{\setlength{\rightskip}{0pt plus 5cm}bool SymbolTable::attributeExists (
-\begin{DoxyParamCaption}
-\item[{int}]{index, }
-\item[{string}]{name, }
-\item[{string}]{attribute}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{attributeExists}]{\setlength{\rightskip}{0pt plus 5cm}bool SymbolTable::attributeExists (int {\em index}, \/  string {\em name}, \/  string {\em attribute})}}
 \label{classSymbolTable_af93b3c97308b5cfe7661e57b83d8dc35}
 
 
@@ -140,31 +113,18 @@ This is separate from the lexeme's value.
 
 It is important to note that this is not checking to see if that attribute has an actual value assigned to it, but merely that an entry that can house a value exists. 
 \begin{DoxyParams}{Parameters}
-{\em index} & \\
-\hline
-{\em name} & \\
-\hline
-{\em attribute} & \\
-\hline
-\end{DoxyParams}
+\item[{\em index}]\item[{\em name}]\item[{\em attribute}]\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 bool 
 \end{DoxyReturn}
 
 
-References index, and table.
+References table.
 
 \hypertarget{classSymbolTable_a7df0fef90bee097810b553ad2e1c6cec}{
 \index{SymbolTable@{SymbolTable}!attributeValueExists@{attributeValueExists}}
 \index{attributeValueExists@{attributeValueExists}!SymbolTable@{SymbolTable}}
-\subsubsection[{attributeValueExists}]{\setlength{\rightskip}{0pt plus 5cm}bool SymbolTable::attributeValueExists (
-\begin{DoxyParamCaption}
-\item[{int}]{index, }
-\item[{string}]{name, }
-\item[{string}]{attribute, }
-\item[{string}]{value}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{attributeValueExists}]{\setlength{\rightskip}{0pt plus 5cm}bool SymbolTable::attributeValueExists (int {\em index}, \/  string {\em name}, \/  string {\em attribute}, \/  string {\em value})}}
 \label{classSymbolTable_a7df0fef90bee097810b553ad2e1c6cec}
 
 
@@ -172,35 +132,22 @@ Verify that the attribute value at the given entry matches the one the caller is
 
 Find if an attribute value exists given the information provided.
 
-We check if the given lexeme exists, then check if the Value of it is equivalent to the one sent by the caller (the final String \char`\"{}value\char`\"{}). Could be used for Macro shorthands, will likely be used by the Parser.
+We check if the given lexeme exists, then check if the Value of it is equivalent to the one sent by the caller (the final String \char`\"{}value\char`\"{}). Could be used for Macro shorthands, will likely be used by the \hyperlink{classParser}{Parser}.
 
 
 \begin{DoxyParams}{Parameters}
-{\em index} & \\
-\hline
-{\em names} & \\
-\hline
-{\em attribute} & \\
-\hline
-{\em value} & \\
-\hline
-\end{DoxyParams}
+\item[{\em index}]\item[{\em name}]\item[{\em attribute}]\item[{\em value}]\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 bool 
 \end{DoxyReturn}
 
 
-References attributeExists(), index, and table.
+References attributeExists(), and table.
 
 \hypertarget{classSymbolTable_a0b0bdb5b1a6095782c6c4f318737a0a9}{
 \index{SymbolTable@{SymbolTable}!findAttributeWhere@{findAttributeWhere}}
 \index{findAttributeWhere@{findAttributeWhere}!SymbolTable@{SymbolTable}}
-\subsubsection[{findAttributeWhere}]{\setlength{\rightskip}{0pt plus 5cm}string SymbolTable::findAttributeWhere (
-\begin{DoxyParamCaption}
-\item[{string}]{tokenName, }
-\item[{string}]{attribute}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{findAttributeWhere}]{\setlength{\rightskip}{0pt plus 5cm}string SymbolTable::findAttributeWhere (string {\em tokenName}, \/  string {\em attribute})}}
 \label{classSymbolTable_a0b0bdb5b1a6095782c6c4f318737a0a9}
 
 
@@ -212,11 +159,7 @@ Returns nothing if the attribute is not found. Otherwise it returns the attribut
 
 Not sure how useful this will be later. IF there are multiple tokens with the same attribute names then this will return the first find. Which makes me believe this wont be very useful. 
 \begin{DoxyParams}{Parameters}
-{\em tokenName} & \\
-\hline
-{\em attribute} & \\
-\hline
-\end{DoxyParams}
+\item[{\em tokenName}]\item[{\em attribute}]\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 attribute value on success, empty string on fail. 
 \end{DoxyReturn}
@@ -227,12 +170,7 @@ References attributeExists(), index, and table.
 \hypertarget{classSymbolTable_a61a3da421ef79fffe47e8e2d3065bb05}{
 \index{SymbolTable@{SymbolTable}!findIndexWhere@{findIndexWhere}}
 \index{findIndexWhere@{findIndexWhere}!SymbolTable@{SymbolTable}}
-\subsubsection[{findIndexWhere}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::findIndexWhere (
-\begin{DoxyParamCaption}
-\item[{string}]{tokenName, }
-\item[{string}]{attribute}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{findIndexWhere}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::findIndexWhere (string {\em tokenName}, \/  string {\em attribute})}}
 \label{classSymbolTable_a61a3da421ef79fffe47e8e2d3065bb05}
 
 
@@ -242,11 +180,7 @@ Find an index using a token name and attribute name.
 
 Not sure how useful this will be 
 \begin{DoxyParams}{Parameters}
-{\em tokenName} & \\
-\hline
-{\em attribute} & \\
-\hline
-\end{DoxyParams}
+\item[{\em tokenName}]\item[{\em attribute}]\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 index of found attribute, -\/1 on fail 
 \end{DoxyReturn}
@@ -257,11 +191,7 @@ References attributeExists(), and index.
 \hypertarget{classSymbolTable_a33fa9fe363246a0b54e9f58191ad931e}{
 \index{SymbolTable@{SymbolTable}!findLexeme@{findLexeme}}
 \index{findLexeme@{findLexeme}!SymbolTable@{SymbolTable}}
-\subsubsection[{findLexeme}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::findLexeme (
-\begin{DoxyParamCaption}
-\item[{string}]{lexeme}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{findLexeme}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::findLexeme (string {\em lexeme})}}
 \label{classSymbolTable_a33fa9fe363246a0b54e9f58191ad931e}
 
 
@@ -281,11 +211,7 @@ References index, and table.
 \hypertarget{classSymbolTable_ad9429553f1aadeade3339e32e4f4c61e}{
 \index{SymbolTable@{SymbolTable}!get@{get}}
 \index{get@{get}!SymbolTable@{SymbolTable}}
-\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}map$<$ int, map$<$ string, map$<$ string, string $>$ $>$ $>$ SymbolTable::get (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}map$<$ int, map$<$ string, map$<$ string, string $>$ $>$ $>$ SymbolTable::get ()}}
 \label{classSymbolTable_ad9429553f1aadeade3339e32e4f4c61e}
 
 
@@ -303,13 +229,7 @@ References table.
 \hypertarget{classSymbolTable_aa5e55d23f3b69e48a8e6c385bd9d509f}{
 \index{SymbolTable@{SymbolTable}!getAttributeWhere@{getAttributeWhere}}
 \index{getAttributeWhere@{getAttributeWhere}!SymbolTable@{SymbolTable}}
-\subsubsection[{getAttributeWhere}]{\setlength{\rightskip}{0pt plus 5cm}string SymbolTable::getAttributeWhere (
-\begin{DoxyParamCaption}
-\item[{int}]{index, }
-\item[{string}]{tokenName, }
-\item[{string}]{attribute}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{getAttributeWhere}]{\setlength{\rightskip}{0pt plus 5cm}string SymbolTable::getAttributeWhere (int {\em index}, \/  string {\em tokenName}, \/  string {\em attribute})}}
 \label{classSymbolTable_aa5e55d23f3b69e48a8e6c385bd9d509f}
 
 
@@ -319,25 +239,15 @@ Returns a value at a given location if it exists.
 
 Otherwise, we return the empty string. 
 \begin{DoxyParams}{Parameters}
-{\em index} & \\
-\hline
-{\em tokenName} & \\
-\hline
-{\em attribute} & \\
-\hline
-\end{DoxyParams}
+\item[{\em index}]\item[{\em tokenName}]\item[{\em attribute}]\end{DoxyParams}
 
 
-References attributeExists(), index, and table.
+References attributeExists(), and table.
 
 \hypertarget{classSymbolTable_a218f832e3d8b4d37cb3aee7af732a0c6}{
 \index{SymbolTable@{SymbolTable}!getNumOfReservedWords@{getNumOfReservedWords}}
 \index{getNumOfReservedWords@{getNumOfReservedWords}!SymbolTable@{SymbolTable}}
-\subsubsection[{getNumOfReservedWords}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::getNumOfReservedWords (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{getNumOfReservedWords}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::getNumOfReservedWords ()}}
 \label{classSymbolTable_a218f832e3d8b4d37cb3aee7af732a0c6}
 
 
@@ -347,14 +257,26 @@ Returns the reserved word count.
 
 References numberOfReservedWords.
 
+\hypertarget{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}{
+\index{SymbolTable@{SymbolTable}!makeEntry@{makeEntry}}
+\index{makeEntry@{makeEntry}!SymbolTable@{SymbolTable}}
+\subsubsection[{makeEntry}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::makeEntry (string {\em name}, \/  string {\em attribute}, \/  string {\em value})}}
+\label{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}
+
+
+A new table entry is made with a predetermined name, lexeme/attribute and value of said attribute. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]\item[{\em attribute}]\item[{\em value}]\end{DoxyParams}
+
+
+References index, and table.
+
 \hypertarget{classSymbolTable_a1df7dfc3592c924e8c8a9fea1e13bf89}{
 \index{SymbolTable@{SymbolTable}!makeEntry@{makeEntry}}
 \index{makeEntry@{makeEntry}!SymbolTable@{SymbolTable}}
-\subsubsection[{makeEntry}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::makeEntry (
-\begin{DoxyParamCaption}
-\item[{string}]{name}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{makeEntry}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::makeEntry (string {\em name})}}
 \label{classSymbolTable_a1df7dfc3592c924e8c8a9fea1e13bf89}
 
 
@@ -364,37 +286,7 @@ An entry to the table is made with no information other than an input Name varia
 
 The index variable is used for the index location of the new entry, and the rest of the entry is empty. Our index is increased and the former index is returned. 
 \begin{DoxyParams}{Parameters}
-{\em name} & \\
-\hline
-\end{DoxyParams}
-
-
-References index, and table.
-
-\hypertarget{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}{
-\index{SymbolTable@{SymbolTable}!makeEntry@{makeEntry}}
-\index{makeEntry@{makeEntry}!SymbolTable@{SymbolTable}}
-\subsubsection[{makeEntry}]{\setlength{\rightskip}{0pt plus 5cm}int SymbolTable::makeEntry (
-\begin{DoxyParamCaption}
-\item[{string}]{name, }
-\item[{string}]{attribute, }
-\item[{string}]{value}
-\end{DoxyParamCaption}
-)}}
-\label{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}
-
-
-A new table entry is made with a predetermined name, lexeme/attribute and value of said attribute. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em name} & \\
-\hline
-{\em attribute} & \\
-\hline
-{\em value} & \\
-\hline
-\end{DoxyParams}
+\item[{\em name}]\end{DoxyParams}
 
 
 References index, and table.

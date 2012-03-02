@@ -1,0 +1,592 @@
+\hypertarget{classFirst}{
+\section{First Class Reference}
+\label{classFirst}\index{First@{First}}
+}
+
+
+Essentially, everything done in this program relies upon the \hyperlink{classSet}{Set} class.  
+
+
+
+
+{\ttfamily \#include $<$first.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFirst_ab52a56e1bfd8e9de263574ef04296008}{First} ()
+\begin{DoxyCompactList}\small\item\em Base Constructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a5d7cc34fb31a5d9b862fd2dcfc7613b5}{Program} ()
+\begin{DoxyCompactList}\small\item\em The following functions have been chunked according to logical groups, but I avoided re-\/ordering them at all in case there was a reason for the ordering -\/ such as following closely to the book's production rules or something like that. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aedc44f52b44e7b409df77f585d5c0a94}{Block} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Block, which is of \char`\"{}begin\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aedd571350accc9639500cbded4a5b183}{DefinitionPart} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of DefinitionPart, which is of Definition. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a68b6b0e9e971cbd2acf56a625ebe0599}{Definition} ()
+\begin{DoxyCompactList}\small\item\em Returns the FS of Definition, which consists of ConstantDefinition, VariableDefinition and ProcedureDefinition. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a67220fb2ed992341a3769a7251366674}{ConstantDefinition} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ConstantDefinition, which is \char`\"{}const\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aefcae573e31e01ae74204a6b9e44a36a}{VariableDefinition} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableDefinition, which is that of TypeSymbol. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a9c91c3f1c5d87c2356cacf6e44200764}{VariableDefinitionPart} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableDefinitionPart, which is \char`\"{}array\char`\"{} and that of VariableList. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aca3f9425bf421939aabc8b911fafdc65}{TypeSymbol} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of TypeSymbol, which is \char`\"{}integer\char`\"{} and \char`\"{}boolean\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a53ff9cbd12b57f99e5b9b96f38d100b8}{VariableList} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableList, which is that of VariableName. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ab17ecbd0c5f0a850227885ba86f15835}{ProcedureDefinition} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ProcedureDefinition, which is \char`\"{}proc\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a80a59db3d4fe3e008df01d475a96f354}{StatementPart} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of StatementPart, which is of Statement. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aa8bb2c9262692d87abdfdf83d740e3c9}{Statement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Statement, which consists of that of EmptyStatement, ReadStatement, WriteStatement, AssignmentStatement, ProcedureStatement, IfStatement and DoStatement. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a0b4acc2ad6d1f2f8f8d3b1ec984431bf}{EmptyStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of EmptyStatement, which is \char`\"{}skip\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a88b0ba44671efe5d4838fa80cbc663fd}{ReadStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ReadStatement, which is \char`\"{}read\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aaa47b4e29fb5ab9df531b490bc954dcd}{VariableAccessList} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableAccessList, which is that of VariableAccess. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ab293c9f0bd36e9696dcb336391df35a4}{WriteStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of WriteStatement, which is \char`\"{}write\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_af4783dc02b3360e5f1f3576aa241bc0e}{ExpressionList} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ExpressionList, which is that of Expression. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a0b4661a1cddafd8b7140c0baf5af8b0a}{AssignmentStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of AssignmentStatement, which is that of VariableAccessList. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a4119362212a222c5b738957f325927ef}{ProcedureStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ProcedureStatement, which is \char`\"{}call\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aa05d413f60b740bc9f594f76b51b0d6e}{IfStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of IfStatement, which is \char`\"{}if\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a163746bc8795e5f57ccd145a4f462a73}{DoStatement} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of DoStatement, which is of \char`\"{}do\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a1ab37b8f1947f33138b6a880e0731f5f}{GuardedCommandList} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of GuardedCommandList, which is of GuardedCommand. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aab66c404b95b67ab14b31bfeaa400eb0}{GuardedCommand} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of GuardedCommand, which is of Expression. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a151428da8e728244184a256f94c16fd2}{Expression} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Expression, which is that of PrimaryExpression. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a8fc3bc98fd57866b459cce1edd5c1925}{PrimaryOperator} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of PrimaryOperator, which is \char`\"{}\&\char`\"{} and \char`\"{}$|$\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ae25d77238175a4e13893ef54650c6276}{PrimaryExpression} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of PrimaryExpression, which is that of SimpleExpression. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a261d760170710c35d83cf5d31d4d252c}{RelationalOperator} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of RelationalOperator, which is \char`\"{}$<$\char`\"{}, \char`\"{}$>$\char`\"{} and \char`\"{}=\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a414ede2339bc646cd2d6472d8f887376}{SimpleExpression} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of SimpleExpression, which is \char`\"{}-\/\char`\"{} and that of Term. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_afd4316b16d2f0497aca2e99420d448bb}{AddingOperator} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of AddingOperator, which is \char`\"{}+\char`\"{} and \char`\"{}-\/\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_adde0c66cf7df9688ea94bfa7eec81b27}{Term} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Term, which is that of Factor. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ae41a595e1322eb3995b70eddb276bb2a}{MultiplyingOperator} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of MultiplyOperator, which is \char`\"{}$\ast$\char`\"{}, \char`\"{}$\backslash$\char`\"{} and \char`\"{}/\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ad4b339bc0b44402c2fac146afd4adeeb}{Factor} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Factor, which is \char`\"{}(\char`\"{}, \char`\"{}$\sim$\char`\"{} and that of VariableAccess and Constant. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_af2c57bd5207f82ae122d6177eac2d1b5}{VariableAccess} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableAccess, which is that of VariableName and IndexedSelector. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a288f40e224fa2225533ad520baaa8575}{IndexedSelector} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of IndexedSelector, which is \char`\"{}\mbox{[}\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a7a9a1bfc65dabe8a153af1dcacd502d3}{Constant} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Constant, which is that of BooleanSymbol and ConstantName. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_aa0fa7fe6f11e3ead3307f35b6e29abaa}{Numeral} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of Numeral, which is \char`\"{}num\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_ad54b225baf52d7c2a020615d50549af1}{BooleanSymbol} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of BooleanSymbol, which is \char`\"{}true\char`\"{} and \char`\"{}false\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a36b5dd323041edb5e4a2043776034331}{ConstantName} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ConstantName, which is \char`\"{}name\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a43688eea61d648abe3ed2c006c712ff8}{VariableName} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of VariableName, which is \char`\"{}name\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a677ce3d90fae56d10823b59f73930023}{ProcedureName} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of ProcedureName, which is \char`\"{}name\char`\"{}. \item\end{DoxyCompactList}\item 
+static \hyperlink{classSet}{Set} \hyperlink{classFirst_a7cad21c19a5bee92d6721497c1182d89}{FactorName} ()
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{classFirst}{First} set of FactorName, which is \char`\"{}name\char`\"{}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Essentially, everything done in this program relies upon the \hyperlink{classSet}{Set} class. A static class that constructs \hyperlink{classFirst}{First} Sets for given productions/nonterminals. Please refer to the specification for a FIRST SET as well as the PL Language.
+
+The \hyperlink{classFirst}{First} object provides a series of static functions that return the semi-\/predefined FIRST sets for any given production rule in the PL language.
+
+These sets are composed using the appropriate set of nonterminals and their first sets, and to that end, their terminals/nonterminals.
+
+As such, the functionality of virtually every function in this object is the same, but with tweaked heuristics and unique \hyperlink{classSet}{Set} string values per each set. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classFirst_ab52a56e1bfd8e9de263574ef04296008}{
+\index{First@{First}!First@{First}}
+\index{First@{First}!First@{First}}
+\subsubsection[{First}]{\setlength{\rightskip}{0pt plus 5cm}First::First ()}}
+\label{classFirst_ab52a56e1bfd8e9de263574ef04296008}
+
+
+Base Constructor. 
+
+Base constructor for the first class.
+
+\subsection{Member Function Documentation}
+\hypertarget{classFirst_afd4316b16d2f0497aca2e99420d448bb}{
+\index{First@{First}!AddingOperator@{AddingOperator}}
+\index{AddingOperator@{AddingOperator}!First@{First}}
+\subsubsection[{AddingOperator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::AddingOperator ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_afd4316b16d2f0497aca2e99420d448bb}
+
+
+Returns the \hyperlink{classFirst}{First} set of AddingOperator, which is \char`\"{}+\char`\"{} and \char`\"{}-\/\char`\"{}. 
+
+\hypertarget{classFirst_a0b4661a1cddafd8b7140c0baf5af8b0a}{
+\index{First@{First}!AssignmentStatement@{AssignmentStatement}}
+\index{AssignmentStatement@{AssignmentStatement}!First@{First}}
+\subsubsection[{AssignmentStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::AssignmentStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a0b4661a1cddafd8b7140c0baf5af8b0a}
+
+
+Returns the \hyperlink{classFirst}{First} set of AssignmentStatement, which is that of VariableAccessList. 
+
+
+
+References VariableAccessList().
+
+\hypertarget{classFirst_aedc44f52b44e7b409df77f585d5c0a94}{
+\index{First@{First}!Block@{Block}}
+\index{Block@{Block}!First@{First}}
+\subsubsection[{Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Block ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aedc44f52b44e7b409df77f585d5c0a94}
+
+
+Returns the \hyperlink{classFirst}{First} set of Block, which is of \char`\"{}begin\char`\"{}. 
+
+\hypertarget{classFirst_ad54b225baf52d7c2a020615d50549af1}{
+\index{First@{First}!BooleanSymbol@{BooleanSymbol}}
+\index{BooleanSymbol@{BooleanSymbol}!First@{First}}
+\subsubsection[{BooleanSymbol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::BooleanSymbol ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ad54b225baf52d7c2a020615d50549af1}
+
+
+Returns the \hyperlink{classFirst}{First} set of BooleanSymbol, which is \char`\"{}true\char`\"{} and \char`\"{}false\char`\"{}. 
+
+\hypertarget{classFirst_a7a9a1bfc65dabe8a153af1dcacd502d3}{
+\index{First@{First}!Constant@{Constant}}
+\index{Constant@{Constant}!First@{First}}
+\subsubsection[{Constant}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Constant ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a7a9a1bfc65dabe8a153af1dcacd502d3}
+
+
+Returns the \hyperlink{classFirst}{First} set of Constant, which is that of BooleanSymbol and ConstantName. 
+
+
+
+References BooleanSymbol(), ConstantName(), Set::munion(), and Numeral().
+
+\hypertarget{classFirst_a67220fb2ed992341a3769a7251366674}{
+\index{First@{First}!ConstantDefinition@{ConstantDefinition}}
+\index{ConstantDefinition@{ConstantDefinition}!First@{First}}
+\subsubsection[{ConstantDefinition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ConstantDefinition ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a67220fb2ed992341a3769a7251366674}
+
+
+Returns the \hyperlink{classFirst}{First} set of ConstantDefinition, which is \char`\"{}const\char`\"{}. 
+
+\hypertarget{classFirst_a36b5dd323041edb5e4a2043776034331}{
+\index{First@{First}!ConstantName@{ConstantName}}
+\index{ConstantName@{ConstantName}!First@{First}}
+\subsubsection[{ConstantName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ConstantName ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a36b5dd323041edb5e4a2043776034331}
+
+
+Returns the \hyperlink{classFirst}{First} set of ConstantName, which is \char`\"{}name\char`\"{}. 
+
+\hypertarget{classFirst_a68b6b0e9e971cbd2acf56a625ebe0599}{
+\index{First@{First}!Definition@{Definition}}
+\index{Definition@{Definition}!First@{First}}
+\subsubsection[{Definition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Definition ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a68b6b0e9e971cbd2acf56a625ebe0599}
+
+
+Returns the FS of Definition, which consists of ConstantDefinition, VariableDefinition and ProcedureDefinition. 
+
+
+
+References ConstantDefinition(), Set::munion(), ProcedureDefinition(), and VariableDefinition().
+
+\hypertarget{classFirst_aedd571350accc9639500cbded4a5b183}{
+\index{First@{First}!DefinitionPart@{DefinitionPart}}
+\index{DefinitionPart@{DefinitionPart}!First@{First}}
+\subsubsection[{DefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::DefinitionPart ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aedd571350accc9639500cbded4a5b183}
+
+
+Returns the \hyperlink{classFirst}{First} set of DefinitionPart, which is of Definition. 
+
+
+
+References Definition().
+
+\hypertarget{classFirst_a163746bc8795e5f57ccd145a4f462a73}{
+\index{First@{First}!DoStatement@{DoStatement}}
+\index{DoStatement@{DoStatement}!First@{First}}
+\subsubsection[{DoStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::DoStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a163746bc8795e5f57ccd145a4f462a73}
+
+
+Returns the \hyperlink{classFirst}{First} set of DoStatement, which is of \char`\"{}do\char`\"{}. 
+
+\hypertarget{classFirst_a0b4acc2ad6d1f2f8f8d3b1ec984431bf}{
+\index{First@{First}!EmptyStatement@{EmptyStatement}}
+\index{EmptyStatement@{EmptyStatement}!First@{First}}
+\subsubsection[{EmptyStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::EmptyStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a0b4acc2ad6d1f2f8f8d3b1ec984431bf}
+
+
+Returns the \hyperlink{classFirst}{First} set of EmptyStatement, which is \char`\"{}skip\char`\"{}. 
+
+\hypertarget{classFirst_a151428da8e728244184a256f94c16fd2}{
+\index{First@{First}!Expression@{Expression}}
+\index{Expression@{Expression}!First@{First}}
+\subsubsection[{Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Expression ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a151428da8e728244184a256f94c16fd2}
+
+
+Returns the \hyperlink{classFirst}{First} set of Expression, which is that of PrimaryExpression. 
+
+
+
+References PrimaryExpression().
+
+\hypertarget{classFirst_af4783dc02b3360e5f1f3576aa241bc0e}{
+\index{First@{First}!ExpressionList@{ExpressionList}}
+\index{ExpressionList@{ExpressionList}!First@{First}}
+\subsubsection[{ExpressionList}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ExpressionList ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_af4783dc02b3360e5f1f3576aa241bc0e}
+
+
+Returns the \hyperlink{classFirst}{First} set of ExpressionList, which is that of Expression. 
+
+
+
+References Expression().
+
+\hypertarget{classFirst_ad4b339bc0b44402c2fac146afd4adeeb}{
+\index{First@{First}!Factor@{Factor}}
+\index{Factor@{Factor}!First@{First}}
+\subsubsection[{Factor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Factor ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ad4b339bc0b44402c2fac146afd4adeeb}
+
+
+Returns the \hyperlink{classFirst}{First} set of Factor, which is \char`\"{}(\char`\"{}, \char`\"{}$\sim$\char`\"{} and that of VariableAccess and Constant. 
+
+
+
+References Constant(), and VariableAccess().
+
+\hypertarget{classFirst_a7cad21c19a5bee92d6721497c1182d89}{
+\index{First@{First}!FactorName@{FactorName}}
+\index{FactorName@{FactorName}!First@{First}}
+\subsubsection[{FactorName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::FactorName ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a7cad21c19a5bee92d6721497c1182d89}
+
+
+Returns the \hyperlink{classFirst}{First} set of FactorName, which is \char`\"{}name\char`\"{}. 
+
+\hypertarget{classFirst_aab66c404b95b67ab14b31bfeaa400eb0}{
+\index{First@{First}!GuardedCommand@{GuardedCommand}}
+\index{GuardedCommand@{GuardedCommand}!First@{First}}
+\subsubsection[{GuardedCommand}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::GuardedCommand ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aab66c404b95b67ab14b31bfeaa400eb0}
+
+
+Returns the \hyperlink{classFirst}{First} set of GuardedCommand, which is of Expression. 
+
+
+
+References Expression().
+
+\hypertarget{classFirst_a1ab37b8f1947f33138b6a880e0731f5f}{
+\index{First@{First}!GuardedCommandList@{GuardedCommandList}}
+\index{GuardedCommandList@{GuardedCommandList}!First@{First}}
+\subsubsection[{GuardedCommandList}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::GuardedCommandList ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a1ab37b8f1947f33138b6a880e0731f5f}
+
+
+Returns the \hyperlink{classFirst}{First} set of GuardedCommandList, which is of GuardedCommand. 
+
+
+
+References GuardedCommand().
+
+\hypertarget{classFirst_aa05d413f60b740bc9f594f76b51b0d6e}{
+\index{First@{First}!IfStatement@{IfStatement}}
+\index{IfStatement@{IfStatement}!First@{First}}
+\subsubsection[{IfStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::IfStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aa05d413f60b740bc9f594f76b51b0d6e}
+
+
+Returns the \hyperlink{classFirst}{First} set of IfStatement, which is \char`\"{}if\char`\"{}. 
+
+\hypertarget{classFirst_a288f40e224fa2225533ad520baaa8575}{
+\index{First@{First}!IndexedSelector@{IndexedSelector}}
+\index{IndexedSelector@{IndexedSelector}!First@{First}}
+\subsubsection[{IndexedSelector}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::IndexedSelector ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a288f40e224fa2225533ad520baaa8575}
+
+
+Returns the \hyperlink{classFirst}{First} set of IndexedSelector, which is \char`\"{}\mbox{[}\char`\"{}. 
+
+\hypertarget{classFirst_ae41a595e1322eb3995b70eddb276bb2a}{
+\index{First@{First}!MultiplyingOperator@{MultiplyingOperator}}
+\index{MultiplyingOperator@{MultiplyingOperator}!First@{First}}
+\subsubsection[{MultiplyingOperator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::MultiplyingOperator ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ae41a595e1322eb3995b70eddb276bb2a}
+
+
+Returns the \hyperlink{classFirst}{First} set of MultiplyOperator, which is \char`\"{}$\ast$\char`\"{}, \char`\"{}$\backslash$\char`\"{} and \char`\"{}/\char`\"{}. 
+
+\hypertarget{classFirst_aa0fa7fe6f11e3ead3307f35b6e29abaa}{
+\index{First@{First}!Numeral@{Numeral}}
+\index{Numeral@{Numeral}!First@{First}}
+\subsubsection[{Numeral}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Numeral ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aa0fa7fe6f11e3ead3307f35b6e29abaa}
+
+
+Returns the \hyperlink{classFirst}{First} set of Numeral, which is \char`\"{}num\char`\"{}. 
+
+\hypertarget{classFirst_ae25d77238175a4e13893ef54650c6276}{
+\index{First@{First}!PrimaryExpression@{PrimaryExpression}}
+\index{PrimaryExpression@{PrimaryExpression}!First@{First}}
+\subsubsection[{PrimaryExpression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::PrimaryExpression ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ae25d77238175a4e13893ef54650c6276}
+
+
+Returns the \hyperlink{classFirst}{First} set of PrimaryExpression, which is that of SimpleExpression. 
+
+
+
+References SimpleExpression().
+
+\hypertarget{classFirst_a8fc3bc98fd57866b459cce1edd5c1925}{
+\index{First@{First}!PrimaryOperator@{PrimaryOperator}}
+\index{PrimaryOperator@{PrimaryOperator}!First@{First}}
+\subsubsection[{PrimaryOperator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::PrimaryOperator ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a8fc3bc98fd57866b459cce1edd5c1925}
+
+
+Returns the \hyperlink{classFirst}{First} set of PrimaryOperator, which is \char`\"{}\&\char`\"{} and \char`\"{}$|$\char`\"{}. 
+
+\hypertarget{classFirst_ab17ecbd0c5f0a850227885ba86f15835}{
+\index{First@{First}!ProcedureDefinition@{ProcedureDefinition}}
+\index{ProcedureDefinition@{ProcedureDefinition}!First@{First}}
+\subsubsection[{ProcedureDefinition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ProcedureDefinition ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ab17ecbd0c5f0a850227885ba86f15835}
+
+
+Returns the \hyperlink{classFirst}{First} set of ProcedureDefinition, which is \char`\"{}proc\char`\"{}. 
+
+\hypertarget{classFirst_a677ce3d90fae56d10823b59f73930023}{
+\index{First@{First}!ProcedureName@{ProcedureName}}
+\index{ProcedureName@{ProcedureName}!First@{First}}
+\subsubsection[{ProcedureName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ProcedureName ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a677ce3d90fae56d10823b59f73930023}
+
+
+Returns the \hyperlink{classFirst}{First} set of ProcedureName, which is \char`\"{}name\char`\"{}. 
+
+\hypertarget{classFirst_a4119362212a222c5b738957f325927ef}{
+\index{First@{First}!ProcedureStatement@{ProcedureStatement}}
+\index{ProcedureStatement@{ProcedureStatement}!First@{First}}
+\subsubsection[{ProcedureStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ProcedureStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a4119362212a222c5b738957f325927ef}
+
+
+Returns the \hyperlink{classFirst}{First} set of ProcedureStatement, which is \char`\"{}call\char`\"{}. 
+
+\hypertarget{classFirst_a5d7cc34fb31a5d9b862fd2dcfc7613b5}{
+\index{First@{First}!Program@{Program}}
+\index{Program@{Program}!First@{First}}
+\subsubsection[{Program}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Program ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a5d7cc34fb31a5d9b862fd2dcfc7613b5}
+
+
+The following functions have been chunked according to logical groups, but I avoided re-\/ordering them at all in case there was a reason for the ordering -\/ such as following closely to the book's production rules or something like that. 
+
+For each of the following functions, a base set or sets are created with the appropriate set values corresponding to the \hyperlink{classFirst}{First} set for the given nonterminal that each function represents (by name). After this, sets are created using the mUnion of the given function set with the following productions' first sets.
+
+Finally, the static functions return the given sets and are accessible without the class being instantiated.
+
+In other words, every function here is representative of a Function in the \hyperlink{classParser}{Parser}, and delivers their Follow sets upon call.
+
+For each of the following functions, a base set or sets are created with the appropriate set values corresponding to the \hyperlink{classFirst}{First} set for the given nonterminal that each function represents (by name). After this, sets are created using the mUnion of the given function set with the following productions' first sets.
+
+Finally, the static functions return the given sets and are accessible without the class being instantiated.
+
+In other words, every function here is representative of a Function in the \hyperlink{classParser}{Parser}, and delivers their Follow sets upon call. Returns the \hyperlink{classFirst}{First} set of Program, which is of Block. 
+
+References Block().
+
+\hypertarget{classFirst_a88b0ba44671efe5d4838fa80cbc663fd}{
+\index{First@{First}!ReadStatement@{ReadStatement}}
+\index{ReadStatement@{ReadStatement}!First@{First}}
+\subsubsection[{ReadStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::ReadStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a88b0ba44671efe5d4838fa80cbc663fd}
+
+
+Returns the \hyperlink{classFirst}{First} set of ReadStatement, which is \char`\"{}read\char`\"{}. 
+
+\hypertarget{classFirst_a261d760170710c35d83cf5d31d4d252c}{
+\index{First@{First}!RelationalOperator@{RelationalOperator}}
+\index{RelationalOperator@{RelationalOperator}!First@{First}}
+\subsubsection[{RelationalOperator}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::RelationalOperator ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a261d760170710c35d83cf5d31d4d252c}
+
+
+Returns the \hyperlink{classFirst}{First} set of RelationalOperator, which is \char`\"{}$<$\char`\"{}, \char`\"{}$>$\char`\"{} and \char`\"{}=\char`\"{}. 
+
+\hypertarget{classFirst_a414ede2339bc646cd2d6472d8f887376}{
+\index{First@{First}!SimpleExpression@{SimpleExpression}}
+\index{SimpleExpression@{SimpleExpression}!First@{First}}
+\subsubsection[{SimpleExpression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::SimpleExpression ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a414ede2339bc646cd2d6472d8f887376}
+
+
+Returns the \hyperlink{classFirst}{First} set of SimpleExpression, which is \char`\"{}-\/\char`\"{} and that of Term. 
+
+
+
+References Term().
+
+\hypertarget{classFirst_aa8bb2c9262692d87abdfdf83d740e3c9}{
+\index{First@{First}!Statement@{Statement}}
+\index{Statement@{Statement}!First@{First}}
+\subsubsection[{Statement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Statement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aa8bb2c9262692d87abdfdf83d740e3c9}
+
+
+Returns the \hyperlink{classFirst}{First} set of Statement, which consists of that of EmptyStatement, ReadStatement, WriteStatement, AssignmentStatement, ProcedureStatement, IfStatement and DoStatement. 
+
+
+
+References AssignmentStatement(), DoStatement(), EmptyStatement(), IfStatement(), Set::munion(), ProcedureStatement(), ReadStatement(), and WriteStatement().
+
+\hypertarget{classFirst_a80a59db3d4fe3e008df01d475a96f354}{
+\index{First@{First}!StatementPart@{StatementPart}}
+\index{StatementPart@{StatementPart}!First@{First}}
+\subsubsection[{StatementPart}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::StatementPart ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a80a59db3d4fe3e008df01d475a96f354}
+
+
+Returns the \hyperlink{classFirst}{First} set of StatementPart, which is of Statement. 
+
+
+
+References Statement().
+
+\hypertarget{classFirst_adde0c66cf7df9688ea94bfa7eec81b27}{
+\index{First@{First}!Term@{Term}}
+\index{Term@{Term}!First@{First}}
+\subsubsection[{Term}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::Term ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_adde0c66cf7df9688ea94bfa7eec81b27}
+
+
+Returns the \hyperlink{classFirst}{First} set of Term, which is that of Factor. 
+
+
+
+References Factor().
+
+\hypertarget{classFirst_aca3f9425bf421939aabc8b911fafdc65}{
+\index{First@{First}!TypeSymbol@{TypeSymbol}}
+\index{TypeSymbol@{TypeSymbol}!First@{First}}
+\subsubsection[{TypeSymbol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::TypeSymbol ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aca3f9425bf421939aabc8b911fafdc65}
+
+
+Returns the \hyperlink{classFirst}{First} set of TypeSymbol, which is \char`\"{}integer\char`\"{} and \char`\"{}boolean\char`\"{}. 
+
+\hypertarget{classFirst_af2c57bd5207f82ae122d6177eac2d1b5}{
+\index{First@{First}!VariableAccess@{VariableAccess}}
+\index{VariableAccess@{VariableAccess}!First@{First}}
+\subsubsection[{VariableAccess}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableAccess ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_af2c57bd5207f82ae122d6177eac2d1b5}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableAccess, which is that of VariableName and IndexedSelector. 
+
+
+
+References IndexedSelector(), Set::munion(), and VariableName().
+
+\hypertarget{classFirst_aaa47b4e29fb5ab9df531b490bc954dcd}{
+\index{First@{First}!VariableAccessList@{VariableAccessList}}
+\index{VariableAccessList@{VariableAccessList}!First@{First}}
+\subsubsection[{VariableAccessList}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableAccessList ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aaa47b4e29fb5ab9df531b490bc954dcd}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableAccessList, which is that of VariableAccess. 
+
+
+
+References VariableAccess().
+
+\hypertarget{classFirst_aefcae573e31e01ae74204a6b9e44a36a}{
+\index{First@{First}!VariableDefinition@{VariableDefinition}}
+\index{VariableDefinition@{VariableDefinition}!First@{First}}
+\subsubsection[{VariableDefinition}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableDefinition ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_aefcae573e31e01ae74204a6b9e44a36a}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableDefinition, which is that of TypeSymbol. 
+
+
+
+References TypeSymbol().
+
+\hypertarget{classFirst_a9c91c3f1c5d87c2356cacf6e44200764}{
+\index{First@{First}!VariableDefinitionPart@{VariableDefinitionPart}}
+\index{VariableDefinitionPart@{VariableDefinitionPart}!First@{First}}
+\subsubsection[{VariableDefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableDefinitionPart ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a9c91c3f1c5d87c2356cacf6e44200764}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableDefinitionPart, which is \char`\"{}array\char`\"{} and that of VariableList. 
+
+
+
+References VariableList().
+
+\hypertarget{classFirst_a53ff9cbd12b57f99e5b9b96f38d100b8}{
+\index{First@{First}!VariableList@{VariableList}}
+\index{VariableList@{VariableList}!First@{First}}
+\subsubsection[{VariableList}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableList ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a53ff9cbd12b57f99e5b9b96f38d100b8}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableList, which is that of VariableName. 
+
+
+
+References VariableName().
+
+\hypertarget{classFirst_a43688eea61d648abe3ed2c006c712ff8}{
+\index{First@{First}!VariableName@{VariableName}}
+\index{VariableName@{VariableName}!First@{First}}
+\subsubsection[{VariableName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::VariableName ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_a43688eea61d648abe3ed2c006c712ff8}
+
+
+Returns the \hyperlink{classFirst}{First} set of VariableName, which is \char`\"{}name\char`\"{}. 
+
+\hypertarget{classFirst_ab293c9f0bd36e9696dcb336391df35a4}{
+\index{First@{First}!WriteStatement@{WriteStatement}}
+\index{WriteStatement@{WriteStatement}!First@{First}}
+\subsubsection[{WriteStatement}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} First::WriteStatement ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFirst_ab293c9f0bd36e9696dcb336391df35a4}
+
+
+Returns the \hyperlink{classFirst}{First} set of WriteStatement, which is \char`\"{}write\char`\"{}. 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{first_8h}{first.h}\item 
+\hyperlink{first_8cpp}{first.cpp}\end{DoxyCompactItemize}
