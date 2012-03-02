@@ -51,3 +51,346 @@ or refined into a final format and representation.
 
 ================================================
 
+INDEX
+-----
+
+The following is a light index of the Parser Documentation.
+I do not feel it is necessary, but feel free to use it to jump to a given section by searching.
+This documentation is a more streamlined, general approach to documenting the given files and
+classes, and as such will be significantly shorter than the Scanner documentation.
+
+At some later point, they may be combined, but the separation makes it easier to understand
+and read both components at the moment.
+
+<A1> Overview
+  (A1.1) Overview
+  (A1.2) Changes to Existing Files, Code and Objects
+
+<B2> Parser Object
+  (B2.1) Overview, Function Types
+  (B2.2) Explicit Functions
+  (B2.3) Functional Representation of Non-Terminal Grammar Components
+
+<C3> Set Object
+<D4> First Object
+
+
+================================================
+
+
+<A1> - OVERVIEW
+----------------------
+(A1.1) Overview
+----------------------
+
+The PL Recursive Descent Parser as a whole isn't a very complex component in regards to 
+how it actually functions from a higher level point of view.
+
+The PL Parser (or rather, the PL Compiler at the Parsing stage) performs the basic role of 
+parsing the input file while it tokenizes it - creating a logical "parse tree" (in the
+form of a function hierarchy) and using the Scanner and its components to construct the necessary
+components (such as the symbol table) for later Parsing duties.
+
+The Parser uses the Scanner to grab a token and to peek at the next one; it then decides, based
+off of a series of production and syntactic and semantic rules (i.e. the Grammar of the PL language)
+which tree of function calls to follow in order to come to a correct conclusion about the 
+code in the source file. A successful conclusion being either than a given statement or line of code
+is syntactically/semantically correct or not.
+
+This is accomplished by a predefined set of functional paths and conditionals therein, which use 
+something called a First set to create sets that decide (when matched) whether a substring can still
+continue to be parsed, whether a syntax error has been reached, or if a file has been parsed correctly.
+When an item is not within the first or stop sets, it failes a syntax check and prompts an error.
+
+In addition to this, there is of course basic error handling and output capabilities, and the Parser 
+is constructed in a recursive manner that allows it to successfully continue to attempt to parse the
+rest of a source file if a syntax error is recovered. That is, it incorporates a form of
+error recovery.
+
+
+----
+----
+(A1.2) Changed to Existing Files, Code and Objects
+--------------------------
+
+As we have yet to truly expand upon the scope and semantic analysis, the changes to existing data
+structures such as the symbol table or Token class have been minimal.
+
+However, a few basic changes have been made that should be noted:
+
+In Admin.cpp and Admin.h, the Admin object now constructs a Parser object upon construction, and 
+passes it a pointer to said Admin object.
+Next, since the Parser now has direct control of the Scanner, the Admin class' scan() function now tells
+the Parser to Run through run();
+Finally, NextToken is now directly accessed through the Parser, which has internal facilities for
+handling bad tokens and such.
+
+However, the Admin itself still maintains the same error reporting and general control structures it had 
+in the first revision of the compiler.
+
+In Scanner.cpp and Scanner.h, the Scanner now properly handles Reserved words and accesses the Symbol
+Table accordingly. Additionally, the proper lexeme name/type for a token is returned now - explicitly,
+such as "name".
+
+Apart from these, there have been no significant changes to the existing files and Compilation
+objects, which (as outlined above) is the reason for the segregated readme's.
+
+
+==================================
+
+
+<B2> Parser Object
+------------------------------
+(B2.1) Overview, Function Types
+------------------------------
+
+The Parser is responsible for properly syntactically verifying that the input is correct, and (virtually) 
+forming a syntax and grammatical parse tree from the scanned input.
+It accomplishes this by linking back to the Scanner through the Admin, using it to grab a given Token, 
+then intelligently proceeding to the next set of proper steps in the Grammatical structure of the PL Language.
+
+In essence, the Parser accomplishes its tasks by utilizing two distinct classes of functions:
+Grammatical Non-terminal functions, and control/syntactic/verification functions.
+
+Non-Terminal Functions -
+
+The Parser object has a large set of functions that are used to parse a file.
+These functions interlink in such a way as to satisfy the specific Grammar of PL as outlined in the
+Per Brinch Hansen book. 
+Which is to say, each function is the logical equivalent of a Non-Terminal of the Grammar, with a given
+function body performing the tasks of the Production Bodies of the given terminals.
+
+Programmatic control structures, such as IF(X OR Y)...ELSE statements allow a given function to act as
+a multiple-production non-terminal.
+As mentioned earlier, any ambiguities regarding the language's grammar itself were adjusted for in 
+creating the functions; at that, the function names may not exactly match the given Grammar names.
+
+When executed, these functions form a logical tree that corresponds to the parse tree for the input
+file - and in the process of attempting to form said structure, discovers any syntax errors in the file.
+
+
+Control/Syntactic/Verification Functions -
+
+These are functions such as Match, syntaxError, syntaxCheck, nextToken, debug and run.
+These functions are used by the Non-terminal functions to check the various inputs they encounter, to access
+the scanner and proceed through the input file, to output error and debug information tot he screen and to 
+check a given lexical sequence for a syntax error.
+
+
+----
+----
+(B2.2) Explicit Functions
+--------------------------
+
+
+Specific Functions:
+
+The following functions are outlined explicitly as they perform specific tasks that are crucial to 
+understanding how the parser operates.
+
+run() - 
+The main function of the parser, which is called from the Admin class.
+It creates a base stopset with the accept character '$', then applies it to the first Non-Terminal in the PL
+language, Program().
+
+debug() - 
+This is a function that outputs the given Parsing information to the screen, particularly where we are in
+the file and what level of the logical tree we are located at.
+It is called with a macro as its paramaeter - __func__ - which presents the function name inside.
+If the Parser prompts a compilation error, your compiler may not be recognizing the standard Macro.
+
+nextToken() - 
+Responsible for calling the nextToken function of Admin (and thus the Scanner) and accounting for any
+scan errors that arise.
+It is important to note that while the Admin reports and accounts for scan errors, the Parser must explicitly
+ensure that it requests tokens until it receives a valid one, as the Grammar itself does not have production
+rules for non-language components.
+
+match() - 
+This function verifies that the current and next token/given lexeme is in the valid set of next possible
+characters in the language and source file; that is, it uses the set created thus far in Parsing to ensure 
+that the token that has just been read is syntactically valid, and calls the appropriate error handler if it
+is not.
+
+syntaxError() - 
+This function outputs the given syntax error and the debugging information (i.e. line number) to the screen,
+then ensures that the Scanner is advanced along the input until a new parsable section of tokens is presented.
+
+syntaxCheck() - 
+Similar to the syntaxError function, this function calls the error function if the next segment of code 
+is syntactically wrong.
+
+
+----
+----
+(B2.3) Functional Representation of Non-Terminal Grammar Components
+-------------------------------------------------------------
+
+The Grammar:
+The following is a set of Production-Rule functions. Each one has a specific speciality in regards to how 
+they treat their input and production rules, but on the whole they follow a similar key process:
+
+* 1) Output the function name and data.
+* 2) Choose a production rule to follow based off of the lookahead
+* 3) Try to Match any prerequisite statements or rules
+* 4) Append any valid lexemes to the StopSet sts
+* 5) Choose a production rule and follow it (a non-terminal)
+* 6) Repeat ~3-5 unless an error is found
+* 7) Attempt to match the post-requisite statement/lexeme/rule.
+* 8) Check the validity of the lookahead in regards to the stopset sts
+
+Though each specific function has its own, unique heuristics for parsing/representing the grammatical
+rules of the PL language. Refer to the PL Grammar itself or the source code to see the minutia.
+
+  void Program(Set sts);
+  void Block(Set sts);
+  void DefinitionPart(Set sts);
+  void Definition(Set sts);
+  void ConstantDefinition(Set sts);
+  void VariableDefinition(Set sts);
+  void VariableDefinitionPart(Set sts);
+  void TypeSymbol(Set sts); 
+  void VariableList(Set sts);
+  void ProcedureDefintion(Set sts);
+  void StatementPart(Set sts);
+  void Statement(Set sts);
+  void EmptyStatement(Set sts);
+  void ReadStatement(Set sts);
+  void VariableAccessList(Set sts);
+  void WriteStatement(Set sts);
+  void ExpressionList(Set sts);
+  void AssignmentStatement(Set sts);
+  void ProcedureStatement(Set sts);
+  void IfStatement(Set sts);
+  void DoStatement(Set sts);
+  void GuardedCommandList(Set sts);
+  void GuardedCommand(Set sts);
+  void Expression(Set sts);
+  void PrimaryOperator(Set sts);
+  void PrimaryExpression(Set sts);
+  void RelationalOperator(Set sts);
+  void SimpleExpression(Set sts);
+  void AddingOperator(Set sts);
+  void Term(Set sts);
+  void MultiplyingOperator(Set sts);
+  void Factor(Set sts);
+  void VariableAccess(Set sts);
+  void IndexedSelector(Set sts);
+  void Constant(Set sts);
+  void Numeral(Set sts);
+  void BooleanSymbol(Set sts);
+  void ConstantName(Set sts);
+  void VariableName(Set sts);
+  void ProcedureName(Set sts);
+  void FactorName(Set sts);
+
+These align precisely to the refined grammar of the PL language.
+Should the Parser reach the end of a given tree of instructions, then this means
+that the given segment was syntactically correct.
+
+Recursively, it will reach the end of the file and end up comparing to the "."
+character, indicating a wholly correct program.
+
+----
+
+As mentioned earlier, the Parser makes use of a Stop set and what's known as a First set.
+Additionally, it (implicitly!) makes use of the Follow sets of certain nonterminals.
+A Set is an object that will be defined later, and First is a static function set that
+returns members of the First set that correspond to a given nonterminal.
+
+For now, it suffices to say that the Parser makes explicit use of the First set by 
+using it to compliment the set of applicable and acceptable syntax components when
+parsing a given line.
+
+
+
+============================================
+
+
+<C3> Set Object(s)
+-------------------------
+
+
+The bulk of the documentation and the logical work is handled by the Parser above.
+Thus, the following documentation is short merely because the Set object is quite simple.
+
+The Set Object is essentially just a wrapper for a Vector of Strings that we use to get a 
+more logical/math-accurate representation of a "set".
+I.E. a set in the form of {e1, e2, e3, e4, ..., en} and so on.
+
+Though we say "strings", we are really referring to more of a type of Lexeme data.
+
+The set object itself provides functions for accessing and "altering" set data;
+A toString function returns a representation of the total set in the form outlined above, 
+but all of the "alteration" functions (except add) actually return a copy of the Set in
+order to maintain integrity within a given program stack/recursive section of the 
+parsed grammar.
+
+The SET object is used extensively by the Parser and the First objects; the former using
+Sets for the parsing itself, and the latter being composed enitrely of set objects.
+An overarching Set stopset "sts" is "passed" between nonterminal functions and their 
+productions and is used to mediate the Matching; Said stop set contains the valid values 
+for continuing to parse, and a lack of a specific value within it indicates a syntax error.
+
+
+=======================================================
+
+
+<D4> First Object
+------------------------
+
+Much like the Set object, the First object is a simple object that has a very simple
+explanation.
+
+The First object is essentially a library/collection of Static functions that are
+pretyped and predeclared. These functions all return the given First() entry for a 
+given Grammar non-Terminal, such as Program.
+
+Which is not to say they're explicitly pre-typed; the First set will perform the computations
+needed to attain the first set of a given nonterminal, though said computation is essentially
+just recursively grabbing the First set of the given nonterminal in it sproductions and
+creating a union of said productions as well.
+
+The First Object is a static object, and needs only be included, rather than declared.
+
+For an example of its use, see the Block nonterminal function in Parser:
+
+void Parser::Block(Set sts)
+{
+  debug(__func__, sts, lookAheadToken);
+  Set* temp = new Set("end");
+
+  
+  match         ("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*temp));
+  DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
+  StatementPart (sts.munion(*temp)); 
+  match         ("end", sts);
+  
+  syntaxCheck(sts);
+  
+  
+}
+
+wherein we can see that we construct a set from the First sets of Block and, funamentally, DefinitionPart and 
+StatementPart.
+
+===========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

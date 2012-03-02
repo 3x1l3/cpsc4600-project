@@ -143,7 +143,8 @@ void Parser::match(string matchMe, Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-  cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << ". Valid set members are: " << validNextCharacters.toString() << "\t linecol " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
+  cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << ". Valid set members are: " << validNextCharacters.toString() 
+       << "\t line/col " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
 
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
