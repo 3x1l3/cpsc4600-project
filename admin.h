@@ -131,6 +131,10 @@ public:
     void resetColumn();
     bool checkMaxErrors();
     int column;
+    
+    /** Basic retrieval functions, used for debug. */
+    int getColumnNumber();
+    int getLineNumber();
 
 };
 

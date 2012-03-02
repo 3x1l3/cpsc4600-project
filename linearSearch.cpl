@@ -3,8 +3,9 @@ begin
 integer q;
 
   const n = 10; 
+
   integer array A[n];
-  integer x, i; 
+  integer x, i;
   Boolean found;
   proc Search
   begin integer m;
@@ -17,9 +18,11 @@ integer q;
     found := A[i] = x;
   end;
 
+  const n = 10;
+
   $ Input Table:
   i := 1;
-  do ~(i > n) ->read A[i]; i := i+1;od;
+  do ~(i > n) -> read A[i]; i := i+1;od;
     $Test Search:
     read x;
     do ~(x=O)->
@@ -29,4 +32,5 @@ integer q;
       fi;
     read x;
   od;
+
 end.
