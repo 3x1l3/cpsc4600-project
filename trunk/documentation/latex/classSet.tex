@@ -1,0 +1,237 @@
+\hypertarget{classSet}{
+\section{Set Class Reference}
+\label{classSet}\index{Set@{Set}}
+}
+
+
+The set class manages logical sets of lexemetic values.  
+
+
+
+
+{\ttfamily \#include $<$set.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSet_a1c5d4bec6a962eb5805cf9a7321e241d}{Set} ()
+\begin{DoxyCompactList}\small\item\em Base constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classSet_a6391cf8d2fcee12b6163ebc652f57d1e}{Set} (string)
+\begin{DoxyCompactList}\small\item\em String constructor that creates a set using the passed Lexeme. \item\end{DoxyCompactList}\item 
+\hyperlink{classSet_a9208c95d5e0d0fcbec93ebc9697d2d8a}{Set} (vector$<$ string $>$)
+\begin{DoxyCompactList}\small\item\em A constructor that creates a \hyperlink{classSet}{Set} out of a complete vector of strings, ie a semi-\/set. \item\end{DoxyCompactList}\item 
+void \hyperlink{classSet_a7b7abf085543d6416445543d9ecec250}{add} (string)
+\begin{DoxyCompactList}\small\item\em Appends the given String to the end of the \hyperlink{classSet}{Set} vector. \item\end{DoxyCompactList}\item 
+\hyperlink{classSet}{Set} \hyperlink{classSet_aff1a2ae6ae0f3bc950b4dba2e46c645f}{remove} (string)
+\begin{DoxyCompactList}\small\item\em Searches for and removes a given String/lexeme from the \hyperlink{classSet}{Set} if present, returning the resultant set. \item\end{DoxyCompactList}\item 
+\hyperlink{classSet}{Set} \hyperlink{classSet_ad28bf0706c650cbb019ed16b258d1441}{munion} (\hyperlink{classSet}{Set})
+\begin{DoxyCompactList}\small\item\em Returns the union of this set with another without actually modifying this set. \item\end{DoxyCompactList}\item 
+vector$<$ string $>$ \hyperlink{classSet_a380e493b3c87097ef6096be6330139b7}{returnVec} ()
+\begin{DoxyCompactList}\small\item\em Returns the internal Vector of the set, ie the vector representation of the \hyperlink{classSet}{Set} object. \item\end{DoxyCompactList}\item 
+string \hyperlink{classSet_aa321f0090bb4f590363556e03375e9ae}{toString} ()
+\begin{DoxyCompactList}\small\item\em Returns a logical String representation of the \hyperlink{classSet}{Set} for OUTPUT/user preview/debug purposes only. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classSet_a4f539b8baf5e31d8c79cae9381a9e8be}{isMember} (string)
+\begin{DoxyCompactList}\small\item\em Checks to see if a given lexeme is in the \hyperlink{classSet}{Set}. \item\end{DoxyCompactList}\item 
+int \hyperlink{classSet_a8e7922429ab244828e26e98ffc10d11f}{indexAt} (string)
+\begin{DoxyCompactList}\small\item\em Returns the exact location, within the set, of a given lexeme/input string. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ string $>$ \hyperlink{classSet_a074020de568f1ff5a2f4a2033ada72ff}{set}
+\begin{DoxyCompactList}\small\item\em The core \hyperlink{classSet}{Set} vector of strings itself, whose representation should never be seen. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The set class manages logical sets of lexemetic values. A SET is an object containing a vector of lexemic strings.
+
+An overarching \hyperlink{classSet}{Set} stopset \char`\"{}sts\char`\"{} is \char`\"{}passed\char`\"{} between nonterminal functions and their productions and is used to mediate the Matching; Said stop set contains the valid values for continuing to parse, and a lack of a specific value within it indicates a syntax error.
+
+The set object uses a Vector of strings to store lexemes. The class also provides core functionality (altering, merging, accessing and viewing the set) in a memory-\/efficient fashion. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSet_a1c5d4bec6a962eb5805cf9a7321e241d}{
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\subsubsection[{Set}]{\setlength{\rightskip}{0pt plus 5cm}Set::Set ()}}
+\label{classSet_a1c5d4bec6a962eb5805cf9a7321e241d}
+
+
+Base constructor. 
+
+Base Constructor.\hypertarget{classSet_a6391cf8d2fcee12b6163ebc652f57d1e}{
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\subsubsection[{Set}]{\setlength{\rightskip}{0pt plus 5cm}Set::Set (string {\em str})}}
+\label{classSet_a6391cf8d2fcee12b6163ebc652f57d1e}
+
+
+String constructor that creates a set using the passed Lexeme. 
+
+String constructor, adds the given parameter to the set on construction.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]A lexeme to be added to the \hyperlink{classSet}{Set}. \end{DoxyParams}
+\hypertarget{classSet_a9208c95d5e0d0fcbec93ebc9697d2d8a}{
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\subsubsection[{Set}]{\setlength{\rightskip}{0pt plus 5cm}Set::Set (vector$<$ string $>$ {\em vec})}}
+\label{classSet_a9208c95d5e0d0fcbec93ebc9697d2d8a}
+
+
+A constructor that creates a \hyperlink{classSet}{Set} out of a complete vector of strings, ie a semi-\/set. 
+
+Vector constructor of the \hyperlink{classSet}{Set}.
+
+Creates the set using a Vector by straight assignment. 
+\begin{DoxyParams}{Parameters}
+\item[{\em vec}]A string of lexemes/an unwrapped set. \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classSet_a7b7abf085543d6416445543d9ecec250}{
+\index{Set@{Set}!add@{add}}
+\index{add@{add}!Set@{Set}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}void Set::add (string {\em str})}}
+\label{classSet_a7b7abf085543d6416445543d9ecec250}
+
+
+Appends the given String to the end of the \hyperlink{classSet}{Set} vector. 
+
+Adds an input string to the \hyperlink{classSet}{Set} object.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]A string lexeme to be added to the \hyperlink{classSet}{Set}. \end{DoxyParams}
+\hypertarget{classSet_a8e7922429ab244828e26e98ffc10d11f}{
+\index{Set@{Set}!indexAt@{indexAt}}
+\index{indexAt@{indexAt}!Set@{Set}}
+\subsubsection[{indexAt}]{\setlength{\rightskip}{0pt plus 5cm}int Set::indexAt (string {\em str})}}
+\label{classSet_a8e7922429ab244828e26e98ffc10d11f}
+
+
+Returns the exact location, within the set, of a given lexeme/input string. 
+
+Finds the exact location of a given string within the \hyperlink{classSet}{Set} and returns its index.
+
+We loop through the \hyperlink{classSet}{Set} and return the index of the given string. If it is not found, we return -\/1.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]String representing the parameter whose index we search for. \end{DoxyParams}
+\hypertarget{classSet_a4f539b8baf5e31d8c79cae9381a9e8be}{
+\index{Set@{Set}!isMember@{isMember}}
+\index{isMember@{isMember}!Set@{Set}}
+\subsubsection[{isMember}]{\setlength{\rightskip}{0pt plus 5cm}bool Set::isMember (string {\em str})}}
+\label{classSet_a4f539b8baf5e31d8c79cae9381a9e8be}
+
+
+Checks to see if a given lexeme is in the \hyperlink{classSet}{Set}. 
+
+Checks to see if a given string is a member of the set.
+
+We loop through the \hyperlink{classSet}{Set} indices to determine if a given lexeme is present.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]String representing the lexeme we are searching for. \end{DoxyParams}
+\hypertarget{classSet_ad28bf0706c650cbb019ed16b258d1441}{
+\index{Set@{Set}!munion@{munion}}
+\index{munion@{munion}!Set@{Set}}
+\subsubsection[{munion}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} Set::munion ({\bf Set} {\em second\_\-set})}}
+\label{classSet_ad28bf0706c650cbb019ed16b258d1441}
+
+
+Returns the union of this set with another without actually modifying this set. 
+
+Appends an input set to this one and returns the resultant set.
+
+A couple of temporary sets are used to perform the Vector modifications, then the temporary set is returned. This set is $\ast$not$\ast$ modified. This is a function to return a proposed Union set, not to actually union two sets. This is done to maintain set integrity between nonterminal nodes.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em second\_\-set}]A set to be appended to the caller set. \end{DoxyParams}
+
+
+temporary sets to ensure original set integrity.
+
+Iteraten through the input set and add any unique values to the temp set.
+
+Return the set union to caller. 
+
+
+
+References returnVec(), and Set().
+
+\hypertarget{classSet_aff1a2ae6ae0f3bc950b4dba2e46c645f}{
+\index{Set@{Set}!remove@{remove}}
+\index{remove@{remove}!Set@{Set}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Set} Set::remove (string {\em str})}}
+\label{classSet_aff1a2ae6ae0f3bc950b4dba2e46c645f}
+
+
+Searches for and removes a given String/lexeme from the \hyperlink{classSet}{Set} if present, returning the resultant set. 
+
+Remove function that Returns a copy of this set with element str removed.
+
+We use temporary sets and check for the existance of a string, then remove it from the temp set and return it.
+
+If the string is not found, we return this original set.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em str}]String representing the lexeme to be \char`\"{}removed\char`\"{} from the return set. \end{DoxyParams}
+
+
+References indexAt().
+
+\hypertarget{classSet_a380e493b3c87097ef6096be6330139b7}{
+\index{Set@{Set}!returnVec@{returnVec}}
+\index{returnVec@{returnVec}!Set@{Set}}
+\subsubsection[{returnVec}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ string $>$ Set::returnVec ()}}
+\label{classSet_a380e493b3c87097ef6096be6330139b7}
+
+
+Returns the internal Vector of the set, ie the vector representation of the \hyperlink{classSet}{Set} object. 
+
+Returns the core set as a Vector with no wrappings.
+
+\begin{DoxyReturn}{Returns}
+this set in vector form. 
+\end{DoxyReturn}
+\hypertarget{classSet_aa321f0090bb4f590363556e03375e9ae}{
+\index{Set@{Set}!toString@{toString}}
+\index{toString@{toString}!Set@{Set}}
+\subsubsection[{toString}]{\setlength{\rightskip}{0pt plus 5cm}string Set::toString ()}}
+\label{classSet_aa321f0090bb4f590363556e03375e9ae}
+
+
+Returns a logical String representation of the \hyperlink{classSet}{Set} for OUTPUT/user preview/debug purposes only. 
+
+Outputs the \hyperlink{classSet}{Set} in basic set-\/builder-\/light notation.
+
+Constructs a string from the Vector, adding symbols such as \{ and commas. \begin{DoxyReturn}{Returns}
+a string representation of the set. 
+\end{DoxyReturn}
+
+
+Loop through the set and add commas, etc. 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classSet_a074020de568f1ff5a2f4a2033ada72ff}{
+\index{Set@{Set}!set@{set}}
+\index{set@{set}!Set@{Set}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ {\bf Set::set}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classSet_a074020de568f1ff5a2f4a2033ada72ff}
+
+
+The core \hyperlink{classSet}{Set} vector of strings itself, whose representation should never be seen. 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{set_8h}{set.h}\item 
+\hyperlink{set_8cpp}{set.cpp}\end{DoxyCompactItemize}

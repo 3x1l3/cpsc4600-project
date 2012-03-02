@@ -14,11 +14,11 @@ The Interface/Specification for our \hyperlink{classSymbolTable}{SymbolTable} (s
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classSymbolTable}{SymbolTable}
-\begin{DoxyCompactList}\small\item\em symboltable object that stores lexemes, IDentifiers and Locations as keys. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em symboltable object that stores lexemes, IDentifiers and Locations as keys. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-The Interface/Specification for our \hyperlink{classSymbolTable}{SymbolTable} (symboltable). The Symbol Table (symboltable) object is a core object used by the \hyperlink{classScanner}{Scanner} and Parser and the majority of the compiler altogether.
+The Interface/Specification for our \hyperlink{classSymbolTable}{SymbolTable} (symboltable). The Symbol Table (symboltable) object is a core object used by the \hyperlink{classScanner}{Scanner} and \hyperlink{classParser}{Parser} and the majority of the compiler altogether.
 
 We impliment the symbol table as a Map of a Map of a Map. The reason behind this is that it allows any given component of the table to have multiple values if needed. Additionally, the nested Map structure allows for fast searching and direct access as well.
 

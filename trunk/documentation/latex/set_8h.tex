@@ -1,0 +1,34 @@
+\hypertarget{set_8h}{
+\section{set.h File Reference}
+\label{set_8h}\index{set.h@{set.h}}
+}
+
+
+The specification header for the base \hyperlink{classSet}{Set} class.  
+
+
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$algorithm$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classSet}{Set}
+\begin{DoxyCompactList}\small\item\em The set class manages logical sets of lexemetic values. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification header for the base \hyperlink{classSet}{Set} class. The \hyperlink{classSet}{Set} class is essentially a wrapper for a Vector of Strings that we use to get a more logical representation of a \char`\"{}set\char`\"{};
+
+That is to say, a mathematical set \{ \char`\"{}a\char`\"{}, \char`\"{}b\char`\"{}, \char`\"{}c\char`\"{}, ...\} of lexemes or other string-\/represented values. Lexemetic values are stored for the \hyperlink{classParser}{Parser} to use.
+
+Functions are provided to created mutual unions (munions) of existing sets, as well as various other \hyperlink{classSet}{Set} operations. Though not all; only what the \hyperlink{classParser}{Parser} needs.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to March 1st, 2011 
+\end{DoxyDate}

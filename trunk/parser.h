@@ -144,15 +144,15 @@ public:
    * 
    * Uses a set object consisting of the next possible valid lexemes to check of matched
    * character is valid, and outputs an error otherwise.
-   * @param string The string lexeme to be matched.
-   * @param Set The set of characters that represent a valid match.
+   * @param matchMe The string lexeme to be matched.
+   * @param validNextCharacters The set of characters that represent a valid match.
    */
   void match(string, Set);
   
   /** 
    * @brief Outputs a syntax error message followed by the characters that would be correct. 
    * syntaxError will loop until it finds the next valid character after finding an error.
-   * @param Set The set of valid next characters as indicated by the grammar.
+   * @param validNextCharacters The set of valid next characters as indicated by the grammar.
    */
   void syntaxError(Set);
   

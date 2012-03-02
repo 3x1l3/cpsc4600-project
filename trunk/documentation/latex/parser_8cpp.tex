@@ -1,0 +1,32 @@
+\hypertarget{parser_8cpp}{
+\section{parser.cpp File Reference}
+\label{parser_8cpp}\index{parser.cpp@{parser.cpp}}
+}
+
+
+The definition file for the \hyperlink{classParser}{Parser} component object.  
+
+
+{\ttfamily \#include \char`\"{}parser.h\char`\"{}}\par
+
+
+\subsection{Detailed Description}
+The definition file for the \hyperlink{classParser}{Parser} component object. The \hyperlink{classParser}{Parser} is responsible for properly syntactically verifying that the input is correct, and (virtually) forming a syntax and grammatical tree from the scanned input.
+
+It accomplishes this by linking back to the \hyperlink{classScanner}{Scanner} through the \hyperlink{classAdmin}{Admin}, using it to grab a given \hyperlink{classToken}{Token}, then intelligently proceeding to the next set of proper steps in the Grammatical structure of the PL Language.
+
+Each of the following functions represents a grammatical rule and fulfills the corresponding set of productions via function calls; a recursive descent stack is created implicitly by the function calls, and the \char`\"{}tree\char`\"{} of function calls is the end logical representation of the Parse tree for the grammar.
+
+We use the output function debug() with the C++ macro \char`\"{}\_\-\_\-func\_\-\_\-\char`\"{} to output the current Parsing function -\/ that is, which node in the descent tree our parsing and scanning is currently in.
+
+A SET is an object containing a vector of lexemic strings. \begin{DoxySeeAlso}{See also}
+\hyperlink{set_8cpp}{set.cpp} The \hyperlink{classSet}{Set} \char`\"{}sts\char`\"{} that is passed between objects is the \char`\"{}stop set\char`\"{}, which functions as a sentinel set indicating the valid next characters; if we see a lexeme that is not in the (sts) Stop \hyperlink{classSet}{Set}, we stop (generate an error).
+
+/documentation/
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+January 9th to February 29th, 2011 
+\end{DoxyDate}

@@ -127,7 +127,7 @@ bool Token::operator==(const Token& first) const
  *
  * Returns the inverse of the equivalency operator.
  *
- * @param first A token reference that we compare this one to.
+ * @param temp A token reference that we compare this one to.
  * @return a boolean indicating that it is equivalent (false) or not.
  */
 bool Token::operator!=(const Token& temp) const

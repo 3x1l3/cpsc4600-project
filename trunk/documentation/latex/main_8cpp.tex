@@ -19,7 +19,7 @@ The main \char`\"{}runner\char`\"{} file for the overall Compiler Project.
 \begin{DoxyCompactItemize}
 \item 
 int \hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em Argc and Argv for later expansion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Argc and Argv for later expansion. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -45,12 +45,7 @@ January 9th to 31st, 2011
 \hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{
 \index{main.cpp@{main.cpp}!main@{main}}
 \index{main@{main}!main.cpp@{main.cpp}}
-\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
-\begin{DoxyParamCaption}
-\item[{int}]{argc, }
-\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
-\end{DoxyParamCaption}
-)}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (int {\em argc}, \/  char $\ast$ {\em argv}\mbox{[}$\,$\mbox{]})}}
 \label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
 
 
@@ -59,6 +54,8 @@ Argc and Argv for later expansion.
 
 
 Read the file to a stream, then send each line to a String. We append our own newline and attach this to our whole File string. Repeat until we reach the end of the file. This might have scaling issues.
+
+We check to see if there was an input parameter, and use that as the filename We do NOT accept multiple inputs (yet?). Choose the first one if multiple detected. If none, then ask for a file name.
 
 We could incorporate an error class here, but for now, it is not necessary as this is not a compiler operation
 
