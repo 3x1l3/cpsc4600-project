@@ -9,6 +9,20 @@ Revision: Second Hand-in, PARSER Revision
 
 ========================
 
+Notes and Issues:
+=====
+
+We were unable to resolve an odd parse error that occurs after the parser
+parser parsers an assignment statement such as "x := 5".
+Anything after said statement is given the wrong Stop Set, and thus the
+wrong Follow set, and thus its match and comparisons do not complete correctly.
+
+As such, we get parsing syntax errors when they shouldn't appear.
+
+Secondly, if a Procedure is called from within a Procedure, the program enters
+an infinite loop when parsing. I believe that this will be solved when 
+scoping and scope resolution are introduced to the Parser.
+
 Files Included:
 =====
 
@@ -94,9 +108,9 @@ Chad Klassen - ~22 to ~27 hours
 
 Approximate Hours Spent on the Parser (Stage 2 of Project):
 
-Jordan Peoples - 25 to 35 Hours
-Chad Klassen - 25 to 35 Hours
-Adam Shepley - 12 to 18 Hours
+Jordan Peoples - 25 to 38 Hours
+Chad Klassen - 25 to 38 Hours
+Adam Shepley - 15 to 22 Hours
 
 Note that these do not account for certain individual endeavours that were not known to the group.
 These are also rough estimates of hours spent.
