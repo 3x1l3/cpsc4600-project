@@ -9,7 +9,7 @@ integer q;
   Boolean found;
   proc Search
   begin integer m;
-      i,m := l(,n;
+      i,m := l,n;
     do i<m ->
       if A[i] = x -> m := i; []
 	~(A[i] = x) -> i := i + 1;
