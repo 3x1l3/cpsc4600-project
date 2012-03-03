@@ -161,6 +161,8 @@ public:
    * This can only happen after having followed a Valid input character.
    */
   void syntaxCheck(Set);
+  
+  int errorCount;
 };
 
 #endif
