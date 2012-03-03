@@ -46,6 +46,7 @@ Parser::Parser(Admin& adminObject)
 {
   admin = &adminObject;
   debugflag = true;
+  errorCount = 0;
 
   lookAheadToken = nextToken();
 }
@@ -69,6 +70,11 @@ void Parser::run()
   //send in money sign
   
   this->Program(*temp);
+  cout << "\nParsing completed.\n";
+  if(errorCount > 0)
+    cout << "\nParsing Errors Found: " << errorCount << endl;
+  else
+    cout << "\nNo Parsing errors found. \n";
 }
 
 /**
@@ -128,6 +134,8 @@ void Parser::match(string matchMe, Set validNextCharacters)
   cin >> a;
   */
   
+  //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
+  
   if (lookAheadToken.getLexeme() == matchMe) 
   {
     lookAheadToken = nextToken();
@@ -143,7 +151,8 @@ void Parser::match(string matchMe, Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::syntaxError( Set validNextCharacters)
 {
-  cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << ". Valid set members are: " << validNextCharacters.toString() 
+  ++errorCount;
+  cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << " with LA " << currentToken.getLexeme() <<  ". Valid set members are: " << validNextCharacters.toString() 
        << "\t line/col " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
 
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
@@ -356,7 +365,7 @@ void Parser::StatementPart(Set sts)
   while(First::Statement().isMember(lookAheadToken.getLexeme()))
   {
     Statement(sts.munion(*temp)); 
-    match(";",sts);
+    match(";",sts.munion(First::Statement()));
   }
   
   syntaxCheck(sts);
@@ -369,7 +378,7 @@ void Parser::Statement(Set sts)
   Set read = First::ReadStatement();
   Set write = First::WriteStatement();
   Set assignment = First::AssignmentStatement();
-  Set procedure = First::ProcedureDefinition() ;
+  Set procedure = First::ProcedureStatement() ;
   Set iff = First::IfStatement();
   Set doo = First::DoStatement();
   
@@ -474,7 +483,6 @@ void Parser::AssignmentStatement(Set sts)
   VariableAccessList(sts.munion(*temp).munion(First::ExpressionList())); 
   match(":=",sts.munion(First::ExpressionList())); 
   ExpressionList(sts);
-  
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -502,8 +510,6 @@ void Parser::IfStatement(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 void Parser::DoStatement(Set sts)
 {
-  
-  cout << "\n\nwhat\n\n";
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("od");
   

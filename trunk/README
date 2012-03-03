@@ -12,16 +12,16 @@ Revision: Second Hand-in, PARSER Revision
 Notes and Issues:
 =====
 
-We were unable to resolve an odd parse error that occurs after the parser
-parser parsers an assignment statement such as "x := 5".
-Anything after said statement is given the wrong Stop Set, and thus the
-wrong Follow set, and thus its match and comparisons do not complete correctly.
+It is important to note that PL, as we understand it, is composed of two
+primary "segments" in a source file; a definition part and a statement part.
+If one attempts to use a Statement part component before a definition part component,
+or the contrapositive of that, i.e. one interweaves components of these outside of
+the usage of Proc(edures), then this (correctly, according to the grammar)
+generates a parsing error.
 
-As such, we get parsing syntax errors when they shouldn't appear.
-
-Secondly, if a Procedure is called from within a Procedure, the program enters
-an infinite loop when parsing. I believe that this will be solved when 
-scoping and scope resolution are introduced to the Parser.
+Additionally, we use a C++ compiler macro, "__func__", which creates a string
+from the function name. If your compiler does not work with this macro,
+please use a newer compiler such as MinGW or G++ or MSVC 2011 or Intel11.
 
 Files Included:
 =====
@@ -47,11 +47,26 @@ Source Files:
 
 Current Test Files:
 Our test files are given the extension ".cpl".
+
 -errorTokenTest.cpl
 -blankSpaceTest.cpl
--linearSearch.cpl
+-linearSearch.cpl	- the primary search function test. Should be valid
 -miscTest.cpl
 -randomTest.cpl
+
+Parser-Oriented Test Files:
+
+-simple.cpl - Error program, with various ignored terminals to check if the parser breaks
+	      on them.
+-simple2.cpl - tests the "interweaving" of statement and definition parts, 
+	       should result in errors but parse completely.
+-simple3.cpl - tests a PL program with an empty proc block. Should pass.
+-recursive.cpl - tests the chaining of functions together and base scope resolution. 
+		Should pass successfully.
+-empty.cpl - Tests an empty file. Should parse successfully 
+	      (no errors found; nothing found, even.)
+-lin.cpl - Tests the error reporting capability of the parser and its error 
+	  recovery capability.
 
 
 Official Documentation:

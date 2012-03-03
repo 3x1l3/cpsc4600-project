@@ -1,14 +1,17 @@
 $ PL Program: Linear Search?
 begin
 integer q;
+q:= 5;
 
   const n = 10; 
 
   integer array A[n];
   integer x, i;
+
   Boolean found;
   proc Search
-  begin integer m;
+  begin
+  integer m;begin
       i,m := l,n;
     do i<m ->
       if A[i] = x -> m := i; []
@@ -17,23 +20,22 @@ integer q;
     od;
     found := A[i] = x;
   end;
-
-  proc b
- end
-
+maker;asd;
   const n = 10;
-
+()() call call ()
   $ Input Table:
-  i := 1;
-  do ~(i > n) ->read A[i]; i := i+1;od;
+proc Johnny
+  begin i := 1;
+  do ~(i > n) -> read A[i]; i := i+1;od;
     $Test Search:
     read x;
     do ~(x=O)->
-      call Search;
+ab;
       if found -> write x, i; []
 	~found -> write x;
       fi;
     read x;
   od;
-
+end;q;
 end.
+end;
