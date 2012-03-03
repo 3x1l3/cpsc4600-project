@@ -23,6 +23,12 @@ Additionally, we use a C++ compiler macro, "__func__", which creates a string
 from the function name. If your compiler does not work with this macro,
 please use a newer compiler such as MinGW or G++ or MSVC 2011 or Intel11.
 
+Finally, some error types result in an inaccurate number of calls to SyntaxError
+as the error reporting cascades sometimes. However, inaccurate errors should never
+occur and the error count is accurate for the most part.
+Thus, when a leading error is corrected, the subsequent resultant errors are also
+automatically/implicitly corrected for.
+
 Files Included:
 =====
 
