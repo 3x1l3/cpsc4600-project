@@ -22,7 +22,7 @@ integer q;
 
   $ Input Table:
   i := 1;
-  do ~(i > n) -> read A[i]; i := i+1;od;
+do ~(i > n) -> read A[i]; i := i+1;od;
   $Test Search:
   read x;
   do ~(x=O)->

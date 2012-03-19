@@ -34,6 +34,7 @@
 #include "admin.h"
 #include "set.h"	
 #include "first.h"
+#include "blocktable.h"
 
 /** Namespaces needed by the Parser. */
 using std::string;
@@ -123,7 +124,9 @@ private:
 	
   /** The Debug function only processes if this Flag is set to True. */
   bool debugflag;
-
+  
+  BlockTable* blocktable;
+  string prevMatch;
   
 public:
   

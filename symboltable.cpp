@@ -206,3 +206,9 @@ int SymbolTable::findLexeme(string lexeme)
     }
     return -1;
 }
+
+bool SymbolTable::indexExists(int index) {
+	if (table.find(index) == table.end())
+		return false;
+	return true;	
+}

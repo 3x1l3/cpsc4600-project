@@ -84,6 +84,7 @@ public:
 
     /** Basic constructor. */
     SymbolTable();
+    ~SymbolTable() { } 
 
     /** Adds another entry to table and increases the index then returning the previous index value. */
     int makeEntry(string);
@@ -128,6 +129,8 @@ public:
     /**  We store and return the number of possible reserved words. This is static and specified by the language. */
     int numberOfReservedWords;
     int getNumOfReservedWords();
+    
+    bool indexExists(int);
 };
 
 #endif
