@@ -47,6 +47,7 @@ Parser::Parser(Admin& adminObject)
   admin = &adminObject;
   debugflag = true;
   errorCount = 0;
+  blocktable = new BlockTable();
 
   lookAheadToken = nextToken();
 }
@@ -90,6 +91,7 @@ void Parser::run()
  */
 void Parser::debug(string functionName, Set sts, Token nextToken) 
 {
+  
   if (debugflag == true) 
   {
     //cout << "In function: " << functionName << ", Next Token:  " << nextToken.getLexeme() << ", Valid next Characters: " << sts.toString() << endl;		
@@ -133,12 +135,23 @@ void Parser::match(string matchMe, Set validNextCharacters)
   char a;
   cin >> a;
   */
-  
+  debug(__func__, validNextCharacters,lookAheadToken);
   //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   
   if (lookAheadToken.getLexeme() == matchMe) 
   {
+  	
+  	if(lookAheadToken.getType() == IDENTIFIER) {
+  		
+  		
+  		if (matchMe == "Boolean")
+  		blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
+  		else if (matchMe == "integer")
+  		blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
+  	} 
+  	
     lookAheadToken = nextToken();
+    prevMatch = matchMe;
   }
   else
   {
@@ -215,10 +228,12 @@ void Parser::Block(Set sts)
 
   
   match         ("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*temp));
+  blocktable->newBlock();
   DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
   StatementPart (sts.munion(*temp)); 
+  blocktable->printAllBlocks();
   match         ("end", sts);
-  
+  blocktable->endBlock();
   syntaxCheck(sts);
   
   
@@ -740,6 +755,7 @@ void Parser::Factor(Set sts)
 
 void Parser::FactorName(Set sts) 
 {
+	debug(__func__, sts, lookAheadToken);
   match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
     
   if (First::Constant().isMember(lookAheadToken.getLexeme())) 
