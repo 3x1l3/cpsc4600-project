@@ -200,12 +200,4 @@ string BlockTable::tableEntrytoString(TableEntry entry) {
 }
 //---------------------------------------------------------------------------------------------
 
-bool BlockTable::redefineValue(int existingID, int newValue) {
-	
-	if (search(existingID)) {
-		
-		
-	}	
-	
-	
-}
+

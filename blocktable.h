@@ -49,7 +49,6 @@ class BlockTable {
 		bool define(int newid, Kind newkind, mType newtype, int newsize, int newvalue);
 		bool define(int newid, Kind newkind, mType newtype);
 		
-		bool redefineValue(int existingID, int newvalue);
 		
 		//Returns object when found in the table. Otherwise error is returned through the parameter "error"
 		TableEntry find(int lookfor, bool& error);
