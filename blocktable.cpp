@@ -9,20 +9,20 @@ BlockTable::BlockTable(SymbolTable& symbolTable) {
 //---------------------------------------------------------------------------------------------
 bool BlockTable::search(int lookFor) {
 	TableEntry* tbl;
-	return search(lookFor, *tbl);
+	return search(lookFor, tbl);
 	
 }
 //---------------------------------------------------------------------------------------------
 
 
-bool BlockTable::search(int lookFor, TableEntry& entry) {
+bool BlockTable::search(int lookFor, TableEntry* entry) {
 	
 	vector<TableEntry *>::iterator it;
 	
 	for(it = currentBlock.begin(); it != currentBlock.end(); ++it) {
 		
 		if ((*it)->id == lookFor) {
-			entry = *(*it);
+			entry = (*it);
 			return true;
 		}
 			
