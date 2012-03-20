@@ -15,20 +15,20 @@ bool BlockTable::search(int lookFor) {
 //---------------------------------------------------------------------------------------------
 
 
-bool BlockTable::search(int lookFor, TableEntry* entry) {
-	
+bool BlockTable::search(int lookFor, TableEntry& entry) {
 	vector<TableEntry *>::iterator it;
 	
-	for(it = currentBlock.begin(); it != currentBlock.end(); ++it) {
+	for (int i = 0; i < currentBlock.size(); i++) {
 		
-		if ((*it)->id == lookFor) {
-			entry = (*it);
+		if (currentBlock.at(i)->id == lookFor) {
+			entry = currentBlock.at(i);
+			cerr << entry << endl;
 			return true;
 		}
-			
-	}	
-	
+		
+	}
 	return false;
+	
 	
 }
 

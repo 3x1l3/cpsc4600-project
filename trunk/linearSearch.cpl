@@ -3,6 +3,8 @@ begin
 integer q;
 
   const n = 10; 
+  const x = n;
+  const z = x;
 
   integer array A[n];
   integer x, i;

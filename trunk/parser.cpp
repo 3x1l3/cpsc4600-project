@@ -314,16 +314,44 @@ void Parser::ConstantDefinition(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("=");
-  
+  int tokenID = 0;
+  int constVal = 0;
+  mType type = UNIVERSAL;
   
   match("const", sts.munion(First::ConstantName()).munion(*temp).munion(First::Constant())); 
-  int tokenID = lookAheadToken.getValue();
+  tokenID = lookAheadToken.getValue();
   ConstantName(sts.munion(*temp).munion(First::Constant())); 
   match("=", sts.munion(First::Constant())); 
 	
-  	int constVal = lookAheadToken.getValue();
+	if (lookAheadToken.getLexeme() == "num") {
+  		constVal = lookAheadToken.getValue();
+		type = INTEGER;
+	}
+	else if (lookAheadToken.getLexeme() == "true" || lookAheadToken.getLexeme() == "false") {
+		type = BOOLEAN;
+		if (lookAheadToken.getLexeme() == "true")
+			constVal = 1;
+		else {
+			constVal = 0;
+		}
+	} else if (lookAheadToken.getLexeme() == "name") {
+		TableEntry* tbl;
+		
+		if (blocktable->search(lookAheadToken.getValue(), *tbl)) {
+			cerr << tbl << endl;
+			if (tbl->okind == CONSTANT) {
+				
+				constVal = tbl->value;
+			}
+		} else {
+			cout << "Type Mismatch: expected constant" << endl;
+		}
+		
+	}
+		
+	
   Constant(sts);
-	blocktable->define(tokenID, CONSTANT, UNIVERSAL, 0, constVal);
+	blocktable->define(tokenID, CONSTANT, type, 0, constVal);
   
   syntaxCheck(sts);
 }
