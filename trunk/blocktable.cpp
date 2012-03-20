@@ -15,7 +15,7 @@ bool BlockTable::search(int lookFor) {
 //---------------------------------------------------------------------------------------------
 
 
-bool BlockTable::search(int lookFor, TableEntry& entry) {
+bool BlockTable::search(int lookFor, TableEntry* entry) {
 	vector<TableEntry *>::iterator it;
 	
 	for (int i = 0; i < currentBlock.size(); i++) {
