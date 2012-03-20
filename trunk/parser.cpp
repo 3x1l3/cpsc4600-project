@@ -48,6 +48,10 @@ Parser::Parser(Admin& adminObject)
   debugflag = true;
   errorCount = 0;
   blocktable = new BlockTable();
+  prevMatch[0] = "";
+  prevMatch[1] = "";
+  prevMatch[2] = "";
+  prevMatch[3] = "";
 
   lookAheadToken = nextToken();
 }
@@ -143,15 +147,34 @@ void Parser::match(string matchMe, Set validNextCharacters)
   	
   	if(lookAheadToken.getType() == IDENTIFIER) {
   		
-  		
-  		if (matchMe == "Boolean")
-  		blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
-  		else if (matchMe == "integer")
-  		blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
+  	if (prevMatch[0] == "const")
+	  blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL);
+	  
+	else if (prevMatch[0] == "array" && prevMatch[1] == "integer")
+	  blocktable->define(lookAheadToken.getValue(), ARRAY, INTEGER);
+	
+	else if (prevMatch[0] == "array" && prevMatch[1] == "Boolean")
+	  blocktable->define(lookAheadToken.getValue(), ARRAY, BOOLEAN);
+	
+  	else if (prevMatch[0] == "Boolean")
+	  blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
+		
+  	else if (prevMatch[0] == "integer")
+	  blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
+	
+	else if (prevMatch[0] == "proc")
+	  blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
+	
+	
   	} 
   	
     lookAheadToken = nextToken();
-    prevMatch = matchMe;
+    
+    prevMatch[3] = prevMatch[2];
+    prevMatch[2] = prevMatch[1];
+    prevMatch[1] = prevMatch[0];
+    prevMatch[0] = matchMe;
+    
   }
   else
   {
