@@ -320,6 +320,7 @@ void Parser::ConstantDefinition(Set sts)
   int tokenID = lookAheadToken.getValue();
   ConstantName(sts.munion(*temp).munion(First::Constant())); 
   match("=", sts.munion(First::Constant())); 
+	
   	int constVal = lookAheadToken.getValue();
   Constant(sts);
 	blocktable->define(tokenID, CONSTANT, UNIVERSAL, 0, constVal);
