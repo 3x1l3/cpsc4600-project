@@ -126,7 +126,7 @@ private:
   bool debugflag;
   
   BlockTable* blocktable;
-  string prevMatch;
+  string prevMatch[4];
   
 public:
   
