@@ -335,12 +335,12 @@ void Parser::ConstantDefinition(Set sts)
 			constVal = 0;
 		}
 	} else if (lookAheadToken.getLexeme() == "name") {
-		TableEntry* tbl;
+		TableEntry tbl = TableEntry();
 		if (blocktable->search(lookAheadToken.getValue(), tbl)) {
 			
-			if (tbl->okind == CONSTANT) {
+			if (tbl.okind == CONSTANT) {
 				
-				constVal = tbl->value;
+				constVal = tbl.value;
 				
 			}
 		} else {
