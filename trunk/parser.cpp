@@ -338,7 +338,7 @@ void Parser::ConstantDefinition(Set sts)
 		TableEntry* tbl;
 		
 		if (blocktable->search(lookAheadToken.getValue(), *tbl)) {
-			cerr << tbl << endl;
+			
 			if (tbl->okind == CONSTANT) {
 				
 				constVal = tbl->value;
