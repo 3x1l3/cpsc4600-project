@@ -335,13 +335,15 @@ void Parser::ConstantDefinition(Set sts)
 			constVal = 0;
 		}
 	} else if (lookAheadToken.getLexeme() == "name") {
-		TableEntry tbl = TableEntry();
-		if (blocktable->search(lookAheadToken.getValue(), tbl)) {
+			bool error = false;
+		TableEntry tbl = blocktable->find(lookAheadToken.getValue(), error);
+	
+		if (!error) {
 			
 			if (tbl.okind == CONSTANT) {
 				
 				constVal = tbl.value;
-				
+				type = tbl.otype;
 			}
 		} else {
 			cout << "Type Mismatch: expected constant" << endl;
@@ -359,13 +361,13 @@ void Parser::ConstantDefinition(Set sts)
 void Parser::VariableDefinition(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-  TypeSymbol(sts.munion(First::VariableDefinitionPart())); 
-  VariableDefinitionPart(sts);
+  mType type = TypeSymbol(sts.munion(First::VariableDefinitionPart())); 
+  VariableDefinitionPart(sts, type);
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::VariableDefinitionPart(Set sts)
+void Parser::VariableDefinitionPart(Set sts, mType type)
 {
 	debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("[");
@@ -373,13 +375,13 @@ void Parser::VariableDefinitionPart(Set sts)
   
   if(First::VariableList().isMember(lookAheadToken.getLexeme()))
   {
-    VariableList(sts);
+    VariableList(sts, type, VARIABLE);
          }
   else if (lookAheadToken.getLexeme() == "array")
   {
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
     prevMatch[0] = "array";
-    VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2)); 
+    VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
     Constant(sts.munion(*temp2)); 
     match("]",sts);
@@ -390,49 +392,63 @@ void Parser::VariableDefinitionPart(Set sts)
 
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::TypeSymbol(Set sts)
+mType Parser::TypeSymbol(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   if(lookAheadToken.getLexeme() == "integer")
   {
+	
     match("integer", sts);
-	prevMatch[0] = prevMatch[1] = "integer";
+	
+	return INTEGER;
   }
   else if (lookAheadToken.getLexeme() == "Boolean")
   {
     match("Boolean", sts);
-	prevMatch[0] = prevMatch[1] = "Boolean";
+	return BOOLEAN;
   }
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::VariableList(Set sts)
+vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 {
+	
+	vector<int> tokenIDs;
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
-  
-  
-  VariableName(sts.munion(*temp).munion(First::VariableName()));
+  string name = "";
+  int id = 0;
+  name = lookAheadToken.getLexeme();
+	id = lookAheadToken.getValue();  
+	
+	VariableName(sts.munion(*temp).munion(First::VariableName()));
+	tokenIDs.push_back(id);
+	blocktable->define(id, kind, type);
   //optional part
   while(temp->isMember(lookAheadToken.getLexeme()))
   {
   	
     match(",",sts.munion(First::VariableName())); 
-    VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
+  name = lookAheadToken.getLexeme();
+	id = lookAheadToken.getValue(); 
+	     
+VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
+blocktable->define(id, kind, type);
+tokenIDs.push_back(id);
   }
   
   syntaxCheck(sts);
-
+return tokenIDs;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureDefintion(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
+  
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
-  prevMatch[0] = "proc";
+  blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
   ProcedureName(sts.munion(First::Block())); 
-	resetPrevMatches();
   Block(sts);
   
   syntaxCheck(sts);
@@ -517,13 +533,23 @@ void Parser::ReadStatement(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::VariableAccessList(Set sts)
+vector<mType> Parser::VariableAccessList(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+	vector<mType> varTypes; 
+  debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
-  
-  VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
-  //optional
+  int id = lookAheadToken.getValue();
+	bool error = false;
+	TableEntry entry;  
+VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
+	
+	entry = blocktable->find(id, error);
+	if (!error) {
+		varTypes.push_back(entry.otype);
+	}  else {
+		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << endl;
+	}
+//optional
   while(lookAheadToken.getLexeme() == ",")
   {
     match(",",sts.munion(First::VariableAccess())); 
@@ -531,6 +557,7 @@ void Parser::VariableAccessList(Set sts)
   }
   
   syntaxCheck(sts);
+return varTypes;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::WriteStatement(Set sts)

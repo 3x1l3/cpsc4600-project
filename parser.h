@@ -72,10 +72,10 @@ Token prevToken;
   void Definition(Set sts);
   void ConstantDefinition(Set sts);
   void VariableDefinition(Set sts);
-  void VariableDefinitionPart(Set sts);
+  void VariableDefinitionPart(Set sts, mType type);
   
-  void TypeSymbol(Set sts); 
-  void VariableList(Set sts);
+  mType TypeSymbol(Set sts); 
+  vector<int> VariableList(Set sts, mType type, Kind kind);
   void ProcedureDefintion(Set sts);
   
   void StatementPart(Set sts);
@@ -83,7 +83,7 @@ Token prevToken;
   void EmptyStatement(Set sts);
   void ReadStatement(Set sts);
   
-  void VariableAccessList(Set sts);
+  vector<mType> VariableAccessList(Set sts);
   void WriteStatement(Set sts);
   void ExpressionList(Set sts);
   void AssignmentStatement(Set sts);

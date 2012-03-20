@@ -61,24 +61,25 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype) {
 TableEntry BlockTable::find(int lookfor, bool& error) {
 		vector< vector<TableEntry *> >::iterator it;
 		vector<TableEntry *>::iterator it2;
-		
-	for (it = blocks.begin(); it != blocks.end(); ++it) {
+	for (it2 = currentBlock.begin(); it2 != currentBlock.end(); ++it2) {
+			if ((*it2)->id == lookfor) {
+				error = false;
+				return *(*it2); 
+			}
+		}
+			
+	for (it = blocks.end(); it != blocks.begin(); --it) {
 		for (it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
 			if ((*it2)->id == lookfor) {
-				error = true;
+				error = false;
 				return *(*it2); 
 			}
 		}	
 	}
 	
-	for (it2 = currentBlock.begin(); it2 != currentBlock.end(); ++it2) {
-			if ((*it2)->id == lookfor) {
-				error = true;
-				return *(*it2); 
-			}
-		}	
 	
-	error = false;
+	
+	error = true;
 	TableEntry blank;
 	return blank;
 	
