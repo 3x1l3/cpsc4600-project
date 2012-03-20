@@ -148,7 +148,7 @@ void Parser::match(string matchMe, Set validNextCharacters)
   	if(lookAheadToken.getType() == IDENTIFIER) {
   		
   	if (prevMatch[0] == "const")
-	  blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL);
+	  blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL );
 	  
 	else if (prevMatch[0] == "array" && prevMatch[1] == "integer")
 	  blocktable->define(lookAheadToken.getValue(), ARRAY, INTEGER);
