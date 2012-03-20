@@ -43,7 +43,7 @@ class BlockTable {
 		
 		//Returns true when in the current block, false otherwise
 		bool search(int lookFor);
-		bool search(int lookFor, TableEntry* entry);
+		bool search(int lookFor, TableEntry& entry);
 		//bool search(const int lookFor, TableEntry* entry);
 		
 		//Return true when the object is stored successfully. returns false if the current block contains the object already
