@@ -78,6 +78,8 @@ class BlockTable {
 		//Format a row for the printBlock function and testing purposes of find
 		string tableEntrytoString(TableEntry);
 		
+		SymbolTable* table;
+		
 	private:
 	
 	//All Blocks defined in a vector
@@ -96,7 +98,7 @@ class BlockTable {
 	string convertType(int);
 	
 	//
-	SymbolTable* table;
+	
 	
 	
 };
