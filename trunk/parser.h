@@ -53,6 +53,7 @@ private:
   /** Tokens retrieved using the scanner and used in parsing heuristics. */
   Token currentToken;
   Token lookAheadToken;
+Token prevToken;
   
   /** The Parser uses the Scanner to parse the file, through a pointer to the admin class. */
   Admin* admin;
@@ -125,13 +126,18 @@ private:
   /** The Debug function only processes if this Flag is set to True. */
   bool debugflag;
   
+SymbolTable* table;
   BlockTable* blocktable;
   string prevMatch[4];
+int prevID;
+
+	void resetPrevMatches();
+
   
 public:
   
   /** Base constructor, requires the admin parent object that created it. */
-  Parser(Admin& );
+  Parser(Admin&, SymbolTable&);
   
   /** Default Destructor. */
   ~Parser();

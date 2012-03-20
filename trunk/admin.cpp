@@ -45,7 +45,7 @@ Admin::Admin(string& src)
     scanner->loadSource(src);
     
     /** Create the base Parser object with a pointer back to here to allow it to access the scanner-> */
-    parser = new Parser(*this);
+    parser = new Parser(*this, *table);
 
 
 }

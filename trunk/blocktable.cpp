@@ -1,26 +1,37 @@
 #include "blocktable.h"
 //---------------------------------------------------------------------------------------------
-BlockTable::BlockTable() {
+BlockTable::BlockTable(SymbolTable& symbolTable) {
 	currentBlockIndex = 0;
+	table = &symbolTable;
 }
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
 bool BlockTable::search(int lookFor) {
+	TableEntry* tbl;
+	return search(lookFor, *tbl);
+	
+}
+//---------------------------------------------------------------------------------------------
+
+
+bool BlockTable::search(int lookFor, TableEntry& entry) {
 	
 	vector<TableEntry *>::iterator it;
 	
 	for(it = currentBlock.begin(); it != currentBlock.end(); ++it) {
 		
-		if ((*it)->id == lookFor)
+		if ((*it)->id == lookFor) {
+			entry = *(*it);
 			return true;
+		}
 			
 	}	
 	
 	return false;
 	
 }
-//---------------------------------------------------------------------------------------------
+
 
 //---------------------------------------------------------------------------------------------
 bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int newvalue) {
@@ -111,7 +122,7 @@ void BlockTable::printBlock(vector<TableEntry* > block, string name) {
 	vector<TableEntry *>::iterator it;
 	
 	cout << "--------------------- " << name << " --------------------" << endl;
-	cout << setw(4) << "ID" << setw(10) << "Kind" << setw(10) << "Type" << setw(10) << "Value" << setw(10) << "Size" << endl;
+	cout << setw(4) << "ID" << setw(10) << "Kind" << setw(10) << "Type" << setw(10) << "Value" << setw(10) << "Size" << setw(10) << "Lexeme" << endl;
 	for (it = block.begin(); it != block.end(); ++it) {
 		TableEntry* entry = *it;
 		cout << tableEntrytoString(*entry);
@@ -184,8 +195,17 @@ void BlockTable::printAllBlocks() {
 //---------------------------------------------------------------------------------------------
 string BlockTable::tableEntrytoString(TableEntry entry) {
 	stringstream str;
-	str << setw(4) << entry.id << setw(10) << convertKind(entry.okind) << setw(10) << convertType(entry.otype) << setw(10) << entry.value << setw(10) << entry.size << endl;
+	str << setw(4) << entry.id << setw(10) << convertKind(entry.okind) << setw(10) << convertType(entry.otype) << setw(10) << entry.value << setw(10) << entry.size << setw(10) << table->getAttributeWhere(entry.id, "ID", "lexeme") << endl;
 	return str.str();
 }
 //---------------------------------------------------------------------------------------------
 
+bool BlockTable::redefineValue(int existingID, int newValue) {
+	
+	if (search(existingID)) {
+		
+		
+	}	
+	
+	
+}

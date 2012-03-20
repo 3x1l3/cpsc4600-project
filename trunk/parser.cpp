@@ -42,17 +42,18 @@
  *
  * @param adminObject a reference to the parent Admin object.
  */
-Parser::Parser(Admin& adminObject)
+Parser::Parser(Admin& adminObject, SymbolTable& symTable)
 {
   admin = &adminObject;
+  table = &symTable;
   debugflag = true;
   errorCount = 0;
-  blocktable = new BlockTable();
+  blocktable = new BlockTable(*table);
   prevMatch[0] = "";
   prevMatch[1] = "";
   prevMatch[2] = "";
   prevMatch[3] = "";
-
+  
   lookAheadToken = nextToken();
 }
 
@@ -142,38 +143,40 @@ void Parser::match(string matchMe, Set validNextCharacters)
   debug(__func__, validNextCharacters,lookAheadToken);
   //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   
+	bool error = false;
+
   if (lookAheadToken.getLexeme() == matchMe) 
   {
   	
   	if(lookAheadToken.getType() == IDENTIFIER) {
   		
-  	if (prevMatch[0] == "const")
-	  blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL );
+  	if (prevMatch[0] == "const") {
+	  error = blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL );
+		prevID = lookAheadToken.getValue();
+	}
 	  
-	else if (prevMatch[0] == "array" && prevMatch[1] == "integer")
-	  blocktable->define(lookAheadToken.getValue(), ARRAY, INTEGER);
-	
-	else if (prevMatch[0] == "array" && prevMatch[1] == "Boolean")
-	  blocktable->define(lookAheadToken.getValue(), ARRAY, BOOLEAN);
-	
-  	else if (prevMatch[0] == "Boolean")
-	  blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
+	else if (prevMatch[0] == "array") {
 		
-  	else if (prevMatch[0] == "integer")
-	  blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
+		if (prevMatch[1] == "integer")
+		 error = blocktable->define(lookAheadToken.getValue(), ARRAY, INTEGER);
+		else if (prevMatch[1] == "Boolean")
+		  error =blocktable->define(lookAheadToken.getValue(), ARRAY, BOOLEAN);
+		
+	}
+  	else if (prevMatch[0] == "Boolean" && lookAheadToken.getLexeme() != "array")
+	  error = blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
+		
+  	else if (prevMatch[0] == "integer" && lookAheadToken.getLexeme() != "array")
+	  error = blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
 	
 	else if (prevMatch[0] == "proc")
-	  blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
+	  error = blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
 	
 	
   	} 
   	
+	prevToken = lookAheadToken;
     lookAheadToken = nextToken();
-    
-    prevMatch[3] = prevMatch[2];
-    prevMatch[2] = prevMatch[1];
-    prevMatch[1] = prevMatch[0];
-    prevMatch[0] = matchMe;
     
   }
   else
@@ -190,6 +193,9 @@ void Parser::syntaxError( Set validNextCharacters)
   ++errorCount;
   cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << " with LA " << currentToken.getLexeme() <<  ". Valid set members are: " << validNextCharacters.toString() 
        << "\t line/col " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
+
+	//Reset Matched variable to nothing
+	resetPrevMatches();
 
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
@@ -276,6 +282,7 @@ void Parser::DefinitionPart(Set sts)
   {
     Definition(sts.munion(*temp)); 
     match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
+	resetPrevMatches();
   }
   
   syntaxCheck(sts);
@@ -310,9 +317,12 @@ void Parser::ConstantDefinition(Set sts)
   
   
   match("const", sts.munion(First::ConstantName()).munion(*temp).munion(First::Constant())); 
+  int tokenID = lookAheadToken.getValue();
   ConstantName(sts.munion(*temp).munion(First::Constant())); 
   match("=", sts.munion(First::Constant())); 
+  	int constVal = lookAheadToken.getValue();
   Constant(sts);
+	blocktable->define(tokenID, CONSTANT, UNIVERSAL, 0, constVal);
   
   syntaxCheck(sts);
 }
@@ -339,6 +349,7 @@ void Parser::VariableDefinitionPart(Set sts)
   else if (lookAheadToken.getLexeme() == "array")
   {
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
+    prevMatch[0] = "array";
     VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2)); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
     Constant(sts.munion(*temp2)); 
@@ -356,10 +367,12 @@ void Parser::TypeSymbol(Set sts)
   if(lookAheadToken.getLexeme() == "integer")
   {
     match("integer", sts);
+	prevMatch[0] = prevMatch[1] = "integer";
   }
   else if (lookAheadToken.getLexeme() == "Boolean")
   {
     match("Boolean", sts);
+	prevMatch[0] = prevMatch[1] = "Boolean";
   }
   
   syntaxCheck(sts);
@@ -388,7 +401,9 @@ void Parser::ProcedureDefintion(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
+  prevMatch[0] = "proc";
   ProcedureName(sts.munion(First::Block())); 
+	resetPrevMatches();
   Block(sts);
   
   syntaxCheck(sts);
@@ -404,6 +419,7 @@ void Parser::StatementPart(Set sts)
   {
     Statement(sts.munion(*temp)); 
     match(";",sts.munion(First::Statement()));
+	resetPrevMatches();
   }
   
   syntaxCheck(sts);
@@ -840,6 +856,7 @@ void Parser::Constant(Set sts)
   if(num.isMember(lookAheadToken.getLexeme()))
   {
     Numeral(sts);
+	//blocktable->redefineValue(prevID, prevToken.getLexeme());
   }
   //or
   else if (bol.isMember(lookAheadToken.getLexeme()))
@@ -902,4 +919,12 @@ void Parser::ProcedureName(Set sts)
 	debug(__func__, sts, lookAheadToken);
   VariableName(sts);
   syntaxCheck(sts);
+}
+
+
+void Parser::resetPrevMatches() {
+	prevMatch[0] = "";
+	prevMatch[1] = "";
+	prevMatch[2] = "";
+	prevMatch[3] = "";
 }

@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include "symboltable.h"
 
 using namespace std;
 
@@ -34,17 +35,21 @@ typedef struct {
 } TableEntry; //Extention of the token object?
 
 
+
 class BlockTable {
 	public:
-		BlockTable();
+		BlockTable(SymbolTable&);
 		~BlockTable();
 		
 		//Returns true when in the current block, false otherwise
 		bool search(int lookFor);
+		bool search(int lookFor, TableEntry& entry);
 		
 		//Return true when the object is stored successfully. returns false if the current block contains the object already
 		bool define(int newid, Kind newkind, mType newtype, int newsize, int newvalue);
 		bool define(int newid, Kind newkind, mType newtype);
+		
+		bool redefineValue(int existingID, int newvalue);
 		
 		//Returns object when found in the table. Otherwise error is returned through the parameter "error"
 		TableEntry find(int lookfor, bool& error);
@@ -89,6 +94,9 @@ class BlockTable {
 	
 	//Helper function for formatting type enum
 	string convertType(int);
+	
+	//
+	SymbolTable* table;
 	
 	
 };
