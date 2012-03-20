@@ -336,12 +336,12 @@ void Parser::ConstantDefinition(Set sts)
 		}
 	} else if (lookAheadToken.getLexeme() == "name") {
 		TableEntry* tbl;
-		
-		if (blocktable->search(lookAheadToken.getValue(), *tbl)) {
+		if (blocktable->search(lookAheadToken.getValue(), tbl)) {
 			
 			if (tbl->okind == CONSTANT) {
 				
 				constVal = tbl->value;
+				
 			}
 		} else {
 			cout << "Type Mismatch: expected constant" << endl;
