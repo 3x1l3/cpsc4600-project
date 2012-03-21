@@ -16,7 +16,7 @@ bool BlockTable::search(int lookFor) {
 
 
 bool BlockTable::search(int lookFor, TableEntry& entry) {
-	for (int i = 0; i < currentBlock.size(); i++) {
+	for (int i = 0; i < (int)currentBlock.size(); i++) {
 		
 		if (currentBlock.at(i)->id == lookFor) {
 			entry = *currentBlock.at(i);
@@ -26,8 +26,6 @@ bool BlockTable::search(int lookFor, TableEntry& entry) {
 		
 	}
 	return false;
-	
-	
 }
 
 
@@ -68,8 +66,8 @@ TableEntry BlockTable::find(int lookfor, bool& error) {
 			}
 		}
 			
-	for (it = blocks.end(); it != blocks.begin(); --it) {
-		for (it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
+	for (int i = blocks.size()-1; i >= 0; i--) {
+		for (it2 = blocks.at(i).begin(); it2 != blocks.at(i).end(); ++it2) {
 			if ((*it2)->id == lookfor) {
 				error = false;
 				return *(*it2); 

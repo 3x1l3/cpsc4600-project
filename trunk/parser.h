@@ -85,7 +85,7 @@ Token prevToken;
   
   vector<mType> VariableAccessList(Set sts);
   void WriteStatement(Set sts);
-  void ExpressionList(Set sts);
+  vector<mType> ExpressionList(Set sts);
   void AssignmentStatement(Set sts);
   void ProcedureStatement(Set sts);
   void IfStatement(Set sts);

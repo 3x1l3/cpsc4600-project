@@ -42,6 +42,8 @@ Scanner::Scanner(SymbolTable& table, Admin& admin)
     peek = ' ';
     symTable = &table; 
     adminPtr = &admin;
+    
+
 
     //is not used currently, may be usefule later
     string reservedWordsArray[] = { "begin", "end", "const", "array", "integer", "Boolean", "proc", "skip", "read",

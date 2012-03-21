@@ -84,6 +84,8 @@ private:
     /** Pointers to necessary Main objects needed by the Scanner. */
     SymbolTable* symTable;
     Admin* adminPtr;
+    
+
 
 public:
     /** There should only be this one kind of constructor. */
