@@ -57,8 +57,10 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype) {
 
 //---------------------------------------------------------------------------------------------
 TableEntry BlockTable::find(int lookfor, bool& error) {
-		vector< vector<TableEntry *> >::iterator it;
-		vector<TableEntry *>::iterator it2;
+  
+	vector< vector<TableEntry *> >::iterator it;
+	vector<TableEntry *>::iterator it2;
+	
 	for (it2 = currentBlock.begin(); it2 != currentBlock.end(); ++it2) {
 			if ((*it2)->id == lookfor) {
 				error = false;
