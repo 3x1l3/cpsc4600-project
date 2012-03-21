@@ -99,6 +99,11 @@ private:
      * @see MAXERRORS
      */
     int errorCount;
+    
+    /**
+     *  Flag used to turn off/on token found printouts.
+     */
+    bool tokenFlag;
   
 public:
 

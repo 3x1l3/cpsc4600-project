@@ -10,7 +10,7 @@ integer q;
   integer x, i;
   Boolean found;
   proc Search
-  begin integer m;
+  begin integer m, l;
       i,m := l,n;
     do i<m ->
       if A[i] = x -> m := i; []

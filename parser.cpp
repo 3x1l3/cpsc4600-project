@@ -46,7 +46,7 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
 {
   admin = &adminObject;
   table = &symTable;
-  debugflag = true;
+  debugflag = false;
   errorCount = 0;
   blocktable = new BlockTable(*table);
   prevMatch[0] = "";
@@ -143,39 +143,12 @@ void Parser::match(string matchMe, Set validNextCharacters)
   debug(__func__, validNextCharacters,lookAheadToken);
   //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   
-	bool error = false;
-
+	
   if (lookAheadToken.getLexeme() == matchMe) 
   {
+  
   	
-  	if(lookAheadToken.getType() == IDENTIFIER) {
-  		
-  	if (prevMatch[0] == "const") {
-	  error = blocktable->define(lookAheadToken.getValue(), CONSTANT, UNIVERSAL );
-		prevID = lookAheadToken.getValue();
-	}
-	  
-	else if (prevMatch[0] == "array") {
-		
-		if (prevMatch[1] == "integer")
-		 error = blocktable->define(lookAheadToken.getValue(), ARRAY, INTEGER);
-		else if (prevMatch[1] == "Boolean")
-		  error =blocktable->define(lookAheadToken.getValue(), ARRAY, BOOLEAN);
-		
-	}
-  	else if (prevMatch[0] == "Boolean" && lookAheadToken.getLexeme() != "array")
-	  error = blocktable->define(lookAheadToken.getValue(), VARIABLE, BOOLEAN);
-		
-  	else if (prevMatch[0] == "integer" && lookAheadToken.getLexeme() != "array")
-	  error = blocktable->define(lookAheadToken.getValue(), VARIABLE, INTEGER);
 	
-	else if (prevMatch[0] == "proc")
-	  error = blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
-	
-	
-  	} 
-  	
-	prevToken = lookAheadToken;
     lookAheadToken = nextToken();
     
   }
@@ -282,7 +255,7 @@ void Parser::DefinitionPart(Set sts)
   {
     Definition(sts.munion(*temp)); 
     match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
-	resetPrevMatches();
+	
   }
   
   syntaxCheck(sts);
@@ -380,7 +353,6 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
   else if (lookAheadToken.getLexeme() == "array")
   {
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
-    prevMatch[0] = "array";
     VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
     Constant(sts.munion(*temp2)); 
@@ -406,6 +378,8 @@ mType Parser::TypeSymbol(Set sts)
   {
     match("Boolean", sts);
 	return BOOLEAN;
+  } else {
+      return UNIVERSAL;
   }
   
   syntaxCheck(sts);
@@ -547,13 +521,20 @@ VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
 	if (!error) {
 		varTypes.push_back(entry.otype);
 	}  else {
-		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << endl;
+		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << id << endl;
 	}
 //optional
   while(lookAheadToken.getLexeme() == ",")
   {
     match(",",sts.munion(First::VariableAccess())); 
+    
     VariableAccess(sts);
+    	entry = blocktable->find(id, error);
+	if (!error) {
+		varTypes.push_back(entry.otype);
+	}  else {
+		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << id << endl;
+	}
   }
   
   syntaxCheck(sts);
@@ -569,20 +550,52 @@ void Parser::WriteStatement(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::ExpressionList(Set sts)
+vector<mType> Parser::ExpressionList(Set sts)
 {
+  vector<mType> types;
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
   
+  int id = lookAheadToken.getValue();
+  string lexeme = lookAheadToken.getLexeme();
+  Token tok = lookAheadToken;
+  bool error = false;
+  TableEntry entry;
+  
   Expression(sts.munion(*temp).munion(First::Expression()));
+  
+  if (lexeme == "name") {
+    entry = blocktable->find(id, error);
+  
+    if (!error) {
+    types.push_back(entry.otype);
+  } else {
+    cout << "Undeclared variablex: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+  } 
+  
+}
+  else if (lexeme == "num") {
+      types.push_back(INTEGER);
+  }
+
+  
   //optional
   while(lookAheadToken.getLexeme() == ",")
   {
     match(",",sts.munion(First::Expression())); 
     Expression(sts);
+      entry = blocktable->find(id, error);
+  
+  if (!error) {
+    types.push_back(entry.otype);
+  } else {
+    cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+
+  }
   }
   
   syntaxCheck(sts);
+  return types;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AssignmentStatement(Set sts)

@@ -47,6 +47,7 @@ Admin::Admin(string& src)
     /** Create the base Parser object with a pointer back to here to allow it to access the scanner-> */
     parser = new Parser(*this, *table);
 
+    tokenFlag = false;
 
 }
 
@@ -172,7 +173,8 @@ Token Admin::nextToken()
       
     }
     /** This outputs the Token to the Screen in a < ___,___,___> format. */
-    cout << tok.toString() <<" \t\t Found at line " << current_line << ", column " << column << "."<< endl;
+    if (tokenFlag)
+      cout << tok.toString() <<" \t\t Found at line " << current_line << ", column " << column << "."<< endl;
 
     return tok;
 
