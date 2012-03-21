@@ -89,7 +89,8 @@ TableEntry BlockTable::find(int lookfor, bool& error) {
 //---------------------------------------------------------------------------------------------
 bool BlockTable::newBlock() {
 	
-	if (currentBlockIndex < MAXBLOCK) {
+	if (currentBlockIndex < MAXBLOCK) 
+	{
 		blocks.push_back(currentBlock);
 		currentBlockIndex++;
 		currentBlock.clear();
@@ -108,7 +109,7 @@ bool BlockTable::endBlock() {
 		
 		currentBlockIndex--; 
 		currentBlock = blocks.at(currentBlockIndex);
-		blocks.erase(blocks.begin()+currentBlockIndex	);
+		blocks.erase(blocks.begin()+currentBlockIndex);
 		return true;
 	}
 	return false;
@@ -126,7 +127,7 @@ void BlockTable::printBlock(vector<TableEntry* > block, string name) {
 		TableEntry* entry = *it;
 		cout << tableEntrytoString(*entry);
 	}
-	cout << "----------------------------------------------" << endl;
+	cout << "------------------------------------------------------" << endl;
 	
 }
 //---------------------------------------------------------------------------------------------
@@ -154,7 +155,7 @@ string BlockTable::convertKind(int kind) {
 		case PROCEDURE: return "Procedure";
 		case DEFINED: return "Defined";
 		default:
-			return "Kind Error";
+			return "Undefined Kind (BlockTable::convertKind(int kind))";
 	}
 	
 }
@@ -166,7 +167,7 @@ string BlockTable::convertType(int type) {
 		case INTEGER: return "Integer";
 		case BOOLEAN: return "Boolean";
 		case UNIVERSAL: return "Universal";
-		default: return "Type Error";	
+		default: return "Undefined Type (BlockTable::convertType(int type))";	
 	}	
 }
 //---------------------------------------------------------------------------------------------
