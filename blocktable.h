@@ -51,7 +51,8 @@ class BlockTable {
 		bool define(int newid, Kind newkind, mType newtype);
 		
 		
-		//Returns object when found in the table. Otherwise error is returned through the parameter "error"
+		//looks through ALL BLOCKs for lookfor variable.  if found, error is true, else error is false.
+		//returns tableentry where look for was found, and if not found, returns an uninitialized TableEntry
 		TableEntry find(int lookfor, bool& error);
 		
 		//returns true if a new block table entry is created, returns false otherwise
