@@ -793,16 +793,20 @@ void Parser::GuardedCommand(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
+  mType theType;
   
-  Expression(sts.munion(*temp).munion(First::StatementPart())); 
+  //expression must evaluate to boolean type
+  theType = Expression(sts.munion(*temp).munion(First::StatementPart())); 
+  
   match("->",sts.munion(First::StatementPart())); 
+  
   StatementPart(sts);
   
   
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::Expression(Set sts)
+mType Parser::Expression(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
@@ -814,6 +818,10 @@ void Parser::Expression(Set sts)
   }
   
   syntaxCheck(sts);
+  
+  //TODO change the return to an actual mtype retrieved from above shit
+  mType jimmy = BOOLEAN;
+  return jimmy;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryOperator(Set sts)
