@@ -44,12 +44,14 @@ class BlockTable {
 		//Returns true when in the current block, false otherwise
 		bool search(int lookFor);
 		bool search(int lookFor, TableEntry& entry);
-		//bool search(const int lookFor, TableEntry* entry);
+		bool search(int , int&);
 		
 		//Return true when the object is stored successfully. returns false if the current block contains the object already
 		bool define(int newid, Kind newkind, mType newtype, int newsize, int newvalue);
 		bool define(int newid, Kind newkind, mType newtype);
 		
+		//I'm going to say to redefine a size of an entry in a block table it must exist in the current block already.
+		bool redefineSize(int, int);
 		
 		//looks through ALL BLOCKs for lookfor variable.  if found, error is true, else error is false.
 		//returns tableentry where look for was found, and if not found, returns an uninitialized TableEntry

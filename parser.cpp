@@ -352,11 +352,37 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
          }
   else if (lookAheadToken.getLexeme() == "array")
   {
+	bool error = false;
+	bool error2 = false;
+	TableEntry entry;
+	int constid;
+	vector<int> arrayIDs;
+	
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
-    VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
+    
+	arrayIDs = VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
-    Constant(sts.munion(*temp2)); 
+    
+	constid = lookAheadToken.getValue();
+	
+	Constant(sts.munion(*temp2)); 
     match("]",sts);
+
+	entry = blocktable->find(constid, error);
+	
+	if (!error) {
+	for(int i=0; i<(int)arrayIDs.size(); i++) {
+		blocktable->find(arrayIDs.at(i), error2);
+		blocktable->redefineSize(arrayIDs.at(i), entry.value);
+	}
+	} else {
+		
+		cerr << "Constant undefined for use in array definition" << endl;
+		
+	}
+	
+	
+	
   }
   
   syntaxCheck(sts);
@@ -393,13 +419,22 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
   Set *temp = new Set(",");
   string name = "";
   int id = 0;
+	bool error = false;
   name = lookAheadToken.getLexeme();
 	id = lookAheadToken.getValue();  
 	
 	VariableName(sts.munion(*temp).munion(First::VariableName()));
-	tokenIDs.push_back(id);
-	blocktable->define(id, kind, type);
+	
+	error = blocktable->define(id, kind, type);
+	
+	if (error)
+		cout << "Multiple variable declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+		else {
+			tokenIDs.push_back(id);
+		}
+	
   //optional part
+error = false;
   while(temp->isMember(lookAheadToken.getLexeme()))
   {
   	

@@ -3,15 +3,14 @@ begin
 integer q;
 
   const n = 10; 
-  const x = n;
-  const z = x;
 
-  integer array A[n];
+  integer array A, B, C[n];
   integer x, i;
+  Boolean x;
   Boolean found;
   proc Search
-  begin integer m, l;
-      i,m := l,n;
+  begin integer m, l, x;
+      i,m := l,10;
     do i<m ->
       if A[i] = x -> m := i; []
 	~(A[i] = x) -> i := i + 1;
