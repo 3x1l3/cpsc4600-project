@@ -5,18 +5,21 @@ integer q;
   const n = 10; 
 
   integer array A, B, C[n];
-  integer x, i;
-  Boolean x;
+  integer int, i;
+  Boolean bool;
   Boolean found;
+  integer x;
   proc Search
-  begin integer m, l, x;
-      i,m := l,10;
+  begin 
+  integer m, l, x;
+      i,m := l,10;    $one 
+
     do i<m ->
-      if A[i] = x -> m := i; []
-	~(A[i] = x) -> i := i + 1;
+      if A[i] = x -> m := i; []  $two
+	~(A[i] = x) -> i := i + 1;  $three
       fi;
     od;
-    found := A[i] = x;
+    found := A[i] = x;   $four
   end;
 
   const n = 10;
@@ -34,3 +37,7 @@ do ~(i > n) -> read A[i]; i := i+1;od;
     read x;
   od;
 end.
+
+
+
+$todo add in boolean or integer print out for multiple declaration error
