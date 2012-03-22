@@ -28,6 +28,17 @@ bool BlockTable::search(int lookFor, TableEntry& entry) {
 	return false;
 }
 
+bool BlockTable::search(int lookFor, int& returnIndex) {
+	for (int i = 0; i < (int)currentBlock.size(); i++) {
+			if (currentBlock.at(i)->id == lookFor) {
+				returnIndex = i;
+				return true;
+			}
+		}
+		return false;
+	
+}
+
 
 //---------------------------------------------------------------------------------------------
 bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int newvalue) {
@@ -40,12 +51,13 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int
 	entry->size = newsize;
 	entry->value = newvalue;
 	currentBlock.push_back(entry);
-	return true; 
+	return false; 
 	} else
-	return false;
+	return true;
 	
 }
 //---------------------------------------------------------------------------------------------
+
 
 //---------------------------------------------------------------------------------------------
 bool BlockTable::define(int newid, Kind newkind, mType newtype) {
@@ -54,6 +66,19 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype) {
 		
 }
 //---------------------------------------------------------------------------------------------
+
+bool BlockTable::redefineSize(int id, int newsize) {
+	int index = 0;
+	if (search(id, index)) {
+		
+		currentBlock.at(index)->size = newsize;
+		
+		return false;
+	}
+	return true;
+	
+}
+
 
 //---------------------------------------------------------------------------------------------
 TableEntry BlockTable::find(int lookfor, bool& error) {
