@@ -371,8 +371,9 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
 	entry = blocktable->find(constid, error);
 	
 	if (!error) {
-	for(int i=0; i<(int)arrayIDs.size(); i++) {
-		blocktable->find(arrayIDs.at(i), error2);
+	for(int i=0; i<(int)arrayIDs.size(); i++) 
+	{
+// 		blocktable->find(arrayIDs.at(i), error2);
 		blocktable->redefineSize(arrayIDs.at(i), entry.value);
 	}
 	} else {
@@ -428,13 +429,14 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 	error = blocktable->define(id, kind, type);
 	
 	if (error)
-		cout << "Multiple variable declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+		cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 		else {
 			tokenIDs.push_back(id);
 		}
-	
+		
   //optional part
 error = false;
+
   while(temp->isMember(lookAheadToken.getLexeme()))
   {
   	
@@ -443,8 +445,13 @@ error = false;
 	id = lookAheadToken.getValue(); 
 	     
 VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
-blocktable->define(id, kind, type);
-tokenIDs.push_back(id);
+error = blocktable->define(id, kind, type);
+if (error)
+cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+else 
+{
+	tokenIDs.push_back(id);
+}
   }
   
   syntaxCheck(sts);
@@ -547,16 +554,16 @@ vector<mType> Parser::VariableAccessList(Set sts)
 	vector<mType> varTypes; 
   debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
-  int id = lookAheadToken.getValue();
+        int id = lookAheadToken.getValue();
 	bool error = false;
 	TableEntry entry;  
-VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
+	VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
 	
 	entry = blocktable->find(id, error);
 	if (!error) {
 		varTypes.push_back(entry.otype);
 	}  else {
-		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << id << endl;
+		cout << "varacclist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 	}
 //optional
   while(lookAheadToken.getLexeme() == ",")
@@ -568,7 +575,7 @@ VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
 	if (!error) {
 		varTypes.push_back(entry.otype);
 	}  else {
-		cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(entry.id, "ID", "lexeme") << id << endl;
+		cout << "varacclist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 	}
   }
   
@@ -599,56 +606,144 @@ vector<mType> Parser::ExpressionList(Set sts)
   
   Expression(sts.munion(*temp).munion(First::Expression()));
   
-  if (lexeme == "name") {
+  if (lexeme == "name") 
+  {
     entry = blocktable->find(id, error);
   
-    if (!error) {
+    if (!error) 
+    {
     types.push_back(entry.otype);
-  } else {
-    cout << "Undeclared variablex: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-  } 
+    } 
+    else 
+    {
+      cout << "exprlist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+    } 
   
-}
-  else if (lexeme == "num") {
+  }
+  else if (lexeme == "num") 
+  {
       types.push_back(INTEGER);
   }
+  else if (lexeme == "false" || lexeme == "true")
+  {
+    types.push_back(BOOLEAN);
+  }
+  else
+  {
+    cout<<"exprlist - Expression evaluates to non-conforming type"<<endl;
+  }
+////////////////////////////////////////////////////////////////////////////////
 
   
   //optional
   while(lookAheadToken.getLexeme() == ",")
   {
     match(",",sts.munion(First::Expression())); 
+    
+    id = lookAheadToken.getValue();
+    lexeme = lookAheadToken.getLexeme();
+    tok = lookAheadToken;
+    error = false;
+    
     Expression(sts);
+    
+    if (lexeme == "name") 
+    {
       entry = blocktable->find(id, error);
-  
-  if (!error) {
-    types.push_back(entry.otype);
-  } else {
-    cout << "Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-
+    
+      if (!error) 
+      {
+      types.push_back(entry.otype);
+      } 
+      else 
+      {
+	cout << "exprlist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+      } 
+    
+    }
+    else if (lexeme == "num") 
+    {
+	types.push_back(INTEGER);
+    }
+    else if (lexeme == "false" || lexeme == "true")
+    {
+      types.push_back(BOOLEAN);
+    }
+    else
+    {
+      cout<< "exprlist - Expression evaluates to non-conforming type"<<endl;
+    }
   }
-  }
-  
+      
   syntaxCheck(sts);
   return types;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AssignmentStatement(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(":=");
   
-  VariableAccessList(sts.munion(*temp).munion(First::ExpressionList())); 
+  vector <mType> val;
+  vector <mType> el;
+  
+  val = VariableAccessList(sts.munion(*temp).munion(First::ExpressionList())); 
+  
   match(":=",sts.munion(First::ExpressionList())); 
-  ExpressionList(sts);
+  
+  el = ExpressionList(sts);
+  
+  if(val.size() == el.size())
+  {
+    //cout<<"assnstmt - Parallel Vectors! (Sizes match)."<<endl;
+    
+    //add in better error print out here
+    bool allOk = true;
+    
+    for(int i = 0; i < (int) val.size(); i++)
+    {
+      if(val.at(i) != el.at(i))
+      {
+	allOk = false;
+      }
+      //cout<<"here"<<endl;
+      //cout<<"variable acces list : "<<blocktable->convertType(val.at(i))<<endl;
+      //cout<<"expression list : "<<blocktable->convertType(el.at(i))<<endl;
+    }
+    if (!allOk)
+    {
+      cout<<"Assignment type mismatch."<<endl;
+    }
+  }
+  else
+  {
+    cout<<"Parameter size mismatch on assignment statement."<<endl;
+  }
+  
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureStatement(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
-  match("call",sts.munion(First::ProcedureName()));  
+  match("call",sts.munion(First::ProcedureName()));
+  
+  int id = lookAheadToken.getValue();
+  bool error = false;
+  TableEntry entry;
+  
   ProcedureName(sts);
+  
+  entry = blocktable->find(id, error);
+  
+  if(entry.okind != PROCEDURE)
+  {
+    cout<<"Invalid procedure call to type of "<<blocktable->convertKind(entry.okind)<<"-"<<blocktable->convertType(entry.otype)<<endl;
+  }
+  if(error)
+  {
+    cout<<"Undefined Procedure Reference."<<endl;
+  }
   
   
   syntaxCheck(sts);
@@ -918,6 +1013,8 @@ void Parser::FactorName(Set sts)
     IndexedSelector(sts);
     
   syntaxCheck(sts);
+  
+  return.......
     
 }
 

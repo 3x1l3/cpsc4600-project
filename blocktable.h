@@ -83,6 +83,12 @@ class BlockTable {
 		
 		SymbolTable* table;
 		
+	//Helper function for formatting kind enum
+	string convertKind(int);
+	
+	//Helper function for formatting type enum
+	string convertType(int);
+		
 	private:
 	
 	//All Blocks defined in a vector
@@ -94,11 +100,7 @@ class BlockTable {
 	//Counter to keep track of the number of blocks inside the vector
 	int currentBlockIndex;
 	
-	//Helper function for formatting kind enum
-	string convertKind(int);
-	
-	//Helper function for formatting type enum
-	string convertType(int);
+
 	
 	//
 	
