@@ -94,7 +94,7 @@ Token prevToken;
   void GuardedCommandList(Set sts);
   void GuardedCommand(Set sts);
   
-  void Expression(Set sts);
+  mType Expression(Set sts);
   void PrimaryOperator(Set sts);
   void PrimaryExpression(Set sts);
   void RelationalOperator(Set sts);
