@@ -353,7 +353,6 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
   else if (lookAheadToken.getLexeme() == "array")
   {
 	bool error = false;
-	bool error2 = false;
 	TableEntry entry;
 	int constid;
 	vector<int> arrayIDs;
@@ -565,12 +564,12 @@ vector<mType> Parser::VariableAccessList(Set sts)
 	}  else {
 		cout << "varacclist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 	}
-//optional
+//optional///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   while(lookAheadToken.getLexeme() == ",")
   {
     match(",",sts.munion(First::VariableAccess())); 
     
-    VariableAccess(sts);
+    VariableAccess(sts.munion(*temp));
     	entry = blocktable->find(id, error);
 	if (!error) {
 		varTypes.push_back(entry.otype);
@@ -645,7 +644,7 @@ vector<mType> Parser::ExpressionList(Set sts)
     tok = lookAheadToken;
     error = false;
     
-    Expression(sts);
+    Expression(sts.munion(*temp));
     
     if (lexeme == "name") 
     {
@@ -1014,7 +1013,7 @@ void Parser::FactorName(Set sts)
     
   syntaxCheck(sts);
   
-  return.......
+  
     
 }
 
