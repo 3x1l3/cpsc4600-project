@@ -795,7 +795,7 @@ void Parser::GuardedCommand(Set sts)
   Set *temp = new Set("->");
   mType theType;
   
-  //expression must evaluate to boolean type
+  //expression must evaluate to boolean type TODO
   theType = Expression(sts.munion(*temp).munion(First::StatementPart())); 
   
   match("->",sts.munion(First::StatementPart())); 
@@ -808,12 +808,19 @@ void Parser::GuardedCommand(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 mType Parser::Expression(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
+  
+  //TODO must evaluate to BOOLEAN TYPE and return it
   PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
+  
+  
+  
   //optional
   while(First::PrimaryOperator().isMember(lookAheadToken.getLexeme()))
   {
+    //primary operator is defined for boolean type only
     PrimaryOperator(sts.munion(First::PrimaryExpression())); 
+    //TODO must evaluate to BOOLEAN TYPE and return it
     PrimaryExpression(sts);
   }
   
@@ -840,18 +847,44 @@ void Parser::PrimaryOperator(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::PrimaryExpression(Set sts)
+mType Parser::PrimaryExpression(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-  SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
+	mType type1;
+	mType type2;
+	
+	bool needInt = false;
+	
+  //TODO MUST EVALUATE TO INTEGER TYPE
+  type1 = SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
+  
   //1 or zero of the follwing
   if(First::RelationalOperator().isMember(lookAheadToken.getLexeme()))
   {
+    needInt = true;
     RelationalOperator(sts.munion(First::SimpleExpression())); 
-    SimpleExpression(sts);
+    //TODO MUST EVALUATE TO INTEGER TYPE
+    type2 = SimpleExpression(sts);
   }
   
   syntaxCheck(sts);
+  
+  if(needInt == true)
+  {
+    //TODO RETURN BOOLEAN TYPE 
+    if(type1 == INTEGER && type2 == INTEGER)
+    {
+      return BOOLEAN;
+    }
+    else
+    {
+//           cout<<"look ahead token "<<lookAheadToken.getLexeme()<<endl; 
+// 	  cout<<"LINE: "<<admin->getLineNumber()<<" column: "<<admin->getColumnNumber()<<endl;
+      cout<<"Attempting to perform a relational operator on expressions not of integer type."<<endl;
+    }
+  }
+  
+  return UNIVERSAL;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::RelationalOperator(Set sts)
@@ -875,9 +908,12 @@ void Parser::RelationalOperator(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::SimpleExpression(Set sts)
+mType Parser::SimpleExpression(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
+	
+  vector <mType> localTypes;
+	
   //1 or zero of the following
   if(lookAheadToken.getLexeme() == "-")
   {
@@ -885,16 +921,29 @@ void Parser::SimpleExpression(Set sts)
   }
   
   //required
-  Term(sts.munion(First::AddingOperator()).munion(First::Term()));
+  localTypes.push_back(Term(sts.munion(First::AddingOperator()).munion(First::Term())));
   
   //Optional
   while(First::AddingOperator().isMember(lookAheadToken.getLexeme()))
   {
     AddingOperator(sts.munion(First::Term())); 
-    Term(sts);
+    localTypes.push_back(Term(sts));
   }
-  
+
+    //cout<<"look ahead token"<<lookAheadToken.getLexeme()<<endl;
+  //TODO check if the localTypes vector only has integers in it. if so retrun mtype of boolean, if not return mtype of universal
+  for (int i = 0; i < (int)localTypes.size(); i++)
+  {
+    //cout<<"simple expression vector"<<blocktable->convertType(localTypes.at(i))<<endl;
+
+    if(localTypes.at(i) != INTEGER)
+    {
+      syntaxCheck(sts);
+      return UNIVERSAL;
+    }
+  }
   syntaxCheck(sts);
+  return INTEGER;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::AddingOperator(Set sts)
@@ -913,10 +962,13 @@ void Parser::AddingOperator(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::Term(Set sts)
+mType Parser::Term(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-  Factor(sts.munion(First::MultiplyingOperator()).munion(First::Factor()));
+	
+  vector<mType> localTypes;
+  
+  localTypes.push_back(Factor(sts.munion(First::MultiplyingOperator()).munion(First::Factor())));
   //redundant check for if it is in factor?
   //casue below we have a while statement that chceks only for if it is in multilpfying opertor.
   //so program could come back here thinking first of factor is correct, but then we dont use it here,
@@ -927,11 +979,22 @@ void Parser::Term(Set sts)
   while(First::MultiplyingOperator().isMember(lookAheadToken.getLexeme()))
   {
     MultiplyingOperator(sts.munion(First::Factor()));  
-    Factor(sts);
+    localTypes.push_back(Factor(sts));
   }
   
-  
+  //TODO check localtypes for all integer.  if so, return mtype integer, if not return mtype universal?
   syntaxCheck(sts);
+  
+  for(int i = 0; i< (int)localTypes.size(); i++)
+  {
+    if(localTypes.at(i) != INTEGER)
+    {
+      //cout<<"Term did not consist fully of integers."<<endl;
+      return UNIVERSAL;
+    }
+  }
+  
+  return INTEGER;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::MultiplyingOperator(Set sts)
@@ -956,7 +1019,7 @@ void Parser::MultiplyingOperator(Set sts)
   syntaxCheck(sts);
 }
 ///////////////////////////////////////////////////////////////////////////// 
-void Parser::Factor(Set sts)
+mType Parser::Factor(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   Set constant = First::Constant();
@@ -967,24 +1030,28 @@ void Parser::Factor(Set sts)
     //Set *temp = new Set(")");
   //
   bool perror = false;
+  
+  mType localType;
     
   if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
   {
-    FactorName(sts);
+    localType = FactorName(sts);
   }
   else if (First::Constant().isMember(lookAheadToken.getLexeme()))
-    Constant(sts);
+  {
+    localType = Constant(sts);
+  }
   else if (lookAheadToken.getLexeme() == "(")
   {
     match("(",sts.munion(First::Expression()).munion(Set(")"))); 
-    Expression(sts.munion(Set(")"))); 
+    localType = Expression(sts.munion(Set(")"))); 
     match(")",sts);
   }
   //or
   else if ( lookAheadToken.getLexeme() == "~")
   {
     match("~",sts.munion(First::Factor())); 
-    Factor(sts);
+    localType = Factor(sts);
   }
   else
     perror = true;
@@ -993,33 +1060,40 @@ void Parser::Factor(Set sts)
   if (!tempset.isMember("") && perror)
     syntaxError(sts);
   
-  
+  //TODO return localtype here. make sure it is integer, or return unviersal
   syntaxCheck(sts);
+  return localType;
 }
 
 
-void Parser::FactorName(Set sts) 
+mType Parser::FactorName(Set sts) 
 {
 	debug(__func__, sts, lookAheadToken);
   match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
+
+  
+  mType localType;
     
   if (First::Constant().isMember(lookAheadToken.getLexeme())) 
   {
     if(First::Numeral().isMember(lookAheadToken.getLexeme()))
     {
-      Numeral(sts);
+      localType = Numeral(sts);
     }
     //or
     else if (First::BooleanSymbol().isMember(lookAheadToken.getLexeme()))
     {
-      BooleanSymbol(sts);
+      localType = BooleanSymbol(sts);
     }
-        
   }
   else if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
-    IndexedSelector(sts);
+  {
+    localType = IndexedSelector(sts);
+  }
     
   syntaxCheck(sts);
+  
+  return localType;
   
   
     
@@ -1042,55 +1116,69 @@ void Parser::VariableAccess(Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::IndexedSelector(Set sts)
+mType Parser::IndexedSelector(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("]");
   
+  mType localType;
+  
   match("[", sts.munion(First::Expression()).munion(*temp)); 
-  Expression(sts.munion(*temp)); 
+  localType = Expression(sts.munion(*temp)); 
   match("]", sts);
   
   syntaxCheck(sts);
+  
+  return localType;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::Constant(Set sts)
+mType Parser::Constant(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
   Set num = First::Numeral();
   Set bol = First::BooleanSymbol();
   Set con = First::ConstantName();
   
+  mType localType;
+  
   if(num.isMember(lookAheadToken.getLexeme()))
   {
-    Numeral(sts);
+    localType = Numeral(sts);
 	//blocktable->redefineValue(prevID, prevToken.getLexeme());
   }
   //or
   else if (bol.isMember(lookAheadToken.getLexeme()))
   {
-    BooleanSymbol(sts);
+    localType = BooleanSymbol(sts);
   }
   //or
   else if (con.isMember(lookAheadToken.getLexeme()))
   {
-    ConstantName(sts);
+    localType = ConstantName(sts);
   }
   
   syntaxCheck(sts);
+  
+  return localType;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::Numeral(Set sts)
+mType Parser::Numeral(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   match("num", sts);//TODO change token creation to make lexeme of a number = "num"
   
+
+  
   syntaxCheck(sts);
+  
+  mType returnMe = INTEGER;
+  return returnMe;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::BooleanSymbol(Set sts)
+mType Parser::BooleanSymbol(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
+   
   if(lookAheadToken.getLexeme() == "false")
   {
     match("false", sts);
@@ -1102,31 +1190,51 @@ void Parser::BooleanSymbol(Set sts)
   }
   
   syntaxCheck(sts);
+
+  mType returnMe = BOOLEAN;
+  return returnMe;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::ConstantName(Set sts)
+mType Parser::ConstantName(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
-  //token must be a reserved word TODO - might not be a reserved word.
-  VariableName(sts);
+  debug(__func__, sts, lookAheadToken);
+  
+  mType local;
+
+  local = VariableName(sts);
   
   syntaxCheck(sts);
+  
+  return local;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::VariableName(Set sts)
+mType Parser::VariableName(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
 	  //token must be a user defined word
+  int id = lookAheadToken.getValue();
+  bool error = false;
+  TableEntry tbl;
+  
+  tbl = blocktable->find(id, error);
   match("name", sts);
   
   syntaxCheck(sts);
+  
+  return tbl.otype;
 }
 /////////////////////////////////////////////////////////////////////////////
-void Parser::ProcedureName(Set sts)
+mType Parser::ProcedureName(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
-  VariableName(sts);
+  debug(__func__, sts, lookAheadToken);
+  
+  mType local;
+  
+  local = VariableName(sts);
+  
   syntaxCheck(sts);
+  
+  return local;
 }
 
 
