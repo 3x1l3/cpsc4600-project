@@ -27,6 +27,10 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <stack>
+
+
+enum blocktype { STATEMENTPART, DEFINITIONPART };
 
 /** Object definitions needed by the Parser. */
 /** @see set.h, set.cpp */
@@ -94,26 +98,26 @@ Token prevToken;
   void GuardedCommandList(Set sts);
   void GuardedCommand(Set sts);
   
-  void Expression(Set sts);
+  mType Expression(Set sts);
   void PrimaryOperator(Set sts);
-  void PrimaryExpression(Set sts);
+  mType PrimaryExpression(Set sts);
   void RelationalOperator(Set sts);
-  void SimpleExpression(Set sts);
+  mType SimpleExpression(Set sts);
   void AddingOperator(Set sts);
-  void Term(Set sts);
+  mType Term(Set sts);
   void MultiplyingOperator(Set sts);
-  void Factor(Set sts);
+  mType Factor(Set sts);
   
   void VariableAccess(Set sts);
   void IndexedSelector(Set sts);
-  void Constant(Set sts);
-  void Numeral(Set sts);
-  void BooleanSymbol(Set sts);
+  mType Constant(Set sts);
+  mType Numeral(Set sts);
+  mType BooleanSymbol(Set sts);
   
-  void ConstantName(Set sts);
-  void VariableName(Set sts);
-  void ProcedureName(Set sts);
-  void FactorName(Set sts);
+  mType ConstantName(Set sts);
+  mType VariableName(Set sts);
+  mType ProcedureName(Set sts);
+  mType FactorName(Set sts);
 
 
   /**
@@ -132,6 +136,7 @@ SymbolTable* table;
 int prevID;
 
 	void resetPrevMatches();
+	stack<blocktype> blockTypeStack;
 
   
 public:
