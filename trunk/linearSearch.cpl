@@ -4,8 +4,7 @@ integer x, i, m;
 const n = 10;
 integer array A[n];
     do i<m ->
-      if (A[i] = x) -> m := i; []
-	~(A[i] = x) -> i := i + 1;
+      if (A[i] = x) -> m := i;
       fi;
 od;
 
