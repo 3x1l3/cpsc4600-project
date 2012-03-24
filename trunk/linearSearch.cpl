@@ -1,41 +1,18 @@
-$ PL Proggram: Linear Search?
+$ PL Program: Linear Search?
 begin
 integer q;
 
   const n = 10; 
 
   integer array A, B, C[n];
-  integer x, i;
-  Boolean x;
-  Boolean X;
+  integer i;
   Boolean found;
-  proc Search
-  begin integer m, l, x;
+  integer m, l, x;
       i,m := l,10;
     do i<m ->
       if A[i] = x -> m := i; []
 	~(A[i] = x) -> i := i + 1;
       fi;
     od;
-    found := A[i] = x;
-  end;
-
-  const n = 10;
-
-  $ Input Table:
-  i := 1;
-do ~(i > n) -> read A[i]; i := i+1;od;
-  $Test Search:
-  read x;
-  do ~(x=O)->
-    call Search;
-    if found -> write x, i; []
-      ~found -> write x;
-    fi;
-    read x;
-  od;
 end.
-
-
-
 $todo add in boolean or integer print out for multiple declaration error

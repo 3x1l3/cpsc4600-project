@@ -296,37 +296,45 @@ void Parser::ConstantDefinition(Set sts)
   ConstantName(sts.munion(*temp).munion(First::Constant())); 
   match("=", sts.munion(First::Constant())); 
 	
-	if (lookAheadToken.getLexeme() == "num") {
+	if (lookAheadToken.getLexeme() == "num") 
+	{
   		constVal = lookAheadToken.getValue();
 		type = INTEGER;
 	}
-	else if (lookAheadToken.getLexeme() == "true" || lookAheadToken.getLexeme() == "false") {
+	else if (lookAheadToken.getLexeme() == "true" || lookAheadToken.getLexeme() == "false") 
+	{
 		type = BOOLEAN;
 		if (lookAheadToken.getLexeme() == "true")
+		{
 			constVal = 1;
-		else {
+		}
+		else 
+		{
 			constVal = 0;
 		}
-	} else if (lookAheadToken.getLexeme() == "name") {
-			bool error = false;
+	} 
+	else if (lookAheadToken.getLexeme() == "name") 
+	{
+		bool error = false;
 		TableEntry tbl = blocktable->find(lookAheadToken.getValue(), error);
 	
-		if (!error) {
-			
+		if (!error) 
+		{	
 			if (tbl.okind == CONSTANT) {
 				
 				constVal = tbl.value;
 				type = tbl.otype;
 			}
-		} else {
-			cout << "Type Mismatch: expected constant" << endl;
-		}
-		
+			else 
+			{
+			  cout << "Type Mismatch: expected constant" << endl;
+		        }
+		} 	
 	}
 		
 	
   Constant(sts);
-	blocktable->define(tokenID, CONSTANT, type, 0, constVal);
+  blocktable->define(tokenID, CONSTANT, type, 0, constVal);
   
   syntaxCheck(sts);
 }
@@ -810,8 +818,10 @@ mType Parser::Expression(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   
+  vector <mType> localTypes;
+  
   //TODO must evaluate to BOOLEAN TYPE and return it
-  PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
+  localTypes.push_back(PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression())));
   
   
   
@@ -821,14 +831,21 @@ mType Parser::Expression(Set sts)
     //primary operator is defined for boolean type only
     PrimaryOperator(sts.munion(First::PrimaryExpression())); 
     //TODO must evaluate to BOOLEAN TYPE and return it
-    PrimaryExpression(sts);
+    localTypes.push_back(PrimaryExpression(sts));
+  }
+  
+  for (int i = 0; i < (int)localTypes.size(); i++)
+  {
+    if(localTypes.at(i) != BOOLEAN)
+    {
+      return UNIVERSAL;
+    }
   }
   
   syntaxCheck(sts);
   
-  //TODO change the return to an actual mtype retrieved from above shit
-  mType jimmy = BOOLEAN;
-  return jimmy;
+  return BOOLEAN;
+
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryOperator(Set sts)
@@ -868,7 +885,7 @@ mType Parser::PrimaryExpression(Set sts)
   }
   
   syntaxCheck(sts);
-  
+ 
   if(needInt == true)
   {
     //TODO RETURN BOOLEAN TYPE 
@@ -1021,7 +1038,7 @@ void Parser::MultiplyingOperator(Set sts)
 ///////////////////////////////////////////////////////////////////////////// 
 mType Parser::Factor(Set sts)
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
  
@@ -1069,31 +1086,39 @@ mType Parser::Factor(Set sts)
 mType Parser::FactorName(Set sts) 
 {
 	debug(__func__, sts, lookAheadToken);
+  
+  int id = lookAheadToken.getValue();
+  TableEntry tbl;
+  bool error = false;
+  tbl = blocktable->find(id, error);
+  mType returnMe;
+  returnMe = tbl.otype;
+  
   match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
 
   
-  mType localType;
+//   mType localType;
     
   if (First::Constant().isMember(lookAheadToken.getLexeme())) 
   {
     if(First::Numeral().isMember(lookAheadToken.getLexeme()))
     {
-      localType = Numeral(sts);
+      /*localType = */Numeral(sts);
     }
     //or
     else if (First::BooleanSymbol().isMember(lookAheadToken.getLexeme()))
     {
-      localType = BooleanSymbol(sts);
+     /* localType = */BooleanSymbol(sts);
     }
   }
   else if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
   {
-    localType = IndexedSelector(sts);
+    /*localType = */IndexedSelector(sts);
   }
     
   syntaxCheck(sts);
   
-  return localType;
+  return returnMe;
   
   
     
@@ -1223,7 +1248,7 @@ mType Parser::VariableName(Set sts)
   
   return tbl.otype;
 }
-//////////////////////////////////g///////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 mType Parser::ProcedureName(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
