@@ -46,7 +46,7 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
 {
   admin = &adminObject;
   table = &symTable;
-  debugflag = false;
+  debugflag = true;
   errorCount = 0;
   blocktable = new BlockTable(*table);
   prevMatch[0] = "";
@@ -141,7 +141,7 @@ void Parser::match(string matchMe, Set validNextCharacters)
   cin >> a;
   */
   debug(__func__, validNextCharacters,lookAheadToken);
-  //cout<<"matching symbol of : "<<matchMe<<endl;
+  cout<<"matching symbol of : '"<<matchMe<<"'"<<endl;
   //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   
 	
@@ -878,6 +878,7 @@ void Parser::PrimaryOperator(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 mType Parser::PrimaryExpression(Set sts)
 {
+  cout<<"Entering PrimExpr"<<endl;
 	debug(__func__, sts, lookAheadToken);
 	mType type1;
 	mType type2;
@@ -885,6 +886,7 @@ mType Parser::PrimaryExpression(Set sts)
 	bool needInt = false;
 	
   //TODO MUST EVALUATE TO INTEGER TYPE
+  cout<<"look ahead token information before type1 assigned: "<<lookAheadToken.getValue()<<" "<<lookAheadToken.getLexeme()<<endl;
   type1 = SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
   
   //1 or zero of the follwing
@@ -897,13 +899,14 @@ mType Parser::PrimaryExpression(Set sts)
   }
   
   syntaxCheck(sts);
-  //cout<<"****************PRIM EXPR type 1 "<<blocktable->convertType(type1)<<endl;
+  cout<<"****************PRIM EXPR type 1 "<<blocktable->convertType(type1)<<endl;
   if(needInt == true)
   {
-    //cout<<"****************PRIM EXPR type 2 "<<blocktable->convertType(type2)<<endl;
+    cout<<"****************PRIM EXPR type 2 "<<blocktable->convertType(type2)<<endl;
     //TODO RETURN BOOLEAN TYPE 
     if(type1 == INTEGER && type2 == INTEGER)
     {
+      cout<<"ExiTinG PrimExpr"<<endl;
       return BOOLEAN;
     }
     else
@@ -913,7 +916,7 @@ mType Parser::PrimaryExpression(Set sts)
       cout<<"Attempting to perform a relational operator on expressions not of integer type."<<endl;
     }
   }
-  
+  cout<<"ExiTinG PrimExpr"<<endl;
   return UNIVERSAL;
 }
 /////////////////////////////////////////////////////////////////////////////
