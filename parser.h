@@ -152,7 +152,7 @@ public:
    * @brief Lexeme matching function.
    * 
    * Uses a set object consisting of the next possible valid lexemes to check of matched
-   * character is valid, and outputs an error otherwise.
+   * character is valid, and outputs an error otherwise.g
    * @param matchMe The string lexeme to be matched.
    * @param validNextCharacters The set of characters that represent a valid match.
    */
