@@ -46,7 +46,7 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
 {
   admin = &adminObject;
   table = &symTable;
-  debugflag = true;
+  debugflag = false;
   errorCount = 0;
   blocktable = new BlockTable(*table);
   prevMatch[0] = "";
@@ -141,7 +141,6 @@ void Parser::match(string matchMe, Set validNextCharacters)
   cin >> a;
   */
   debug(__func__, validNextCharacters,lookAheadToken);
-  cout<<"matching symbol of : '"<<matchMe<<"'"<<endl;
   //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   
 	
@@ -294,7 +293,8 @@ void Parser::ConstantDefinition(Set sts)
   
   match("const", sts.munion(First::ConstantName()).munion(*temp).munion(First::Constant())); 
   tokenID = lookAheadToken.getValue();
- 
+  ConstantName(sts.munion(*temp).munion(First::Constant())); 
+  match("=", sts.munion(First::Constant())); 
 	
 	if (lookAheadToken.getLexeme() == "num") {
   		constVal = lookAheadToken.getValue();
@@ -308,32 +308,25 @@ void Parser::ConstantDefinition(Set sts)
 			constVal = 0;
 		}
 	} else if (lookAheadToken.getLexeme() == "name") {
-		bool error = false;
+			bool error = false;
 		TableEntry tbl = blocktable->find(lookAheadToken.getValue(), error);
-
 	
-		if (!error) 
-		{
+		if (!error) {
 			
 			if (tbl.okind == CONSTANT) {
 				
 				constVal = tbl.value;
 				type = tbl.otype;
-			} 
-			else 
-			{
-			  cout << "Type Mismatch: expected constant" << endl;
 			}
+		} else {
+			cout << "Type Mismatch: expected constant" << endl;
 		}
 		
 	}
 		
 	
-  
+  Constant(sts);
 	blocktable->define(tokenID, CONSTANT, type, 0, constVal);
-	ConstantName(sts.munion(*temp).munion(First::Constant())); 
-        match("=", sts.munion(First::Constant()));
-	Constant(sts);
   
   syntaxCheck(sts);
 }
@@ -430,7 +423,7 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
   name = lookAheadToken.getLexeme();
 	id = lookAheadToken.getValue();  
 	
-	
+	VariableName(sts.munion(*temp).munion(First::VariableName()));
 	
 	error = blocktable->define(id, kind, type);
 	
@@ -439,32 +432,29 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 		else {
 			tokenIDs.push_back(id);
 		}
-	VariableName(sts.munion(*temp).munion(First::VariableName()));
 		
   //optional part
 error = false;
 
   while(temp->isMember(lookAheadToken.getLexeme()))
-  {	
+  {
+  	
     match(",",sts.munion(First::VariableName())); 
-    name = lookAheadToken.getLexeme();   
-    id = lookAheadToken.getValue(); 
-	      
-    //here i added in the comma symbol, so the loop can continue if lookahead is another comma
-    error = blocktable->define(id, kind, type);
-    if (error)
-    {
-      cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-    }
-    else 
-    {
-	    tokenIDs.push_back(id);
-    }
-    VariableName(sts.munion(*temp)); 
+  name = lookAheadToken.getLexeme();
+	id = lookAheadToken.getValue(); 
+	     
+VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
+error = blocktable->define(id, kind, type);
+if (error)
+cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+else 
+{
+	tokenIDs.push_back(id);
+}
   }
-    
-    syntaxCheck(sts);
-  return tokenIDs;
+  
+  syntaxCheck(sts);
+return tokenIDs;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureDefintion(Set sts)
@@ -792,7 +782,6 @@ void Parser::GuardedCommandList(Set sts)
   //optional
   while(lookAheadToken.getLexeme() == "[]")
   {
-    cout<<"matched []"<<endl;
     match("[]",sts.munion(First::GuardedCommand())); 
     GuardedCommand(sts);
   }
@@ -808,17 +797,6 @@ void Parser::GuardedCommand(Set sts)
   
   //expression must evaluate to boolean type TODO
   theType = Expression(sts.munion(*temp).munion(First::StatementPart())); 
-  //cout<<"guarded command epxression evaluates to "<<blocktable->convertType(theType)<<endl;
-  
-  if(theType == BOOLEAN)
-  {
-    //all good. expression has evaluated to boolean.
-  }
-  else
-  {
-    cout<<"Guarded Command did not evaluate to boolean. (Parser::GuardedCommand(Set sts)). Line/Col: ";
-    cout<<admin->getLineNumber()<<" "<<admin->getColumnNumber()<<endl;
-  }
   
   match("->",sts.munion(First::StatementPart())); 
   
@@ -832,10 +810,8 @@ mType Parser::Expression(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   
-  vector <mType> localTypes;
-  
   //TODO must evaluate to BOOLEAN TYPE and return it
-  localTypes.push_back (PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression())));
+  PrimaryExpression(sts.munion(First::PrimaryOperator()).munion(First::PrimaryExpression()));
   
   
   
@@ -845,19 +821,14 @@ mType Parser::Expression(Set sts)
     //primary operator is defined for boolean type only
     PrimaryOperator(sts.munion(First::PrimaryExpression())); 
     //TODO must evaluate to BOOLEAN TYPE and return it
-    localTypes.push_back(PrimaryExpression(sts));
+    PrimaryExpression(sts);
   }
   
   syntaxCheck(sts);
   
-  for (int i = 0; i < (int)localTypes.size(); i++)
-  {
-    if(localTypes.at(i) != BOOLEAN)
-    {
-      return UNIVERSAL;
-    }
-  }
-  return BOOLEAN;
+  //TODO change the return to an actual mtype retrieved from above shit
+  mType jimmy = BOOLEAN;
+  return jimmy;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::PrimaryOperator(Set sts)
@@ -878,7 +849,6 @@ void Parser::PrimaryOperator(Set sts)
 /////////////////////////////////////////////////////////////////////////////
 mType Parser::PrimaryExpression(Set sts)
 {
-  cout<<"Entering PrimExpr"<<endl;
 	debug(__func__, sts, lookAheadToken);
 	mType type1;
 	mType type2;
@@ -886,7 +856,6 @@ mType Parser::PrimaryExpression(Set sts)
 	bool needInt = false;
 	
   //TODO MUST EVALUATE TO INTEGER TYPE
-  cout<<"look ahead token information before type1 assigned: "<<lookAheadToken.getValue()<<" "<<lookAheadToken.getLexeme()<<endl;
   type1 = SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
   
   //1 or zero of the follwing
@@ -899,14 +868,12 @@ mType Parser::PrimaryExpression(Set sts)
   }
   
   syntaxCheck(sts);
-  cout<<"****************PRIM EXPR type 1 "<<blocktable->convertType(type1)<<endl;
+  
   if(needInt == true)
   {
-    cout<<"****************PRIM EXPR type 2 "<<blocktable->convertType(type2)<<endl;
     //TODO RETURN BOOLEAN TYPE 
     if(type1 == INTEGER && type2 == INTEGER)
     {
-      cout<<"ExiTinG PrimExpr"<<endl;
       return BOOLEAN;
     }
     else
@@ -916,7 +883,7 @@ mType Parser::PrimaryExpression(Set sts)
       cout<<"Attempting to perform a relational operator on expressions not of integer type."<<endl;
     }
   }
-  cout<<"ExiTinG PrimExpr"<<endl;
+  
   return UNIVERSAL;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -963,20 +930,19 @@ mType Parser::SimpleExpression(Set sts)
     localTypes.push_back(Term(sts));
   }
 
+    //cout<<"look ahead token"<<lookAheadToken.getLexeme()<<endl;
   //TODO check if the localTypes vector only has integers in it. if so retrun mtype of boolean, if not return mtype of universal
   for (int i = 0; i < (int)localTypes.size(); i++)
   {
-    //cout<<"simple expression vector "<<blocktable->convertType(localTypes.at(i))<<endl;
+    //cout<<"simple expression vector"<<blocktable->convertType(localTypes.at(i))<<endl;
 
     if(localTypes.at(i) != INTEGER)
     {
       syntaxCheck(sts);
-      //cout<<"simple expression Returning universal"<<admin->getLineNumber()<<" " <<admin->getColumnNumber()<<endl;
       return UNIVERSAL;
     }
   }
   syntaxCheck(sts);
-  //cout<<"simple expression Returning integer"<<endl;
   return INTEGER;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -1059,7 +1025,10 @@ mType Parser::Factor(Set sts)
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
  
-
+  //
+  // Do we need this still? It seems like it was supposed to be used in those MUNIONS
+    //Set *temp = new Set(")");
+  //
   bool perror = false;
   
   mType localType;
@@ -1081,7 +1050,6 @@ mType Parser::Factor(Set sts)
   //or
   else if ( lookAheadToken.getLexeme() == "~")
   {
-    cout<<"matched tilda"<<endl;
     match("~",sts.munion(First::Factor())); 
     localType = Factor(sts);
   }
@@ -1101,14 +1069,6 @@ mType Parser::Factor(Set sts)
 mType Parser::FactorName(Set sts) 
 {
 	debug(__func__, sts, lookAheadToken);
-	int id = lookAheadToken.getValue();
-	TableEntry tbl;
-	bool error = false;
-	tbl = blocktable->find(id, error);
-	
-	mType returnMe;
-	returnMe = tbl.otype;
-	
   match("name", sts.munion(First::Constant()).munion(First::VariableAccess()));
 
   
@@ -1133,7 +1093,7 @@ mType Parser::FactorName(Set sts)
     
   syntaxCheck(sts);
   
-  return returnMe;
+  return localType;
   
   
     
@@ -1257,14 +1217,10 @@ mType Parser::VariableName(Set sts)
   TableEntry tbl;
   
   tbl = blocktable->find(id, error);
-  //cout<<"debug dump: "<<tbl.id<<" "<<tbl.okind<<" "<<tbl.otype<<" "<<tbl.size<<" "<<tbl.value<<endl;
-//   cout<<"searching for id # "<<id<<endl;
-//   blocktable->printAllBlocks();
   match("name", sts);
   
   syntaxCheck(sts);
-  //cout<<admin->getLineNumber()<<" " <<admin->getColumnNumber();
-  //cout<<"variable name function returning: "<<blocktable->convertType(tbl.otype)<<endl;
+  
   return tbl.otype;
 }
 /////////////////////////////////////////////////////////////////////////////
