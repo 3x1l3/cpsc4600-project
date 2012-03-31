@@ -236,7 +236,7 @@ void Parser::Block(Set sts)
   blocktable->newBlock();
   DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
   StatementPart (sts.munion(*temp)); 
-  //blocktable->printAllBlocks();
+  blocktable->printAllBlocks();
   match         ("end", sts);
   blocktable->endBlock();
   syntaxCheck(sts);
@@ -377,23 +377,37 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
     
 	constid = lookAheadToken.getValue();
-	
+	//for some reason, this returns UNIVERSAL no matter what type the actual item in between the square brackets is...
+	//very strange... but if we access entry after the call to entry = blocktable->find(constid, error); below,
+	//we can accuratly get the type of the object by blocktable->convertType(entry.otype)
+	//so for sake of easiness i will just use the entry type and compare it to the type paramter passed in to this function.
+	//this will allow us to check on declaration of a array, if the size variable is integer as it should be, or boolean which is error
 	Constant(sts.munion(*temp2)); 
-    match("]",sts);
+	
+	match("]",sts);
 
 	entry = blocktable->find(constid, error);
-	
-	if (!error) {
-	for(int i=0; i<(int)arrayIDs.size(); i++) 
+	if(entry.otype != INTEGER)
 	{
-		blocktable->redefineSize(arrayIDs.at(i), entry.value);
+	  cout<<"Array Size variable is of non-Integer type.  Trying to create array size with type of "<<blocktable->convertType(entry.otype)<<endl;
+	  numberOfScopeTypeErrors++;
+	  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 	}
-	} else {
-		
-		cerr << "Constant undefined for use in array definition" << endl;
-		numberOfScopeTypeErrors++;
-		cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
-		
+	
+	if (!error) 
+	{
+	  for(int i=0; i<(int)arrayIDs.size(); i++) 
+	  {
+		  blocktable->redefineSize(arrayIDs.at(i), entry.value);
+	  }
+	} 
+	else 
+	{
+		  
+		  cerr << "Constant undefined for use in array definition" << endl;
+		  numberOfScopeTypeErrors++;
+		  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
+		  
 	}
 	
 	
