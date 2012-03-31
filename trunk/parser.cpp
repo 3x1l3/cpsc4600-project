@@ -77,11 +77,22 @@ void Parser::run()
   //send in money sign
   
   this->Program(*temp);
-  cout << "\nParsing completed.\n";
+  cout<<endl;
+  cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
+  cout << "Parsing completed."<<endl;;
   if(errorCount > 0)
-    cout << "\nParsing Errors Found: " << errorCount << endl;
+    cout << "Parsing Errors Found: " << errorCount << endl;
   else
-    cout << "\nNo Parsing errors found. \n";
+    cout << "No Parsing errors found. "<<endl;;
+  
+  
+    cout << "Scope and Type check Completed."<<endl;
+  if(numberOfScopeTypeErrors > 0)
+    cout << "Scope and Type Check Errors Found: " << numberOfScopeTypeErrors << endl;
+  else
+    cout << "No Scope or Type check errors found. "<<endl;;
+  
+  
 }
 
 /**
@@ -225,7 +236,7 @@ void Parser::Block(Set sts)
   blocktable->newBlock();
   DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
   StatementPart (sts.munion(*temp)); 
-  blocktable->printAllBlocks();
+  //blocktable->printAllBlocks();
   match         ("end", sts);
   blocktable->endBlock();
   syntaxCheck(sts);
@@ -315,12 +326,14 @@ void Parser::ConstantDefinition(Set sts)
 			{
 			  cout << "Type Mismatch: expected constant" << endl;
 			  numberOfScopeTypeErrors++;
+			  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 			}
 		} 
 		else 
 		{ 
 		  cout << "Error: constant not defined" << endl;
 		  numberOfScopeTypeErrors++;
+		  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 		}
 		
 	}
@@ -379,6 +392,7 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
 		
 		cerr << "Constant undefined for use in array definition" << endl;
 		numberOfScopeTypeErrors++;
+		cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 		
 	}
 	
@@ -433,6 +447,7 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 	  cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " 
 	       << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 	  numberOfScopeTypeErrors++;
+	  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 	}
 	else 
 	{
@@ -456,6 +471,7 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 	     cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " 
 	          << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
 		  numberOfScopeTypeErrors++;
+		  cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
 	  }
 	  else 
 	  {
@@ -660,12 +676,14 @@ void Parser::AssignmentStatement(Set sts)
     {
       cout<<"Assignment type mismatch at place (from 0) " <<indexSelect<<". Trying to assign " << blocktable->convertType(val.at(indexSelect))<<" to "<< blocktable->convertType(el.at(indexSelect)) <<endl;
       numberOfScopeTypeErrors++;
+      cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
     }
   }
   else
   {
     cout<<"Unbalanced assignment statement (number of variable pairs is unequal)."<<endl;
     numberOfScopeTypeErrors++;
+    cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   
   syntaxCheck(sts);
@@ -688,11 +706,13 @@ void Parser::ProcedureStatement(Set sts)
   {
     cout<<"Invalid procedure call to type of "<<blocktable->convertKind(entry.okind)<<"-"<<blocktable->convertType(entry.otype)<<endl;
     numberOfScopeTypeErrors++;
+    cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   if(error)
   {
     cout<<"Undefined Procedure Call - Unreferenced Procedure Name."<<endl;
     numberOfScopeTypeErrors++;
+    cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   
   
@@ -748,7 +768,9 @@ void Parser::GuardedCommand(Set sts)
   if (Expression(sts.munion(*temp).munion(First::StatementPart())) != BOOLEAN)
   {
     //Need a better print out here - JP Mar31 2012
-    cout << "Guard does not evaluate to boolean" << endl;
+    cout << "Compound guarded command statement (entry conditions for while, do, for, if) did not evaluate to boolean." << endl;
+    numberOfScopeTypeErrors++;
+    cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   match("->",sts.munion(First::StatementPart())); 
   StatementPart(sts);
@@ -1132,6 +1154,7 @@ void Parser::IndexedSelector(Set sts)
   {
     cout << "Index selector evaluates to non integer type.  Please ensure only integers exists between [ and ]." << endl;
     numberOfScopeTypeErrors++;
+    cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   match("]", sts);
   
@@ -1227,6 +1250,7 @@ mType Parser::VariableName(Set sts)
      type = UNIVERSAL;
      cout << "Undeclared variable. Maybe a typo? Check variable declaration section." << endl;
      numberOfScopeTypeErrors++;
+     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
    }
    
   }
