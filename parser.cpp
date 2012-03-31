@@ -48,6 +48,7 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
   table = &symTable;
   debugflag = false;
   errorCount = 0;
+  numberOfScopeTypeErrors = 0;
   blocktable = new BlockTable(*table);
   prevMatch[0] = "";
   prevMatch[1] = "";
@@ -135,13 +136,7 @@ Token Parser::nextToken()
  */
 void Parser::match(string matchMe, Set validNextCharacters)
 {
-  /* Preliminary debug functions.
-  cout << "\nTesting matchMe: " << matchMe << " and la: " << lookAheadToken.getLexeme() << "\n" << validNextCharacters.toString() << "\n" << endl;
-  char a;
-  cin >> a;
-  */
   debug(__func__, validNextCharacters,lookAheadToken);
-  //cout << "\n\nTrying to match lookahead " << lookAheadToken.getLexeme() << " and match token " << matchMe << " and valid chars " << validNextCharacters.toString();
   //cout<<"Matching symbol : " <<lookAheadToken.getLexeme()<<endl;
 	
   if (lookAheadToken.getLexeme() == matchMe) 
@@ -157,7 +152,6 @@ void Parser::match(string matchMe, Set validNextCharacters)
     
     syntaxError(validNextCharacters);
   }
-  //cout << "\nHere's the debug data.\n MatchMe is " << matchMe << " and the valset is " << validNextCharacters.toString() << endl;
   syntaxCheck(validNextCharacters);
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -167,8 +161,6 @@ void Parser::syntaxError( Set validNextCharacters)
   cout << "\nSyntax Error on token: " << lookAheadToken.getLexeme() << " with LA " << currentToken.getLexeme() <<  ". Valid set members are: " << validNextCharacters.toString() 
        << "\t line/col " << admin->getLineNumber() << " " << admin->getColumnNumber() << endl;
 
-	//Reset Matched variable to nothing
-	resetPrevMatches();
 
   while (! validNextCharacters.isMember(lookAheadToken.getLexeme())) 
   {
@@ -245,7 +237,7 @@ void Parser::DefinitionPart(Set sts)
 {
   blockTypeStack.push(DEFINITIONPART);
   
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(";");
   Set first = First::Definition();
   
@@ -313,24 +305,29 @@ void Parser::ConstantDefinition(Set sts)
 			bool error = false;
 		TableEntry tbl = blocktable->find(lookAheadToken.getValue(), error);
 	
-		if (!error) {
-			
-			if (tbl.okind == CONSTANT) {
-				
+		if (!error) 
+		{	
+			if (tbl.okind == CONSTANT) 
+			{	
 				constVal = tbl.value;
 				type = tbl.otype;
-			} else {
-			cout << "Type Mismatch: expected constant" << endl;
-		}
-		} else { 
+			} else 
+			{
+			  cout << "Type Mismatch: expected constant" << endl;
+			  numberOfScopeTypeErrors++;
+			}
+		} 
+		else 
+		{ 
 		  cout << "Error: constant not defined" << endl;
+		  numberOfScopeTypeErrors++;
 		}
 		
 	}
 		
 	
   Constant(sts);
-	blocktable->define(tokenID, CONSTANT, type, 0, constVal);
+  blocktable->define(tokenID, CONSTANT, type, 0, constVal);
   
   syntaxCheck(sts);
 }
@@ -353,7 +350,7 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
   if(First::VariableList().isMember(lookAheadToken.getLexeme()))
   {
     VariableList(sts, type, VARIABLE);
-         }
+  }
   else if (lookAheadToken.getLexeme() == "array")
   {
 	bool error = false;
@@ -363,7 +360,7 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
 	
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
     
-	arrayIDs = VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
+    arrayIDs = VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
     
 	constid = lookAheadToken.getValue();
@@ -376,12 +373,12 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
 	if (!error) {
 	for(int i=0; i<(int)arrayIDs.size(); i++) 
 	{
-// 		blocktable->find(arrayIDs.at(i), error2);
 		blocktable->redefineSize(arrayIDs.at(i), entry.value);
 	}
 	} else {
 		
 		cerr << "Constant undefined for use in array definition" << endl;
+		numberOfScopeTypeErrors++;
 		
 	}
 	
@@ -432,33 +429,42 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
 	error = blocktable->define(id, kind, type);
 	
 	if (error)
-		cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-		else {
-			tokenIDs.push_back(id);
-		}
-		
-  //optional part
-error = false;
+	{
+	  cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " 
+	       << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+	  numberOfScopeTypeErrors++;
+	}
+	else 
+	{
+	   tokenIDs.push_back(id);
+	}
+			
+	  //optional part
+	error = false;
 
-  while(temp->isMember(lookAheadToken.getLexeme()))
-  {
-  	
-    match(",",sts.munion(First::VariableName())); 
-  name = lookAheadToken.getLexeme();
-	id = lookAheadToken.getValue(); 
-	     
-VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
-error = blocktable->define(id, kind, type);
-if (error)
-cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-else 
-{
-	tokenIDs.push_back(id);
-}
-  }
-  
-  syntaxCheck(sts);
-return tokenIDs;
+	while(temp->isMember(lookAheadToken.getLexeme()))
+	{
+		
+	  match(",",sts.munion(First::VariableName())); 
+	  name = lookAheadToken.getLexeme();
+	  id = lookAheadToken.getValue(); 
+		    
+	  VariableName(sts.munion(*temp)); //here i added in the comma symbol, so the loop can continue if lookahead is another comma
+	  error = blocktable->define(id, kind, type);
+	  if (error)
+	  {
+	     cout << "Multiple "<<blocktable->convertKind(kind)<< " declaration: " 
+	          << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+		  numberOfScopeTypeErrors++;
+	  }
+	  else 
+	  {
+	    tokenIDs.push_back(id);
+	  }
+	}
+	  
+	  syntaxCheck(sts);
+	return tokenIDs;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::ProcedureDefintion(Set sts)
@@ -556,35 +562,21 @@ void Parser::ReadStatement(Set sts)
 vector<mType> Parser::VariableAccessList(Set sts)
 {
 	vector<mType> varTypes; 
-  debug(__func__, sts, lookAheadToken);
-  Set *temp = new Set(",");
-        int id = lookAheadToken.getValue();
-	bool error = false;
-	TableEntry entry;  
-	VariableAccess(sts.munion(*temp).munion(First::VariableAccess()));
+        debug(__func__, sts, lookAheadToken);
+        Set *temp = new Set(",");
+ 
+	varTypes.push_back(VariableAccess(sts.munion(*temp).munion(First::VariableAccess())));
 	
-	entry = blocktable->find(id, error);
-	if (!error) {
-		varTypes.push_back(entry.otype);
-	}  else {
-		cout << "varacclist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
+        //optional////////////
+	while(lookAheadToken.getLexeme() == ",")
+	{
+	  match(",",sts.munion(First::VariableAccess())); 
+	  
+	  varTypes.push_back(VariableAccess(sts.munion(*temp)));
 	}
-//optional///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  while(lookAheadToken.getLexeme() == ",")
-  {
-    match(",",sts.munion(First::VariableAccess())); 
-    
-    VariableAccess(sts.munion(*temp));
-    	entry = blocktable->find(id, error);
-	if (!error) {
-		varTypes.push_back(entry.otype);
-	}  else {
-		cout << "varacclist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-	}
-  }
-  
-  syntaxCheck(sts);
-return varTypes;
+	
+	syntaxCheck(sts);
+        return varTypes;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::WriteStatement(Set sts)
@@ -599,87 +591,30 @@ void Parser::WriteStatement(Set sts)
 vector<mType> Parser::ExpressionList(Set sts)
 {
   vector<mType> types;
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   Set *temp = new Set(",");
   
-  int id = lookAheadToken.getValue();
-  string lexeme = lookAheadToken.getLexeme();
-  Token tok = lookAheadToken;
-  bool error = false;
-  TableEntry entry;
   
-  Expression(sts.munion(*temp).munion(First::Expression()));
+  types.push_back(Expression(sts.munion(*temp).munion(First::Expression())));
   
-  if (lexeme == "name") 
-  {
-    entry = blocktable->find(id, error);
-  
-    if (!error) 
-    {
-    types.push_back(entry.otype);
-    } 
-    else 
-    {
-      cout << "exprlist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-    } 
-  
-  }
-  else if (lexeme == "num") 
-  {
-      types.push_back(INTEGER);
-  }
-  else if (lexeme == "false" || lexeme == "true")
-  {
-    types.push_back(BOOLEAN);
-  }
-  else
-  {
-    cout<<"exprlist - Expression evaluates to non-conforming type"<<endl;
-  }
 ////////////////////////////////////////////////////////////////////////////////
 
   
   //optional
   while(lookAheadToken.getLexeme() == ",")
   {
-    match(",",sts.munion(First::Expression())); 
-    
-    id = lookAheadToken.getValue();
-    lexeme = lookAheadToken.getLexeme();
-    tok = lookAheadToken;
-    error = false;
-    
-    Expression(sts.munion(*temp));
-    
-    if (lexeme == "name") 
-    {
-      entry = blocktable->find(id, error);
-    
-      if (!error) 
-      {
-      types.push_back(entry.otype);
-      } 
-      else 
-      {
-	cout << "exprlist - Undeclared variable: " << blocktable->table->getAttributeWhere(id, "ID", "lexeme") << endl;
-      } 
-    
-    }
-    else if (lexeme == "num") 
-    {
-	types.push_back(INTEGER);
-    }
-    else if (lexeme == "false" || lexeme == "true")
-    {
-      types.push_back(BOOLEAN);
-    }
-    else
-    {
-      cout<< "exprlist - Expression evaluates to non-conforming type"<<endl;
-    }
+    match(",",sts.munion(First::Expression()));     
+    types.push_back(Expression(sts.munion(*temp)));
   }
       
+      
   syntaxCheck(sts);
+  
+//Jordan's Debug Info - Please Leave - Mar 31st 2012  
+//   for(int i = 0 ; i < (int)types.size(); i++)
+//   {
+//     cout<<"####################ExprList(printOutAllVector)="<<blocktable->convertType(types.at(i))<<endl;
+//   }
   return types;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -699,29 +634,38 @@ void Parser::AssignmentStatement(Set sts)
   
   if(val.size() == el.size())
   {
-    //cout<<"assnstmt - Parallel Vectors! (Sizes match)."<<endl;
     
     //add in better error print out here
     bool allOk = true;
+    int indexSelect;
     
     for(int i = 0; i < (int) val.size(); i++)
     {
       if(val.at(i) != el.at(i))
       {
 	allOk = false;
+	indexSelect = i;
       }
-      //cout<<"here"<<endl;
-      //cout<<"variable acces list : "<<blocktable->convertType(val.at(i))<<endl;
-      //cout<<"expression list : "<<blocktable->convertType(el.at(i))<<endl;
+//       if(val.at(i) == UNIVERSAL)
+//       {
+// 	cout<<"Error - Trying to redefine a constant variable. - variable # " <<i<<" on right hand side of assignment statement"<<endl;
+// 	numberOfScopeTypeErrors++;
+//       }
+      //Jordan's debuging info - Please Leave - Mar 31 2012
+      //cout<<"66666666666666666666666666here"<<endl;
+      //cout<<"66666666666666666666666666variable acces list : "<<blocktable->convertType(val.at(i))<<endl;
+      //cout<<"66666666666666666666666666expression list : "<<blocktable->convertType(el.at(i))<<endl;
     }
     if (!allOk)
     {
-      cout<<"Assignment type mismatch."<<endl;
+      cout<<"Assignment type mismatch at place (from 0) " <<indexSelect<<". Trying to assign " << blocktable->convertType(val.at(indexSelect))<<" to "<< blocktable->convertType(el.at(indexSelect)) <<endl;
+      numberOfScopeTypeErrors++;
     }
   }
   else
   {
-    cout<<"Parameter size mismatch on assignment statement."<<endl;
+    cout<<"Unbalanced assignment statement (number of variable pairs is unequal)."<<endl;
+    numberOfScopeTypeErrors++;
   }
   
   syntaxCheck(sts);
@@ -743,10 +687,12 @@ void Parser::ProcedureStatement(Set sts)
   if(entry.okind != PROCEDURE)
   {
     cout<<"Invalid procedure call to type of "<<blocktable->convertKind(entry.okind)<<"-"<<blocktable->convertType(entry.otype)<<endl;
+    numberOfScopeTypeErrors++;
   }
   if(error)
   {
-    cout<<"Undefined Procedure Reference."<<endl;
+    cout<<"Undefined Procedure Call - Unreferenced Procedure Name."<<endl;
+    numberOfScopeTypeErrors++;
   }
   
   
@@ -777,7 +723,7 @@ void Parser::DoStatement(Set sts)
   
   syntaxCheck(sts);
 }
-/////////////////////g////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 void Parser::GuardedCommandList(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
@@ -800,7 +746,10 @@ void Parser::GuardedCommand(Set sts)
   Set *temp = new Set("->");
   
   if (Expression(sts.munion(*temp).munion(First::StatementPart())) != BOOLEAN)
+  {
+    //Need a better print out here - JP Mar31 2012
     cout << "Guard does not evaluate to boolean" << endl;
+  }
   match("->",sts.munion(First::StatementPart())); 
   StatementPart(sts);
   
@@ -825,11 +774,24 @@ mType Parser::Expression(Set sts)
 
   
   syntaxCheck(sts);
-  
-  for(int i=0; i < localTypes.size(); i++) {
-   if (localTypes.at(i) != BOOLEAN)
-     return UNIVERSAL;
+  if((int)localTypes.size() == 1)
+  {
+    //Jordan's debuggin info - Please Leave - Mar 31 2012
+    //cout<<"********************ExprReturn(VecSize1)="<<blocktable->convertType(localTypes.at(0))<<endl;
+    return localTypes.at(0);
   }
+  
+  for(int i=0; i < (int)localTypes.size(); i++) 
+  {
+    if (localTypes.at(i) != BOOLEAN)
+    {  
+      //leave - JP march 31
+      //cout<<"********************ExprReturn(SomeNotBoolean)="<<blocktable->convertType(UNIVERSAL)<<endl;
+      return UNIVERSAL;
+    }
+  }
+  //leave - JP march 31
+  //cout<<"********************ExprReturn(AllBoolean)="<<blocktable->convertType(BOOLEAN)<<endl;
   return BOOLEAN;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -855,36 +817,78 @@ mType Parser::PrimaryExpression(Set sts)
 	debug(__func__, sts, lookAheadToken);
 	bool type2found = false;
  
-  if (lookAheadToken.getLexeme() == "~" || lookAheadToken.getLexeme() == "(") {
+  if (lookAheadToken.getLexeme() == "~" || lookAheadToken.getLexeme() == "(") 
+  {
       type1 = Factor(sts);
-      
+      //maybe have to do something here too TODO - JP march 31 2012
       if (type1 == BOOLEAN)
 	return type1;
       else
 	return UNIVERSAL;
-  } else {
+  } 
+  else 
+  {
 	  
   type1 = SimpleExpression(sts.munion(First::RelationalOperator()).munion(First::SimpleExpression()));
   //1 or zero of the follwing
   if(First::RelationalOperator().isMember(lookAheadToken.getLexeme()))
   {
+    type2found = true;
     RelationalOperator(sts.munion(First::SimpleExpression())); 
     type2 = SimpleExpression(sts);
-    type2found = true;
+    
   }
   
   syntaxCheck(sts);
   
-  if(type1 == INTEGER && !type2found) {
-    return BOOLEAN;
-  } else if (type1 == INTEGER && type2 == INTEGER)
-    return BOOLEAN;
-  else
-    return UNIVERSAL;
+  if(type2found)
+  {
+    if (type1 == INTEGER && type2 == INTEGER)
+    {
+      //JP debug - leave - march 31 2012
+      //cout<<"******************************************PrimExprReturn(type1&type2found)="<<blocktable->convertType(BOOLEAN)<<endl;
+      return BOOLEAN;
+    }
+    else
+    {
+      //jp debug leave mar 31 2012
+      //cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(UNIVERSAL)<<endl;
+      
+      //primary expression did not evaulate to boolean type (meaning all the elements where not of one type)
+      return UNIVERSAL;
+    }
   }
   
-
+  if(!type2found)
+  {
+    if(type1 == INTEGER) 
+    {
+      //jp - leave - mar 31
+      //cout<<"******************************************PrimExprReturn(type1found)="<<blocktable->convertType(INTEGER)<<endl;
+      return INTEGER;
+    }
+    else if (type1 == BOOLEAN)
+    {
+      //jp - leave - mar 31
+      //cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(BOOLEAN)<<endl;
+      return BOOLEAN;
+    }
+    else
+    {
+      //jp - leave - mar 31
+      //cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(UNIVERSAL)<<endl;
+      return UNIVERSAL;
+    }
+  }
   
+  
+  
+  
+  }
+  
+  //jp leave - mar 31
+  //cout<<"***************************PrimExprReturn(defaultCaseAtBottom)="<<blocktable->convertType(UNIVERSAL)<<endl;
+  return UNIVERSAL;
   
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -934,8 +938,17 @@ mType Parser::SimpleExpression(Set sts)
 
   syntaxCheck(sts);
   
-  for(int i=0; i < localtypes.size(); i++) {
+  //this is to check when we only see one factor here.  then we just return that one factor's type,
+  //instead of checking if they are all INTEGER, casue if there is only one, it doesnt have to be just INTEGER
+  if((int)localtypes.size() == 1)
+  {
+    return localtypes.at(0);
+  }
+  
+  for(int i=0; i < (int)localtypes.size(); i++) {
    if (localtypes.at(i) != INTEGER)
+     //if we return universal, we have seen more than one term, and therefore need all of them to be
+   //of integer type to make the adding operator valid.  AddOp not defined for boolean types in PL
      return UNIVERSAL;
   }
   return INTEGER;
@@ -971,15 +984,24 @@ mType Parser::Term(Set sts)
   //optinal
   while(First::MultiplyingOperator().isMember(lookAheadToken.getLexeme()))
   {
-    MultiplyingOperator(sts.munion(First::Factor()));  
+   MultiplyingOperator(sts.munion(First::Factor()));  
    localtypes.push_back( Factor(sts));
   }
   
   
   syntaxCheck(sts);
   
-    for(int i=0; i < localtypes.size(); i++) {
+  //this is to check when we only see one factor here.  then we just return that one factor's type,
+  //instead of checking if they are all INTEGER, casue if there is only one, it doesnt have to be just INTEGER
+  if((int)localtypes.size() == 1)
+  {
+    return localtypes.at(0);
+  }
+  
+    for(int i=0; i < (int)localtypes.size(); i++) {
    if (localtypes.at(i) != INTEGER)
+    //if we return universal, we have seen more than one term, and therefore need all of them to be
+   //of integer type to make the multiplying operator valid.  MulOp not defined for boolean types in PL
      return UNIVERSAL;
   }
   return INTEGER;
@@ -1017,7 +1039,7 @@ mType Parser::Factor(Set sts)
   // Do we need this still? It seems like it was supposed to be used in those MUNIONS
     //Set *temp = new Set(")");
   //
-  bool perror = false;
+
     
   if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
   {
@@ -1047,13 +1069,16 @@ mType Parser::Factor(Set sts)
 
 mType Parser::FactorName(Set sts) 
 {
-	debug(__func__, sts, lookAheadToken);
+  debug(__func__, sts, lookAheadToken);
   mType localType;
-	if (lookAheadToken.getLexeme() == "name") {
-	localType = VariableName( sts.munion(First::Constant()).munion(First::VariableAccess()));
-	  if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
-	    IndexedSelector(sts);
-	} 
+  if (lookAheadToken.getLexeme() == "name") 
+  {
+    localType = VariableName( sts.munion(First::Constant()).munion(First::VariableAccess()));
+    if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
+    {
+	IndexedSelector(sts);
+    }	
+  } 
     
   else if (First::Constant().isMember(lookAheadToken.getLexeme())) 
   {
@@ -1078,12 +1103,12 @@ mType Parser::FactorName(Set sts)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void Parser::VariableAccess(Set sts)
+mType Parser::VariableAccess(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-	
+  mType localType;	
   Set indsel = First::IndexedSelector();
-  VariableName(sts.munion(First::IndexedSelector()));
+  localType = VariableName(sts.munion(First::IndexedSelector()));
   //one or zero of thefollowing
   
   if(indsel.isMember(lookAheadToken.getLexeme()))
@@ -1092,6 +1117,7 @@ void Parser::VariableAccess(Set sts)
   }
   
   syntaxCheck(sts);
+  return localType;
 }
 /////////////////////////////////////////////////////////////////////////////
 void Parser::IndexedSelector(Set sts)
@@ -1101,8 +1127,12 @@ void Parser::IndexedSelector(Set sts)
 	Set *temp = new Set("]");
   
   match("[", sts.munion(First::Expression()).munion(*temp)); 
-  if (Expression(sts.munion(*temp)) != BOOLEAN)
-    cout << "Index selector evaluates to non integer" << endl;
+  
+  if (Expression(sts.munion(*temp)) != INTEGER)
+  {
+    cout << "Index selector evaluates to non integer type.  Please ensure only integers exists between [ and ]." << endl;
+    numberOfScopeTypeErrors++;
+  }
   match("]", sts);
   
   syntaxCheck(sts);
@@ -1114,11 +1144,12 @@ mType Parser::Constant(Set sts)
   Set num = First::Numeral();
   Set bol = First::BooleanSymbol();
   Set con = First::ConstantName();
+  
   mType localType;
+  
   if(num.isMember(lookAheadToken.getLexeme()))
   {
-    localType = Numeral(sts);
-	//blocktable->redefineValue(prevID, prevToken.getLexeme());
+    localType = Numeral(sts);//////////////////////////////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
   }
   //or
   else if (bol.isMember(lookAheadToken.getLexeme()))
@@ -1128,7 +1159,7 @@ mType Parser::Constant(Set sts)
   //or
   else if (con.isMember(lookAheadToken.getLexeme()))
   {
-    /*localType = */ConstantName(sts);
+    localType = ConstantName(sts);
   }
   
   syntaxCheck(sts);
@@ -1139,7 +1170,7 @@ mType Parser::Constant(Set sts)
 mType Parser::Numeral(Set sts)
 {
 	debug(__func__, sts, lookAheadToken);
-  match("num", sts);//TODO change token creation to make lexeme of a number = "num"
+  match("num", sts);
   
   syntaxCheck(sts);
 
@@ -1188,20 +1219,23 @@ mType Parser::VariableName(Set sts)
    entry = blocktable->find(lookAheadToken.getValue(), error);
    
    if (!error) 
+   {
      type = entry.otype;
+   }
    else
    {
      type = UNIVERSAL;
-     cout << "Undeclared variable" << endl;
+     cout << "Undeclared variable. Maybe a typo? Check variable declaration section." << endl;
+     numberOfScopeTypeErrors++;
    }
    
   }
     
-    
   match("name", sts);
   
   syntaxCheck(sts);
-
+  //jp debug info - leave - mar 31 2012
+  //cout<<"**************************************VariableNameReturnType="<<blocktable->convertType(type)<<endl;
   return type;
 }
 ///////////////////////////g//////////////////////////////////////////////////

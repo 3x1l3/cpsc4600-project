@@ -108,7 +108,7 @@ Token prevToken;
   void MultiplyingOperator(Set sts);
   mType Factor(Set sts);
   
-  void VariableAccess(Set sts);
+  mType VariableAccess(Set sts);
   void IndexedSelector(Set sts);
   mType Constant(Set sts);
   mType Numeral(Set sts);
@@ -130,13 +130,16 @@ Token prevToken;
   /** The Debug function only processes if this Flag is set to True. */
   bool debugflag;
   
-SymbolTable* table;
+  SymbolTable* table;
   BlockTable* blocktable;
   string prevMatch[4];
-int prevID;
+  int prevID;
 
-	void resetPrevMatches();
-	stack<blocktype> blockTypeStack;
+  void resetPrevMatches();
+  stack<blocktype> blockTypeStack;
+  
+  //this variable will track the number of scope/type check errors we have found
+  int numberOfScopeTypeErrors;
 
   
 public:
