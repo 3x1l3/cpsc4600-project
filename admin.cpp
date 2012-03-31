@@ -98,7 +98,10 @@ int Admin::scan()
     return 0;
   
   /** Run the Parser! The parser itself will also manage the error count. */
-  cout << "\nParsing Started.\n" << endl;
+  cout << "\nParsing Started." << endl;
+  cout << "Scope and Type Check Started"<<endl;
+  cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
+  cout<<endl;
   parser->run();
   
   /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
