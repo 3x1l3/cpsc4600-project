@@ -135,7 +135,6 @@ Token prevToken;
   string prevMatch[4];
   int prevID;
 
-  void resetPrevMatches();
   stack<blocktype> blockTypeStack;
   
   //this variable will track the number of scope/type check errors we have found

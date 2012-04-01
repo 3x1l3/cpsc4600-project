@@ -3,12 +3,14 @@ begin
 integer q;
 
   const n = 10; 
+const check = true;
   integer array A[n];
   integer x, i; 
   Boolean found;
   proc Search
   begin integer m;
       i,m := 1,n;
+      n, n, check := 1, x, false;
     do i<m ->
       if A[i] = x -> m := i; []
 	~(A[i] = x) -> i := i + 1;

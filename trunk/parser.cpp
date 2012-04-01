@@ -236,7 +236,7 @@ void Parser::Block(Set sts)
   blocktable->newBlock();
   DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
   StatementPart (sts.munion(*temp)); 
-  blocktable->printAllBlocks();
+  //blocktable->printAllBlocks();
   match         ("end", sts);
   blocktable->endBlock();
   syntaxCheck(sts);
@@ -520,7 +520,6 @@ void Parser::StatementPart(Set sts)
   {
     Statement(sts.munion(*temp)); 
     match(";",sts.munion(First::Statement()));
-	resetPrevMatches();
   }
   blockTypeStack.pop();
   syntaxCheck(sts);
@@ -665,22 +664,42 @@ void Parser::AssignmentStatement(Set sts)
   if(val.size() == el.size())
   {
     
-    //add in better error print out here
     bool allOk = true;
     int indexSelect;
     
     for(int i = 0; i < (int) val.size(); i++)
     {
-      if(val.at(i) != el.at(i))
+
+      if(val.at(i) == CBOOLEAN)
+      {
+	//error - trying to redefine constant variable
+	cout<<"Error - Attempting to redefine a constant Boolean variable within a assignment statement.  Constant located at place (from 0) "<<i<<endl;
+	numberOfScopeTypeErrors++;
+	cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
+	
+      }
+      else if (val.at(i) == CINTEGER)
+      {
+	//error - trying to redefine constant variable
+	cout<<"Error - Attempting to redefine a constant Integer variable within a assignment statement.  Constant located at place (from 0) "<<i<<endl;
+        numberOfScopeTypeErrors++;
+	cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
+	
+      }     
+      else if(val.at(i) == INTEGER && el.at(i) == CINTEGER)
+      {
+	//all is well
+      }
+      else if (val.at(i) == BOOLEAN && el.at(i) == CBOOLEAN)
+      {
+	//all is well
+      }
+      else if(val.at(i) != el.at(i))
       {
 	allOk = false;
 	indexSelect = i;
       }
-//       if(val.at(i) == UNIVERSAL)
-//       {
-// 	cout<<"Error - Trying to redefine a constant variable. - variable # " <<i<<" on right hand side of assignment statement"<<endl;
-// 	numberOfScopeTypeErrors++;
-//       }
+
       //Jordan's debuging info - Please Leave - Mar 31 2012
       //cout<<"66666666666666666666666666here"<<endl;
       //cout<<"66666666666666666666666666variable acces list : "<<blocktable->convertType(val.at(i))<<endl;
@@ -779,7 +798,9 @@ void Parser::GuardedCommand(Set sts)
 	debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
   
-  if (Expression(sts.munion(*temp).munion(First::StatementPart())) != BOOLEAN)
+  mType localType = Expression(sts.munion(*temp).munion(First::StatementPart()));
+  
+  if (localType != BOOLEAN && localType != CBOOLEAN)
   {
     //Need a better print out here - JP Mar31 2012
     cout << "Compound guarded command statement (entry conditions for while, do, for, if) did not evaluate to boolean." << endl;
@@ -814,12 +835,17 @@ mType Parser::Expression(Set sts)
   {
     //Jordan's debuggin info - Please Leave - Mar 31 2012
     //cout<<"********************ExprReturn(VecSize1)="<<blocktable->convertType(localTypes.at(0))<<endl;
-    return localTypes.at(0);
+    if(localTypes.at(0) == CINTEGER)
+      return INTEGER;
+    else if (localTypes.at(0) == CBOOLEAN)
+      return BOOLEAN;
+    else
+      return localTypes.at(0);
   }
   
   for(int i=0; i < (int)localTypes.size(); i++) 
   {
-    if (localTypes.at(i) != BOOLEAN)
+    if (localTypes.at(i) != BOOLEAN && localTypes.at(i) != CBOOLEAN)
     {  
       //leave - JP march 31
       //cout<<"********************ExprReturn(SomeNotBoolean)="<<blocktable->convertType(UNIVERSAL)<<endl;
@@ -856,8 +882,8 @@ mType Parser::PrimaryExpression(Set sts)
   if (lookAheadToken.getLexeme() == "~" || lookAheadToken.getLexeme() == "(") 
   {
       type1 = Factor(sts);
-      //maybe have to do something here too TODO - JP march 31 2012
-      if (type1 == BOOLEAN)
+
+      if (type1 == BOOLEAN || type1 == CBOOLEAN)
 	return type1;
       else
 	return UNIVERSAL;
@@ -879,7 +905,7 @@ mType Parser::PrimaryExpression(Set sts)
   
   if(type2found)
   {
-    if (type1 == INTEGER && type2 == INTEGER)
+    if ( (type1 == INTEGER || type1 == CINTEGER) && (type2 == INTEGER || type2 == CINTEGER) )
     {
       //JP debug - leave - march 31 2012
       //cout<<"******************************************PrimExprReturn(type1&type2found)="<<blocktable->convertType(BOOLEAN)<<endl;
@@ -890,20 +916,20 @@ mType Parser::PrimaryExpression(Set sts)
       //jp debug leave mar 31 2012
       //cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(UNIVERSAL)<<endl;
       
-      //primary expression did not evaulate to boolean type (meaning all the elements where not of one type)
+      //primary expression did not evaulate to boolean type (meaning all the elements where not of one type (INTEGER type) )
       return UNIVERSAL;
     }
   }
   
   if(!type2found)
   {
-    if(type1 == INTEGER) 
+    if(type1 == INTEGER || type1 == CINTEGER) 
     {
       //jp - leave - mar 31
       //cout<<"******************************************PrimExprReturn(type1found)="<<blocktable->convertType(INTEGER)<<endl;
       return INTEGER;
     }
-    else if (type1 == BOOLEAN)
+    else if (type1 == BOOLEAN || type1 == CBOOLEAN)
     {
       //jp - leave - mar 31
       //cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(BOOLEAN)<<endl;
@@ -978,11 +1004,16 @@ mType Parser::SimpleExpression(Set sts)
   //instead of checking if they are all INTEGER, casue if there is only one, it doesnt have to be just INTEGER
   if((int)localtypes.size() == 1)
   {
-    return localtypes.at(0);
+    if(localtypes.at(0) == CINTEGER)
+      return INTEGER;
+    else if(localtypes.at(0) == CBOOLEAN)
+      return BOOLEAN;
+    else
+      return localtypes.at(0);
   }
   
   for(int i=0; i < (int)localtypes.size(); i++) {
-   if (localtypes.at(i) != INTEGER)
+   if ((localtypes.at(i) != INTEGER) && (localtypes.at(i) != CINTEGER))
      //if we return universal, we have seen more than one term, and therefore need all of them to be
    //of integer type to make the adding operator valid.  AddOp not defined for boolean types in PL
      return UNIVERSAL;
@@ -1031,11 +1062,16 @@ mType Parser::Term(Set sts)
   //instead of checking if they are all INTEGER, casue if there is only one, it doesnt have to be just INTEGER
   if((int)localtypes.size() == 1)
   {
-    return localtypes.at(0);
+    if(localtypes.at(0) == CINTEGER)
+      return INTEGER;
+    else if(localtypes.at(0) == CBOOLEAN)
+      return BOOLEAN;
+    else
+      return localtypes.at(0);
   }
   
     for(int i=0; i < (int)localtypes.size(); i++) {
-   if (localtypes.at(i) != INTEGER)
+   if ((localtypes.at(i) != INTEGER) && (localtypes.at(i) != CINTEGER))
     //if we return universal, we have seen more than one term, and therefore need all of them to be
    //of integer type to make the multiplying operator valid.  MulOp not defined for boolean types in PL
      return UNIVERSAL;
@@ -1070,11 +1106,8 @@ mType Parser::Factor(Set sts)
 	debug(__func__, sts, lookAheadToken);
   Set constant = First::Constant();
   Set varacc = First::VariableAccess();
- mType localType;
-  //
-  // Do we need this still? It seems like it was supposed to be used in those MUNIONS
-    //Set *temp = new Set(")");
-  //
+  mType localType;
+
 
     
   if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
@@ -1164,9 +1197,12 @@ void Parser::IndexedSelector(Set sts)
   
   match("[", sts.munion(First::Expression()).munion(*temp)); 
   
-  if (Expression(sts.munion(*temp)) != INTEGER)
+  mType localType = Expression(sts.munion(*temp));
+  
+  if (localType != INTEGER && localType != CINTEGER)
   {
     cout << "Index selector evaluates to non integer type.  Please ensure only integers exists between [ and ]." << endl;
+    cout<<"Current index selector is of type "<<blocktable->convertType(localType)<<"."<<endl;
     numberOfScopeTypeErrors++;
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
@@ -1186,7 +1222,7 @@ mType Parser::Constant(Set sts)
   
   if(num.isMember(lookAheadToken.getLexeme()))
   {
-    localType = Numeral(sts);//////////////////////////////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+    localType = Numeral(sts);
   }
   //or
   else if (bol.isMember(lookAheadToken.getLexeme()))
@@ -1258,6 +1294,14 @@ mType Parser::VariableName(Set sts)
    if (!error) 
    {
      type = entry.otype;
+     if(entry.okind == CONSTANT && entry.otype == INTEGER)
+     {
+       type = CINTEGER;
+     }
+     if(entry.okind == CONSTANT && entry.otype == BOOLEAN)
+     {
+       type = CBOOLEAN;
+     }
    }
    else
    {
@@ -1286,9 +1330,4 @@ mType Parser::ProcedureName(Set sts)
 }
 
 
-void Parser::resetPrevMatches() {
-	prevMatch[0] = "";
-	prevMatch[1] = "";
-	prevMatch[2] = "";
-	prevMatch[3] = "";
-}
+
