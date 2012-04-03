@@ -47,6 +47,7 @@ Admin::Admin(string& src)
     /** Create the base Parser object with a pointer back to here to allow it to access the scanner-> */
     parser = new Parser(*this, *table);
 
+    /** A flag for managing the output of TOKEN debug information. Set to TRUE to see said information. */
     tokenFlag = false;
 
 }
@@ -99,6 +100,7 @@ int Admin::scan()
   
   /** Run the Parser! The parser itself will also manage the error count. */
   cout << "\nParsing Started." << endl;
+  // We're finally at this stage!
   cout << "Scope and Type Check Started"<<endl;
   cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
   cout<<endl;

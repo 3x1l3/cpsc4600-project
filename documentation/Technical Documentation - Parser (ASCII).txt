@@ -15,8 +15,13 @@ Written By:
 
 Version 2 - Parser Revision
 Created between February 1st and March 1st.
-
+Revised for April 2nd, 2012.
 =============================================
+
+
+*****************NOTE*****************************
+Please check section E5 and F6 for New additions to this ReadMe. 
+**************************************************
 
 
 It should be explicitly noted that, as specified in the README, this documentation is
@@ -73,6 +78,11 @@ and read both components at the moment.
 
 <C3> Set Object
 <D4> First Object
+
+**********************NEW************************
+
+<E5> BlockTable Scope Object
+<F6> Scope and Type Check Additions - Semantic/Static Verification
 
 
 ================================================
@@ -374,23 +384,217 @@ void Parser::Block(Set sts)
 wherein we can see that we construct a set from the First sets of Block and, funamentally, DefinitionPart and 
 StatementPart.
 
-===========================================================
+****************************************************************************************************************
+=======================================================
+****************************************************************************************************************
+
+As this is a subcomponent of the Parser, we have added it as a stipend to the current documention, appended so as to preserve
+the original outlined style of the Parser.
+
+=======================================================
 
 
+<E5> The BlockTable
+------------------------
+
+In order to accomodate the Scope and Type checking in the following section, we have created
+a new Object called a BlockTable.
+
+This object manages a collection of a new record type called a TableEntry; a TableEntry struct is defined as follows:
+
+typedef struct {
+
+	 //integer code for ID
+	int id;
+	
+	//Kind is an enum type to represent objects Kind e.g. CONSTANT VARIABLE ARRAY PROCEDURE UNDEFINED
+	Kind okind;
+	
+	//mType is an enum type to represent datatypes in PL e.g. Integer Boolean Universal ConstantInteger, ConstantBoolean
+	mType otype;
+	
+	//Only for array types this entry will be filled. All others will have zero
+	int size;
+	
+	//Only for constants
+	int value;	
+	
+} TableEntry; //Logical "Extension" of a Token's consolidated representation
+(direct from code)
+
+It is a structure that accomodates a couple of enums (Kind and mType) which determine the Type and Kind of a given TableEntry;
+A TableEntry itself is a logical and literal representation of a "completed" token object entry in aline of code.
+i.e. we could have TableEntry X, which is a constant integer and contains a value of, say, 5.
+
+The Parser uses these TableEntry structures in checking specifics about logical programming constructs, specifics such as if
+a given object has been declared (in name) before, or if its value can be evaluated or assigned properly
+(i.e. that we aren't assigning a 4 to a Boolean type, or that we aren't trying to re-assign a Constant variable. )
 
 
+The BlockTable object contains a local "Block" which is a vector of these tableEntries, and provides numerous
+facilities for editing and accessing such blocks and their component table entries; additionally, it contains a
+vector of such "Blocks" (a Vector of a Vector of TableEntry pointers) that equates to the Logical Scope of a programming
+language.
+
+In other words, the Parser keeps track of the Scope and a given scope's objects by keeping track of the current Scope 
+(as represented by a block) and all entries in it, and by keeping a Stack of previous blocks above that;
+When a block reaches the end of its life (i.e. end of scope) it is removed from the stack (or current scope) when necessary.
+
+Scope and Type checking are accomplished therein by checking the Types of the given TableEntry's that correspond to the current
+logical programming object being looked at by the Parser, and comparing it to any previous iterations (or lack thereof)
+in the table (vector) of blocks (table entry vectors).
+
+These tableEntries are constructed by using the SymbolTable from the Scanner when necessary.
+
+For more information, please see BlockTable.h and BlockTable.cpp.
 
 
+======================================================
+
+<F6> Scope and Type Checking Additions - Semantic/Static Verification
+---------------------------------------------------------------------
+
+The following is a set of Function/Production altercations that were made to accomodate scope and type checking;
+Ultimately, this was accomplished by chaining and passing the relevant and proper Types from the "bottom" or end-productions
+of the Parser parse tree, and verifying along each step that they correspond to the logical programming constructs'
+grammar requirements.
+
+For example, guaranteeing that a GuardedCommand is properly evaluated and formulated, or that a PrimaryExpression evaluates
+to the proper, prompt type.
+
+For more information, see Parser.cpp, Parser.h, and section <E5>.
+Where necessary, refer to the function header or inline comments associated with each production in the class definition file.
+
+The following is a Production-By-Production / Function-by-Function Grammatical breakdown of the individual handling of type checking semantics.
+
+NOTE: Throughout the whole of the Scope and Type checking semantics, we use a Universal type largely as an Error type of table entry type;
+it indicates that we have encountered something that does not fit in properly with the production rule it has been divined from.
 
 
+Parser::Block
+-a newBlock is created in the blockTable before DefinitionPart, then the block is ended/removed after the end of StatementPart
+
+Parser::DefinitionPart
+-a blockType is pushed onto the blockTypeStack (DEFINITIONPART) while we call the next Definition tokens, and it is popped once the definitionPart of this Block reaches the end (the while loop lookaheadtoken is not a Definition)
+
+Program::VariableDefinition
+-Passes the type of a TypeSymbol to VariableDefinitionPart, allowing VDP to know if it needs to create an Array or process a normal Variable kind.
 
 
+Parser::VariableDefinitionPart
+-Checks to verify what KIND of variable is being defined. If it's an array, we grab a set of ids from VariableList (see bwlow)
+and the valid constant and attempt to find the valid entry in the blocktable if a predefined variable is used.
+As the array is created, we ensure that each blocktable tableentry is valid and expand the given Array entry in the blocktable correspondingly.
+(Blocktable->redefineSize())
+Alternatively, we simply try to generate a VariableList of kind VARIABLE using our current type.
 
 
+Parser::VariableList
+-Now returns a vector of Integers corresponding to the valid tokenIDs of the variables that are being found in the list.
+By adding to the blocktable, the implicit blocktable checks for repitition allows us to catch repeat variable definitions inside
+of the variable list.
+Also processes a single variable explicitly as well.
+
+Parser::ProcedureDefinition
+-Now defines the Procedure by Name, as a PROCEDURE and UNIVERSAL TYPE in the blocktable, allowing it to be retrieved
+at a later scope;
+By calling the check, it guarantees that there will be no multiple definitions and thus ambiguous/nondeterministic calls to
+the procedure will not happen.
 
 
+Parser::StatementPart
+-Now adds and pops the blocktype of StatementPart to the blocktypestack, guaranteeding that the eventual comparison can
+be made; if it ends not-empty, there will be a parse error.
+
+Parser::Statement
+-Calls the corresponding guards for If/Do in addition to standard parsing, guaranteeing that the guards are properly considered.
+
+Parser::VariableAccessList
+-Returns a vector of variable types corresponding to the returns from the VariableAccess productions (list variables)
+
+Parser::ExpressionList
+-Returns a Vector of mTypes that correspond to the types of expressions in the list of expressions, thus assuring coverage of multiple expressions in a list, regardless of varying types.
+
+Parser::AssignmentStatement
+-Uses two mType vectors and processes the valid VariableAccessList and ExpressionList components, furthermore comparing
+the selected types in each to verify that they are all assignable and that, specifically, a list component on the left hand side
+of the assignment corresponds to an identical (type/kind-wise) list on the right hand side of the assignment.
+
+Parser::ProcedureStatement
+-Guarantees the Scoping of procedures is correct by checking for the Procedure name as being defined in a previous block, and processing errors as necessary
+
+Parser::IfStatement
+-Similar to DoStatement, verifies that the If/fi requirements are met and processes the guarded command list.
+
+Parser::DoStatement
+-Verifies that the Do command and the subsequent Guarded command processes as necesary.
+
+Parser::GuardedCommandList
+-Verifies that the GuardedCommands are valid, and each subsequent guarded command in the list is valid as well.
+It does not need to chain any types upward.
+
+Parser::GuardedCommand
+-Gathers the type of the coinciding, following Expression part, and then guarantees that the StatementPart follows.
+The guard fails if no kind of boolean resultant evaluation type is detected (constant or normal).
 
 
+Parser::Expression
+-Returns an mType evaluating the type resultant from the corresponding primary expressions (and operators therein between.)
+If there are multiple primary expressions, it consolidates their types to determine if a valid one is present (INTEGER),
+and then returns a UNIVERSAL (error) type if otherwise.
+
+Parser::PrimaryExpression
+-Ultimately returns a boolean mType to the caller Production, but determines that it should use that type by examining the series of simpleExpressions and relational operators that follow;
+For insteance, a SimpleExpression by itself could just be a Factor following a construct specifier (such as ( or ~) or it could be a simpleExpression followed by a possible relational operator.
+Without the following operator, it would need to be boolean, but with it, they could be any equitable boolean operating component; however, PrimaryExpression will properly compare the types and return a Boolean if it was a valid comparison, or an error type (Universal) if otherwise.
+This likewise includes comparing our new types, CINTEGER and INTEGER or CBOOLEAN and BOOLEAN.
+
+Parser::SimpleExpression
+-Returns a proper mType after checking the types corresponding to the adding operators; it must evaluate to an integer in the end.
+-The validation logic is similar to term; see below. This follows from PrimaryExpression's requirements; See above.
+
+Parser::Term	This is a central Production/function.
+-A term is composed of Term = Factor { MultiplyingOperator Factor } and thus can contain multiple Factor types.
+Thus, we grab them all and then check to see what kind they are; for multiple ones, we return a relevant Integer or Universal type (otherwise, we will get a mismatch).
+If there's only 1 (A Term can be one or many Factors separated by MultiplyingOperators), then we return that type.
+Ultimately, we either return a Boolean, Integer, CBoolean or CInteger (constant variations) as that's what a Term could be. BUT, a Universal type indicates multiple terms that need to be identically matched.
+
+Parser::Factor
+-Returns the mType of the given Factor, whether it is a Constant, a VariableName (FactorName), or a corresponding Expression's type.
+
+Parser::FactorName
+-returns the mtype of a numeral or boolean, or the type that the VariableName (if it is one) corresponds to.
+
+Parser::VariableAccess
+-returns the mtype of the corresponding VariableName
+-does not handle a Factor production; Unambiguous new production FactorName does this.
+
+Parser::IndexedSelector
+-We determine the type of the selector and then produce an error if it isn't of an integer type. We check it as an expression, which handles the type determinism inside itself.
+
+Parser::ConstantName
+-returns the mtype of booleansymbol, ConstantName or Numeral
+
+Parser::Numeral
+-returns an INTEGER mtype
+
+Parser::BooleanSymbol
+-returns boolean mtype
+
+Parser::ConstantName
+-mtype return (universal/const)
+
+Parser::VariableName
+-We set the type of a VariableName by checking the kind of variable and its corresponding entry's oType.
+I.e. A constant Integer.
+If we're in the definition part, it's of a Universal type.
+Otherwise, we search for it...if it isn't found, then we're using an undeclared variable.
+
+--------------------------------------
+
+By making the above changes to the given functions, we've allowed for semantic and syntactic additions and
+logic to account for Scope and Type Parsing problems and considerations.
 
 
+=================================================
 

@@ -1,11 +1,11 @@
 C++ PL Compiler Project
 ========================
 
-PL Compilter, Stage-2 (Parser)
+PL Compilter, Stage-3 (Scope and Type Checking Parser)
 Authors: Chad Klassen, Jordan Peoples and Adam Shepley
 Made for CPSC 4600
 
-Revision: Second Hand-in, PARSER Revision
+Revision: Third Hand-in, SCOPETYPE Revision
 
 ========================
 
@@ -29,6 +29,13 @@ occur and the error count is accurate for the most part.
 Thus, when a leading error is corrected, the subsequent resultant errors are also
 automatically/implicitly corrected for.
 
+New Notes:
+====
+
+Our documentation was appended to the altered Parser documentation file outline below.
+
+
+
 Files Included:
 =====
 
@@ -50,6 +57,9 @@ Source Files:
 -symboltable.h
 -token.cpp
 -token.h
+
+-blocktable.h
+-blocktable.cpp
 
 Current Test Files:
 Our test files are given the extension ".cpl".
@@ -73,12 +83,18 @@ Parser-Oriented Test Files:
 	      (no errors found; nothing found, even.)
 -lin.cpl - Tests the error reporting capability of the parser and its error 
 	  recovery capability.
+-constantRedeclarationTest.cpl - A fail test, tries to redeclare a constant.
+-declindef.cpl - tests a declaration outside of the definition part, also with a wrong type name
+-longdec.cpl	-Tests a very long list of declarations.
+-redecl.cpl	-Tests the redeclaration of one type in longdec.cpl
+-wrong comparison.cpl	-tests a comparison with mismatching types and without proper guards.
 
 
 Official Documentation:
 README (ascii file)
 "Technical Documentation ASCII.txt" - ASCII Documentation for the Scanner
-"Technical Documentation - Parser (ASCII).txt" - ASCII Documentation for the Parser
+"Technical Documentation - Parser (ASCII).txt" - ASCII Documentation for the 
+			  Parser and Scope/Type Checking.
 
 Other Files:
 DoxyFile (doxygen documentation generator file)
@@ -132,6 +148,13 @@ Approximate Hours Spent on the Parser (Stage 2 of Project):
 Jordan Peoples - 25 to 38 Hours
 Chad Klassen - 25 to 38 Hours
 Adam Shepley - 15 to 22 Hours
+
+Approximate Hours Spent on the Scope and Type Checking (Stage 3 of Project):
+
+Jordan Peoples - 30 to 42 Hours
+Chad Klassen - 33 to 45 Hours
+Adam Shepley - 18 to 24 Hours
+
 
 Note that these do not account for certain individual endeavours that were not known to the group.
 These are also rough estimates of hours spent.

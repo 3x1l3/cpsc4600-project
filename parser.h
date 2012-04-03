@@ -29,7 +29,11 @@
 #include <sstream>
 #include <stack>
 
-
+/** 
+ * A PL Program has two "parts" of any block, which are
+ * a statement part and a definition part. We need to track these
+ * for our semantic analysis.
+ */
 enum blocktype { STATEMENTPART, DEFINITIONPART };
 
 /** Object definitions needed by the Parser. */
@@ -46,10 +50,31 @@ using std::cout;
 using std::endl;
 using std::stringstream;
 
-/** Admin predeclaration to facilitate scanner control. */
+/** Admin forward declaration to facilitate scanner control. */
 class Admin;
 
-
+/**
+ * @brief The main object for Parsing the PL source code and guaranteeing correctness.
+ *
+ * The Parser is responsible for verifying that the syntax in a PL program's source
+ * code is semantically correct. It verifies/guarantees that a program corresponds to 
+ * the correct series of Production Rules of the PL grammar, but correspondingly
+ * guarantees that the scope and type checking rules, or rather, the implicit rules
+ * of the grammar are also adhered to.
+ *
+ * The Function Call tree that is generated corresponds to the outline for a correct
+ * Parse tree for the PL grammar, and thus an incorrect program will break this tree
+ * at some point, in some fashion.
+ *
+ * Every function call corresponds to a PL production or a corrected PL production set
+ * (adjusted for ambiguity or problems when present).
+ *
+ * The Parser uses a BlockTable to ensure that the scope and type rules are valid when 
+ * parsing a given statement. This is done by ensuring that the scope of an "entry" 
+ * is correct or "new", and that all following usages of a declaration are verified
+ * in kind.
+ *
+ */
 class Parser {
 
 private:
@@ -57,17 +82,34 @@ private:
   /** Tokens retrieved using the scanner and used in parsing heuristics. */
   Token currentToken;
   Token lookAheadToken;
-Token prevToken;
+  Token prevToken;
   
   /** The Parser uses the Scanner to parse the file, through a pointer to the admin class. */
   Admin* admin;
-  
   
   /**
    * The following functions make up the core of our Parser, and are (in effect) essentially
    * just a visual and literal representation of the PL language's grammar rules; each nonterminal
    * production rule is equivalent to the calling of another one of these functions.
    * 
+   * For each of these, refer to the Parser.cpp heading comments.
+   *
+   * In order to guarantee that our Productions are satisfying the various Type checking
+   * requirements of the PL language, we need to make sure that they evaluate to - or return - 
+   * or operate on the proper type of expression or terminal or nonterminal set (at the very
+   * basest of levels, these end of being roughly equivalent).
+   *
+   * Thus, we return an mType or a vector of mType (for lists) in order to guarantee that the proper
+   * evaluation or comparison has occured, or in order to check if the following or preceding 
+   * evaluations are correct.
+   *
+   * For each of the following, refer to the PL grammar. Any deviations indicate a correction of the
+   * grammar to eliminate the problems of Ambiguity or implicit differentiation.
+   * In any case, the role of each function is explicit within the function's name itself.
+   *
+   * Pages 282-287 of Per Brinch Hansen's Pascal Compiler book. 
+   *
+   * @see parser.cpp, blocktable.h
    */
   void Program(Set sts);
   void Block(Set sts);
@@ -78,6 +120,7 @@ Token prevToken;
   void VariableDefinition(Set sts);
   void VariableDefinitionPart(Set sts, mType type);
   
+  
   mType TypeSymbol(Set sts); 
   vector<int> VariableList(Set sts, mType type, Kind kind);
   void ProcedureDefintion(Set sts);
@@ -87,9 +130,14 @@ Token prevToken;
   void EmptyStatement(Set sts);
   void ReadStatement(Set sts);
   
+  /** We need to track the various types that make up an access list. */
   vector<mType> VariableAccessList(Set sts);
+  
   void WriteStatement(Set sts);
+  
+  /** An Expression list can have a series of different types. */
   vector<mType> ExpressionList(Set sts);
+  
   void AssignmentStatement(Set sts);
   void ProcedureStatement(Set sts);
   void IfStatement(Set sts);
@@ -130,14 +178,22 @@ Token prevToken;
   /** The Debug function only processes if this Flag is set to True. */
   bool debugflag;
   
+  /** A Symbol Table pointer, allowing direct access to Symbol Table information. */
   SymbolTable* table;
+  
+  /** A blocktable object used for proper Scope checking facilities. @see blocktable.h */
   BlockTable* blocktable;
+  
+  //A deprecated Array used for checking previous declarations.
   string prevMatch[4];
+  //Deprecated, used in conjunction with prevmatch for previous scope attempt.
   int prevID;
 
+  
+  /** Used to track what area of the Block we are currently in, and thus what mType we should be returning. */
   stack<blocktype> blockTypeStack;
   
-  //this variable will track the number of scope/type check errors we have found
+  /** Tracks the Scope type of parsing errors we encounter. */
   int numberOfScopeTypeErrors;
 
   
@@ -178,6 +234,7 @@ public:
    */
   void syntaxCheck(Set);
   
+  /** Keeps track of the Parsing Errors we encounter. */
   int errorCount;
 };
 
