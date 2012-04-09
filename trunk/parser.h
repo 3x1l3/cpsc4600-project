@@ -112,13 +112,13 @@ private:
    * @see parser.cpp, blocktable.h
    */
   void Program(Set sts);
-  void Block(Set sts);
+  void Block(int, int, Set sts);
   
-  void DefinitionPart(Set sts);
-  void Definition(Set sts);
+  int DefinitionPart(Set sts);
+  int Definition(int&, Set sts);
   void ConstantDefinition(Set sts);
-  void VariableDefinition(Set sts);
-  void VariableDefinitionPart(Set sts, mType type);
+  int VariableDefinition(int&, Set sts);
+  int VariableDefinitionPart(Set sts, int&, mType type);
   
   
   mType TypeSymbol(Set sts); 
@@ -196,6 +196,7 @@ private:
   /** Tracks the Scope type of parsing errors we encounter. */
   int numberOfScopeTypeErrors;
 
+  int NewLabel();
   
 public:
   

@@ -140,6 +140,10 @@ public:
     /** Basic retrieval functions, used for debug. */
     int getColumnNumber();
     int getLineNumber();
+    
+    void emit(string);
+    void emit2(string, int);
+    void emit3(string, int, int);
 
 };
 
