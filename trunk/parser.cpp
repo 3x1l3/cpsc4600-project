@@ -674,12 +674,23 @@ void Parser::ProcedureDefintion(Set sts)
   debug(__func__, sts, lookAheadToken);
   
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
+  
+  int procLabel = NewLabel();
+  
   blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
   ProcedureName(sts.munion(First::Block())); 
+  
+  
   int startLabel = NewLabel();
   int varLabel = NewLabel();
   
+  admin->emit2("DEFADDR", procLabel);
+  admin->emit3("PROC", varLabel, startLabel);
+  
+  
   Block(startLabel, varLabel, sts);
+  
+  admin->emit("ENDPROC");
   
   syntaxCheck(sts);
 }
@@ -964,6 +975,7 @@ void Parser::ProcedureStatement(Set sts)
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   
+  admin->emit3("CALL", blocktable->currentLevel() - entry.level, entry.startLabel);
   
   syntaxCheck(sts);
 }
@@ -980,7 +992,16 @@ void Parser::IfStatement(Set sts)
   Set *temp = new Set("fi");
   
   match("if",sts.munion(First::GuardedCommandList()).munion(*temp)); 
-  GuardedCommandList(sts.munion(*temp)); 
+  int startLabel = NewLabel();
+  int doneLabel = NewLabel();
+  
+  GuardedCommandList(startLabel, doneLabel, sts.munion(*temp)); 
+  admin->emit2("DEFADDR", startLabel);
+  
+  admin->emit2("FI", admin->getLineNumber());
+  
+  admin->emit2("DEFADDR", doneLabel);
+  
   match("fi",sts);
   
   syntaxCheck(sts);
@@ -999,7 +1020,13 @@ void Parser::DoStatement(Set sts)
   Set *temp = new Set("od");
   
   match("do",sts.munion(First::GuardedCommandList()).munion(*temp)); 
-  GuardedCommandList(sts.munion(*temp)); 
+  
+  int startLabel = NewLabel();
+  int loopLabel = NewLabel();
+  
+  admin->emit2("DEFADDR", loopLabel);
+  GuardedCommandList(startLabel, loopLabel, sts.munion(*temp)); 
+  admin->emit2("DEFADDR", startLabel);
   match("od",sts);
   
   
@@ -1013,17 +1040,17 @@ void Parser::DoStatement(Set sts)
  * command in the list is valid as well.
  * 
  */
-void Parser::GuardedCommandList(Set sts)
+void Parser::GuardedCommandList(int& startLabel, int GoTo,Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("[]");
   
-  GuardedCommand(sts.munion(*temp).munion(First::GuardedCommand()));
+  GuardedCommand(startLabel, GoTo, sts.munion(*temp).munion(First::GuardedCommand()));
   //optional
   while(lookAheadToken.getLexeme() == "[]")
   {
     match("[]",sts.munion(First::GuardedCommand())); 
-    GuardedCommand(sts.munion(*temp));
+    GuardedCommand(startLabel, GoTo, sts.munion(*temp));
   }
   
   syntaxCheck(sts);
@@ -1036,11 +1063,11 @@ void Parser::GuardedCommandList(Set sts)
  * If the expression type is not a Boolean, then it throws the proper error.
  * Does not chain up.
  */
-void Parser::GuardedCommand(Set sts)
+void Parser::GuardedCommand(int& thisLabel, int GoTo, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
-  
+  admin->emit2("DEFADDR", thisLabel);
   mType localType = Expression(sts.munion(*temp).munion(First::StatementPart()));
   
   if (localType != BOOLEAN && localType != CBOOLEAN)
@@ -1050,11 +1077,14 @@ void Parser::GuardedCommand(Set sts)
     numberOfScopeTypeErrors++;
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
+  thisLabel = NewLabel();
   match("->",sts.munion(First::StatementPart())); 
   StatementPart(sts);
   
   
   syntaxCheck(sts);
+  
+  admin->emit2("BAR", GoTo);
 }
 /////////////////////////////////////////////////////////////////////////////
 /**

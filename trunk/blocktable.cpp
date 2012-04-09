@@ -131,6 +131,7 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int
     entry->otype = newtype;
     entry->size = newsize;
     entry->value = newvalue;
+	entry->level = currentBlockIndex;
     
     //add to the current block
     currentBlock.push_back(entry);
@@ -461,4 +462,9 @@ string BlockTable::tableEntrytoString(TableEntry entry)
 }
 //---------------------------------------------------------------------------------------------
 
+int BlockTable::currentLevel() {
+	
+	return currentBlockIndex;
+	
+}
 
