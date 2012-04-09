@@ -237,3 +237,16 @@ int Admin::getLineNumber()
 {
   return current_line;
 }
+
+void Admin::emit(string str) {
+	
+}
+
+void Admin::emit2(string str, int i) {
+	
+}
+
+void Admin::emit3(string str, int i, int j) {
+	
+	
+}

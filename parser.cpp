@@ -75,6 +75,10 @@ Parser::~Parser()
 {
 }
 
+int Parser::NewLabel() {
+	return 0;	
+}
+
 /**
  * @brief The main Runner for the Parser object.
  * 
@@ -263,7 +267,13 @@ void Parser::Program(Set sts)
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(".");
   
-  Block(sts.munion(*temp)); 
+  int startLabel, varLabel;
+  startLabel = NewLabel();
+  varLabel = NewLabel();
+  
+  admin->emit3("PROG", varLabel, startLabel);
+  Block(startLabel, varLabel, sts.munion(*temp)); 
+  admin->emit("ENDPROG");
   match(".", sts);
   
   syntaxCheck(sts);
@@ -280,7 +290,7 @@ void Parser::Program(Set sts)
  * (we use endBlock to ensure this.)
  * 
  */
-void Parser::Block(Set sts)
+void Parser::Block(int beginLabel, int varLabel, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("end");
@@ -290,7 +300,11 @@ void Parser::Block(Set sts)
   
   /** A new scope has started. */
   blocktable->newBlock();
-  DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
+  int varLength = 0;
+  
+  varLength = DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
+  admin->emit3("DEFRAG", varLabel, varLength);
+  admin->emit2("DEFADDR", beginLabel);
   StatementPart (sts.munion(*temp)); 
   //blocktable->printAllBlocks();		//debug
   /** The previous scope (block) has ended. */
@@ -310,7 +324,7 @@ void Parser::Block(Set sts)
  * The block type is recorded to ensure that Expressions and guards evaluate properly.
  * 
  */
-void Parser::DefinitionPart(Set sts)
+int Parser::DefinitionPart(Set sts)
 {
   /** Used to guarantee that the proceeding productions have the right semantic types when checked. */
   blockTypeStack.push(DEFINITIONPART);
@@ -319,6 +333,10 @@ void Parser::DefinitionPart(Set sts)
   Set* temp = new Set(";");
   Set first = First::Definition();
   
+  int varlength = 0;
+  
+  int nextvarstart = 3;
+  
   //optional part
   //can be one or more, or nothing here
   //have to check if the lookahead is in the first of definition, and if not, 
@@ -326,12 +344,14 @@ void Parser::DefinitionPart(Set sts)
   /** Loops through until we find a Token that isn't a valid Definition/is the end of the DefinitionPart */
   while(first.isMember(lookAheadToken.getLexeme()))
   {
-    Definition(sts.munion(*temp)); 
+    varlength += Definition(nextvarstart, sts.munion(*temp)); 
     match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
   }
   /** Since we are no longer in the DefinitionPart, we pop it off the Type stack. */
   blockTypeStack.pop();
   syntaxCheck(sts);
+  
+  return varlength;
   
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -346,7 +366,7 @@ void Parser::DefinitionPart(Set sts)
  *
  * @see DefinitionPart()
  */
-void Parser::Definition(Set sts)
+int Parser::Definition(int& varStart, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   
@@ -354,17 +374,21 @@ void Parser::Definition(Set sts)
   if(First::ConstantDefinition().isMember(lookAheadToken.getLexeme()))
   {
     ConstantDefinition(sts);
+    return 0;
   }
   else if(First::VariableDefinition().isMember(lookAheadToken.getLexeme()))
   {
-    VariableDefinition(sts);
+    return VariableDefinition(varStart, sts);
   }
   else if(First::ProcedureDefinition().isMember(lookAheadToken.getLexeme()))
   {
     ProcedureDefintion(sts);
+    return 0;
   }
   
   syntaxCheck(sts);
+  
+  return 0;
 }
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -458,13 +482,15 @@ void Parser::ConstantDefinition(Set sts)
  * (such as the array index specifier) accordingly.
  * 
  */
-void Parser::VariableDefinition(Set sts)
+int Parser::VariableDefinition(int& varStart, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   mType type = TypeSymbol(sts.munion(First::VariableDefinitionPart())); 
-  VariableDefinitionPart(sts, type);
+  int tempVal = VariableDefinitionPart(sts, varStart, type);
   
   syntaxCheck(sts);
+  
+  return tempVal;
 }
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -480,27 +506,32 @@ void Parser::VariableDefinition(Set sts)
  * Array to specification within the BlockTable.
  * 
  */
-void Parser::VariableDefinitionPart(Set sts, mType type)
+int Parser::VariableDefinitionPart(Set sts, int &varStart, mType type)
 {
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("[");
   Set* temp2 = new Set("]");
+  vector<int> arrayIDs;
   
   if(First::VariableList().isMember(lookAheadToken.getLexeme()))
   {
-    VariableList(sts, type, VARIABLE);
+   arrayIDs = VariableList(sts, type, VARIABLE);
+   return arrayIDs.size();
   }
-  else if (lookAheadToken.getLexeme() == "array")
+  else 
   {
     bool error = false;
     TableEntry entry;
     int constid;
-    vector<int> arrayIDs;
+    
     
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
     
     arrayIDs = VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
     match("[",sts.munion(First::Constant()).munion(*temp2)); 
+    
+    int arraysize;
+    mType indextype;
     
     constid = lookAheadToken.getValue();
     //for some reason, this returns UNIVERSAL no matter what type the actual item in between the square brackets is...
@@ -508,7 +539,7 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
     //we can accuratly get the type of the object by blocktable->convertType(entry.otype)
     //so for sake of easiness i will just use the entry type and compare it to the type paramter passed in to this function.
     //this will allow us to check on declaration of a array, if the size variable is integer as it should be, or boolean which is error
-    Constant(sts.munion(*temp2)); 
+    indextype = Constant(sts.munion(*temp2)); 
     
     match("]",sts);
     
@@ -533,8 +564,10 @@ void Parser::VariableDefinitionPart(Set sts, mType type)
       numberOfScopeTypeErrors++;
       cout << "Found at line: "<< admin->getLineNumber() << ", Column: "<< admin->getColumnNumber() << endl; 
     }
-  }
   syntaxCheck(sts);
+  return arrayIDs.size() * arraysize; 
+  }
+  
 }
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -643,7 +676,10 @@ void Parser::ProcedureDefintion(Set sts)
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
   blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
   ProcedureName(sts.munion(First::Block())); 
-  Block(sts);
+  int startLabel = NewLabel();
+  int varLabel = NewLabel();
+  
+  Block(startLabel, varLabel, sts);
   
   syntaxCheck(sts);
 }
@@ -1549,6 +1585,8 @@ mType Parser::Constant(Set sts)
 mType Parser::Numeral(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
+  
+ 
   match("num", sts);
   
   syntaxCheck(sts);
