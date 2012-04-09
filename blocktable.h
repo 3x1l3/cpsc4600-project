@@ -67,6 +67,12 @@ typedef struct {
 	//Only for constants
 	int value;	
 	
+	//Store the current block level in each struct
+	int level;
+	
+	int startLabel; //Not sure what this is used for yet
+	
+	
 } TableEntry; //Logical "Extension" of a Token's consolidated representation
 
 
@@ -158,6 +164,8 @@ class BlockTable {
     
     /** Empty pointer, which has a Scanner's Symbol Table attached when this class is Constructed.*/
     SymbolTable* table;
+
+	int currentLevel();
     
     
   private:

@@ -143,8 +143,8 @@ private:
   void IfStatement(Set sts);
   void DoStatement(Set sts);
   
-  void GuardedCommandList(Set sts);
-  void GuardedCommand(Set sts);
+  void GuardedCommandList(int&, int, Set sts);
+  void GuardedCommand(int&, int, Set sts);
   
   mType Expression(Set sts);
   void PrimaryOperator(Set sts);
