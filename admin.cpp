@@ -15,6 +15,7 @@
  **/
 
 #include "admin.h"
+#include <fstream>
 
 /**
  * @brief Constructor for the Admin class.
@@ -113,6 +114,12 @@ int Admin::scan()
       cout << "\nAt the end of Parsing. Assembling Code Reprint: \n";
       cout << assemblerStream.str() << endl;
     */
+    
+    /** We output to an ASM file. */
+    ofstream out_stream("test.asm");
+    out_stream << assemblerStream.str();
+    out_stream.close();
+    
     return 0;
   }
   else
