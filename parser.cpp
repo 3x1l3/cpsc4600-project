@@ -1300,9 +1300,11 @@ mType Parser::SimpleExpression(Set sts)
   //Optional
   while(First::AddingOperator().isMember(lookAheadToken.getLexeme()))
   {
+    Set *temp = new Set("+");
+    Set *temp2 = new Set("-");
     AddingOperator(sts.munion(First::Term())); 
     
-    localtypes.push_back(Term(sts));
+    localtypes.push_back(Term(sts.munion(*temp).munion(*temp2)));
   }
   
   
@@ -1378,7 +1380,10 @@ mType Parser::Term(Set sts)
   while(First::MultiplyingOperator().isMember(lookAheadToken.getLexeme()))
   {
     MultiplyingOperator(sts.munion(First::Factor()));  
-    localtypes.push_back( Factor(sts));
+    Set *temp = new Set("*");
+    Set *temp2 = new Set("/");
+    Set *temp3 = new Set("\\");
+    localtypes.push_back( Factor(sts.munion(*temp).munion(*temp2).munion(*temp3)));
   }
   
   syntaxCheck(sts);
