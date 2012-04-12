@@ -207,8 +207,18 @@ int SymbolTable::findLexeme(string lexeme)
     return -1;
 }
 
-bool SymbolTable::indexExists(int index) {
+/** 
+ * Checks if the index we desire is at the end of our SymbolTable.
+ *
+ * If empty, then our search value is the end of the Symbol Table,
+ * thus we have no entry with that index. Otherwise, an entry was
+ * found that has said index.
+ * @return bool Boolean shows whether the index exists.
+ */
+bool SymbolTable::indexExists(int index) 
+{
 	if (table.find(index) == table.end())
 		return false;
+	
 	return true;	
 }

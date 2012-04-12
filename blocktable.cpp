@@ -1,9 +1,36 @@
+/**
+ * @brief The definitions for the Admin Class Object
+ *
+ * @file blocktable.cpp
+ * 
+ * The BlockTable class manages a series and collection of Blocks.
+ * A Block is a collection of TableEntry records, which detail a specific
+ * semantic object - such as "X", which is an Integer of (value) 5.
+ *
+ * The ancilliary functions allow us to keep track of the current variables
+ * and properly check for scope issues and problems by checking for
+ * any previous declarations of a current object, and checking for 
+ * consistency (i.e. that an Integer operation is being applied to an int).
+ *
+ * This is accomplished at parse-time by constructing and verifying TableEntry 
+ * information through a single-access to the Scanner's symbol table.
+ *
+ * @author Jordan Peoples, Chad Klassen, Adam Shepley
+ * @date March 1st to April 2nd, 2012
+ */
 
+/** Specification File. */
 #include "blocktable.h"
 
 
 //---------------------------------------------------------------------------------------------
-
+/** 
+ * @brief Base Constructor.
+ *
+ * A BlockTable can only be constructed if a Scanner, and thus a SymbolTable, exist.
+ * We assign the address of the symbol table to our local pointer, and set the base 
+ * index of our block level/scope for the table/program.
+ */
 BlockTable::BlockTable(SymbolTable& symbolTable) 
 {
   currentBlockIndex = 0;
@@ -12,15 +39,32 @@ BlockTable::BlockTable(SymbolTable& symbolTable)
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Simple search function. 
+ *
+ * The user does not need the reference, but just a confirmation
+ * that a given TableEntry ID exists in our BlockTable.
+ * 
+ * The TableEntry refrence is discarded automatically.
+ * @param lookfor
+ * @return bool a boolean of if the ID was found
+ */
 bool BlockTable::search(int lookFor)
 {
   TableEntry tbl;
   return search(lookFor, tbl);  
 }
 //---------------------------------------------------------------------------------------------
-
-
+/** 
+ * @brief Search function with ID and actual Entry returns.
+ * 
+ * Checks all of the entries in the current block to see if the
+ * entry ID is found.
+ * If found, we return true, but also attach the given item's address
+ * to the passed-in reference parameter.
+ * Thus, we return a reference to the item as well as the TableEntry ID.
+ * 
+ */
 bool BlockTable::search(int lookFor, TableEntry& entry) 
 {
   for (int i = 0; i < (int)currentBlock.size(); i++) 
@@ -37,7 +81,15 @@ bool BlockTable::search(int lookFor, TableEntry& entry)
   return false;
 }
 
-//---------------------------------------------------------------------------------------------
+/**
+ * @brief Searches for a given entry and also returns its index.
+ *
+ * Determines (boolean) if a given lookfor (TE ID) is in the
+ * current block. If not, it returns a false. If it is found, it will
+ * return true as well as attaching the given Block index (location of
+ * the item) to the integer reference.
+ *
+ */
 bool BlockTable::search(int lookFor, int& returnIndex) 
 {
   for (int i = 0; i < (int)currentBlock.size(); i++) 
@@ -96,13 +148,13 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int
       entry->displacement = ( 2 + (currentBlock.size() -1) );
     }
     
-    
     //add to the current block
     currentBlock.push_back(entry);
     return false; 
   } 
   else
     return true;
+
   
 }
 //---------------------------------------------------------------------------------------------
@@ -204,7 +256,19 @@ TableEntry BlockTable::find(int lookfor, bool& error)
 }
 //---------------------------------------------------------------------------------------------
 
-
+//---------------------------------------------------------------------------------------------
+/**
+ * @brief Adds a new block to the BlockTable and pushes the old one onto the main vector.
+ *
+ * If our maximum scope-level has not been reached, then we put the current block onto the overall
+ * "previous" vector (i.e. "higher level" of the scope).
+ *
+ * Really, we push a copy of it, and clear the current one, which allows us to save on memory and
+ * reduce the risk of errors.
+ *
+ * As usual, a True is returned if a block could be successfully created, and a false otherwise.
+ *
+ */
 bool BlockTable::newBlock() 
 {
   
@@ -221,7 +285,21 @@ bool BlockTable::newBlock()
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Ends the current block/exits the top-most scope.
+ *
+ * We clear the current block information, which is synonymous logically
+ * with ending the current given scope.
+ *
+ * All of the current tableEntrys go out of scope, and are thus cleared
+ * along with the other block data.
+ *
+ * Additionally, we move the previous block data back into our temporary 
+ * block, and remove it from the top of the Blocks vector.
+ * This brings the BlockTable to the state it was in before it last raised
+ * its scope.
+ *
+ */
 bool BlockTable::endBlock() 
 {
   //Sanity check to guarantee that we don't end a block without a scope!
@@ -239,7 +317,11 @@ bool BlockTable::endBlock()
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Prints out the current block with a "stock" title/heading
+ *
+ * Calls our main Block printing function with a default title of "Block"
+ */
 void BlockTable::printBlock(vector<TableEntry* > block) 
 {
   printBlock(block, "Block");	
@@ -247,7 +329,16 @@ void BlockTable::printBlock(vector<TableEntry* > block)
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Helper Printer function, prints a block's information in an easy-to-read format.
+ *
+ * Prints all of the table-entry records in a given passed-in block.
+ * A name parameter allows the caller to specificy specifics, such as the current
+ * Parser function they are calling from.
+ *
+ * It utilizes our tableEntrytoString function to print the individual TableEntry records.
+ *
+ */
 void BlockTable::printBlock(vector<TableEntry* > block, string name) 
 { 
   vector<TableEntry *>::iterator it;
@@ -265,7 +356,11 @@ void BlockTable::printBlock(vector<TableEntry* > block, string name)
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Returns the current block.
+ *
+ * Returns the current block, a vector of TableEntry pointers.
+ */
 vector<TableEntry* > BlockTable::returnCurrentBlock() 
 {
   return currentBlock;	
@@ -273,7 +368,14 @@ vector<TableEntry* > BlockTable::returnCurrentBlock()
 //---------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
-
+/**
+ * @brief Returns a given Kind of a TableEntry in string format.
+ *
+ * Converts a given Kind enum into a corresponding string.
+ * Mostly for error checking.
+ * If a given kind is not found, we report this.
+ *
+ */
 string BlockTable::convertKind(int kind) 
 {
   switch(kind) 
