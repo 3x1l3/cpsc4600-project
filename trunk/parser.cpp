@@ -1,37 +1,3 @@
-/**
- * @brief The definition file for the Parser component object.
- *
- * @file parser.cpp
- * 
- * The Parser is responsible for properly syntactically verifying that the
- * input is correct, and (virtually) forming a syntax and grammatical tree
- * from the scanned input.
- *
- * It accomplishes this by linking back to the Scanner through the Admin,
- * using it to grab a given Token, then intelligently proceeding to the next
- * set of proper steps in the Grammatical structure of the PL Language. 
- *
- * Each of the following functions represents a grammatical rule and 
- * fulfills the corresponding set of productions via function calls;
- * a recursive descent stack is created implicitly by the function calls,
- * and the "tree" of function calls is the end logical representation
- * of the Parse tree for the grammar.
- *
- * We use the output function debug() with the C++ macro "__func__" to output
- * the current Parsing function - that is, which node in the descent tree our
- * parsing and scanning is currently in.
- *
- * A SET is an object containing a vector of lexemic strings. @see set.cpp
- * The Set "sts" that is passed between objects is the "stop set", which functions 
- * as a sentinel set indicating the valid next characters; if we see a lexeme that
- * is not in the (sts) Stop Set, we stop (generate an error).
- * 
- * @see /documentation/
- *
- * @author Jordan Peoples, Chad Klassen, Adam Shepley
- * @date January 9th to February 29th, 2011
- **/
-
 #include "parser.h"
 
 /**
@@ -58,16 +24,13 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
   // Attach a new blocktable to our Parser. This should be unique.
   blocktable = new BlockTable(*table);
   
-  /** The following is deprecated. Kept for posterity.*/
-  //------------------------------------------
-  prevMatch[0] = "";
-  prevMatch[1] = "";
-  prevMatch[2] = "";
-  prevMatch[3] = "";
-  //------------------------------------------
+
   
   //Begin the Parsing/scanning.
   lookAheadToken = nextToken();
+  
+  // start negative so labelcount++ will give 0
+  labelCount = -1;
 }
 
 /** Base destructor. */
@@ -75,8 +38,10 @@ Parser::~Parser()
 {
 }
 
-int Parser::NewLabel() {
-	return 0;	
+int Parser::NewLabel() 
+{
+  labelCount += 1;
+  return labelCount;
 }
 
 /**
@@ -218,40 +183,6 @@ void Parser::syntaxCheck(Set validNextCharacters)
 }
 
 
-/**
- *
- * The following is a set of Production-Rule functions. Each one has a specific
- * speciality in regards to how they treat their input and production rules,
- * but on the whole they follow a key process:
- *
- * 1) Output the function name and data.
- * 2) Choose a production rule to follow based off of the lookahead
- * 3) Try to Match any prerequisite statements or rules
- * 4) Append any valid lexemes to the StopSet sts
- * 5) Choose a production rule and follow it (a non-terminal)
- * 6) Repeat ~3-5 unless an error is found
- * 7) Attempt to match the post-requisite statement/lexeme/rule.
- * 8) Check the validity of the lookahead in regards to the stopset sts
- *
- * This implicitly maintains a "stack" of unique stopsets at each function (production)
- * level, These are allocated on the application stack.
- *
- * Thus, we need to be wary of Stack Overflows when using the recursive parser.
- *
- * In order to guarantee Semantic correctness and correct Scope validity, some
- * productions need to return their mType or the mType of their proceeding operations
- * which is then compared against the set of proper possible mTypes for the given
- * production rules to guarantee that it's valid.
- *
- * i.e. we cannot have Integer X := 5 in the DefinitionPart.
- * For scope checking, we check the current and preceeding blocks to see if the 
- * currently examined table entry/tokenized object is semantically valid and not
- * being redeclared or improperly used.
- * The order and syntax of such operations varies with each specific production,
- * and thus does not fit into the 8-point checklist above.
- *
- * @see parser.h
- */
 
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -268,11 +199,20 @@ void Parser::Program(Set sts)
   Set* temp = new Set(".");
   
   int startLabel, varLabel;
+  //there is a counter that returns next label (an integer) to each call to NewLabel function
+  
+  //this is to record the address of the first instruction of the program
   startLabel = NewLabel();
+  //this is storage needed for the variables
   varLabel = NewLabel();
   
+  //output the instruction prog which sets up the activation record for program and executes first instruction
+  //at startLabel (to be computed by assembler)
+  cout<<"emitting"<<endl;
   admin->emit3("PROG", varLabel, startLabel);
   Block(startLabel, varLabel, sts.munion(*temp)); 
+  //putput end of program instruction endprog
+  cout<<"emitting"<<endl;
   admin->emit("ENDPROG");
   match(".", sts);
   
@@ -280,74 +220,65 @@ void Parser::Program(Set sts)
   
 }
 /////////////////////////////////////////////////////////////////////////////
-/**
- * @brief A Block grammar component, which equates to a specific program Scope
- * 
- * Each Block contains a DefinitionPart and StatementPart, and indicates that a
- * new program Scope has been entered. Thus, the internal parts have access to
- * the previous Block entries (scope data) but the StatementPart AFTER this block
- * (if any) will not have access to the information created in this Block production
- * (we use endBlock to ensure this.)
- * 
- */
+
 void Parser::Block(int beginLabel, int varLabel, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set("end");
   
   
-  match         ("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*temp));
+  match("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*temp));
   
-  /** A new scope has started. */
+
   blocktable->newBlock();
+  
+  //total variable storage requirement
   int varLength = 0;
-  
+  //retriving varLength from the DefinitionPart function
   varLength = DefinitionPart(sts.munion(First::StatementPart()).munion(*temp)); 
+  //defin the labels used in PROC and PROG operations.
+  //output assembler instruction DEFARG to enter labelTable[varLabel] = varLength in pass 1 so that
+  // varLength replaces varLabel in the final code output in pass 2 of the assembler
+  cout<<"emitting"<<endl;
   admin->emit3("DEFRAG", varLabel, varLength);
+  //we are about to begin the first executable instruction - output assembler instruction DEFADDR to enter
+  //labelTable[startLabel] = address   for next instruction
+  cout<<"emitting"<<endl;
   admin->emit2("DEFADDR", beginLabel);
+  
   StatementPart (sts.munion(*temp)); 
-  //blocktable->printAllBlocks();		//debug
-  /** The previous scope (block) has ended. */
-  match         ("end", sts);
+  //blocktable->printAllBlocks();
+
+  match("end", sts);
   blocktable->endBlock();
+  
+  
   syntaxCheck(sts);
-  
-  
 }
 /////////////////////////////////////////////////////////////////////////////
-/**
- * @brief The latter half of a Block, the DefinitionPart.
- * 
- * The DefinitionPart is where PL constructs are first declared, though only
- * given distinct values in the cases of Proc names, Const values, and array sizes.
- * 
- * The block type is recorded to ensure that Expressions and guards evaluate properly.
- * 
- */
+
 int Parser::DefinitionPart(Set sts)
 {
-  /** Used to guarantee that the proceeding productions have the right semantic types when checked. */
   blockTypeStack.push(DEFINITIONPART);
   
   debug(__func__, sts, lookAheadToken);
   Set* temp = new Set(";");
   Set first = First::Definition();
   
+  //total storage needed for variables declared within this particular blcok
   int varlength = 0;
-  
+  //variable start is offset for the dynamixc link, static link, and return address within a stack frame
   int nextvarstart = 3;
   
   //optional part
   //can be one or more, or nothing here
   //have to check if the lookahead is in the first of definition, and if not, 
   //then check if it is in the first of statement part from block
-  /** Loops through until we find a Token that isn't a valid Definition/is the end of the DefinitionPart */
   while(first.isMember(lookAheadToken.getLexeme()))
   {
     varlength += Definition(nextvarstart, sts.munion(*temp)); 
     match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
   }
-  /** Since we are no longer in the DefinitionPart, we pop it off the Type stack. */
   blockTypeStack.pop();
   syntaxCheck(sts);
   
@@ -382,7 +313,7 @@ int Parser::Definition(int& varStart, Set sts)
   }
   else if(First::ProcedureDefinition().isMember(lookAheadToken.getLexeme()))
   {
-    ProcedureDefintion(sts);
+    ProcedureDefinition(sts);
     return 0;
   }
   
@@ -528,10 +459,7 @@ int Parser::VariableDefinitionPart(Set sts, int &varStart, mType type)
     match("array",sts.munion(First::VariableList()).munion(*temp).munion(First::Constant()).munion(*temp2)); 
     
     arrayIDs = VariableList(sts.munion(*temp).munion(First::Constant()).munion(*temp2), type, ARRAY); 
-    match("[",sts.munion(First::Constant()).munion(*temp2)); 
-    
-    int arraysize;
-    mType indextype;
+    match("[",sts.munion(First::Constant()).munion(*temp2));
     
     constid = lookAheadToken.getValue();
     //for some reason, this returns UNIVERSAL no matter what type the actual item in between the square brackets is...
@@ -539,7 +467,7 @@ int Parser::VariableDefinitionPart(Set sts, int &varStart, mType type)
     //we can accuratly get the type of the object by blocktable->convertType(entry.otype)
     //so for sake of easiness i will just use the entry type and compare it to the type paramter passed in to this function.
     //this will allow us to check on declaration of a array, if the size variable is integer as it should be, or boolean which is error
-    indextype = Constant(sts.munion(*temp2)); 
+    Constant(sts.munion(*temp2)); 
     
     match("]",sts);
     
@@ -565,7 +493,7 @@ int Parser::VariableDefinitionPart(Set sts, int &varStart, mType type)
       cout << "Found at line: "<< admin->getLineNumber() << ", Column: "<< admin->getColumnNumber() << endl; 
     }
   syntaxCheck(sts);
-  return arrayIDs.size() * arraysize; 
+  return arrayIDs.size() * entry.value; 
   }
   
 }
@@ -669,7 +597,7 @@ vector<int> Parser::VariableList(Set sts, mType type, Kind kind)
  * Adds it to the current/given block.
  * 
  */
-void Parser::ProcedureDefintion(Set sts)
+void Parser::ProcedureDefinition(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   
@@ -684,12 +612,13 @@ void Parser::ProcedureDefintion(Set sts)
   int startLabel = NewLabel();
   int varLabel = NewLabel();
   
+  cout<<"emitting2"<<endl;
   admin->emit2("DEFADDR", procLabel);
   admin->emit3("PROC", varLabel, startLabel);
   
   
   Block(startLabel, varLabel, sts);
-  
+  cout<<"emitting"<<endl;
   admin->emit("ENDPROC");
   
   syntaxCheck(sts);
@@ -851,11 +780,6 @@ vector<mType> Parser::ExpressionList(Set sts)
   
   syntaxCheck(sts);
   
-  //Jordan's Debug Info - Please Leave - Mar 31st 2012  
-  //   for(int i = 0 ; i < (int)types.size(); i++)
-  //   {
-    //     cout<<"####################ExprList(printOutAllVector)="<<blocktable->convertType(types.at(i))<<endl;
-    //   }
     return types;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -918,17 +842,16 @@ void Parser::AssignmentStatement(Set sts)
 	allOk = false;
 	indexSelect = i;
       }
-      
-      //Jordan's debuging info - Please Leave - Mar 31 2012
-      //cout<<"66666666666666666666666666here"<<endl;
-      //cout<<"66666666666666666666666666variable acces list : "<<blocktable->convertType(val.at(i))<<endl;
-      //cout<<"66666666666666666666666666expression list : "<<blocktable->convertType(el.at(i))<<endl;
     }
     if (!allOk)
     {
       cout<<"Assignment type mismatch at place (from 0) " <<indexSelect<<". Trying to assign " << blocktable->convertType(val.at(indexSelect))<<" to "<< blocktable->convertType(el.at(indexSelect)) <<endl;
       numberOfScopeTypeErrors++;
       cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
+    }
+    else
+    {
+      admin->emit2("ASSIGN", val.size());
     }
   }
   else
@@ -975,6 +898,9 @@ void Parser::ProcedureStatement(Set sts)
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   
+  //make the call with the info found in the table entry
+  //what is entry.startLabel? where in the world is carmen sandiego?
+  cout<<"emitting"<<endl;
   admin->emit3("CALL", blocktable->currentLevel() - entry.level, entry.startLabel);
   
   syntaxCheck(sts);
@@ -992,10 +918,12 @@ void Parser::IfStatement(Set sts)
   Set *temp = new Set("fi");
   
   match("if",sts.munion(First::GuardedCommandList()).munion(*temp)); 
+  
   int startLabel = NewLabel();
   int doneLabel = NewLabel();
   
   GuardedCommandList(startLabel, doneLabel, sts.munion(*temp)); 
+  cout<<"emitting3"<<endl;
   admin->emit2("DEFADDR", startLabel);
   
   admin->emit2("FI", admin->getLineNumber());
@@ -1024,8 +952,10 @@ void Parser::DoStatement(Set sts)
   int startLabel = NewLabel();
   int loopLabel = NewLabel();
   
+  cout<<"emitting"<<endl;
   admin->emit2("DEFADDR", loopLabel);
   GuardedCommandList(startLabel, loopLabel, sts.munion(*temp)); 
+  cout<<"emitting"<<endl;
   admin->emit2("DEFADDR", startLabel);
   match("od",sts);
   
@@ -1067,6 +997,7 @@ void Parser::GuardedCommand(int& thisLabel, int GoTo, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
+  cout<<"emitting"<<endl;
   admin->emit2("DEFADDR", thisLabel);
   mType localType = Expression(sts.munion(*temp).munion(First::StatementPart()));
   
@@ -1078,13 +1009,16 @@ void Parser::GuardedCommand(int& thisLabel, int GoTo, Set sts)
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   thisLabel = NewLabel();
+  cout<<"emitting"<<endl;
+  admin->emit2("ARROW", thisLabel);
   match("->",sts.munion(First::StatementPart())); 
   StatementPart(sts);
-  
+  cout<<"emitting"<<endl;
+  admin->emit2("BAR", GoTo);
   
   syntaxCheck(sts);
   
-  admin->emit2("BAR", GoTo);
+  
 }
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -1115,8 +1049,6 @@ mType Parser::Expression(Set sts)
   syntaxCheck(sts);
   if((int)localTypes.size() == 1)
   {
-    //Jordan's debuggin info - Please Leave - Mar 31 2012
-    //cout<<"********************ExprReturn(VecSize1)="<<blocktable->convertType(localTypes.at(0))<<endl;
     if(localTypes.at(0) == CINTEGER)
       return INTEGER;
     else if (localTypes.at(0) == CBOOLEAN)
@@ -1129,13 +1061,9 @@ mType Parser::Expression(Set sts)
   {
     if (localTypes.at(i) != BOOLEAN && localTypes.at(i) != CBOOLEAN)
     {  
-      //leave - JP march 31
-      //cout<<"********************ExprReturn(SomeNotBoolean)="<<blocktable->convertType(UNIVERSAL)<<endl;
       return UNIVERSAL;
     }
   }
-  //leave - JP march 31
-  //cout<<"********************ExprReturn(AllBoolean)="<<blocktable->convertType(BOOLEAN)<<endl;
   return BOOLEAN;
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -1202,16 +1130,10 @@ mType Parser::PrimaryExpression(Set sts)
     {
       if ( (type1 == INTEGER || type1 == CINTEGER) && (type2 == INTEGER || type2 == CINTEGER) )
       {
-	//JP debug - leave - march 31 2012
-	//cout<<"******************************************PrimExprReturn(type1&type2found)="<<blocktable->convertType(BOOLEAN)<<endl;
 	return BOOLEAN;
       }
       else
       {
-	//jp debug leave mar 31 2012
-	//cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(UNIVERSAL)<<endl;
-	
-	//primary expression did not evaulate to boolean type (meaning all the elements where not of one type (INTEGER type) )
 	return UNIVERSAL;
       }
     }
@@ -1220,27 +1142,18 @@ mType Parser::PrimaryExpression(Set sts)
     {
       if(type1 == INTEGER || type1 == CINTEGER) 
       {
-	//jp - leave - mar 31
-	//cout<<"******************************************PrimExprReturn(type1found)="<<blocktable->convertType(INTEGER)<<endl;
 	return INTEGER;
       }
       else if (type1 == BOOLEAN || type1 == CBOOLEAN)
       {
-	//jp - leave - mar 31
-	//cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(BOOLEAN)<<endl;
 	return BOOLEAN;
       }
       else
       {
-	//jp - leave - mar 31
-	//cout<<"******************************************PrimExprReturn(noneInteger)="<<blocktable->convertType(UNIVERSAL)<<endl;
 	return UNIVERSAL;
       }
     } 
   }
-  
-  //jp leave - mar 31
-  //cout<<"***************************PrimExprReturn(defaultCaseAtBottom)="<<blocktable->convertType(UNIVERSAL)<<endl;
   return UNIVERSAL;
   
 }

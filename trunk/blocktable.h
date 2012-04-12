@@ -70,6 +70,9 @@ typedef struct {
 	//Store the current block level in each struct
 	int level;
 	
+	//store the displacement within the current level
+	int displacement;
+	
 	int startLabel; //Not sure what this is used for yet
 	
 	
@@ -165,7 +168,8 @@ class BlockTable {
     /** Empty pointer, which has a Scanner's Symbol Table attached when this class is Constructed.*/
     SymbolTable* table;
 
-	int currentLevel();
+    //for the code generation, will get current block level
+    int currentLevel();
     
     
   private:

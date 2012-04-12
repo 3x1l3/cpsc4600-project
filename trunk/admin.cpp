@@ -238,15 +238,20 @@ int Admin::getLineNumber()
   return current_line;
 }
 
-void Admin::emit(string str) {
-	
+void Admin::emit(string str) 
+{
+  cout<<str<<endl;
 }
 
-void Admin::emit2(string str, int i) {
-	
+void Admin::emit2(string str, int i) 
+{
+  cout<<str<<endl;
+  cout<<i<<endl;
 }
 
-void Admin::emit3(string str, int i, int j) {
-	
-	
+void Admin::emit3(string str, int i, int j) 
+{
+  cout<<str<<endl;
+  cout<<i<<endl;
+  cout<<j<<endl;
 }
