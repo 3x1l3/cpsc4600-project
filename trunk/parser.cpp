@@ -1,3 +1,37 @@
+/**
+ * @brief The definition file for the Parser component object.
+ *
+ * @file parser.cpp
+ * 
+ * The Parser is responsible for properly syntactically verifying that the
+ * input is correct, and (virtually) forming a syntax and grammatical tree
+ * from the scanned input.
+ *
+ * It accomplishes this by linking back to the Scanner through the Admin,
+ * using it to grab a given Token, then intelligently proceeding to the next
+ * set of proper steps in the Grammatical structure of the PL Language. 
+ *
+ * Each of the following functions represents a grammatical rule and 
+ * fulfills the corresponding set of productions via function calls;
+ * a recursive descent stack is created implicitly by the function calls,
+ * and the "tree" of function calls is the end logical representation
+ * of the Parse tree for the grammar.
+ *
+ * We use the output function debug() with the C++ macro "__func__" to output
+ * the current Parsing function - that is, which node in the descent tree our
+ * parsing and scanning is currently in.
+ *
+ * A SET is an object containing a vector of lexemic strings. @see set.cpp
+ * The Set "sts" that is passed between objects is the "stop set", which functions 
+ * as a sentinel set indicating the valid next characters; if we see a lexeme that
+ * is not in the (sts) Stop Set, we stop (generate an error).
+ * 
+ * @see /documentation/
+ *
+ * @author Jordan Peoples, Chad Klassen, Adam Shepley
+ * @date January 9th to February 29th, 2011
+ **/
+
 #include "parser.h"
 
 /**
@@ -184,6 +218,43 @@ void Parser::syntaxCheck(Set validNextCharacters)
 
 
 
+
+/**
+ *
+ * The following is a set of Production-Rule functions. Each one has a specific
+ * speciality in regards to how they treat their input and production rules,
+ * but on the whole they follow a key process:
+ *
+ * 1) Output the function name and data.
+ * 2) Choose a production rule to follow based off of the lookahead
+ * 3) Try to Match any prerequisite statements or rules
+ * 4) Append any valid lexemes to the StopSet sts
+ * 5) Choose a production rule and follow it (a non-terminal)
+ * 6) Repeat ~3-5 unless an error is found
+ * 7) Attempt to match the post-requisite statement/lexeme/rule.
+ * 8) Check the validity of the lookahead in regards to the stopset sts
+ *
+ * This implicitly maintains a "stack" of unique stopsets at each function (production)
+ * level, These are allocated on the application stack.
+ *
+ * Thus, we need to be wary of Stack Overflows when using the recursive parser.
+ *
+ * In order to guarantee Semantic correctness and correct Scope validity, some
+ * productions need to return their mType or the mType of their proceeding operations
+ * which is then compared against the set of proper possible mTypes for the given
+ * production rules to guarantee that it's valid.
+ *
+ * i.e. we cannot have Integer X := 5 in the DefinitionPart.
+ * For scope checking, we check the current and preceeding blocks to see if the 
+ * currently examined table entry/tokenized object is semantically valid and not
+ * being redeclared or improperly used.
+ * The order and syntax of such operations varies with each specific production,
+ * and thus does not fit into the 8-point checklist above.
+ *
+ * @see parser.h
+ */
+
+
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -220,6 +291,16 @@ void Parser::Program(Set sts)
   
 }
 /////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief A Block grammar component, which equates to a specific program Scope
+ * 
+ * Each Block contains a DefinitionPart and StatementPart, and indicates that a
+ * new program Scope has been entered. Thus, the internal parts have access to
+ * the previous Block entries (scope data) but the StatementPart AFTER this block
+ * (if any) will not have access to the information created in this Block production
+ * (we use endBlock to ensure this.)
+ * 
+ */
 
 void Parser::Block(int beginLabel, int varLabel, Set sts)
 {
@@ -229,7 +310,7 @@ void Parser::Block(int beginLabel, int varLabel, Set sts)
   
   match("begin",sts.munion(First::DefinitionPart()).munion(First::StatementPart()).munion(*temp));
   
-
+  /** A new scope has started. */
   blocktable->newBlock();
   
   //total variable storage requirement
@@ -249,6 +330,7 @@ void Parser::Block(int beginLabel, int varLabel, Set sts)
   StatementPart (sts.munion(*temp)); 
   //blocktable->printAllBlocks();
 
+  /** The previous scope (block) has ended. */
   match("end", sts);
   blocktable->endBlock();
   
@@ -256,9 +338,19 @@ void Parser::Block(int beginLabel, int varLabel, Set sts)
   syntaxCheck(sts);
 }
 /////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief The latter half of a Block, the DefinitionPart.
+ * 
+ * The DefinitionPart is where PL constructs are first declared, though only
+ * given distinct values in the cases of Proc names, Const values, and array sizes.
+ * 
+ * The block type is recorded to ensure that Expressions and guards evaluate properly.
+ * 
+ */
 
 int Parser::DefinitionPart(Set sts)
 {
+  /** Used to guarantee that the proceeding productions have the right semantic types when checked. */
   blockTypeStack.push(DEFINITIONPART);
   
   debug(__func__, sts, lookAheadToken);
@@ -274,11 +366,13 @@ int Parser::DefinitionPart(Set sts)
   //can be one or more, or nothing here
   //have to check if the lookahead is in the first of definition, and if not, 
   //then check if it is in the first of statement part from block
+  /** Loops through until we find a Token that isn't a valid Definition/is the end of the DefinitionPart */
   while(first.isMember(lookAheadToken.getLexeme()))
   {
     varlength += Definition(nextvarstart, sts.munion(*temp)); 
     match(";", sts.munion(First::Definition()));//aded in first of definition so the while loop can keep going.
   }
+  /** Since we are no longer in the DefinitionPart, we pop it off the Type stack. */
   blockTypeStack.pop();
   syntaxCheck(sts);
   

@@ -71,9 +71,13 @@ private:
 
     /** We track the current line and column locations while reading through our File string. */
     int current_line;
+
     /** We store our errors in a StringStream for easy manipulation and conversion. */
     stringstream error_str;
 
+    /** We store our Intermediary/Back-End code in a StringStream for eventual writing to file or output. */
+    stringstream assemblerStream;
+    
     /** 
      * Symbol Table, Parser and Scanner object pointers.
      * This allows us to send symbol tables and scanners to and from other objects,

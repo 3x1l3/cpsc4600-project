@@ -130,6 +130,7 @@ public:
     int numberOfReservedWords;
     int getNumOfReservedWords();
     
+    /** Checks if a given index is within or at the end of the symbol table. */
     bool indexExists(int);
 };
 

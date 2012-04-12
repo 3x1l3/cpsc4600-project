@@ -101,14 +101,20 @@ int Admin::scan()
   /** Run the Parser! The parser itself will also manage the error count. */
   cout << "\nParsing Started." << endl;
   // We're finally at this stage!
-  cout << "Scope and Type Check Started"<<endl;
-  cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
-  cout<<endl;
+  cout << "Scope and Type Check Started" << endl;
+  cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+  cout << endl;
   parser->run();
   
   /** We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. */
   if (errorCount == 0)
+  {
+    /* Test output of our inter code. 
+      cout << "\nAt the end of Parsing. Assembling Code Reprint: \n";
+      cout << assemblerStream.str() << endl;
+    */
     return 0;
+  }
   else
   {
     cerr << "\nEncountered: " << errorCount << " errors." << endl;
@@ -217,13 +223,13 @@ void Admin::resetColumn()
  */
 bool Admin::checkMaxErrors()
 {
-    if(errorCount >= MAXERRORS)
-    {
-      cerr << "Error threashold limit reached. Bailing out of scanning." << endl;
-      return true;
-    }
-    else
-      return false;
+  if(errorCount >= MAXERRORS)
+  {
+    cerr << "Error threashold limit reached. Bailing out of scanning." << endl;
+    return true;
+  }
+  else
+    return false;
 }
 
 /** Retrieve the Column number in raw/unchanged/unmodified form. */
@@ -238,20 +244,38 @@ int Admin::getLineNumber()
   return current_line;
 }
 
+/** 
+ * @brief Singular Emit Function
+ * Outputs the single string param of backend code.
+ * Stores in primary backend StringStream.
+ */
 void Admin::emit(string str) 
 {
-  cout<<str<<endl;
+  assemblerStream << str << endl;
+  cout << str << endl;
 }
 
+/** 
+ * @brief Double Emit Function
+ * Outputs two-param interp code.
+ * Stores in primary backend StringStream.
+ */
 void Admin::emit2(string str, int i) 
 {
-  cout<<str<<endl;
-  cout<<i<<endl;
+  assemblerStream << str << endl << i << endl;
+  cout << str << endl;
+  cout << i << endl;
 }
 
+/** 
+ * @brief Trinary Emit Function
+ * Outputs three-piece code.
+ * Stores in primary backend StringStream.
+ */
 void Admin::emit3(string str, int i, int j) 
 {
-  cout<<str<<endl;
-  cout<<i<<endl;
-  cout<<j<<endl;
+  assemblerStream << str << endl << i << endl << j << endl;
+  cout << str << endl;
+  cout << i << endl;
+  cout << j << endl;
 }
