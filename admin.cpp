@@ -249,7 +249,7 @@ int Admin::getLineNumber()
  * Outputs the single string param of backend code.
  * Stores in primary backend StringStream.
  */
-void Admin::emit(string str) 
+void Admin::emit1(string str) 
 {
   assemblerStream << str << endl;
   cout << str << endl;
