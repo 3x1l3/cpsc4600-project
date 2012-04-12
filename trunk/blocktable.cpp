@@ -145,7 +145,7 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int
     }
     else
     {
-      entry->displacement = ( 2 + (currentBlock.size() -1) );
+      entry->displacement = ( 3 + (currentBlock.size()) );
     }
     
     //add to the current block

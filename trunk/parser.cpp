@@ -64,7 +64,7 @@ Parser::Parser(Admin& adminObject, SymbolTable& symTable)
   lookAheadToken = nextToken();
   
   // start negative so labelcount++ will give 0
-  labelCount = -1;
+  labelCount = 0;
 }
 
 /** Base destructor. */
@@ -181,7 +181,8 @@ void Parser::match(string matchMe, Set validNextCharacters)
 /////////////////////////////////////////////////////////////////////////////
 /**
  * @brief Cleans up after an error has been detected while matching or checking syntax.
- * 
+ * 14240815
+
  * Increases the error count, outputs the relevent error information, then loops
  * until it encounters a valid set of next parseable characters.
  *
@@ -279,12 +280,12 @@ void Parser::Program(Set sts)
   
   //output the instruction prog which sets up the activation record for program and executes first instruction
   //at startLabel (to be computed by assembler)
-  cout<<"emitting"<<endl;
+
   admin->emit3("PROG", varLabel, startLabel);
   Block(startLabel, varLabel, sts.munion(*temp)); 
   //putput end of program instruction endprog
-  cout<<"emitting"<<endl;
-  admin->emit("ENDPROG");
+
+  admin->emit1("ENDPROG");
   match(".", sts);
   
   syntaxCheck(sts);
@@ -320,11 +321,11 @@ void Parser::Block(int beginLabel, int varLabel, Set sts)
   //defin the labels used in PROC and PROG operations.
   //output assembler instruction DEFARG to enter labelTable[varLabel] = varLength in pass 1 so that
   // varLength replaces varLabel in the final code output in pass 2 of the assembler
-  cout<<"emitting"<<endl;
+
   admin->emit3("DEFRAG", varLabel, varLength);
   //we are about to begin the first executable instruction - output assembler instruction DEFADDR to enter
   //labelTable[startLabel] = address   for next instruction
-  cout<<"emitting"<<endl;
+
   admin->emit2("DEFADDR", beginLabel);
   
   StatementPart (sts.munion(*temp)); 
@@ -706,14 +707,14 @@ void Parser::ProcedureDefinition(Set sts)
   int startLabel = NewLabel();
   int varLabel = NewLabel();
   
-  cout<<"emitting2"<<endl;
+
   admin->emit2("DEFADDR", procLabel);
   admin->emit3("PROC", varLabel, startLabel);
   
   
   Block(startLabel, varLabel, sts);
-  cout<<"emitting"<<endl;
-  admin->emit("ENDPROC");
+
+  admin->emit1("ENDPROC");
   
   syntaxCheck(sts);
 }
@@ -805,7 +806,9 @@ void Parser::ReadStatement(Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   match("read",sts.munion(First::VariableAccessList())); 
-  VariableAccessList(sts);
+  vector<mType> countMe = VariableAccessList(sts);
+  
+  admin->emit2("READ", countMe.size());
   
   syntaxCheck(sts);
 }
@@ -840,7 +843,10 @@ void Parser::WriteStatement(Set sts)
 {
   debug(__func__, sts, lookAheadToken); 
   match("write",sts.munion(First::ExpressionList())); 
-  ExpressionList(sts);
+  
+  vector <mType> callMeMaybe = ExpressionList(sts);
+  
+  admin->emit2("WRITE", callMeMaybe.size());
   
   syntaxCheck(sts);
 }
@@ -994,7 +1000,6 @@ void Parser::ProcedureStatement(Set sts)
   
   //make the call with the info found in the table entry
   //what is entry.startLabel? where in the world is carmen sandiego?
-  cout<<"emitting"<<endl;
   admin->emit3("CALL", blocktable->currentLevel() - entry.level, entry.startLabel);
   
   syntaxCheck(sts);
@@ -1017,7 +1022,7 @@ void Parser::IfStatement(Set sts)
   int doneLabel = NewLabel();
   
   GuardedCommandList(startLabel, doneLabel, sts.munion(*temp)); 
-  cout<<"emitting3"<<endl;
+
   admin->emit2("DEFADDR", startLabel);
   
   admin->emit2("FI", admin->getLineNumber());
@@ -1046,10 +1051,10 @@ void Parser::DoStatement(Set sts)
   int startLabel = NewLabel();
   int loopLabel = NewLabel();
   
-  cout<<"emitting"<<endl;
+
   admin->emit2("DEFADDR", loopLabel);
   GuardedCommandList(startLabel, loopLabel, sts.munion(*temp)); 
-  cout<<"emitting"<<endl;
+
   admin->emit2("DEFADDR", startLabel);
   match("od",sts);
   
@@ -1091,7 +1096,7 @@ void Parser::GuardedCommand(int& thisLabel, int GoTo, Set sts)
 {
   debug(__func__, sts, lookAheadToken);
   Set *temp = new Set("->");
-  cout<<"emitting"<<endl;
+
   admin->emit2("DEFADDR", thisLabel);
   mType localType = Expression(sts.munion(*temp).munion(First::StatementPart()));
   
@@ -1103,11 +1108,11 @@ void Parser::GuardedCommand(int& thisLabel, int GoTo, Set sts)
     cout << "Found at line: "<<admin->getLineNumber()<<", Column: "<<admin->getColumnNumber()<<endl;
   }
   thisLabel = NewLabel();
-  cout<<"emitting"<<endl;
+
   admin->emit2("ARROW", thisLabel);
   match("->",sts.munion(First::StatementPart())); 
   StatementPart(sts);
-  cout<<"emitting"<<endl;
+
   admin->emit2("BAR", GoTo);
   
   syntaxCheck(sts);
@@ -1167,11 +1172,13 @@ void Parser::PrimaryOperator(Set sts)
   if(lookAheadToken.getLexeme() == "&")
   {
     match("&",sts);
+    admin->emit1("AND");
   }
   //or
   else if (lookAheadToken.getLexeme() == "|")
   {
     match("|",sts);
+    admin->emit1("OR");
   }
   
   syntaxCheck(sts);
@@ -1258,16 +1265,19 @@ void Parser::RelationalOperator(Set sts)
   if(lookAheadToken.getLexeme() == "<")
   {
     match("<",sts);
+    admin->emit1("LESS");
   }
   //or
   else if(lookAheadToken.getLexeme() == "=")
   {
     match("=",sts);
+    admin->emit1("EQUAL");
   }
   //or
   else if(lookAheadToken.getLexeme() == ">")
   {
     match(">",sts);
+    admin->emit1("GREATER");
   }
   
   syntaxCheck(sts);
@@ -1290,6 +1300,7 @@ mType Parser::SimpleExpression(Set sts)
   //1 or zero of the following
   if(lookAheadToken.getLexeme() == "-")
   {
+    admin->emit1("MINUS");
     match("-",sts.munion(First::Term()).munion(First::AddingOperator()));
   }
   
@@ -1338,11 +1349,13 @@ void Parser::AddingOperator(Set sts)
   if(lookAheadToken.getLexeme() == "+")
   {
     match("+",sts);
+    admin->emit1("ADD");
   }
   //or
   else if(lookAheadToken.getLexeme()=="-")
   {
     match("-",sts);
+    admin->emit1("SUBTRACT");
   }
   
   syntaxCheck(sts);
@@ -1450,21 +1463,42 @@ mType Parser::Factor(Set sts)
   
   if (First::FactorName().isMember(lookAheadToken.getLexeme())) 
   {
+    TableEntry entry;
+    bool error = false;
+    entry = blocktable->find(lookAheadToken.getValue(), error);
+    if (entry.okind == VARIABLE)
+    {  
+      admin->emit1("VALUE");
+      
+        bool error = false;
+  TableEntry entry;
+  entry = blocktable->find(lookAheadToken.getValue(), error);
+  admin->emit3("VARIABLE", entry.level, entry.displacement);
+    }
+    
     localType = FactorName(sts);
   }
   else if (First::Constant().isMember(lookAheadToken.getLexeme()))
+  {
+
+    admin->emit2("CONSTANT", lookAheadToken.getValue());
+    
+    
     localType = Constant(sts);
+  }
   else if (lookAheadToken.getLexeme() == "(")
   {
     match("(",sts.munion(First::Expression()).munion(Set(")"))); 
     localType = Expression(sts.munion(Set(")"))); 
     match(")",sts);
+    //no emit needed here
     
   }
   //or
   else if ( lookAheadToken.getLexeme() == "~")
   {
     match("~",sts.munion(First::Factor())); 
+    admin->emit1("NOT");
     localType = Factor(sts);
   }
   
@@ -1529,14 +1563,26 @@ mType Parser::VariableAccess(Set sts)
   
   /** Set the index selector stop set. */
   Set indsel = First::IndexedSelector();
+
+  //grabbing the next token and looking it up in the blocktable, finding the level and displacement and
+  //emit the variable signal and information
+  bool error = false;
+  TableEntry entry;
+  entry = blocktable->find(lookAheadToken.getValue(), error);
+  admin->emit3("VARIABLE", entry.level, entry.displacement);
   
   /** Grab the proper type from the variable name. */
   localType = VariableName(sts.munion(First::IndexedSelector()));
+
+
+  
+
   
   /** Process the indexedSelector data, if valid. */
   //one or zero of thefollowing
   if(indsel.isMember(lookAheadToken.getLexeme()))
   {
+    admin->emit3("INDEX", entry.size, admin->getLineNumber());
     IndexedSelector(sts);
   }
   
@@ -1562,6 +1608,7 @@ void Parser::IndexedSelector(Set sts)
   
   /** Determine the type of expression for this selector. */
   mType localType = Expression(sts.munion(*temp));
+  
   
   /** the Indexed Selector is not an integer or constant integer, and thus is not valid! */
   if (localType != INTEGER && localType != CINTEGER)
