@@ -1386,6 +1386,8 @@ mType Parser::Term(Set sts)
   //so program could come back here thinking first of factor is correct, but then we dont use it here,
   //only use first of multpiying operator......? TODO
   
+  /** Used to grab the proper Multiplicative symbol for ASSEM output. */
+  string currentLexeme = lookAheadToken.getLexeme();
   
   //optional
   /** If we have a qualifying MultiplyingOperator, then we keep adding the Factor terms to the
@@ -1393,10 +1395,21 @@ mType Parser::Term(Set sts)
   while(First::MultiplyingOperator().isMember(lookAheadToken.getLexeme()))
   {
     MultiplyingOperator(sts.munion(First::Factor()));  
+    
     Set *temp = new Set("*");
     Set *temp2 = new Set("/");
     Set *temp3 = new Set("\\");
     localtypes.push_back( Factor(sts.munion(*temp).munion(*temp2).munion(*temp3)));
+    
+    /** We output after the pushback with FACTOR in order to get the postfix form. */
+    if(currentLexeme == "*")
+      admin->emit1("MULTIPLY");
+    else if(currentLexeme == "/")
+      admin->emit1("DIVIDE");
+    else if(currentLexeme == "\\")
+     admin-> emit1("MODULO");
+    
+    currentLexeme = lookAheadToken.getLexeme();
   }
   
   syntaxCheck(sts);
@@ -1467,23 +1480,37 @@ mType Parser::Factor(Set sts)
     bool error = false;
     entry = blocktable->find(lookAheadToken.getValue(), error);
     if (entry.okind == VARIABLE)
-    {  
+    { 
+      /*
+      cerr << "\nPrinting Value Info\n" << "Displacement " <<  entry.displacement << " id " << entry.id << " level " <<
+	  entry.level << " size " << entry.size << "okind " << blocktable->convertKind(entry.okind) << " otype " << blocktable->convertType(entry.otype) << endl;
+      */
+      bool error = false;
+      TableEntry entry;
+      entry = blocktable->find(lookAheadToken.getValue(), error);
+  
+  
+  /**
+   * *
+   * *
+   * *
+   * *
+   * *
+   * 
+   * FIX TO 1 BY REMOVING THE -1 ALSO IN FACTOR NAME.
+   * ED is currently starting at 1, but we think el should start at 1 but it starts at 0.
+   * We would have to change - , +, AND, OR, >, < possibly to the post-fix form. Also EQUALS
+   * *
+   */
+      admin->emit3("VARIABLE", entry.level - 1, entry.displacement);
       admin->emit1("VALUE");
-      
-        bool error = false;
-  TableEntry entry;
-  entry = blocktable->find(lookAheadToken.getValue(), error);
-  admin->emit3("VARIABLE", entry.level, entry.displacement);
     }
     
     localType = FactorName(sts);
   }
   else if (First::Constant().isMember(lookAheadToken.getLexeme()))
   {
-
-    admin->emit2("CONSTANT", lookAheadToken.getValue());
-    
-    
+    admin->emit2("CONSTANT", lookAheadToken.getValue()); 
     localType = Constant(sts);
   }
   else if (lookAheadToken.getLexeme() == "(")
@@ -1569,7 +1596,7 @@ mType Parser::VariableAccess(Set sts)
   bool error = false;
   TableEntry entry;
   entry = blocktable->find(lookAheadToken.getValue(), error);
-  admin->emit3("VARIABLE", entry.level, entry.displacement);
+  admin->emit3("VARIABLE", entry.level - 1, entry.displacement);
   
   /** Grab the proper type from the variable name. */
   localType = VariableName(sts.munion(First::IndexedSelector()));
