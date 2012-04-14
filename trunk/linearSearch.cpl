@@ -2,6 +2,6 @@ begin
 	integer x, y, z;
 
 	read y, z;
-	x := y * z / 666;
+	x := 4 * 4 / 6;
 	write x;
 end.

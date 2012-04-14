@@ -1219,8 +1219,17 @@ mType Parser::PrimaryExpression(Set sts)
     if(First::RelationalOperator().isMember(lookAheadToken.getLexeme()))
     {
       type2found = true;
-      RelationalOperator(sts.munion(First::SimpleExpression())); 
+      
+	  string currentLexeme = lookAheadToken.getLexeme();
+	  RelationalOperator(sts.munion(First::SimpleExpression())); 
       type2 = SimpleExpression(sts);
+	  
+	if (currentLexeme == ">")
+		admin->emit1("GREATER");
+	else if (currentLexeme == "=")
+		admin->emit1("EQUAL");
+	else if (currentLexeme == "<")
+		admin->emit1("LESS");
       
     }
     
@@ -1265,19 +1274,19 @@ void Parser::RelationalOperator(Set sts)
   if(lookAheadToken.getLexeme() == "<")
   {
     match("<",sts);
-    admin->emit1("LESS");
+   /// admin->emit1("LESS");
   }
   //or
   else if(lookAheadToken.getLexeme() == "=")
   {
     match("=",sts);
-    admin->emit1("EQUAL");
+   // admin->emit1("EQUAL");
   }
   //or
   else if(lookAheadToken.getLexeme() == ">")
   {
     match(">",sts);
-    admin->emit1("GREATER");
+   // admin->emit1("GREATER");
   }
   
   syntaxCheck(sts);
@@ -1308,6 +1317,8 @@ mType Parser::SimpleExpression(Set sts)
   //required
   localtypes.push_back(Term(sts.munion(First::AddingOperator()).munion(First::Term())));
   
+	string currentlexeme = lookAheadToken.getLexeme();
+
   //Optional
   while(First::AddingOperator().isMember(lookAheadToken.getLexeme()))
   {
@@ -1315,7 +1326,16 @@ mType Parser::SimpleExpression(Set sts)
     Set *temp2 = new Set("-");
     AddingOperator(sts.munion(First::Term())); 
     
+	
+
     localtypes.push_back(Term(sts.munion(*temp).munion(*temp2)));
+
+	if (currentlexeme == "+")
+			admin->emit1("ADD");
+		else if (currentlexeme == "-")
+			admin->emit1("SUBTRACT");
+
+	currentlexeme = lookAheadToken.getLexeme();
   }
   
   
@@ -1349,13 +1369,13 @@ void Parser::AddingOperator(Set sts)
   if(lookAheadToken.getLexeme() == "+")
   {
     match("+",sts);
-    admin->emit1("ADD");
+    //admin->emit1("ADD");
   }
   //or
   else if(lookAheadToken.getLexeme()=="-")
   {
     match("-",sts);
-    admin->emit1("SUBTRACT");
+    //admin->emit1("SUBTRACT");
   }
   
   syntaxCheck(sts);
