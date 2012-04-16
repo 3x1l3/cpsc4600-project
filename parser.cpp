@@ -1139,8 +1139,19 @@ mType Parser::Expression(Set sts)
   //optional
   while(First::PrimaryOperator().isMember(lookAheadToken.getLexeme()))
   {
+    string currentLookAhead = lookAheadToken.getLexeme();
+    
     PrimaryOperator(sts.munion(First::PrimaryExpression())); 
     localTypes.push_back(PrimaryExpression(sts));
+    
+    if(currentLookAhead == "&")
+    {
+      admin->emit1("AND");
+    }
+    if(currentLookAhead == "|")
+    {
+      admin->emit1("OR");
+    }
   }
   
   
@@ -1172,13 +1183,15 @@ void Parser::PrimaryOperator(Set sts)
   if(lookAheadToken.getLexeme() == "&")
   {
     match("&",sts);
-    admin->emit1("AND");
+    //following is for infix notation, we need postfix
+    //admin->emit1("AND");
   }
   //or
   else if (lookAheadToken.getLexeme() == "|")
   {
     match("|",sts);
-    admin->emit1("OR");
+    //following is for infix notation, we need postfix
+    //admin->emit1("OR");
   }
   
   syntaxCheck(sts);
