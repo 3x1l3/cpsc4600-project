@@ -1545,8 +1545,9 @@ mType Parser::Factor(Set sts)
   else if ( lookAheadToken.getLexeme() == "~")
   {
     match("~",sts.munion(First::Factor())); 
-    admin->emit1("NOT");
+    
     localType = Factor(sts);
+    admin->emit1("NOT");
   }
   
   
