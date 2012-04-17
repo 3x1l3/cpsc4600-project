@@ -35,11 +35,16 @@
 #include "admin.h"
 #include "token.h"
 #include "Assembler.h"
+#include "interp.h"
 
 /** Namespaces to prevent ugly code */
 using std::string;
 using std::cout;
 using std::endl;
+
+/** Function prototypes. */
+void runAssembler(Admin* admin);
+void runInterpreter(bool step);
 
 /** Argc and Argv for later expansion. */
 int main( int argc, char* argv[]) 
@@ -125,23 +130,69 @@ int main( int argc, char* argv[])
     {
       //Our scanning was successful.
       cout << "Scanning successful" << endl;
-     
-      //Setup our base streams for the Assembler to use
-      std::ifstream asmFile;
-      asmFile.open("test.asm");
       
-      //This will be the file read by our Interpreter.
-      std::ofstream interpCode("interpOutput");
-
-      Assembler* myASM = new Assembler( asmFile, interpCode);
-
-      //Our actual Assembler passes.
-      myASM->firstPass();
-      //Hossain's Assembler does not reset his stream. So we cheat.
-      myASM->secondPass(admin->getASM());
+      cout << "\nThe Parsed Output is now going to be passed to the Assembler...Input a char to continue.\n";
+      char throwAway;
+      cin >> throwAway;
+      runAssembler(admin);
+      
+      cout << "\nWould you like to run the interpreter? (y / n) ";
+      cin >> throwAway;
+      
+      if(throwAway == 'y')
+      {
+	cout << "\nReady to run Interpreter. Would you like the interpreter to Step through the program? (y / n)" << endl;
+	cin >> throwAway;
+	if(throwAway == 'y')
+	  runInterpreter(true);
+	else
+	  runInterpreter(false);
+      }
+      
     }
     else
       cout << "Program contains scan errors" << endl;
 
+    cout << "\nPL Compiler Complete." << endl;
     return 0;
+}
+
+
+/**
+ * @brief Operates the Assembler component of the compiler.
+ * 
+ * Use this function with a corresponding completed Parser
+ * code in order to run the Assembler on it.
+ * The code is then sent to interpInput.itp
+ */
+void runAssembler(Admin* admin)
+{
+  //Setup our base streams for the Assembler to use
+  std::ifstream asmFile;
+  asmFile.open("test.asm");
+  
+  //This will be the file read by our Interpreter.
+  std::ofstream interpCode("interpInput.itp");
+  
+  Assembler* myASM = new Assembler( asmFile, interpCode);
+  
+  //Our actual Assembler passes.
+  myASM->firstPass();
+  //Hossain's Assembler does not reset his stream. So we cheat.
+  myASM->secondPass(admin->getASM());
+  
+  cout << "Assembly Complete.\n";
+}
+
+/**
+ * @brief Main function to run our Interpreter.
+ * 
+ * Use this function to run the Interpreter on assembled PL code.
+ * This assumes that the assembled PL interpreter code is 
+ * present in a file called interpInput.itp.
+ */
+void runInterpreter(bool step)
+{
+  cout << "\nRunning interpreter..." << endl;
+  Interpreter* interp = new Interpreter("interpInput.itp", step);
 }
