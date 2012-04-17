@@ -34,6 +34,7 @@
 /** Associated custom libraries/Classes */
 #include "admin.h"
 #include "token.h"
+#include "Assembler.h"
 
 /** Namespaces to prevent ugly code */
 using std::string;
@@ -114,8 +115,31 @@ int main( int argc, char* argv[])
     Admin* admin = new Admin(file);
     int status = admin->scan();
 
+    /**
+     * 
+     * Assembler Part
+     * This is where our assembler is called.
+     */
+    //if our program scanned and parsed successfully
     if (status == 0)
+    {
+      //Our scanning was successful.
       cout << "Scanning successful" << endl;
+     
+      //Setup our base streams for the Assembler to use
+      std::ifstream asmFile;
+      asmFile.open("test.asm");
+      
+      //This will be the file read by our Interpreter.
+      std::ofstream interpCode("interpOutput");
+
+      Assembler* myASM = new Assembler( asmFile, interpCode);
+
+      //Our actual Assembler passes.
+      myASM->firstPass();
+      //Hossain's Assembler does not reset his stream. So we cheat.
+      myASM->secondPass(admin->getASM());
+    }
     else
       cout << "Program contains scan errors" << endl;
 

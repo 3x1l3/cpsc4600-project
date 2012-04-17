@@ -8,6 +8,9 @@
 using namespace std;
 #include <iostream>
 #include <string>
+#include <sstream>
+
+using std::stringstream;
 //#include "parser.h"
 
 const int MAXLABEL = 500;
@@ -19,7 +22,7 @@ class Assembler
    ~Assembler();
    // The two passes of the assembler.
    void firstPass(); 
-   void secondPass();
+   void secondPass(string alpha);
 
   private:
    int labelTable[MAXLABEL]; 

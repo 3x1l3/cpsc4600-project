@@ -258,7 +258,7 @@ int Admin::getLineNumber()
  */
 void Admin::emit1(string str) 
 {
-  assemblerStream << str << endl;
+  assemblerStream << str; if(str != "ENDPROG") assemblerStream <<  endl;
   cout << str << endl;
 }
 
@@ -285,4 +285,10 @@ void Admin::emit3(string str, int i, int j)
   cout << str << endl;
   cout << i << endl;
   cout << j << endl;
+}
+
+
+string Admin::getASM()
+{
+  return assemblerStream.str();
 }
