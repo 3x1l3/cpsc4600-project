@@ -145,9 +145,14 @@ public:
     int getColumnNumber();
     int getLineNumber();
     
+    
+    /** Our functions for emitting our ASM code. */
     void emit1(string);
     void emit2(string, int);
     void emit3(string, int, int);
+    
+    /** Returns our stringstream code to be used by the assembler. */
+    string getASM();
 
 };
 
