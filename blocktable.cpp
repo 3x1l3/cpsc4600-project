@@ -484,3 +484,7 @@ int BlockTable::currentLevel() {
 	
 }
 
+string BlockTable::returnLexeme(int entryID) {
+  return table->getAttributeWhere(entryID, "ID", "lexeme");
+}
+

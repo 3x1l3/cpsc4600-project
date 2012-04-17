@@ -322,7 +322,7 @@ void Parser::Block(int beginLabel, int varLabel, Set sts)
   //output assembler instruction DEFARG to enter labelTable[varLabel] = varLength in pass 1 so that
   // varLength replaces varLabel in the final code output in pass 2 of the assembler
 
-  admin->emit3("DEFRAG", varLabel, varLength);
+  admin->emit3("DEFARG", varLabel, varLength);
   //we are about to begin the first executable instruction - output assembler instruction DEFADDR to enter
   //labelTable[startLabel] = address   for next instruction
 
@@ -1287,19 +1287,16 @@ void Parser::RelationalOperator(Set sts)
   if(lookAheadToken.getLexeme() == "<")
   {
     match("<",sts);
-   /// admin->emit1("LESS");
   }
   //or
   else if(lookAheadToken.getLexeme() == "=")
   {
     match("=",sts);
-   // admin->emit1("EQUAL");
   }
   //or
   else if(lookAheadToken.getLexeme() == ">")
   {
     match(">",sts);
-   // admin->emit1("GREATER");
   }
   
   syntaxCheck(sts);
@@ -1543,7 +1540,7 @@ mType Parser::Factor(Set sts)
   }
   else if (First::Constant().isMember(lookAheadToken.getLexeme()))
   {
-    admin->emit2("CONSTANT", lookAheadToken.getValue()); 
+    //admin->emit2("CONSTANT", lookAheadToken.getValue()); 
     localType = Constant(sts);
   }
   else if (lookAheadToken.getLexeme() == "(")
@@ -1643,8 +1640,11 @@ mType Parser::VariableAccess(Set sts)
   //one or zero of thefollowing
   if(indsel.isMember(lookAheadToken.getLexeme()))
   {
-    admin->emit3("INDEX", entry.size, admin->getLineNumber());
+    int sizeSend = entry.size;
+    int lineNum = admin->getLineNumber();
+    
     IndexedSelector(sts);
+    admin->emit3("INDEX", sizeSend, lineNum);
   }
   
   syntaxCheck(sts);
@@ -1708,17 +1708,30 @@ mType Parser::Constant(Set sts)
   /** Check for validity of the matching token, which is one of these...*/
   if(num.isMember(lookAheadToken.getLexeme()))
   {
+    if(blockTypeStack.top() == STATEMENTPART)
+      admin->emit2("CONSTANT", lookAheadToken.getValue());
     localType = Numeral(sts);
   }
   //or
   else if (bol.isMember(lookAheadToken.getLexeme()))
   {
+    if(blockTypeStack.top() == STATEMENTPART)
+    {
+      if(lookAheadToken.getLexeme() == "true")
+	admin->emit2("CONSTANT", 1);
+      else
+	admin->emit2("CONSTANT", 0);
+    }
     localType = BooleanSymbol(sts);
   }
   //or
   else if (con.isMember(lookAheadToken.getLexeme()))
   {
+    if(blockTypeStack.top() == STATEMENTPART)
+      admin->emit2("CONSTANT", lookAheadToken.getValue());
     localType = ConstantName(sts);
+    
+    //entry = blocktable->find(lookAheadToken.getValue(), error);
   }
   
   syntaxCheck(sts);
@@ -1826,12 +1839,16 @@ mType Parser::VariableName(Set sts)
       type = entry.otype;
       if(entry.okind == CONSTANT && entry.otype == INTEGER)
       {
+	admin->emit2("CONSTANT", entry.value);
 	type = CINTEGER;
       }
       if(entry.okind == CONSTANT && entry.otype == BOOLEAN)
       {
+	admin->emit2("CONSTANT", entry.value);
 	type = CBOOLEAN;
       }
+      
+   
     }
     /** The variable was not found, and we're not declaring it for the first time, so it's an error. */
     else
