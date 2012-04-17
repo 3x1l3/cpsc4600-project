@@ -171,6 +171,8 @@ class BlockTable {
     //for the code generation, will get current block level
     int currentLevel();
     
+    string returnLexeme(int);
+    
     
   private:
     
