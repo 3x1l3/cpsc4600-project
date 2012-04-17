@@ -112,6 +112,9 @@ class BlockTable {
     /** Locates a given TE ID in the current Block, and pairs its index with the input integer reference. */
     bool search(int , int&);
     
+
+	 bool define(int newid, Kind newkind, mType newtype, int newsize, int newvalue, int startLabel);
+
     /** 
      * Creates an object if we don't find it in the current block.
      * We don't call Find as the caller of Define will know whether to check 

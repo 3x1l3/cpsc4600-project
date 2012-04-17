@@ -105,6 +105,45 @@ bool BlockTable::search(int lookFor, int& returnIndex)
 }
 
 
+bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int newvalue, int startLabel) {
+	
+	  //Check for matching existing TableEntry
+	  if (!search(newid)) 
+	  {
+	    TableEntry* entry = new TableEntry();
+	    
+	    entry->okind = newkind;
+	    entry->id = newid;
+	    entry->otype = newtype;
+	    entry->size = newsize;
+	    entry->value = newvalue;
+	    entry->level = currentBlockIndex;
+	    entry->startLabel = startLabel;
+	
+	    //sets the displacement variable
+	    //starting at 0 
+	    //0 is static link
+	    //1 is dynamic link
+	    //2 is return address
+	    //3 is first place for variables
+	    if(currentBlock.size() == 0)
+	    {
+	      entry->displacement = 3;
+	    }
+	    else
+	    {
+	      entry->displacement = ( 3 + (currentBlock.size()) );
+	    }
+	    
+	    //add to the current block
+	    currentBlock.push_back(entry);
+	    return false; 
+	  } 
+	  else
+	    return true;
+	
+}
+
 //---------------------------------------------------------------------------------------------
 /**
  * @brief Defines a new entry in the current block table if not found.
@@ -119,42 +158,11 @@ bool BlockTable::search(int lookFor, int& returnIndex)
  * special handling. If the object is not a const or array, it will get a 0 for each.
  *
  */
+
 bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int newvalue)
 {
-  //Check for matching existing TableEntry
-  if (!search(newid)) 
-  {
-    TableEntry* entry = new TableEntry();
-    
-    entry->okind = newkind;
-    entry->id = newid;
-    entry->otype = newtype;
-    entry->size = newsize;
-    entry->value = newvalue;
-    entry->level = currentBlockIndex;
-    
-    //sets the displacement variable
-    //starting at 0 
-    //0 is static link
-    //1 is dynamic link
-    //2 is return address
-    //3 is first place for variables
-    if(currentBlock.size() == 0)
-    {
-      entry->displacement = 3;
-    }
-    else
-    {
-      entry->displacement = ( 3 + (currentBlock.size()) );
-    }
-    
-    //add to the current block
-    currentBlock.push_back(entry);
-    return false; 
-  } 
-  else
-    return true;
 
+return define(newid, newkind, newtype, newsize, newvalue, 0);
   
 }
 //---------------------------------------------------------------------------------------------
@@ -178,7 +186,7 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype)
 {
   //we just pass in default values to our other function.
   //NOTE: A const CAN have a 0, so this may not be perfectly safe.
-  return define(newid, newkind, newtype, 0, 0);
+  return define(newid, newkind, newtype, 0, 0, 0);
 }
 //---------------------------------------------------------------------------------------------
 

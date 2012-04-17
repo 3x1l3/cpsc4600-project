@@ -699,15 +699,12 @@ void Parser::ProcedureDefinition(Set sts)
   match("proc",sts.munion(First::ProcedureName()).munion(First::Block())); 
   
   int procLabel = NewLabel();
-  
-  blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL);
+    int startLabel = NewLabel();
+  int varLabel = NewLabel();
+
+  blocktable->define(lookAheadToken.getValue(), PROCEDURE, UNIVERSAL, 0, 0, procLabel);
   ProcedureName(sts.munion(First::Block())); 
   
-  
-  int startLabel = NewLabel();
-  int varLabel = NewLabel();
-  
-
   admin->emit2("DEFADDR", procLabel);
   admin->emit3("PROC", varLabel, startLabel);
   
@@ -984,7 +981,7 @@ void Parser::ProcedureStatement(Set sts)
   ProcedureName(sts);
   
   entry = blocktable->find(id, error);
-  
+ 
   if(entry.okind != PROCEDURE)
   {
     cout<<"Invalid procedure call to type of "<<blocktable->convertKind(entry.okind)<<"-"<<blocktable->convertType(entry.otype)<<endl;
