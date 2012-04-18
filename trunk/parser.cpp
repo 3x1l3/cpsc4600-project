@@ -1532,7 +1532,7 @@ mType Parser::Factor(Set sts)
    * We would have to change - , +, AND, OR, >, < possibly to the post-fix form. Also EQUALS
    * *
    */
-      admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement+1);
+      admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement);
       admin->emit1("VALUE");
     }
     
@@ -1627,7 +1627,7 @@ mType Parser::VariableAccess(Set sts)
   bool error = false;
   TableEntry entry;
   entry = blocktable->find(lookAheadToken.getValue(), error);
-  admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement-1);
+  admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement);
   
   /** Grab the proper type from the variable name. */
   localType = VariableName(sts.munion(First::IndexedSelector()));
