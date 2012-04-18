@@ -709,7 +709,7 @@ void Parser::ProcedureDefinition(Set sts)
   ProcedureName(sts.munion(First::Block())); 
   
   admin->emit2("DEFADDR", procLabel);
-  admin->emit3("PROC",startLabel, varLabel);
+  admin->emit3("PROC", varLabel, startLabel);
   
   
   Block(startLabel, varLabel, sts);
