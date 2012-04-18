@@ -126,14 +126,9 @@ bool BlockTable::define(int newid, Kind newkind, mType newtype, int newsize, int
 	    //1 is dynamic link
 	    //2 is return address
 	    //3 is first place for variables
-	    if(currentBlock.size() == 0)
-	    {
-	      entry->displacement = 3;
-	    }
-	    else
-	    {
+
 	      entry->displacement = ( 3 + (currentBlock.size()) );
-	    }
+	    
 	    
 	    //add to the current block
 	    currentBlock.push_back(entry);

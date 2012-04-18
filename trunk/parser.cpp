@@ -272,11 +272,14 @@ void Parser::Program(Set sts)
   
   int startLabel, varLabel;
   //there is a counter that returns next label (an integer) to each call to NewLabel function
-  
+
   //this is to record the address of the first instruction of the program
-  startLabel = NewLabel();
+  startLabel = NewLabel();  
+
   //this is storage needed for the variables
   varLabel = NewLabel();
+
+
   
   //output the instruction prog which sets up the activation record for program and executes first instruction
   //at startLabel (to be computed by assembler)
@@ -1529,7 +1532,7 @@ mType Parser::Factor(Set sts)
    * We would have to change - , +, AND, OR, >, < possibly to the post-fix form. Also EQUALS
    * *
    */
-      admin->emit3("VARIABLE", entry.level - 1, entry.displacement);
+      admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement+1);
       admin->emit1("VALUE");
     }
     
@@ -1624,7 +1627,7 @@ mType Parser::VariableAccess(Set sts)
   bool error = false;
   TableEntry entry;
   entry = blocktable->find(lookAheadToken.getValue(), error);
-  admin->emit3("VARIABLE", entry.level - 1, entry.displacement);
+  admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement-1);
   
   /** Grab the proper type from the variable name. */
   localType = VariableName(sts.munion(First::IndexedSelector()));
