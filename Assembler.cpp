@@ -67,7 +67,9 @@ void Assembler::firstPass()
 	 (*insource) >> nextop;
 	 currentAddress++;
       }
+        
    }
+     
 }
 
 // The second pass of the assembler.  Here we actually translate operations
@@ -245,7 +247,7 @@ void Assembler::secondPass(string sourceASM)
       }
       else {
 	 // We should never see this message.
-	 cerr << "Assembler encountered unknown operator \"" << nextop << "\"\n";
+	 if(!(*insource).eof())cerr << "Assembler encountered unknown operator \"" << nextop << "\"\n";
 	 //exit = true;
       }
       if(!exit)
