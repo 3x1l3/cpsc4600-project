@@ -179,9 +179,10 @@ void runAssembler(Admin* admin)
   //Our actual Assembler passes.
   myASM->firstPass();
   //Hossain's Assembler does not reset his stream. So we cheat.
-  myASM->secondPass(admin->getASM());
-  
+  myASM->secondPass(admin->getASM().append("\n"));
+  interpCode.close();
   cout << "Assembly Complete.\n";
+  delete myASM;
 }
 
 /**
@@ -195,4 +196,5 @@ void runInterpreter(bool step)
 {
   cout << "\nRunning interpreter..." << endl;
   Interpreter* interp = new Interpreter("interpInput.itp", step);
+  delete interp;
 }
