@@ -591,6 +591,7 @@ int Parser::VariableDefinitionPart(Set sts, int &varStart, mType type)
       cout << "Found at line: "<< admin->getLineNumber() << ", Column: "<< admin->getColumnNumber() << endl; 
     }
   syntaxCheck(sts);
+	
   return arrayIDs.size() * entry.value; 
   }
   
@@ -1581,10 +1582,21 @@ mType Parser::FactorName(Set sts)
   /** If it's a name, grab its type, and process the index if it's an array */
   if (lookAheadToken.getLexeme() == "name") 
   {
+	 TableEntry entry;
+	bool error = false;
+	  entry = blocktable->find(lookAheadToken.getValue(), error);
+	 
+	  
     localType = VariableName( sts.munion(First::Constant()).munion(First::VariableAccess()));
     if (First::IndexedSelector().isMember(lookAheadToken.getLexeme()))
     {
-      IndexedSelector(sts);
+	    int sizeSend = entry.size;
+	    int lineNum = admin->getLineNumber();
+      admin->emit3("VARIABLE", blocktable->currentLevel()-entry.level, entry.displacement);
+		IndexedSelector(sts);
+ 		 
+		admin->emit3("INDEX", sizeSend, lineNum);
+		admin->emit1("VALUE");
     }	
   } 
   /** Otherwise, it's either a Numeral or a Boolean symbol type. Process them. */
