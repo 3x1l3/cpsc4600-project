@@ -5,8 +5,9 @@ integer x;
 
 proc a
 begin integer alpha;
-
+  alpha := 5
   x := 1;
+ write alpha, x;
 end;
 
 proc b
@@ -21,4 +22,5 @@ end;
 
 call c;
 
+write p, x;
 end.
