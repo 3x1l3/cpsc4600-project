@@ -215,6 +215,16 @@ with the following schema
 If any problems occur, please move the given PL source file to the binary's directory.
 
 
+Debug Flag
+-------
+
+You can append the compiler command with the -g flag to show the Assembly output/TAC.
+However, this must be done alongside a filename.
+
+If the Debug flag is not appended, the ASM will not be outputted, but will still be
+stored in "test.asm".
+
+
 Assembler and Interpreter
 -----------------
 
@@ -245,7 +255,21 @@ to view the Interpreter's function calls with a pause at each level.
 The flag "-s" denotes the Step option.
 ex:	./Interpreter interpFile.itp -s
 
+But you MUST include a filename to do so.
 
+
+If these fail to compile, feel free to cd to the tools/ directory and compile
+them locally.
+
+i.e. the command would be
+
+***
+cd tools; make -f makeInterp; make -f makeASM; cd ..;
+***
+
+And then tools/Interpreter and tools/ASMTester could be called.
+However, for simplicity, we included the files needed to make these in the root folder as
+well; only the make files are crucially located in tools/.
 
 ============================
 
