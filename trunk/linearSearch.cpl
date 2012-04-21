@@ -1,7 +1,0 @@
-begin
-	integer x, y, z;
-
-	read y, z;
-	x := 4 * 4 / 6;
-	write x;
-end.
