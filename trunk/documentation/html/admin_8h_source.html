@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00043"></a>00043 <span class="keyword">using</span> std::stringstream;
 <a name="l00044"></a>00044 
 <a name="l00046"></a>00046 <span class="keyword">class </span><a class="code" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a>;
-<a name="l00047"></a>00047 <span class="keyword">class </span><a class="code" href="classParser.html">Parser</a>;
+<a name="l00047"></a>00047 <span class="keyword">class </span><a class="code" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>;
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049 
 <a name="l00062"></a><a class="code" href="classAdmin.html">00062</a> <span class="keyword">class </span><a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a> {
@@ -72,41 +72,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00070"></a><a class="code" href="classAdmin.html#a2070f3b7ce2f309da1b080c3d3f07ecf">00070</a>     std::vector&lt;int&gt; <a class="code" href="classAdmin.html#a2070f3b7ce2f309da1b080c3d3f07ecf">error_line</a>;
 <a name="l00071"></a>00071 
 <a name="l00073"></a><a class="code" href="classAdmin.html#a77039c04350669e25d604593a77bea36">00073</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a77039c04350669e25d604593a77bea36" title="We track the current line and column locations while reading through our File string...">current_line</a>;
-<a name="l00075"></a><a class="code" href="classAdmin.html#ad5610f86befa3a43987ce15cfc389d28">00075</a>     stringstream <a class="code" href="classAdmin.html#ad5610f86befa3a43987ce15cfc389d28" title="We store our errors in a StringStream for easy manipulation and conversion.">error_str</a>;
-<a name="l00076"></a>00076 
-<a name="l00082"></a><a class="code" href="classAdmin.html#afb5161f047f166b985257447b9c47f22">00082</a>     <a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>* <a class="code" href="classAdmin.html#afb5161f047f166b985257447b9c47f22" title="Symbol Table, Parser and Scanner object pointers.">table</a>;
-<a name="l00083"></a><a class="code" href="classAdmin.html#a6846c5ec5e565001a18a20167ff7b3cf">00083</a>     <a class="code" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a>* <a class="code" href="classAdmin.html#a6846c5ec5e565001a18a20167ff7b3cf">scanner</a>;
-<a name="l00084"></a><a class="code" href="classAdmin.html#a0fe59c6a08ae239bee02a58180fef8c3">00084</a>     <a class="code" href="classParser.html">Parser</a>* <a class="code" href="classAdmin.html#a0fe59c6a08ae239bee02a58180fef8c3">parser</a>;
-<a name="l00085"></a>00085 
-<a name="l00091"></a><a class="code" href="classAdmin.html#ae1c48226f950c3e470785785aff4d536">00091</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae1c48226f950c3e470785785aff4d536" title="The Index integer for our symbol table.">symTIndex</a>;
-<a name="l00092"></a>00092 
-<a name="l00094"></a><a class="code" href="classAdmin.html#a18dd34f91c28721e9ba9ec9370ae5f98">00094</a>     <span class="keywordtype">bool</span> <a class="code" href="classAdmin.html#a18dd34f91c28721e9ba9ec9370ae5f98" title="If a line cannot be scanned/parsed, this boolean is used to indicate such.">correctLine</a>;
-<a name="l00095"></a>00095 
-<a name="l00101"></a><a class="code" href="classAdmin.html#ae29edcd0464b203b35f72caba6af7295">00101</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae29edcd0464b203b35f72caba6af7295" title="Simple tracking of the number of errors encountered.">errorCount</a>;
-<a name="l00102"></a>00102   
-<a name="l00103"></a>00103 <span class="keyword">public</span>:
-<a name="l00104"></a>00104 
-<a name="l00112"></a>00112     <a class="code" href="classAdmin.html#a5b1a3a537008af6065e9cb55522b7a67" title="Base constructor for the Administrator.">Admin</a>(<span class="keywordtype">string</span>&amp;);
+<a name="l00074"></a>00074 
+<a name="l00076"></a><a class="code" href="classAdmin.html#ad5610f86befa3a43987ce15cfc389d28">00076</a>     stringstream <a class="code" href="classAdmin.html#ad5610f86befa3a43987ce15cfc389d28" title="We store our errors in a StringStream for easy manipulation and conversion.">error_str</a>;
+<a name="l00077"></a>00077 
+<a name="l00079"></a><a class="code" href="classAdmin.html#a008c56533042666979d7c685dc5d01a8">00079</a>     stringstream <a class="code" href="classAdmin.html#a008c56533042666979d7c685dc5d01a8" title="We store our Intermediary/Back-End code in a StringStream for eventual writing to...">assemblerStream</a>;
+<a name="l00080"></a>00080     
+<a name="l00086"></a><a class="code" href="classAdmin.html#afb5161f047f166b985257447b9c47f22">00086</a>     <a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>* <a class="code" href="classAdmin.html#afb5161f047f166b985257447b9c47f22" title="Symbol Table, Parser and Scanner object pointers.">table</a>;
+<a name="l00087"></a><a class="code" href="classAdmin.html#a6846c5ec5e565001a18a20167ff7b3cf">00087</a>     <a class="code" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a>* <a class="code" href="classAdmin.html#a6846c5ec5e565001a18a20167ff7b3cf">scanner</a>;
+<a name="l00088"></a><a class="code" href="classAdmin.html#a0fe59c6a08ae239bee02a58180fef8c3">00088</a>     <a class="code" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>* <a class="code" href="classAdmin.html#a0fe59c6a08ae239bee02a58180fef8c3">parser</a>;
+<a name="l00089"></a>00089 
+<a name="l00095"></a><a class="code" href="classAdmin.html#ae1c48226f950c3e470785785aff4d536">00095</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae1c48226f950c3e470785785aff4d536" title="The Index integer for our symbol table.">symTIndex</a>;
+<a name="l00096"></a>00096 
+<a name="l00098"></a><a class="code" href="classAdmin.html#a18dd34f91c28721e9ba9ec9370ae5f98">00098</a>     <span class="keywordtype">bool</span> <a class="code" href="classAdmin.html#a18dd34f91c28721e9ba9ec9370ae5f98" title="If a line cannot be scanned/parsed, this boolean is used to indicate such.">correctLine</a>;
+<a name="l00099"></a>00099 
+<a name="l00105"></a><a class="code" href="classAdmin.html#ae29edcd0464b203b35f72caba6af7295">00105</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae29edcd0464b203b35f72caba6af7295" title="Simple tracking of the number of errors encountered.">errorCount</a>;
+<a name="l00106"></a>00106     
+<a name="l00110"></a><a class="code" href="classAdmin.html#a7160b27f8f1cf8d4e526cc6e54ee8031">00110</a>     <span class="keywordtype">bool</span> <a class="code" href="classAdmin.html#a7160b27f8f1cf8d4e526cc6e54ee8031" title="Flag used to turn off/on token found printouts.">tokenFlag</a>;
+<a name="l00111"></a>00111   
+<a name="l00112"></a>00112 <span class="keyword">public</span>:
 <a name="l00113"></a>00113 
-<a name="l00115"></a>00115     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a6519bde7fd1ffd997a66987c2417d7bd" title="Records the Error Message string into the Error vector.">recordError</a>(<span class="keywordtype">string</span>);
-<a name="l00116"></a>00116 
-<a name="l00118"></a>00118     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#aaa4f711e8151dceab8d90c5f127c6820" title="Executes the scanner function and returns an integer count of the errors found.">scan</a>();
-<a name="l00119"></a>00119     
-<a name="l00121"></a>00121     <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classAdmin.html#a7d32bf0c9bcc29be8f622e9b07cfb3d8" title="The primary tokenizing function that can be called for scanning and parsing.">nextToken</a>();
+<a name="l00121"></a>00121     <a class="code" href="classAdmin.html#a1483f37673aa04863e86a37b8c493733" title="Base constructor for the Administrator.">Admin</a>(<span class="keywordtype">string</span>&amp;, <span class="keywordtype">int</span> debug);
 <a name="l00122"></a>00122 
-<a name="l00127"></a>00127     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#ae121a9ce2a34ac4075d074c2d1f306c5" title="A newline operation is performed as our current line is valid.">newLine</a>();
-<a name="l00128"></a>00128 
-<a name="l00130"></a>00130     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a89653dd68c51b51d9003a2518a56175f" title="Our column count management functions allow us to report exact error locations.">increaseColumn</a>();
-<a name="l00131"></a>00131     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a62813e5c17636eeef43524ad40cdaab8" title="The default &amp;quot;left-aligned&amp;quot; column is 1, we reset it when we reach the end...">resetColumn</a>();
-<a name="l00132"></a>00132     <span class="keywordtype">bool</span> <a class="code" href="classAdmin.html#af5cd211ee7891ec1fec719bace4b678b" title="Checks if we have reached the maximum number of errors.">checkMaxErrors</a>();
-<a name="l00133"></a><a class="code" href="classAdmin.html#ae6bcb0d3aa08b938197a332c5af5a456">00133</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae6bcb0d3aa08b938197a332c5af5a456">column</a>;
-<a name="l00134"></a>00134     
-<a name="l00136"></a>00136     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a576e2dfe10f528ad5f1816e673ed2e32" title="Basic retrieval functions, used for debug.">getColumnNumber</a>();
-<a name="l00137"></a>00137     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a1a33282a2d64fa3dd9b3e8ac1a4799e3" title="Send back the line number without edits.">getLineNumber</a>();
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139 };
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141 <span class="preprocessor">#endif</span>
+<a name="l00124"></a>00124     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a6519bde7fd1ffd997a66987c2417d7bd" title="Records the Error Message string into the Error vector.">recordError</a>(<span class="keywordtype">string</span>);
+<a name="l00125"></a>00125 
+<a name="l00127"></a>00127     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#aaa4f711e8151dceab8d90c5f127c6820" title="Executes the scanner function and returns an integer count of the errors found.">scan</a>();
+<a name="l00128"></a>00128     
+<a name="l00130"></a>00130     <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classAdmin.html#a7d32bf0c9bcc29be8f622e9b07cfb3d8" title="The primary tokenizing function that can be called for scanning and parsing.">nextToken</a>();
+<a name="l00131"></a>00131 
+<a name="l00136"></a>00136     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#ae121a9ce2a34ac4075d074c2d1f306c5" title="A newline operation is performed as our current line is valid.">newLine</a>();
+<a name="l00137"></a>00137 
+<a name="l00139"></a>00139     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a89653dd68c51b51d9003a2518a56175f" title="Our column count management functions allow us to report exact error locations.">increaseColumn</a>();
+<a name="l00140"></a>00140     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a62813e5c17636eeef43524ad40cdaab8" title="The default &amp;quot;left-aligned&amp;quot; column is 1, we reset it when we reach the end...">resetColumn</a>();
+<a name="l00141"></a>00141     <span class="keywordtype">bool</span> <a class="code" href="classAdmin.html#af5cd211ee7891ec1fec719bace4b678b" title="Checks if we have reached the maximum number of errors.">checkMaxErrors</a>();
+<a name="l00142"></a><a class="code" href="classAdmin.html#ae6bcb0d3aa08b938197a332c5af5a456">00142</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ae6bcb0d3aa08b938197a332c5af5a456">column</a>;
+<a name="l00143"></a>00143     
+<a name="l00145"></a>00145     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a576e2dfe10f528ad5f1816e673ed2e32" title="Basic retrieval functions, used for debug.">getColumnNumber</a>();
+<a name="l00146"></a>00146     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a1a33282a2d64fa3dd9b3e8ac1a4799e3" title="Send back the line number without edits.">getLineNumber</a>();
+<a name="l00147"></a>00147     
+<a name="l00148"></a>00148     
+<a name="l00150"></a>00150     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a8518362526e301c8ccd26eeff689b862" title="Our functions for emitting our ASM code.">emit1</a>(<span class="keywordtype">string</span>);
+<a name="l00151"></a>00151     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#a7862a90db685a8321e47d684c67b6451" title="Double Emit Function Outputs two-param interp code.">emit2</a>(<span class="keywordtype">string</span>, <span class="keywordtype">int</span>);
+<a name="l00152"></a>00152     <span class="keywordtype">void</span> <a class="code" href="classAdmin.html#ab97fe62f8c41b03f21082f5a9bc7ecfa" title="Trinary Emit Function Outputs three-piece code.">emit3</a>(<span class="keywordtype">string</span>, <span class="keywordtype">int</span>, <span class="keywordtype">int</span>);
+<a name="l00153"></a>00153     
+<a name="l00155"></a>00155     <span class="keywordtype">string</span> <a class="code" href="classAdmin.html#a40cf08260b4ca4200791ed3f13080153" title="Returns our stringstream code to be used by the assembler.">getASM</a>();
+<a name="l00156"></a>00156     
+<a name="l00158"></a>00158     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#a1740ce0bc2f182fd337cb3d44a15b3fb" title="Returns an error count,.">getErrorCount</a>();
+<a name="l00159"></a>00159 
+<a name="l00162"></a><a class="code" href="classAdmin.html#ac243ca073c9295f7a451089724093fae">00162</a>     <span class="keywordtype">int</span> <a class="code" href="classAdmin.html#ac243ca073c9295f7a451089724093fae" title="Determines whether the EMITS output or not.">asmDebugFlag</a>;
+<a name="l00163"></a>00163 };
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -122,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

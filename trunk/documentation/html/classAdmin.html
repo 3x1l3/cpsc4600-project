@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p><a href="classAdmin-members.html">List of all members.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a5b1a3a537008af6065e9cb55522b7a67">Admin</a> (string &amp;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Base constructor for the Administrator.  <a href="#a5b1a3a537008af6065e9cb55522b7a67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a1483f37673aa04863e86a37b8c493733">Admin</a> (string &amp;, int debug)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Base constructor for the Administrator.  <a href="#a1483f37673aa04863e86a37b8c493733"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a6519bde7fd1ffd997a66987c2417d7bd">recordError</a> (string)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Records the Error Message string into the Error vector.  <a href="#a6519bde7fd1ffd997a66987c2417d7bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#aaa4f711e8151dceab8d90c5f127c6820">scan</a> ()</td></tr>
@@ -73,8 +73,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Basic retrieval functions, used for debug.  <a href="#a576e2dfe10f528ad5f1816e673ed2e32"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a1a33282a2d64fa3dd9b3e8ac1a4799e3">getLineNumber</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Send back the line number without edits.  <a href="#a1a33282a2d64fa3dd9b3e8ac1a4799e3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a8518362526e301c8ccd26eeff689b862">emit1</a> (string)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Our functions for emitting our ASM code.  <a href="#a8518362526e301c8ccd26eeff689b862"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a7862a90db685a8321e47d684c67b6451">emit2</a> (string, int)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Double Emit Function Outputs two-param interp code.  <a href="#a7862a90db685a8321e47d684c67b6451"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ab97fe62f8c41b03f21082f5a9bc7ecfa">emit3</a> (string, int, int)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Trinary Emit Function Outputs three-piece code.  <a href="#ab97fe62f8c41b03f21082f5a9bc7ecfa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a40cf08260b4ca4200791ed3f13080153">getASM</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns our stringstream code to be used by the assembler.  <a href="#a40cf08260b4ca4200791ed3f13080153"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a1740ce0bc2f182fd337cb3d44a15b3fb">getErrorCount</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns an error count,.  <a href="#a1740ce0bc2f182fd337cb3d44a15b3fb"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ae6bcb0d3aa08b938197a332c5af5a456">column</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ac243ca073c9295f7a451089724093fae">asmDebugFlag</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Determines whether the EMITS output or not.  <a href="#ac243ca073c9295f7a451089724093fae"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ad8c946fbb7ed32ad1f73a24eaf422c53">error_msgs</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Vectors used to store error details.  <a href="#ad8c946fbb7ed32ad1f73a24eaf422c53"></a><br/></td></tr>
@@ -83,8 +95,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We track the current line and column locations while reading through our File string.  <a href="#a77039c04350669e25d604593a77bea36"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">stringstream&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ad5610f86befa3a43987ce15cfc389d28">error_str</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We store our errors in a StringStream for easy manipulation and conversion.  <a href="#ad5610f86befa3a43987ce15cfc389d28"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">stringstream&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a008c56533042666979d7c685dc5d01a8">assemblerStream</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We store our Intermediary/Back-End code in a StringStream for eventual writing to file or output.  <a href="#a008c56533042666979d7c685dc5d01a8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSymbolTable.html">SymbolTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#afb5161f047f166b985257447b9c47f22">table</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Symbol Table, <a class="el" href="classParser.html">Parser</a> and <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> object pointers.  <a href="#afb5161f047f166b985257447b9c47f22"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Symbol Table, <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> and <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> object pointers.  <a href="#afb5161f047f166b985257447b9c47f22"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classScanner.html">Scanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a6846c5ec5e565001a18a20167ff7b3cf">scanner</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classParser.html">Parser</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a0fe59c6a08ae239bee02a58180fef8c3">parser</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ae1c48226f950c3e470785785aff4d536">symTIndex</a></td></tr>
@@ -93,13 +107,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">If a line cannot be scanned/parsed, this boolean is used to indicate such.  <a href="#a18dd34f91c28721e9ba9ec9370ae5f98"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#ae29edcd0464b203b35f72caba6af7295">errorCount</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Simple tracking of the number of errors encountered.  <a href="#ae29edcd0464b203b35f72caba6af7295"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAdmin.html#a7160b27f8f1cf8d4e526cc6e54ee8031">tokenFlag</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Flag used to turn off/on token found printouts.  <a href="#a7160b27f8f1cf8d4e526cc6e54ee8031"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>This is the main administrator class that manages the different compiler functions. </p>
-<p>This class mediates between the different analytical portions of the compiler. The Administrator class ensures that the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> and <a class="el" href="classParser.html">Parser</a> communicate using the same set of data, such as the same Symbol Table(s), same line/column count, and the same error data.</p>
+<p>This class mediates between the different analytical portions of the compiler. The Administrator class ensures that the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> and <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> communicate using the same set of data, such as the same Symbol Table(s), same line/column count, and the same error data.</p>
 <p>As of now, the Administrator executes the scanning and parsing functions when needed and supplies the correct data for each. It may also mediate for the Error Handling classes. </p>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5b1a3a537008af6065e9cb55522b7a67"></a><!-- doxytag: member="Admin::Admin" ref="a5b1a3a537008af6065e9cb55522b7a67" args="(string &amp;)" -->
+<a class="anchor" id="a1483f37673aa04863e86a37b8c493733"></a><!-- doxytag: member="Admin::Admin" ref="a1483f37673aa04863e86a37b8c493733" args="(string &amp;, int debug)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -107,9 +123,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           <td class="memname">Admin::Admin </td>
           <td>(</td>
           <td class="paramtype">string &amp;&nbsp;</td>
-          <td class="paramname"> <em>src</em></td>
-          <td>&nbsp;)&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>DEBUG</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
         </tr>
       </table>
 </div>
@@ -136,10 +161,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p><p>correctLine could technically be used a constructor sentinel in the future.</p>
 <p>We send the symbol table to the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a>, along with a reference to the Administrator.</p>
 <p>The reference to the "File" string is sent to the scanner.</p>
-<p>Create the base <a class="el" href="classParser.html">Parser</a> object with a pointer back to here to allow it to access the scanner-&gt; </p>
+<p>Create the base <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> object with a pointer back to here to allow it to access the scanner-&gt;</p>
+<p>A flag for managing the output of TOKEN debug information. <a class="el" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> to TRUE to see said information. </p>
 </p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00133">column</a>, <a class="el" href="admin_8h_source.html#l00094">correctLine</a>, <a class="el" href="admin_8h_source.html#l00073">current_line</a>, <a class="el" href="admin_8h_source.html#l00101">errorCount</a>, <a class="el" href="scanner_8cpp_source.html#l00064">Scanner::loadSource()</a>, <a class="el" href="admin_8h_source.html#l00084">parser</a>, <a class="el" href="admin_8h_source.html#l00083">scanner</a>, <a class="el" href="admin_8h_source.html#l00091">symTIndex</a>, and <a class="el" href="admin_8h_source.html#l00082">table</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00162">asmDebugFlag</a>, <a class="el" href="admin_8h_source.html#l00142">column</a>, <a class="el" href="admin_8h_source.html#l00098">correctLine</a>, <a class="el" href="admin_8h_source.html#l00073">current_line</a>, <a class="el" href="admin_8h_source.html#l00105">errorCount</a>, <a class="el" href="scanner_8cpp_source.html#l00066">Scanner::loadSource()</a>, <a class="el" href="admin_8h_source.html#l00088">parser</a>, <a class="el" href="admin_8h_source.html#l00087">scanner</a>, <a class="el" href="admin_8h_source.html#l00095">symTIndex</a>, <a class="el" href="admin_8h_source.html#l00086">table</a>, and <a class="el" href="admin_8h_source.html#l00110">tokenFlag</a>.</p>
 
 </div>
 </div>
@@ -163,7 +189,123 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>If we have reached the maximum number of errors, we return a true statement as well as letting the operator/user know this has happened. Used to shorten code above.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A boolean indicating if we have too many errors. </dd></dl>
 
-<p>References <a class="el" href="admin_8h_source.html#l00101">errorCount</a>, and <a class="el" href="admin_8h_source.html#l00037">MAXERRORS</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00105">errorCount</a>, and <a class="el" href="admin_8h_source.html#l00037">MAXERRORS</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8518362526e301c8ccd26eeff689b862"></a><!-- doxytag: member="Admin::emit1" ref="a8518362526e301c8ccd26eeff689b862" args="(string)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Admin::emit1 </td>
+          <td>(</td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>str</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Our functions for emitting our ASM code. </p>
+<p>Singular Emit Function Outputs the single string param of backend code.</p>
+<p>Stores in primary backend StringStream. </p>
+
+<p>References <a class="el" href="admin_8h_source.html#l00162">asmDebugFlag</a>, and <a class="el" href="admin_8h_source.html#l00079">assemblerStream</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7862a90db685a8321e47d684c67b6451"></a><!-- doxytag: member="Admin::emit2" ref="a7862a90db685a8321e47d684c67b6451" args="(string, int)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Admin::emit2 </td>
+          <td>(</td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>i</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Double Emit Function Outputs two-param interp code. </p>
+<p>Stores in primary backend StringStream. </p>
+
+<p>References <a class="el" href="admin_8h_source.html#l00162">asmDebugFlag</a>, and <a class="el" href="admin_8h_source.html#l00079">assemblerStream</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab97fe62f8c41b03f21082f5a9bc7ecfa"></a><!-- doxytag: member="Admin::emit3" ref="ab97fe62f8c41b03f21082f5a9bc7ecfa" args="(string, int, int)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Admin::emit3 </td>
+          <td>(</td>
+          <td class="paramtype">string&nbsp;</td>
+          <td class="paramname"> <em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>j</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Trinary Emit Function Outputs three-piece code. </p>
+<p>Stores in primary backend StringStream. </p>
+
+<p>References <a class="el" href="admin_8h_source.html#l00162">asmDebugFlag</a>, and <a class="el" href="admin_8h_source.html#l00079">assemblerStream</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a40cf08260b4ca4200791ed3f13080153"></a><!-- doxytag: member="Admin::getASM" ref="a40cf08260b4ca4200791ed3f13080153" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Admin::getASM </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns our stringstream code to be used by the assembler. </p>
+<p>Returns the <a class="el" href="classAssembler.html">Assembler</a> stream.</p>
+
+<p>References <a class="el" href="admin_8h_source.html#l00079">assemblerStream</a>.</p>
 
 </div>
 </div>
@@ -185,7 +327,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Basic retrieval functions, used for debug. </p>
 <p>Retrieve the Column number in raw/unchanged/unmodified form.</p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00133">column</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00142">column</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1740ce0bc2f182fd337cb3d44a15b3fb"></a><!-- doxytag: member="Admin::getErrorCount" ref="a1740ce0bc2f182fd337cb3d44a15b3fb" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Admin::getErrorCount </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns an error count,. </p>
+<p>Returns the Error count as an int.</p>
+
+<p>References <a class="el" href="admin_8h_source.html#l00105">errorCount</a>.</p>
 
 </div>
 </div>
@@ -229,7 +393,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Our column count is increased.</p>
 <p>We use it to track error and token positions. </p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00133">column</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00142">column</a>.</p>
 
 </div>
 </div>
@@ -253,7 +417,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dl class="see"><dt><b>See also:</b></dt><dd>formal Definition of <a class="el" href="classAdmin.html#ae121a9ce2a34ac4075d074c2d1f306c5" title="A newline operation is performed as our current line is valid.">newLine()</a></dd></dl>
 <p>) </p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00094">correctLine</a>, and <a class="el" href="admin_8h_source.html#l00073">current_line</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00098">correctLine</a>, and <a class="el" href="admin_8h_source.html#l00073">current_line</a>.</p>
 
 </div>
 </div>
@@ -283,7 +447,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This outputs the <a class="el" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> to the Screen in a &lt; ___,___,___&gt; format. </p>
 </p>
 
-<p>References <a class="el" href="token_8h_source.html#l00043">BADNAME</a>, <a class="el" href="token_8h_source.html#l00043">BADNUMERAL</a>, <a class="el" href="token_8h_source.html#l00044">BADSYMBOL</a>, <a class="el" href="admin_8cpp_source.html#l00211">checkMaxErrors()</a>, <a class="el" href="admin_8h_source.html#l00133">column</a>, <a class="el" href="admin_8h_source.html#l00073">current_line</a>, <a class="el" href="token_8h_source.html#l00044">ENDOFFILE</a>, <a class="el" href="admin_8h_source.html#l00075">error_str</a>, <a class="el" href="admin_8h_source.html#l00101">errorCount</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="token_8cpp_source.html#l00054">Token::getType()</a>, <a class="el" href="scanner_8cpp_source.html#l00590">Scanner::inRange()</a>, <a class="el" href="scanner_8cpp_source.html#l00140">Scanner::nextToken()</a>, <a class="el" href="admin_8cpp_source.html#l00065">recordError()</a>, <a class="el" href="admin_8h_source.html#l00083">scanner</a>, and <a class="el" href="token_8cpp_source.html#l00088">Token::toString()</a>.</p>
+<p>References <a class="el" href="token_8h_source.html#l00043">BADNAME</a>, <a class="el" href="token_8h_source.html#l00043">BADNUMERAL</a>, <a class="el" href="token_8h_source.html#l00044">BADSYMBOL</a>, <a class="el" href="admin_8cpp_source.html#l00235">checkMaxErrors()</a>, <a class="el" href="admin_8h_source.html#l00142">column</a>, <a class="el" href="admin_8h_source.html#l00073">current_line</a>, <a class="el" href="token_8h_source.html#l00044">ENDOFFILE</a>, <a class="el" href="admin_8h_source.html#l00076">error_str</a>, <a class="el" href="admin_8h_source.html#l00105">errorCount</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="token_8cpp_source.html#l00054">Token::getType()</a>, <a class="el" href="scanner_8cpp_source.html#l00592">Scanner::inRange()</a>, <a class="el" href="scanner_8cpp_source.html#l00142">Scanner::nextToken()</a>, <a class="el" href="admin_8cpp_source.html#l00070">recordError()</a>, <a class="el" href="admin_8h_source.html#l00087">scanner</a>, <a class="el" href="admin_8h_source.html#l00110">tokenFlag</a>, and <a class="el" href="token_8cpp_source.html#l00088">Token::toString()</a>.</p>
 
 </div>
 </div>
@@ -314,7 +478,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </dd>
 </dl>
 
-<p>References <a class="el" href="admin_8h_source.html#l00094">correctLine</a>, <a class="el" href="admin_8h_source.html#l00069">error_msgs</a>, and <a class="el" href="admin_8h_source.html#l00075">error_str</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00098">correctLine</a>, <a class="el" href="admin_8h_source.html#l00069">error_msgs</a>, and <a class="el" href="admin_8h_source.html#l00076">error_str</a>.</p>
 
 </div>
 </div>
@@ -335,7 +499,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>The default "left-aligned" column is 1, we reset it when we reach the end of a line. </p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00133">column</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00142">column</a>.</p>
 
 </div>
 </div>
@@ -356,7 +520,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Executes the scanner function and returns an integer count of the errors found. </p>
 <p>The <a class="el" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a> function that operates the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> and details errors as necessary.</p>
-<p>We check for the various heuristics of the scanner, and then start the <a class="el" href="classParser.html">Parser</a>. The parser itself then has direct control fo the scanner, though this function ensures that the scanner or parser's error thresholds are accounted for.</p>
+<p>We check for the various heuristics of the scanner, and then start the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>. The parser itself then has direct control fo the scanner, though this function ensures that the scanner or parser's error thresholds are accounted for.</p>
 <p>We output the token, and ensure that we stay within "file" range (string, technically).</p>
 <p>Finally, we return an integer that counts the number of errors. Thus, if a 0 means our scanner has scanned successfully and the parser has not failed.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>We have a file string of a PL program and an empty symbol table. </dd></dl>
@@ -364,14 +528,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dl class="return"><dt><b>Returns:</b></dt><dd>An integer count of errors encountered. </dd></dl>
 
 <p><p>Run the Parser! The parser itself will also manage the error count.</p>
-<p>We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main. </p>
+<p>We return an "all clear" digit of 0 if there were no errors. The rest is handled in the main.</p>
+<p>We output to an ASM file. </p>
 </p>
 
-<p>References <a class="el" href="admin_8h_source.html#l00069">error_msgs</a>, <a class="el" href="admin_8h_source.html#l00101">errorCount</a>, <a class="el" href="scanner_8cpp_source.html#l00590">Scanner::inRange()</a>, <a class="el" href="admin_8h_source.html#l00084">parser</a>, <a class="el" href="parser_8cpp_source.html#l00066">Parser::run()</a>, and <a class="el" href="admin_8h_source.html#l00083">scanner</a>.</p>
+<p>References <a class="el" href="admin_8h_source.html#l00079">assemblerStream</a>, <a class="el" href="admin_8h_source.html#l00069">error_msgs</a>, <a class="el" href="admin_8h_source.html#l00105">errorCount</a>, <a class="el" href="parser_8cpp_source.html#l01910">Parser::existsError()</a>, <a class="el" href="scanner_8cpp_source.html#l00592">Scanner::inRange()</a>, <a class="el" href="admin_8h_source.html#l00088">parser</a>, <a class="el" href="parser_8cpp_source.html#l00098">Parser::run()</a>, and <a class="el" href="admin_8h_source.html#l00087">scanner</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="ac243ca073c9295f7a451089724093fae"></a><!-- doxytag: member="Admin::asmDebugFlag" ref="ac243ca073c9295f7a451089724093fae" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classAdmin.html#ac243ca073c9295f7a451089724093fae">Admin::asmDebugFlag</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Determines whether the EMITS output or not. </p>
+
+</div>
+</div>
+<a class="anchor" id="a008c56533042666979d7c685dc5d01a8"></a><!-- doxytag: member="Admin::assemblerStream" ref="a008c56533042666979d7c685dc5d01a8" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stringstream <a class="el" href="classAdmin.html#a008c56533042666979d7c685dc5d01a8">Admin::assemblerStream</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>We store our Intermediary/Back-End code in a StringStream for eventual writing to file or output. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae6bcb0d3aa08b938197a332c5af5a456"></a><!-- doxytag: member="Admin::column" ref="ae6bcb0d3aa08b938197a332c5af5a456" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -529,8 +724,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>Symbol Table, <a class="el" href="classParser.html">Parser</a> and <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> object pointers. </p>
+<p>Symbol Table, <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> and <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> object pointers. </p>
 <p>This allows us to send symbol tables and scanners to and from other objects, and makes it easier to manage memory and overflows. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7160b27f8f1cf8d4e526cc6e54ee8031"></a><!-- doxytag: member="Admin::tokenFlag" ref="a7160b27f8f1cf8d4e526cc6e54ee8031" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classAdmin.html#a7160b27f8f1cf8d4e526cc6e54ee8031">Admin::tokenFlag</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flag used to turn off/on token found printouts. </p>
 
 </div>
 </div>
@@ -553,7 +763,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

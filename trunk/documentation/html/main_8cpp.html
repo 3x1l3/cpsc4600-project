@@ -52,10 +52,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;fstream&gt;</code><br/>
 <code>#include &lt;istream&gt;</code><br/>
 <code>#include &lt;ostream&gt;</code><br/>
+<code>#include &lt;cstring&gt;</code><br/>
 <code>#include &quot;<a class="el" href="admin_8h_source.html">admin.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="assembler_8h_source.html">assembler.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="interp_8h_source.html">interp.h</a>&quot;</code><br/>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1ebfba6753dd5c09eef607b0199cfd90">runAssembler</a> (<a class="el" href="classAdmin.html">Admin</a> *admin)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Function prototypes.  <a href="#a1ebfba6753dd5c09eef607b0199cfd90"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a01f415a2e2d5ad0f3d38c5196eea64d5">runInterpreter</a> (bool step)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Main function to run our <a class="el" href="classInterpreter.html">Interpreter</a>.  <a href="#a01f415a2e2d5ad0f3d38c5196eea64d5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Argc and Argv for later expansion.  <a href="#a0ddf1224851353fc92bfbff6f499fa97"></a><br/></td></tr>
 </table>
@@ -98,12 +105,60 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><p>Read the file to a stream, then send each line to a String. We append our own newline and attach this to our whole File string. Repeat until we reach the end of the file. This might have scaling issues.</p>
 <p>We check to see if there was an input parameter, and use that as the filename We do NOT accept multiple inputs (yet?). Choose the first one if multiple detected. If none, then ask for a file name.</p>
+<p><a class="el" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> the debug flag for ASM output if we see the -g flag.</p>
 <p>We could incorporate an error class here, but for now, it is not necessary as this is not a compiler operation</p>
 <p>We create our administration object with our file string. It then begins the Scanning process. We could also have some error handling here, but that is not required. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd>Admin()</dd></dl>
+<p><a class="el" href="classAssembler.html">Assembler</a> Part This is where our assembler is called. Only runs if no errors are discovered.</p>
+<p>LAST MINUTE HACK JOB. </p>
 </p>
 
-<p>References <a class="el" href="admin_8cpp_source.html#l00094">Admin::scan()</a>.</p>
+<p>References <a class="el" href="admin_8cpp_source.html#l00310">Admin::getErrorCount()</a>, <a class="el" href="main_8cpp_source.html#l00210">runAssembler()</a>, <a class="el" href="main_8cpp_source.html#l00237">runInterpreter()</a>, and <a class="el" href="admin_8cpp_source.html#l00099">Admin::scan()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1ebfba6753dd5c09eef607b0199cfd90"></a><!-- doxytag: member="main.cpp::runAssembler" ref="a1ebfba6753dd5c09eef607b0199cfd90" args="(Admin *admin)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runAssembler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAdmin.html">Admin</a> *&nbsp;</td>
+          <td class="paramname"> <em>admin</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Function prototypes. </p>
+<p>Operates the <a class="el" href="classAssembler.html">Assembler</a> component of the compiler.</p>
+<p>Use this function with a corresponding completed <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> code in order to run the <a class="el" href="classAssembler.html">Assembler</a> on it. The code is then sent to interpInput.itp </p>
+
+<p>References <a class="el" href="assembler_8cpp_source.html#l00024">Assembler::firstPass()</a>, <a class="el" href="admin_8cpp_source.html#l00304">Admin::getASM()</a>, and <a class="el" href="assembler_8cpp_source.html#l00077">Assembler::secondPass()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a01f415a2e2d5ad0f3d38c5196eea64d5"></a><!-- doxytag: member="main.cpp::runInterpreter" ref="a01f415a2e2d5ad0f3d38c5196eea64d5" args="(bool step)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void runInterpreter </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>step</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Main function to run our <a class="el" href="classInterpreter.html">Interpreter</a>. </p>
+<p>Use this function to run the <a class="el" href="classInterpreter.html">Interpreter</a> on assembled PL code. This assumes that the assembled PL interpreter code is present in a file called interpInput.itp. </p>
 
 </div>
 </div>
@@ -122,7 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

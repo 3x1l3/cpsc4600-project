@@ -13,11 +13,18 @@ The main \char`\"{}runner\char`\"{} file for the overall Compiler Project.
 {\ttfamily \#include $<$fstream$>$}\par
 {\ttfamily \#include $<$istream$>$}\par
 {\ttfamily \#include $<$ostream$>$}\par
+{\ttfamily \#include $<$cstring$>$}\par
 {\ttfamily \#include \char`\"{}admin.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}token.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}assembler.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}interp.h\char`\"{}}\par
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+void \hyperlink{main_8cpp_a1ebfba6753dd5c09eef607b0199cfd90}{runAssembler} (\hyperlink{classAdmin}{Admin} $\ast$admin)
+\begin{DoxyCompactList}\small\item\em Function prototypes. \item\end{DoxyCompactList}\item 
+void \hyperlink{main_8cpp_a01f415a2e2d5ad0f3d38c5196eea64d5}{runInterpreter} (bool step)
+\begin{DoxyCompactList}\small\item\em Main function to run our \hyperlink{classInterpreter}{Interpreter}. \item\end{DoxyCompactList}\item 
 int \hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Argc and Argv for later expansion. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -57,14 +64,43 @@ Read the file to a stream, then send each line to a String. We append our own ne
 
 We check to see if there was an input parameter, and use that as the filename We do NOT accept multiple inputs (yet?). Choose the first one if multiple detected. If none, then ask for a file name.
 
+\hyperlink{classSet}{Set} the debug flag for ASM output if we see the -\/g flag.
+
 We could incorporate an error class here, but for now, it is not necessary as this is not a compiler operation
 
 We create our administration object with our file string. It then begins the Scanning process. We could also have some error handling here, but that is not required. \begin{DoxySeeAlso}{See also}
 Admin()
 \end{DoxySeeAlso}
+\hyperlink{classAssembler}{Assembler} Part This is where our assembler is called. Only runs if no errors are discovered.
+
+LAST MINUTE HACK JOB. 
 
 
 
+References Admin::getErrorCount(), runAssembler(), runInterpreter(), and Admin::scan().
 
-References Admin::scan().
+\hypertarget{main_8cpp_a1ebfba6753dd5c09eef607b0199cfd90}{
+\index{main.cpp@{main.cpp}!runAssembler@{runAssembler}}
+\index{runAssembler@{runAssembler}!main.cpp@{main.cpp}}
+\subsubsection[{runAssembler}]{\setlength{\rightskip}{0pt plus 5cm}void runAssembler ({\bf Admin} $\ast$ {\em admin})}}
+\label{main_8cpp_a1ebfba6753dd5c09eef607b0199cfd90}
 
+
+Function prototypes. 
+
+Operates the \hyperlink{classAssembler}{Assembler} component of the compiler.
+
+Use this function with a corresponding completed \hyperlink{classParser}{Parser} code in order to run the \hyperlink{classAssembler}{Assembler} on it. The code is then sent to interpInput.itp 
+
+References Assembler::firstPass(), Admin::getASM(), and Assembler::secondPass().
+
+\hypertarget{main_8cpp_a01f415a2e2d5ad0f3d38c5196eea64d5}{
+\index{main.cpp@{main.cpp}!runInterpreter@{runInterpreter}}
+\index{runInterpreter@{runInterpreter}!main.cpp@{main.cpp}}
+\subsubsection[{runInterpreter}]{\setlength{\rightskip}{0pt plus 5cm}void runInterpreter (bool {\em step})}}
+\label{main_8cpp_a01f415a2e2d5ad0f3d38c5196eea64d5}
+
+
+Main function to run our \hyperlink{classInterpreter}{Interpreter}. 
+
+Use this function to run the \hyperlink{classInterpreter}{Interpreter} on assembled PL code. This assumes that the assembled PL interpreter code is present in a file called interpInput.itp. 

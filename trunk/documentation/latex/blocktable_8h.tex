@@ -1,0 +1,144 @@
+\hypertarget{blocktable_8h}{
+\section{blocktable.h File Reference}
+\label{blocktable_8h}\index{blocktable.h@{blocktable.h}}
+}
+
+
+The specification for the \hyperlink{classAdmin}{Admin} Class Object.  
+
+
+{\ttfamily \#include $<$vector$>$}\par
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$iomanip$>$}\par
+{\ttfamily \#include $<$string$>$}\par
+{\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include \char`\"{}symboltable.h\char`\"{}}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structTableEntry}{TableEntry}
+\begin{DoxyCompactList}\small\item\em A special data structure used to define a given PL code object. \item\end{DoxyCompactList}\item 
+class \hyperlink{classBlockTable}{BlockTable}
+\begin{DoxyCompactList}\small\item\em The structure facilitating the creation and manipulation of Program Blocks. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{blocktable_8h_aa53ee33117067c1a43f9dc410bd3cfef}{MAXBLOCK}~10
+\begin{DoxyCompactList}\small\item\em A constant defining the size limit of our table. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} \{ \par
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba83972670b57415508523b5641bb46116}{CONSTANT}, 
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba39031ce5df6f91d3778590d6d644b9ea}{VARIABLE}, 
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba1e029fbf0c881b85d80fc8e89b753688}{ARRAY}, 
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5bad95bbb705a560daadfaa6c72329fbd61}{PROCEDURE}, 
+\par
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba8f8ad6619cb26aa9565964158fbd3c73}{DEFINED}
+ \}
+\begin{DoxyCompactList}\small\item\em Enumerates the KIND an object referred to by a \hyperlink{structTableEntry}{TableEntry}. \item\end{DoxyCompactList}\item 
+enum \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \{ \par
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5a063e265d2ac903b6808e9f6e73ec46}{INTEGER}, 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba8a583f16e8d237a423c8c1d9087a4c72}{BOOLEAN}, 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5441eeb1ea3b7eff8ea600536afd8b35}{UNIVERSAL}, 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba9035632b8b61def56ee7a037068bf0db}{CINTEGER}, 
+\par
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51baa39e29402c4486c8cbb3e4619e0ff0af}{CBOOLEAN}
+ \}
+\begin{DoxyCompactList}\small\item\em The TYPE of \hyperlink{structTableEntry}{TableEntry}; The PL Grammar features the first three. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The specification for the \hyperlink{classAdmin}{Admin} Class Object. The \hyperlink{classBlockTable}{BlockTable} class is used to manage a series and collection of Blocks, which are themselves a collection of \hyperlink{structTableEntry}{TableEntry} structure records that refer to a specific \char`\"{}entry\char`\"{} in a given segment of PL code.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+March 1st to April 2nd, 2012 
+\end{DoxyDate}
+
+
+\subsection{Define Documentation}
+\hypertarget{blocktable_8h_aa53ee33117067c1a43f9dc410bd3cfef}{
+\index{blocktable.h@{blocktable.h}!MAXBLOCK@{MAXBLOCK}}
+\index{MAXBLOCK@{MAXBLOCK}!blocktable.h@{blocktable.h}}
+\subsubsection[{MAXBLOCK}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAXBLOCK~10}}
+\label{blocktable_8h_aa53ee33117067c1a43f9dc410bd3cfef}
+
+
+A constant defining the size limit of our table. 
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{
+\index{blocktable.h@{blocktable.h}!Kind@{Kind}}
+\index{Kind@{Kind}!blocktable.h@{blocktable.h}}
+\subsubsection[{Kind}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Kind}}}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}
+
+
+Enumerates the KIND an object referred to by a \hyperlink{structTableEntry}{TableEntry}. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{CONSTANT@{CONSTANT}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!CONSTANT@{CONSTANT}}\item[{\em 
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba83972670b57415508523b5641bb46116}{
+CONSTANT}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba83972670b57415508523b5641bb46116}
+}]\index{VARIABLE@{VARIABLE}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!VARIABLE@{VARIABLE}}\item[{\em 
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba39031ce5df6f91d3778590d6d644b9ea}{
+VARIABLE}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba39031ce5df6f91d3778590d6d644b9ea}
+}]\index{ARRAY@{ARRAY}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!ARRAY@{ARRAY}}\item[{\em 
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba1e029fbf0c881b85d80fc8e89b753688}{
+ARRAY}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba1e029fbf0c881b85d80fc8e89b753688}
+}]\index{PROCEDURE@{PROCEDURE}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!PROCEDURE@{PROCEDURE}}\item[{\em 
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5bad95bbb705a560daadfaa6c72329fbd61}{
+PROCEDURE}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5bad95bbb705a560daadfaa6c72329fbd61}
+}]\index{DEFINED@{DEFINED}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!DEFINED@{DEFINED}}\item[{\em 
+\hypertarget{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba8f8ad6619cb26aa9565964158fbd3c73}{
+DEFINED}
+\label{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5ba8f8ad6619cb26aa9565964158fbd3c73}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{
+\index{blocktable.h@{blocktable.h}!mType@{mType}}
+\index{mType@{mType}!blocktable.h@{blocktable.h}}
+\subsubsection[{mType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mType}}}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}
+
+
+The TYPE of \hyperlink{structTableEntry}{TableEntry}; The PL Grammar features the first three. 
+
+CInteger and CBoolean reflect Constant Integer and Constant Boolean. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{INTEGER@{INTEGER}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!INTEGER@{INTEGER}}\item[{\em 
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5a063e265d2ac903b6808e9f6e73ec46}{
+INTEGER}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5a063e265d2ac903b6808e9f6e73ec46}
+}]\index{BOOLEAN@{BOOLEAN}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!BOOLEAN@{BOOLEAN}}\item[{\em 
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba8a583f16e8d237a423c8c1d9087a4c72}{
+BOOLEAN}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba8a583f16e8d237a423c8c1d9087a4c72}
+}]\index{UNIVERSAL@{UNIVERSAL}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!UNIVERSAL@{UNIVERSAL}}\item[{\em 
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5441eeb1ea3b7eff8ea600536afd8b35}{
+UNIVERSAL}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba5441eeb1ea3b7eff8ea600536afd8b35}
+}]\index{CINTEGER@{CINTEGER}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!CINTEGER@{CINTEGER}}\item[{\em 
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba9035632b8b61def56ee7a037068bf0db}{
+CINTEGER}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51ba9035632b8b61def56ee7a037068bf0db}
+}]\index{CBOOLEAN@{CBOOLEAN}!blocktable.h@{blocktable.h}}\index{blocktable.h@{blocktable.h}!CBOOLEAN@{CBOOLEAN}}\item[{\em 
+\hypertarget{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51baa39e29402c4486c8cbb3e4619e0ff0af}{
+CBOOLEAN}
+\label{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51baa39e29402c4486c8cbb3e4619e0ff0af}
+}]\end{description}
+\end{Desc}
+

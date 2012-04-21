@@ -44,29 +44,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <h1>parser.h File Reference</h1>
-<p>The specification header for the <a class="el" href="classParser.html">Parser</a> component object.  
+<p>The specification header for the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> component object.  
 <a href="#_details">More...</a></p>
 <code>#include &lt;vector&gt;</code><br/>
 <code>#include &lt;string&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;stack&gt;</code><br/>
 <code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="admin_8h_source.html">admin.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="set_8h_source.html">set.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="first_8h_source.html">first.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="blocktable_8h_source.html">blocktable.h</a>&quot;</code><br/>
 
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html">Parser</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The main object for Parsing the PL source code and guaranteeing correctness.  <a href="classParser.html#_details">More...</a><br/></td></tr>
+<tr><td colspan="2"><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c">blocktype</a> { <a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96">STATEMENTPART</a>, 
+<a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de">DEFINITIONPART</a>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Standard STL output, string and container classes. </p>
+ <a href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c">More...</a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>The specification header for the <a class="el" href="classParser.html">Parser</a> component object. </p>
-<p>The <a class="el" href="classParser.html">Parser</a> is responsible for properly syntactically verifying that the input is correct, and (virtually) forming a syntax and grammatical tree from the scanned input.</p>
+<p>The specification header for the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> component object. </p>
+<p>The <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> is responsible for properly syntactically verifying that the input is correct, and (virtually) forming a syntax and grammatical tree from the scanned input.</p>
 <p>It accomplishes this by linking back to the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> through the <a class="el" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>, using it to grab a given <a class="el" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a>, then intelligently proceeding to the next set of proper steps in the Grammatical structure of the PL Language.</p>
 <p>Note that the Doxygen function documentation for these functions must be referred to from the CPP file as defining them again here would be not just redundant, but horrendously ugly.</p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Jordan Peoples, Chad Klassen, Adam Shepley </dd></dl>
 <dl class="date"><dt><b>Date:</b></dt><dd>January 9th to February 29th, 2011 </dd></dl>
+<hr/><h2>Enumeration Type Documentation</h2>
+<a class="anchor" id="a84146e06b05135ce314ab9e853e43d8c"></a><!-- doxytag: member="parser.h::blocktype" ref="a84146e06b05135ce314ab9e853e43d8c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c">blocktype</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Standard STL output, string and container classes. </p>
+<p>A PL Program has two "parts" of any block, which are a statement part and a definition part. We need to track these for our semantic analysis. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96"></a><!-- doxytag: member="STATEMENTPART" ref="a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96" args="" -->STATEMENTPART</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de"></a><!-- doxytag: member="DEFINITIONPART" ref="a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de" args="" -->DEFINITIONPART</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+</div>
+</div>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -82,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
