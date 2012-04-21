@@ -18,7 +18,7 @@ prog1 : $(OBJS1)
  
 
 ## generate the prerequistes and append to the desired file
-.prereq : $(OBJS1:.o=.cpp) $(wildcard *.h) makeASM
+.prereq : $(OBJS1:.o=.cpp) $(wildcard *.h) 
 	rm -f .prereq
 	$(CC) $(CCFLAGS) -MM $(OBJS1:.o=.cpp) >> ./.prereq 
 
