@@ -242,6 +242,9 @@ public:
   int errorCount;
   
   int labelCount;
+  
+  /** Returns a TRUE if there is any kind of error. */
+  bool existsError();
 };
 
 #endif

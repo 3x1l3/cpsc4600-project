@@ -120,23 +120,27 @@ int main( int argc, char* argv[])
     Admin* admin = new Admin(file);
     int status = admin->scan();
 
+    if(status == 0)
+    {
+      cout << "Scanning Successful..." << endl;
+    }
+    else
+      cout << "Program contains scan errors." << endl;
     /**
      * 
      * Assembler Part
      * This is where our assembler is called.
+     * Only runs if no errors are discovered.
      */
     //if our program scanned and parsed successfully
-    if (status == 0)
+    char throwAway;
+    if (admin->getErrorCount() <= 0)
     {
-      //Our scanning was successful.
-      cout << "Scanning successful" << endl;
-      
-      cout << "\nThe Parsed Output is now going to be passed to the Assembler...Input a char to continue.\n";
-      char throwAway;
-      cin >> throwAway;
+      cout << "\nThe Parsed Output is now going to be passed to the Assembler...Press Enter to Continue." << endl;
+      std::cin.ignore();  
       runAssembler(admin);
       
-      cout << "\nWould you like to run the interpreter? (y / n) ";
+      cout << endl << "\nWould you like to run the interpreter? (y / n) ";
       cin >> throwAway;
       
       if(throwAway == 'y')
@@ -149,9 +153,31 @@ int main( int argc, char* argv[])
 	  runInterpreter(false);
       }
       
-    }
+    }			/** LAST MINUTE HACK JOB. */
     else
-      cout << "Program contains scan errors" << endl;
+    {
+      cout << "Cannot attempt assembly, as an error was detected." << endl
+	   << "Do you wish to still assemble the file (y / n) ?" << endl;
+      cin >> throwAway;
+      
+      if(throwAway == 'y')
+      {
+	runAssembler(admin);
+      
+	cout << endl << "\nWould you like to run the interpreter? (y / n) ";
+	cin >> throwAway;
+      
+	if(throwAway == 'y')
+	{
+	  cout << "\nReady to run Interpreter. Would you like the interpreter to Step through the program? (y / n)" << endl;
+	  cin >> throwAway;
+	  if(throwAway == 'y')
+	    runInterpreter(true);
+	  else
+	    runInterpreter(false);
+	}
+      }
+    }
 
     cout << "\nPL Compiler Complete." << endl;
     return 0;
@@ -181,7 +207,7 @@ void runAssembler(Admin* admin)
   //Hossain's Assembler does not reset his stream. So we cheat.
   myASM->secondPass(admin->getASM().append("\n"));
   interpCode.close();
-  cout << "Assembly Complete.\n";
+  cout << "Assembly Complete.\nThe assembled code is in file \"test.asm\"\n";
   delete myASM;
 }
 

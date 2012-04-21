@@ -1896,3 +1896,12 @@ mType Parser::ProcedureName(Set sts)
   syntaxCheck(sts);
   return type;
 }
+
+/** Returns a true if any errors of any kind are found. */
+bool Parser::existsError()
+{
+  if(errorCount + numberOfScopeTypeErrors > 0)
+    return true;
+  else
+    return false;
+}
