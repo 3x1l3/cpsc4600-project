@@ -24,8 +24,8 @@ int main(int argc, char* argv[])
   //Deal with our arguments
   if(argc == 1)
   {
-    cout << "\nYou did not specify an input file. Using \"test2.asm\"." << endl;
-    ASMSourceFile = "test2.asm";
+    cout << "\nYou did not specify an input file. Using \"test.asm\"." << endl;
+    ASMSourceFile = "test.asm";
   }
   else
   {

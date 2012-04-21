@@ -120,6 +120,8 @@ int Admin::scan()
     out_stream << assemblerStream.str();
     out_stream.close();
     
+    if(parser->existsError())
+      errorCount += 1;
     return 0;
   }
   else
@@ -287,8 +289,14 @@ void Admin::emit3(string str, int i, int j)
   cout << j << endl;
 }
 
-
+/** Returns the Assembler stream. */
 string Admin::getASM()
 {
   return assemblerStream.str();
+}
+
+/** Returns the Error count as an int. */
+int Admin::getErrorCount()
+{
+  return errorCount;
 }

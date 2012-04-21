@@ -153,6 +153,9 @@ public:
     
     /** Returns our stringstream code to be used by the assembler. */
     string getASM();
+    
+    /** Returns an error count, */
+    int getErrorCount();
 
 };
 
