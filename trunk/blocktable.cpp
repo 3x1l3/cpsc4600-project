@@ -481,13 +481,15 @@ string BlockTable::tableEntrytoString(TableEntry entry)
 }
 //---------------------------------------------------------------------------------------------
 
-int BlockTable::currentLevel() {
-	
-	return currentBlockIndex;
-	
+/** Returns the level of the current block, i.e. the index and scope. */
+int BlockTable::currentLevel()
+{	
+  return currentBlockIndex;	
 }
 
-string BlockTable::returnLexeme(int entryID) {
+/** Grabs the lexeme of a given table ID. */
+string BlockTable::returnLexeme(int entryID) 
+{
   return table->getAttributeWhere(entryID, "ID", "lexeme");
 }
 

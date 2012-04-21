@@ -48,6 +48,15 @@ enum mType { INTEGER, BOOLEAN, UNIVERSAL, CINTEGER, CBOOLEAN };
  *
  * Which is to say, for a given variable X, we can know that X is an integer, has value Y,
  * and has the Table's referential ID of #.
+ * 
+ * We augment the TableEntry structure to include the block displacement level.
+ * This allows us to know the relevent location of the given line-entry in regards
+ * to the stack of instructions and data.
+ * 
+ * Additionally, we have a startLabel to allow us to know where the start of the current
+ * displacement is and to divine the relative location of this specific entry.
+ * 
+ * This ties into the generation of instructions later on.
  *
  */
 typedef struct {
@@ -171,9 +180,10 @@ class BlockTable {
     /** Empty pointer, which has a Scanner's Symbol Table attached when this class is Constructed.*/
     SymbolTable* table;
 
-    //for the code generation, will get current block level
+    /** Returns the current block level. */
     int currentLevel();
     
+    /** Returns a given lexeme as a string. */
     string returnLexeme(int);
     
     
