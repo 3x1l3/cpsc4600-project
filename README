@@ -218,11 +218,14 @@ If any problems occur, please move the given PL source file to the binary's dire
 Assembler and Interpreter
 -----------------
 
+Our compiler includes the Assembler and Interpreter natively.
+
 Running the MAIN compiler will parse pl code into an ".asm" file,
 run it through the assembler to create a ".itp" file, and run the
-itp binary file through the interpreter. However, if you would like to run
-the Assembler and Interpreter seperately on an itp or asm file, we have
-provided the tools to do so as well.
+itp binary file through the interpreter. 
+
+However, if you would like to run the Assembler and Interpreter 
+seperately on an itp or asm file, we have provided the tools to do so as well.
 
 To begin, you will need to compile the Assembler with
 	make -f tools/makeASM

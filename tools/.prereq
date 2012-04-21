@@ -1,0 +1,2 @@
+Interpreter.o: Interpreter.cpp interp.h
+interp.o: interp.cpp interp.h
