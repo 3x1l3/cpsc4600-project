@@ -34,7 +34,7 @@
 /** Associated custom libraries/Classes */
 #include "admin.h"
 #include "token.h"
-#include "Assembler.h"
+#include "assembler.h"
 #include "interp.h"
 
 /** Namespaces to prevent ugly code */

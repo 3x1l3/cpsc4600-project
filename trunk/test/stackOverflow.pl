@@ -5,7 +5,7 @@ begin
 
 const multi = 5;
 integer x;
-const END = -1;
+const END = 0;
 
 proc lol
 begin 
@@ -16,7 +16,7 @@ begin
   call lol;
 end;
 
-x:=0;
+x:=1;
 call lol;
 
 write x, END;

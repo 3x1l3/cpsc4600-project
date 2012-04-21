@@ -1,13 +1,13 @@
 ## definitions
 CC = g++
 CCFLAGS = -Wall
-OBJS1 = ASMTester.o assembler.o
+OBJS1 = Interpreter.o interp.o
 
 ## targets and prerequisites
 .PHONY : all
-all : ASMTester
+all : Interpreter
 
-ASMTester: $(OBJS1)
+Interpreter: $(OBJS1)
 
 prog1 : $(OBJS1)
 	$(CC) $^ -o $@
@@ -18,7 +18,7 @@ prog1 : $(OBJS1)
  
 
 ## generate the prerequistes and append to the desired file
-.prereq : $(OBJS1:.o=.cpp) $(wildcard *.h) makeASM
+.prereq : $(OBJS1:.o=.cpp) $(wildcard *.h) 
 	rm -f .prereq
 	$(CC) $(CCFLAGS) -MM $(OBJS1:.o=.cpp) >> ./.prereq 
 
@@ -32,4 +32,4 @@ clean :                 ## next lines must begin with a TAB
 
 .PHONY : clean-all
 	clean-all : clean      ## next line must begin with a TAB
-	rm -f ASMTester
+	rm -f Interpreter

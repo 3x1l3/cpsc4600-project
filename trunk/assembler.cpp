@@ -2,7 +2,7 @@
 
 using namespace std;
 #include <iostream>
-#include "Assembler.h"
+#include "assembler.h"
 #include <fstream>
 
 // Simple constructor.
@@ -247,7 +247,7 @@ void Assembler::secondPass(string sourceASM)
       }
       else {
 	 // We should never see this message.
-	 if(!(*insource).eof())cerr << "Assembler encountered unknown operator \"" << nextop << "\"\n";
+	 if(!(*insource).eof() && nextop != "")cerr << "Assembler encountered unknown operator \"" << nextop << "\"\n";
 	 //exit = true;
       }
       if(!exit)
