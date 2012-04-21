@@ -26,10 +26,19 @@
  * as a sentinel set indicating the valid next characters; if we see a lexeme that
  * is not in the (sts) Stop Set, we stop (generate an error).
  * 
+ * Every relevant function has been augmented to output (to a stream, and then
+ * to a file) a string representing a given block's information in regards
+ * to the corresponding Assembly and Interpretation functions and three-address
+ * code needed to properly manipulate the stack and the corresponding memory addresses
+ * of the variables and instructions in the PL source file.
+ * 
  * @see /documentation/
+ * @see /test/
+ * @see /tools/
+ * @see README
  *
  * @author Jordan Peoples, Chad Klassen, Adam Shepley
- * @date January 9th to February 29th, 2011
+ * @date January 9th to April 20th, 2011
  **/
 
 #include "parser.h"

@@ -13,16 +13,21 @@ Written By:
 -Jordan Peoples
 -Adam Shepley
 
-Version 2 - Parser Revision
+Version 3 - Code Generation Parser Revision
 Created between February 1st and March 1st.
-Revised for April 2nd, 2012.
+Second Revision April 2nd, 2012
+Third Revision April 20th, 2012.
 =============================================
 
 
 *****************NOTE*****************************
-Please check section E5 and F6 for New additions to this ReadMe. 
+Please check sections E5 and F6 for Scope and Type information. 
 **************************************************
 
+****************NOTE******************************
+Please check section G7 for information about the code-generation
+process of this compiler, and the relevant information within that.
+**************************************************
 
 It should be explicitly noted that, as specified in the README, this documentation is
  created and exists apart from the original Scanner documentation.
@@ -596,5 +601,13 @@ By making the above changes to the given functions, we've allowed for semantic a
 logic to account for Scope and Type Parsing problems and considerations.
 
 
-=================================================
+
+
+
+***************************************************************************************
+
+=================================================================
+
+<G7> Generation and Assembly of PL Program Code as Instructions
+---------------------------------------------------------------------
 
