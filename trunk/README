@@ -1,11 +1,14 @@
 C++ PL Compiler Project
 ========================
 
-PL Compilter, Stage-3 (Scope and Type Checking Parser)
+PL Compiler, Stage-4 (Code-Generation Version)
 Authors: Chad Klassen, Jordan Peoples and Adam Shepley
 Made for CPSC 4600
 
-Revision: Third Hand-in, SCOPETYPE Revision
+Revision: Final, Fourth Hand-In - Finished Version 
+Assembler and Interpreter Included
+
+Friday, April 20th, 2012.
 
 ========================
 
@@ -23,16 +26,42 @@ Additionally, we use a C++ compiler macro, "__func__", which creates a string
 from the function name. If your compiler does not work with this macro,
 please use a newer compiler such as MinGW or G++ or MSVC 2011 or Intel11.
 
-Finally, some error types result in an inaccurate number of calls to SyntaxError
-as the error reporting cascades sometimes. However, inaccurate errors should never
-occur and the error count is accurate for the most part.
-Thus, when a leading error is corrected, the subsequent resultant errors are also
-automatically/implicitly corrected for.
+Also important to note, is that our error reporting sometimes reports multiple
+errors for one logical error - this is not necessarily semantically incorrect,
+as a single incorrect statement may in fact be composed of multiple sub-errors.
+
+Finally, our compiler is built with the assumption that the grammar rules
+for Arrays require a Defined Constant when initializing an array; ultimately,
+augmenting our compiler and the grammar to handle arrays declared with a literal
+is quite easy and simple, and would be done by appending the necessary 
+type to the Stop Set for the involved expression productions.
+
+However, this is outside the scope of this project, and thus we have avoided
+augmenting the grammar itself beyond solving ambiguities and similar problems.
+
+
 
 New Notes:
 ====
 
-Our documentation was appended to the altered Parser documentation file outline below.
+We now include the Assembler and Interpreter in this project, both as 
+a component of this compiler, and as an optional external tools.
+The compiler itself will Parse the input PL program and will assemble
+it by default, but the option of sending it to the Interpreter - 
+and the option of Stepping through the Interpreter (debug/step mode)
+are both asked as Runtime.
+
+Also, we have altered the provided Interpreter and Assembler slightly,
+to fit the needs of our project. However, the base functionality is still
+the same.
+
+Our primary Parser documentation file details the Code Generation
+component of our compiler.
+
+Lastly, we see some odd functionality occuring with the Assembler wherein a 
+blank character is always detected and seen as an error. We did not want to
+augment the Assembler beyond what was necessary for our project, so this error
+still occurs.
 
 
 
@@ -61,8 +90,22 @@ Source Files:
 -blocktable.h
 -blocktable.cpp
 
+-interp.h		// Note: These are external tools, and their comments
+-interp.cpp		// and structure have been kept the same. No new
+-assembler.h		// comments have been added to them.
+-assembler.cpp
+
+Additionally, we have put the Assembler and Interpreter into the Tools folder:
+Tools/interp.h
+Tools/interp.cpp
+Tools/Interpreter.cpp
+Tools/assembler.h
+Tools/assembler.cpp
+Tools/ASMTester.cpp
+
 Current Test Files:
-Our test files are given the extension ".cpl".
+Our test files are given the extension ".cpl", but also have the extensions 
+".p" and ".pl".
 
 -errorTokenTest.cpl
 -blankSpaceTest.cpl
@@ -90,15 +133,43 @@ Parser-Oriented Test Files:
 -wrong comparison.cpl	-tests a comparison with mismatching types and without proper guards.
 
 
+New Test Files:
+
+For testing the Code Generation and general correctness of our compiler in regards to
+the generated assembly and intepretation of that code, we have provided numerous test
+files such as:
+
+-arrayTest.p
+-arrayWrite.p
+-exprtest1.pl
+-Fibonacci.pl
+-linearSearch.cpl
+-trueRecursive.cpl
+-stackOverflow.pl
+
+These files and their comments should be explicit in what their specific purposes
+are.
+
+All of the above test files have been provided in the test/ folder.
+Some are made for showing that errors occur, and some are made for breaking
+the interpreter, and some are made to demonstrate correctness.
+
+A complete list of test files can be found in test/filelist.txt.
+
+
 Official Documentation:
 README (ascii file)
 "Technical Documentation ASCII.txt" - ASCII Documentation for the Scanner
 "Technical Documentation - Parser (ASCII).txt" - ASCII Documentation for the 
-			  Parser and Scope/Type Checking.
+			  Parser and Scope/Type Checking, as well as the Code Generation.
 
 Other Files:
 DoxyFile (doxygen documentation generator file)
 MakeFile (makefile for the actual project)
+Tools/makeASM (Makefile for the standalone Assembler)
+Tools/makeInterp (Makefile for the standalone Interpreter)
+
+
 
 ==========================
 
@@ -108,11 +179,14 @@ How To Compile
 Run "make" in the root directory. This should compile the actual project;
 from there, run the "main" binary to execute the project.
 
-Alternatively, run "make -f MakeFile" to compile the scanner/compiler.
+Alternatively, run "make -f MakeFile" to compile it specifically if the Makefile
+default path is not set (in certain POSIX systems).
 
 To create fresh doxygen documentation, run "doxygen DoxyFile".
 
 No syntactic or compiling or run time errors were found as of writing.
+
+
 
 =========================
 
@@ -126,14 +200,49 @@ The argument used is the name of the test PL file/directory-to-file you would li
 
 i.e. for our base test case, the command would be:
 
-./main errorTokenTest.cpl
+./main test/errorTokenTest.cpl
 
 and our program would interpret the argument as the test file argument.
 If multiple arguments are present, only the first one will be used.
 
 This name *can* contain a directory path, but only if represented by forward slashes.
-As such, we will not support a Test directory as of yet, and test files will be located
-in the root directory.
+
+As we have a Test folder, you can execute the test files in the test folder
+with the following schema
+
+./main test/fileName.pl
+
+If any problems occur, please move the given PL source file to the binary's directory.
+
+
+Assembler and Interpreter
+-----------------
+
+Running the MAIN compiler will parse pl code into an ".asm" file,
+run it through the assembler to create a ".itp" file, and run the
+itp binary file through the interpreter. However, if you would like to run
+the Assembler and Interpreter seperately on an itp or asm file, we have
+provided the tools to do so as well.
+
+To begin, you will need to compile the Assembler with
+	make -f tools/makeASM
+which will construct the "ASMTester" binary in the local directory.
+The interpreter can be constructed similarly:
+	make -f tools/makeInterp
+which will construct the "Interpreter" binary in the local directory.
+
+The ASMTester takes one parameter, which is a .asm file.
+ex:	./ASMTester assemblyfile.asm
+But will use test.asm as a default if no file is provided.
+
+The Interpreter takes two parameters, which are the ".itp" filename and the Step
+flag. The Step option is a function of the interpreter which allows the user
+to view the Interpreter's function calls with a pause at each level.
+
+The flag "-s" denotes the Step option.
+ex:	./Interpreter interpFile.itp -s
+
+
 
 ============================
 
@@ -155,9 +264,18 @@ Jordan Peoples - 30 to 42 Hours
 Chad Klassen - 33 to 45 Hours
 Adam Shepley - 18 to 24 Hours
 
+Approximate Hours Spent on Code Generation (Stage 4 of Project):
+
+Jordan Peoples - 20 to 25 Hours
+Chad Klassen - 20 to 25 Hours
+Adam Shepley - 14 to 20 Hours
+(The code generation hours were not strictly recorded, and included fixes
+to Scope & Type check components)
 
 Note that these do not account for certain individual endeavours that were not known to the group.
 These are also rough estimates of hours spent.
+
+
 
 ===========================
 
@@ -170,6 +288,9 @@ Located in /documentation/
 
 2) A secondary documentation file, called "Technical Documentation - Parser (ASCII).txt", which documents the new additions 
 to the compiler and gives a high-level explanation and run-through of our Parser code and components.
+Additionally, this file details the Code Generation components and lightly discusses
+the processes of the Interpreter and the Assembler, and how they link into
+our compiler as a whole.
 
 3) A Doxygen-generated HTML and LaTeX documentation of the actual code and functions, at a granular level.
 Located in /documentation/html/index.html and /documentation/latex/

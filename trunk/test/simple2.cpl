@@ -1,0 +1,25 @@
+$ PL Program: Linear Search?
+begin
+
+integer q;
+
+proc j
+begin
+q := 5;
+end;
+
+const n = 10;
+
+integer array A[10];
+
+proc g
+begin
+a := 5;
+
+end;
+
+
+f:=5;
+const r = 5;
+
+end.
