@@ -615,6 +615,9 @@ logic to account for Scope and Type Parsing problems and considerations.
 <G7> Generation and Assembly of PL Program Code as Instructions
 ---------------------------------------------------------------------
 
+As the nontrivial parts of the code generation were completed already, we take only a short
+section here to explain the general structure and process of our code-generation procedure(s).
+
 Ultimately, our Parser is supposed to eventually output some form of three-address code
 that is to be read by an Assembler, which then creates "binary" (pseudo-binary) code
 for the given Interpreter or execution environment.
@@ -635,6 +638,8 @@ VARIABLE
 8
 which (in the end) leads the Interpreter to call the Variable function with the parameters
 0 and 8.
+Instructions of this sort, and of lesser variety, are used to convert a PL statement to a symbolic one
+that can be passed over and used to create meaningful stack and bit operations.
 
 In our case, the Assembler converts this to an instruction that manipulates the Interpreter
 stack and calls functions accordingly, in a black-box fashion<G7> Generation and Assembly of PL Program Code as Instructions (to the outside reader of
@@ -653,13 +658,15 @@ instructions.
 In order to get the external Assembler to work with out code, we augmented the Second Pass
 function to take a string copy of the original source file again.
 
+Ultimately, we generate three-address code corresponding to the following set of instructions:
+-Add, And, Arrow, Assign, Bar, Call, Constant, Divide, EndProc, EndProg, Equal, Fi, Greater,
+Index, Less, Minus, Modulo, Multiply, Not, Or, Proc, Prog, Read, Subtract, Value,
+Variable and Write.
 
+Each of these instructions has one to two additional parameters as integer, thus our ASM files consist of
+a series of INSTRUCTIONs followed by one or two numbers.
 
+To see precise information of how these instructions are laid out, please see both Parser.cpp and
+Interp.h and Interp.cpp.
 
-
-
-
-
-
-
-
+In order to view the intermediary symbolic code, add the -g flag when running the ./main compiler.
