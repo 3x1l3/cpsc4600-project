@@ -1,0 +1,23 @@
+begin
+
+const p = 112;
+integer x;
+integer y;
+
+proc a
+begin 
+  integer temp;
+  write x;
+  temp := x;
+  x := temp + 1;
+  if x < 10 -> 
+      call a;
+  [] ~(x > 10) -> y:=224;
+  fi;
+end;
+
+x:=0;
+call a;
+
+write p, x;
+end.
