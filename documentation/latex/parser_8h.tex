@@ -11,15 +11,24 @@ The specification header for the \hyperlink{classParser}{Parser} component objec
 {\ttfamily \#include $<$string$>$}\par
 {\ttfamily \#include $<$iostream$>$}\par
 {\ttfamily \#include $<$sstream$>$}\par
+{\ttfamily \#include $<$stack$>$}\par
 {\ttfamily \#include \char`\"{}token.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}admin.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}set.h\char`\"{}}\par
 {\ttfamily \#include \char`\"{}first.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}blocktable.h\char`\"{}}\par
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classParser}{Parser}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em The main object for Parsing the PL source code and guaranteeing correctness. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{parser_8h_a84146e06b05135ce314ab9e853e43d8c}{blocktype} \{ \hyperlink{parser_8h_a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96}{STATEMENTPART}, 
+\hyperlink{parser_8h_a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de}{DEFINITIONPART}
+ \}
+\begin{DoxyCompactList}\small\item\em Standard STL output, string and container classes. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -35,3 +44,29 @@ Jordan Peoples, Chad Klassen, Adam Shepley
 \begin{DoxyDate}{Date}
 January 9th to February 29th, 2011 
 \end{DoxyDate}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{parser_8h_a84146e06b05135ce314ab9e853e43d8c}{
+\index{parser.h@{parser.h}!blocktype@{blocktype}}
+\index{blocktype@{blocktype}!parser.h@{parser.h}}
+\subsubsection[{blocktype}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf blocktype}}}
+\label{parser_8h_a84146e06b05135ce314ab9e853e43d8c}
+
+
+Standard STL output, string and container classes. 
+
+A PL Program has two \char`\"{}parts\char`\"{} of any block, which are a statement part and a definition part. We need to track these for our semantic analysis. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{STATEMENTPART@{STATEMENTPART}!parser.h@{parser.h}}\index{parser.h@{parser.h}!STATEMENTPART@{STATEMENTPART}}\item[{\em 
+\hypertarget{parser_8h_a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96}{
+STATEMENTPART}
+\label{parser_8h_a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96}
+}]\index{DEFINITIONPART@{DEFINITIONPART}!parser.h@{parser.h}}\index{parser.h@{parser.h}!DEFINITIONPART@{DEFINITIONPART}}\item[{\em 
+\hypertarget{parser_8h_a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de}{
+DEFINITIONPART}
+\label{parser_8h_a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de}
+}]\end{description}
+\end{Desc}
+

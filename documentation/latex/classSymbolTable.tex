@@ -16,6 +16,8 @@ symboltable object that stores lexemes, IDentifiers and Locations as keys.
 \item 
 \hyperlink{classSymbolTable_a1fbe6cec5594463b766db0ac58c9aa1d}{SymbolTable} ()
 \begin{DoxyCompactList}\small\item\em Basic constructor. \item\end{DoxyCompactList}\item 
+\hyperlink{classSymbolTable_a5d5ae9b5b22d87691cec9ec17cfff650}{$\sim$SymbolTable} ()
+\item 
 int \hyperlink{classSymbolTable_a1df7dfc3592c924e8c8a9fea1e13bf89}{makeEntry} (string)
 \begin{DoxyCompactList}\small\item\em Adds another entry to table and increases the index then returning the previous index value. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}{makeEntry} (string, string, string)
@@ -37,7 +39,9 @@ int \hyperlink{classSymbolTable_a61a3da421ef79fffe47e8e2d3065bb05}{findIndexWher
 int \hyperlink{classSymbolTable_a33fa9fe363246a0b54e9f58191ad931e}{findLexeme} (string)
 \begin{DoxyCompactList}\small\item\em Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme. \item\end{DoxyCompactList}\item 
 int \hyperlink{classSymbolTable_a218f832e3d8b4d37cb3aee7af732a0c6}{getNumOfReservedWords} ()
-\begin{DoxyCompactList}\small\item\em Returns the reserved word count. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns the reserved word count. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classSymbolTable_a70c8b5e2a159350ffefffffbf6d974ee}{indexExists} (int)
+\begin{DoxyCompactList}\small\item\em Checks if a given index is within or at the end of the symbol table. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -77,6 +81,11 @@ We create a bunch of entries in our symbol table to reflect Reserved Words of th
 
 References index, makeEntry(), and numberOfReservedWords.
 
+\hypertarget{classSymbolTable_a5d5ae9b5b22d87691cec9ec17cfff650}{
+\index{SymbolTable@{SymbolTable}!$\sim$SymbolTable@{$\sim$SymbolTable}}
+\index{$\sim$SymbolTable@{$\sim$SymbolTable}!SymbolTable@{SymbolTable}}
+\subsubsection[{$\sim$SymbolTable}]{\setlength{\rightskip}{0pt plus 5cm}SymbolTable::$\sim$SymbolTable ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classSymbolTable_a5d5ae9b5b22d87691cec9ec17cfff650}
 
 
 \subsection{Member Function Documentation}
@@ -256,6 +265,24 @@ Returns the reserved word count.
 
 
 References numberOfReservedWords.
+
+\hypertarget{classSymbolTable_a70c8b5e2a159350ffefffffbf6d974ee}{
+\index{SymbolTable@{SymbolTable}!indexExists@{indexExists}}
+\index{indexExists@{indexExists}!SymbolTable@{SymbolTable}}
+\subsubsection[{indexExists}]{\setlength{\rightskip}{0pt plus 5cm}bool SymbolTable::indexExists (int {\em index})}}
+\label{classSymbolTable_a70c8b5e2a159350ffefffffbf6d974ee}
+
+
+Checks if a given index is within or at the end of the symbol table. 
+
+Checks if the index we desire is at the end of our \hyperlink{classSymbolTable}{SymbolTable}.
+
+If empty, then our search value is the end of the Symbol Table, thus we have no entry with that index. Otherwise, an entry was found that has said index. \begin{DoxyReturn}{Returns}
+bool Boolean shows whether the index exists. 
+\end{DoxyReturn}
+
+
+References table.
 
 \hypertarget{classSymbolTable_a064e30f7ddbd4065244d1d41ea885737}{
 \index{SymbolTable@{SymbolTable}!makeEntry@{makeEntry}}

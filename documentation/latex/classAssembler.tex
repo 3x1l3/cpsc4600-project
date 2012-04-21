@@ -1,0 +1,97 @@
+\hypertarget{classAssembler}{
+\section{Assembler Class Reference}
+\label{classAssembler}\index{Assembler@{Assembler}}
+}
+
+
+{\ttfamily \#include $<$assembler.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classAssembler_ae13aed6c88a1c85b32d04286ae3f3f99}{Assembler} (istream \&in, ostream \&out)
+\item 
+\hyperlink{classAssembler_a6e9d207baf8191cd6c4847f56548f73f}{$\sim$Assembler} ()
+\item 
+void \hyperlink{classAssembler_a2896bf358b7ae6c53bcc887f48cf52f3}{firstPass} ()
+\item 
+void \hyperlink{classAssembler_ac9bc248b0687b5cf6aaf275255d1f808}{secondPass} (string alpha)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classAssembler_ad5862739b31da3c3f85afa2dc9b17fe0}{labelTable} \mbox{[}\hyperlink{assembler_8h_a6673a3ae56c5fd5f06ee28fab9693c33}{MAXLABEL}\mbox{]}
+\item 
+int \hyperlink{classAssembler_a645f96a3abf12b17bdbbd3b9a20063f5}{currentAddress}
+\item 
+istream $\ast$ \hyperlink{classAssembler_a1b03f0d4cb3021f7415cb7cd0c20d4fe}{insource}
+\item 
+ostream $\ast$ \hyperlink{classAssembler_a5fc343ff2abfae56309dcd696d9e5295}{outsource}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAssembler_ae13aed6c88a1c85b32d04286ae3f3f99}{
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\index{Assembler@{Assembler}!Assembler@{Assembler}}
+\subsubsection[{Assembler}]{\setlength{\rightskip}{0pt plus 5cm}Assembler::Assembler (istream \& {\em in}, \/  ostream \& {\em out})}}
+\label{classAssembler_ae13aed6c88a1c85b32d04286ae3f3f99}
+
+
+References currentAddress, insource, labelTable, MAXLABEL, and outsource.
+
+\hypertarget{classAssembler_a6e9d207baf8191cd6c4847f56548f73f}{
+\index{Assembler@{Assembler}!$\sim$Assembler@{$\sim$Assembler}}
+\index{$\sim$Assembler@{$\sim$Assembler}!Assembler@{Assembler}}
+\subsubsection[{$\sim$Assembler}]{\setlength{\rightskip}{0pt plus 5cm}Assembler::$\sim$Assembler ()}}
+\label{classAssembler_a6e9d207baf8191cd6c4847f56548f73f}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classAssembler_a2896bf358b7ae6c53bcc887f48cf52f3}{
+\index{Assembler@{Assembler}!firstPass@{firstPass}}
+\index{firstPass@{firstPass}!Assembler@{Assembler}}
+\subsubsection[{firstPass}]{\setlength{\rightskip}{0pt plus 5cm}void Assembler::firstPass ()}}
+\label{classAssembler_a2896bf358b7ae6c53bcc887f48cf52f3}
+
+
+References currentAddress, and labelTable.
+
+\hypertarget{classAssembler_ac9bc248b0687b5cf6aaf275255d1f808}{
+\index{Assembler@{Assembler}!secondPass@{secondPass}}
+\index{secondPass@{secondPass}!Assembler@{Assembler}}
+\subsubsection[{secondPass}]{\setlength{\rightskip}{0pt plus 5cm}void Assembler::secondPass (string {\em alpha})}}
+\label{classAssembler_ac9bc248b0687b5cf6aaf275255d1f808}
+
+
+References currentAddress, insource, and labelTable.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classAssembler_a645f96a3abf12b17bdbbd3b9a20063f5}{
+\index{Assembler@{Assembler}!currentAddress@{currentAddress}}
+\index{currentAddress@{currentAddress}!Assembler@{Assembler}}
+\subsubsection[{currentAddress}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Assembler::currentAddress}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAssembler_a645f96a3abf12b17bdbbd3b9a20063f5}
+\hypertarget{classAssembler_a1b03f0d4cb3021f7415cb7cd0c20d4fe}{
+\index{Assembler@{Assembler}!insource@{insource}}
+\index{insource@{insource}!Assembler@{Assembler}}
+\subsubsection[{insource}]{\setlength{\rightskip}{0pt plus 5cm}istream$\ast$ {\bf Assembler::insource}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAssembler_a1b03f0d4cb3021f7415cb7cd0c20d4fe}
+\hypertarget{classAssembler_ad5862739b31da3c3f85afa2dc9b17fe0}{
+\index{Assembler@{Assembler}!labelTable@{labelTable}}
+\index{labelTable@{labelTable}!Assembler@{Assembler}}
+\subsubsection[{labelTable}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Assembler::labelTable}\mbox{[}{\bf MAXLABEL}\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAssembler_ad5862739b31da3c3f85afa2dc9b17fe0}
+\hypertarget{classAssembler_a5fc343ff2abfae56309dcd696d9e5295}{
+\index{Assembler@{Assembler}!outsource@{outsource}}
+\index{outsource@{outsource}!Assembler@{Assembler}}
+\subsubsection[{outsource}]{\setlength{\rightskip}{0pt plus 5cm}ostream$\ast$ {\bf Assembler::outsource}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAssembler_a5fc343ff2abfae56309dcd696d9e5295}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{assembler_8h}{assembler.h}\item 
+\hyperlink{assembler_8cpp}{assembler.cpp}\end{DoxyCompactItemize}

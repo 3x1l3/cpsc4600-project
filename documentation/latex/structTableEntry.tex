@@ -1,0 +1,91 @@
+\hypertarget{structTableEntry}{
+\section{TableEntry Struct Reference}
+\label{structTableEntry}\index{TableEntry@{TableEntry}}
+}
+
+
+A special data structure used to define a given PL code object.  
+
+
+
+
+{\ttfamily \#include $<$blocktable.h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{structTableEntry_aded1f22bfcb60027c8adac8d927deb43}{id}
+\item 
+\hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} \hyperlink{structTableEntry_a74160c41838c43ac2869239d33bea3e0}{okind}
+\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{structTableEntry_a14059d82997cf47de6b8a8187cfd154f}{otype}
+\item 
+int \hyperlink{structTableEntry_a1ca46ef970e0c34c9d4f6dbfd9424e9f}{size}
+\item 
+int \hyperlink{structTableEntry_ab094106a732ea8edf1c8357489e69b94}{value}
+\item 
+int \hyperlink{structTableEntry_a4b9ee2cf034f9074da07205bc4ed8fc6}{level}
+\item 
+int \hyperlink{structTableEntry_ac0ba3c406ece114defb6575a8412e489}{displacement}
+\item 
+int \hyperlink{structTableEntry_ac5d597df796d333a3891bf967f64b5e7}{startLabel}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A special data structure used to define a given PL code object. A \hyperlink{structTableEntry}{TableEntry} is a kind of record that amalgamates a given Entry in a given Block. These \char`\"{}block entries\char`\"{} are a kind of programming object -\/ like an Array, or an INTEGER, and this structure combines all of the relevent tokens and their information into one specific record.
+
+Which is to say, for a given variable X, we can know that X is an integer, has value Y, and has the Table's referential ID of \#.
+
+We augment the \hyperlink{structTableEntry}{TableEntry} structure to include the block displacement level. This allows us to know the relevent location of the given line-\/entry in regards to the stack of instructions and data.
+
+Additionally, we have a startLabel to allow us to know where the start of the current displacement is and to divine the relative location of this specific entry.
+
+This ties into the generation of instructions later on. 
+
+\subsection{Member Data Documentation}
+\hypertarget{structTableEntry_ac0ba3c406ece114defb6575a8412e489}{
+\index{TableEntry@{TableEntry}!displacement@{displacement}}
+\index{displacement@{displacement}!TableEntry@{TableEntry}}
+\subsubsection[{displacement}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::displacement}}}
+\label{structTableEntry_ac0ba3c406ece114defb6575a8412e489}
+\hypertarget{structTableEntry_aded1f22bfcb60027c8adac8d927deb43}{
+\index{TableEntry@{TableEntry}!id@{id}}
+\index{id@{id}!TableEntry@{TableEntry}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::id}}}
+\label{structTableEntry_aded1f22bfcb60027c8adac8d927deb43}
+\hypertarget{structTableEntry_a4b9ee2cf034f9074da07205bc4ed8fc6}{
+\index{TableEntry@{TableEntry}!level@{level}}
+\index{level@{level}!TableEntry@{TableEntry}}
+\subsubsection[{level}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::level}}}
+\label{structTableEntry_a4b9ee2cf034f9074da07205bc4ed8fc6}
+\hypertarget{structTableEntry_a74160c41838c43ac2869239d33bea3e0}{
+\index{TableEntry@{TableEntry}!okind@{okind}}
+\index{okind@{okind}!TableEntry@{TableEntry}}
+\subsubsection[{okind}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Kind} {\bf TableEntry::okind}}}
+\label{structTableEntry_a74160c41838c43ac2869239d33bea3e0}
+\hypertarget{structTableEntry_a14059d82997cf47de6b8a8187cfd154f}{
+\index{TableEntry@{TableEntry}!otype@{otype}}
+\index{otype@{otype}!TableEntry@{TableEntry}}
+\subsubsection[{otype}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} {\bf TableEntry::otype}}}
+\label{structTableEntry_a14059d82997cf47de6b8a8187cfd154f}
+\hypertarget{structTableEntry_a1ca46ef970e0c34c9d4f6dbfd9424e9f}{
+\index{TableEntry@{TableEntry}!size@{size}}
+\index{size@{size}!TableEntry@{TableEntry}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::size}}}
+\label{structTableEntry_a1ca46ef970e0c34c9d4f6dbfd9424e9f}
+\hypertarget{structTableEntry_ac5d597df796d333a3891bf967f64b5e7}{
+\index{TableEntry@{TableEntry}!startLabel@{startLabel}}
+\index{startLabel@{startLabel}!TableEntry@{TableEntry}}
+\subsubsection[{startLabel}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::startLabel}}}
+\label{structTableEntry_ac5d597df796d333a3891bf967f64b5e7}
+\hypertarget{structTableEntry_ab094106a732ea8edf1c8357489e69b94}{
+\index{TableEntry@{TableEntry}!value@{value}}
+\index{value@{value}!TableEntry@{TableEntry}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TableEntry::value}}}
+\label{structTableEntry_ab094106a732ea8edf1c8357489e69b94}
+
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{blocktable_8h}{blocktable.h}\end{DoxyCompactItemize}

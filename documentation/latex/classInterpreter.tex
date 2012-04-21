@@ -1,0 +1,444 @@
+\hypertarget{classInterpreter}{
+\section{Interpreter Class Reference}
+\label{classInterpreter}\index{Interpreter@{Interpreter}}
+}
+
+
+{\ttfamily \#include $<$interp.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classInterpreter_a053aca9ec82a7f02879c5216cad78708}{Interpreter} (string, bool=false)
+\item 
+void \hyperlink{classInterpreter_aadc741cd76c43b3dda9d6c0841ba6548}{memory\_\-dump} (string) const 
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classInterpreter_ad88b100c53bbf05172daafcfaabf77a6}{load\_\-program} (string)
+\item 
+void \hyperlink{classInterpreter_a471d0958d94f1378dfbc83d378a604a1}{run\_\-program} ()
+\item 
+void \hyperlink{classInterpreter_ac5ae8c07a18fbec811b37e2dd500c3ef}{runtime\_\-error} (string, int=-\/1)
+\item 
+void \hyperlink{classInterpreter_ad52aec1a3af5198ba353ddcdc4dacaed}{allocate} (int)
+\item 
+void \hyperlink{classInterpreter_ac9e99e8d7aa00928ed590354231a84fc}{variable} (int, int)
+\item 
+void \hyperlink{classInterpreter_aad0bc05e209d533b2771798cea86d21a}{index} (int, int)
+\item 
+void \hyperlink{classInterpreter_a88892bf93230336ef0ea0c2a218e5af6}{constant} (int)
+\item 
+void \hyperlink{classInterpreter_a9dd8f6e72262517ab78d956360868dbc}{value} ()
+\item 
+void \hyperlink{classInterpreter_a74d15a1c501fbe26b66e4d44a86a57eb}{plnot} ()
+\item 
+void \hyperlink{classInterpreter_a030165f73b064a2e22216b8dbb659259}{multiply} ()
+\item 
+void \hyperlink{classInterpreter_a08c1dbed7667664b45c26142cc90b9c7}{divide} ()
+\item 
+void \hyperlink{classInterpreter_a88b9baaecb6f18e2266b54be7f5f6817}{modulo} ()
+\item 
+void \hyperlink{classInterpreter_ab5d74f8dc5770eb8f6869f30401e4a69}{minus} ()
+\item 
+void \hyperlink{classInterpreter_aa890b84392084c5cd2c2586dc2a3a7a8}{add} ()
+\item 
+void \hyperlink{classInterpreter_aa535362cdd6da9d9f4184e180d8c7f56}{subtract} ()
+\item 
+void \hyperlink{classInterpreter_a58ba8620d123934102e6c35fff1392f0}{less} ()
+\item 
+void \hyperlink{classInterpreter_a129c1560de1856427446a8da8ceb80ca}{equal} ()
+\item 
+void \hyperlink{classInterpreter_ad12692ddcafda749510418bb6d6c58df}{greater} ()
+\item 
+void \hyperlink{classInterpreter_ac5a0b960cbc8c7ff686c127ccf806c09}{pland} ()
+\item 
+void \hyperlink{classInterpreter_a5f0454582ef1e52e2fcaee1b703553b8}{plor} ()
+\item 
+void \hyperlink{classInterpreter_a499070c59ca4127e57ad621bd489645c}{read} (int)
+\item 
+void \hyperlink{classInterpreter_a59c724a616fcd6c6ac176fe53ba6b81c}{write} (int)
+\item 
+void \hyperlink{classInterpreter_a19687bebaa308803b02e12239c0b812c}{assign} (int)
+\item 
+void \hyperlink{classInterpreter_ae8da184101a719f601e7d46c4920225f}{call} (int, int)
+\item 
+void \hyperlink{classInterpreter_a0301b087eed7addc3046b47c4438825d}{arrow} (int)
+\item 
+void \hyperlink{classInterpreter_aa29dee87877a4d5017642cfed6d14322}{bar} (int)
+\item 
+void \hyperlink{classInterpreter_a633b22152bac2b1e4c6156bea780f3ad}{fi} (int)
+\item 
+void \hyperlink{classInterpreter_a559d265d75195aab3e0390b62d35626f}{proc} (int, int)
+\item 
+void \hyperlink{classInterpreter_aea3951f5783795c265a9c032c67cd246}{endproc} ()
+\item 
+void \hyperlink{classInterpreter_a26e7331de08ed5f4aa54e2cc0db83798}{prog} (int, int)
+\item 
+void \hyperlink{classInterpreter_ad8087c5f94eafe127280d03351906424}{endprog} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classInterpreter_af320a034984d7ea210a546c9d0313443}{store} \mbox{[}\hyperlink{interp_8h_a610b46241859b5e63fe92fae6d55d14e}{STORE\_\-SIZE}+1\mbox{]}
+\item 
+int \hyperlink{classInterpreter_ac2b2272e7e93df082733e94d0c2e39df}{stack\_\-bottom}
+\item 
+int \hyperlink{classInterpreter_adceea023d2b221e04ccc84ce0260301e}{stack\_\-register}
+\item 
+int \hyperlink{classInterpreter_a0805dbd4ca54babe4f4b60055f36aa27}{base\_\-register}
+\item 
+int \hyperlink{classInterpreter_a341a6e3cb3a9a23afef084eac5e1ff41}{program\_\-register}
+\item 
+bool \hyperlink{classInterpreter_a26d311ea5a776034720f8ce465f04bc2}{running}
+\item 
+bool \hyperlink{classInterpreter_a55aac45fbc90e77dac77042f269009ad}{stepping}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classInterpreter_a053aca9ec82a7f02879c5216cad78708}{
+\index{Interpreter@{Interpreter}!Interpreter@{Interpreter}}
+\index{Interpreter@{Interpreter}!Interpreter@{Interpreter}}
+\subsubsection[{Interpreter}]{\setlength{\rightskip}{0pt plus 5cm}Interpreter::Interpreter (string {\em filename}, \/  bool {\em step} = {\ttfamily false})}}
+\label{classInterpreter_a053aca9ec82a7f02879c5216cad78708}
+
+
+References load\_\-program(), run\_\-program(), and stepping.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classInterpreter_aa890b84392084c5cd2c2586dc2a3a7a8}{
+\index{Interpreter@{Interpreter}!add@{add}}
+\index{add@{add}!Interpreter@{Interpreter}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::add ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_aa890b84392084c5cd2c2586dc2a3a7a8}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_ad52aec1a3af5198ba353ddcdc4dacaed}{
+\index{Interpreter@{Interpreter}!allocate@{allocate}}
+\index{allocate@{allocate}!Interpreter@{Interpreter}}
+\subsubsection[{allocate}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::allocate (int {\em words})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ad52aec1a3af5198ba353ddcdc4dacaed}
+
+
+References runtime\_\-error(), stack\_\-register, and STORE\_\-SIZE.
+
+\hypertarget{classInterpreter_a0301b087eed7addc3046b47c4438825d}{
+\index{Interpreter@{Interpreter}!arrow@{arrow}}
+\index{arrow@{arrow}!Interpreter@{Interpreter}}
+\subsubsection[{arrow}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::arrow (int {\em address})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a0301b087eed7addc3046b47c4438825d}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a19687bebaa308803b02e12239c0b812c}{
+\index{Interpreter@{Interpreter}!assign@{assign}}
+\index{assign@{assign}!Interpreter@{Interpreter}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::assign (int {\em count})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a19687bebaa308803b02e12239c0b812c}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_aa29dee87877a4d5017642cfed6d14322}{
+\index{Interpreter@{Interpreter}!bar@{bar}}
+\index{bar@{bar}!Interpreter@{Interpreter}}
+\subsubsection[{bar}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::bar (int {\em address})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_aa29dee87877a4d5017642cfed6d14322}
+
+
+References program\_\-register.
+
+\hypertarget{classInterpreter_ae8da184101a719f601e7d46c4920225f}{
+\index{Interpreter@{Interpreter}!call@{call}}
+\index{call@{call}!Interpreter@{Interpreter}}
+\subsubsection[{call}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::call (int {\em level}, \/  int {\em address})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ae8da184101a719f601e7d46c4920225f}
+
+
+References allocate(), base\_\-register, program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a88892bf93230336ef0ea0c2a218e5af6}{
+\index{Interpreter@{Interpreter}!constant@{constant}}
+\index{constant@{constant}!Interpreter@{Interpreter}}
+\subsubsection[{constant}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::constant (int {\em value})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a88892bf93230336ef0ea0c2a218e5af6}
+
+
+References allocate(), program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a08c1dbed7667664b45c26142cc90b9c7}{
+\index{Interpreter@{Interpreter}!divide@{divide}}
+\index{divide@{divide}!Interpreter@{Interpreter}}
+\subsubsection[{divide}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::divide ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a08c1dbed7667664b45c26142cc90b9c7}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_aea3951f5783795c265a9c032c67cd246}{
+\index{Interpreter@{Interpreter}!endproc@{endproc}}
+\index{endproc@{endproc}!Interpreter@{Interpreter}}
+\subsubsection[{endproc}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::endproc ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_aea3951f5783795c265a9c032c67cd246}
+
+
+References base\_\-register, program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_ad8087c5f94eafe127280d03351906424}{
+\index{Interpreter@{Interpreter}!endprog@{endprog}}
+\index{endprog@{endprog}!Interpreter@{Interpreter}}
+\subsubsection[{endprog}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::endprog ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ad8087c5f94eafe127280d03351906424}
+
+
+References running.
+
+\hypertarget{classInterpreter_a129c1560de1856427446a8da8ceb80ca}{
+\index{Interpreter@{Interpreter}!equal@{equal}}
+\index{equal@{equal}!Interpreter@{Interpreter}}
+\subsubsection[{equal}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::equal ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a129c1560de1856427446a8da8ceb80ca}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a633b22152bac2b1e4c6156bea780f3ad}{
+\index{Interpreter@{Interpreter}!fi@{fi}}
+\index{fi@{fi}!Interpreter@{Interpreter}}
+\subsubsection[{fi}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::fi (int {\em line\_\-number})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a633b22152bac2b1e4c6156bea780f3ad}
+
+
+References runtime\_\-error().
+
+\hypertarget{classInterpreter_ad12692ddcafda749510418bb6d6c58df}{
+\index{Interpreter@{Interpreter}!greater@{greater}}
+\index{greater@{greater}!Interpreter@{Interpreter}}
+\subsubsection[{greater}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::greater ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ad12692ddcafda749510418bb6d6c58df}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_aad0bc05e209d533b2771798cea86d21a}{
+\index{Interpreter@{Interpreter}!index@{index}}
+\index{index@{index}!Interpreter@{Interpreter}}
+\subsubsection[{index}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::index (int {\em bound}, \/  int {\em line\_\-number})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_aad0bc05e209d533b2771798cea86d21a}
+
+
+References program\_\-register, runtime\_\-error(), stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a58ba8620d123934102e6c35fff1392f0}{
+\index{Interpreter@{Interpreter}!less@{less}}
+\index{less@{less}!Interpreter@{Interpreter}}
+\subsubsection[{less}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::less ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a58ba8620d123934102e6c35fff1392f0}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_ad88b100c53bbf05172daafcfaabf77a6}{
+\index{Interpreter@{Interpreter}!load\_\-program@{load\_\-program}}
+\index{load\_\-program@{load\_\-program}!Interpreter@{Interpreter}}
+\subsubsection[{load\_\-program}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::load\_\-program (string {\em name})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ad88b100c53bbf05172daafcfaabf77a6}
+
+
+References stack\_\-bottom, store, and STORE\_\-SIZE.
+
+\hypertarget{classInterpreter_aadc741cd76c43b3dda9d6c0841ba6548}{
+\index{Interpreter@{Interpreter}!memory\_\-dump@{memory\_\-dump}}
+\index{memory\_\-dump@{memory\_\-dump}!Interpreter@{Interpreter}}
+\subsubsection[{memory\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::memory\_\-dump (string {\em name}) const}}
+\label{classInterpreter_aadc741cd76c43b3dda9d6c0841ba6548}
+
+
+References store, and STORE\_\-SIZE.
+
+\hypertarget{classInterpreter_ab5d74f8dc5770eb8f6869f30401e4a69}{
+\index{Interpreter@{Interpreter}!minus@{minus}}
+\index{minus@{minus}!Interpreter@{Interpreter}}
+\subsubsection[{minus}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::minus ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ab5d74f8dc5770eb8f6869f30401e4a69}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a88b9baaecb6f18e2266b54be7f5f6817}{
+\index{Interpreter@{Interpreter}!modulo@{modulo}}
+\index{modulo@{modulo}!Interpreter@{Interpreter}}
+\subsubsection[{modulo}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::modulo ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a88b9baaecb6f18e2266b54be7f5f6817}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a030165f73b064a2e22216b8dbb659259}{
+\index{Interpreter@{Interpreter}!multiply@{multiply}}
+\index{multiply@{multiply}!Interpreter@{Interpreter}}
+\subsubsection[{multiply}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::multiply ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a030165f73b064a2e22216b8dbb659259}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_ac5a0b960cbc8c7ff686c127ccf806c09}{
+\index{Interpreter@{Interpreter}!pland@{pland}}
+\index{pland@{pland}!Interpreter@{Interpreter}}
+\subsubsection[{pland}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::pland ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ac5a0b960cbc8c7ff686c127ccf806c09}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a74d15a1c501fbe26b66e4d44a86a57eb}{
+\index{Interpreter@{Interpreter}!plnot@{plnot}}
+\index{plnot@{plnot}!Interpreter@{Interpreter}}
+\subsubsection[{plnot}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::plnot ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a74d15a1c501fbe26b66e4d44a86a57eb}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a5f0454582ef1e52e2fcaee1b703553b8}{
+\index{Interpreter@{Interpreter}!plor@{plor}}
+\index{plor@{plor}!Interpreter@{Interpreter}}
+\subsubsection[{plor}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::plor ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a5f0454582ef1e52e2fcaee1b703553b8}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a559d265d75195aab3e0390b62d35626f}{
+\index{Interpreter@{Interpreter}!proc@{proc}}
+\index{proc@{proc}!Interpreter@{Interpreter}}
+\subsubsection[{proc}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::proc (int {\em variable\_\-length}, \/  int {\em address})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a559d265d75195aab3e0390b62d35626f}
+
+
+References allocate(), and program\_\-register.
+
+\hypertarget{classInterpreter_a26e7331de08ed5f4aa54e2cc0db83798}{
+\index{Interpreter@{Interpreter}!prog@{prog}}
+\index{prog@{prog}!Interpreter@{Interpreter}}
+\subsubsection[{prog}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::prog (int {\em variable\_\-length}, \/  int {\em address})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a26e7331de08ed5f4aa54e2cc0db83798}
+
+
+References allocate(), base\_\-register, program\_\-register, stack\_\-bottom, and stack\_\-register.
+
+\hypertarget{classInterpreter_a499070c59ca4127e57ad621bd489645c}{
+\index{Interpreter@{Interpreter}!read@{read}}
+\index{read@{read}!Interpreter@{Interpreter}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::read (int {\em count})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a499070c59ca4127e57ad621bd489645c}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a471d0958d94f1378dfbc83d378a604a1}{
+\index{Interpreter@{Interpreter}!run\_\-program@{run\_\-program}}
+\index{run\_\-program@{run\_\-program}!Interpreter@{Interpreter}}
+\subsubsection[{run\_\-program}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::run\_\-program ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a471d0958d94f1378dfbc83d378a604a1}
+
+
+References add(), arrow(), assign(), bar(), call(), constant(), divide(), endproc(), endprog(), equal(), fi(), greater(), index(), less(), minus(), modulo(), multiply(), OP\_\-ADD, OP\_\-AND, OP\_\-ARROW, OP\_\-ASSIGN, OP\_\-BAR, OP\_\-CALL, OP\_\-CONSTANT, OP\_\-DIVIDE, OP\_\-ENDPROC, OP\_\-ENDPROG, OP\_\-EQUAL, OP\_\-FI, OP\_\-GREATER, OP\_\-INDEX, OP\_\-LESS, OP\_\-MINUS, OP\_\-MODULO, OP\_\-MULTIPLY, OP\_\-NOT, OP\_\-OR, OP\_\-PROC, OP\_\-PROG, OP\_\-READ, OP\_\-SUBTRACT, OP\_\-VALUE, OP\_\-VARIABLE, OP\_\-WRITE, opcode\_\-name, pland(), plnot(), plor(), proc(), prog(), program\_\-register, read(), running, runtime\_\-error(), stepping, store, subtract(), value(), variable(), and write().
+
+\hypertarget{classInterpreter_ac5ae8c07a18fbec811b37e2dd500c3ef}{
+\index{Interpreter@{Interpreter}!runtime\_\-error@{runtime\_\-error}}
+\index{runtime\_\-error@{runtime\_\-error}!Interpreter@{Interpreter}}
+\subsubsection[{runtime\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::runtime\_\-error (string {\em message}, \/  int {\em line\_\-number} = {\ttfamily -\/1})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ac5ae8c07a18fbec811b37e2dd500c3ef}
+
+
+References running.
+
+\hypertarget{classInterpreter_aa535362cdd6da9d9f4184e180d8c7f56}{
+\index{Interpreter@{Interpreter}!subtract@{subtract}}
+\index{subtract@{subtract}!Interpreter@{Interpreter}}
+\subsubsection[{subtract}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::subtract ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_aa535362cdd6da9d9f4184e180d8c7f56}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a9dd8f6e72262517ab78d956360868dbc}{
+\index{Interpreter@{Interpreter}!value@{value}}
+\index{value@{value}!Interpreter@{Interpreter}}
+\subsubsection[{value}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::value ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a9dd8f6e72262517ab78d956360868dbc}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_ac9e99e8d7aa00928ed590354231a84fc}{
+\index{Interpreter@{Interpreter}!variable@{variable}}
+\index{variable@{variable}!Interpreter@{Interpreter}}
+\subsubsection[{variable}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::variable (int {\em level}, \/  int {\em displacement})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ac9e99e8d7aa00928ed590354231a84fc}
+
+
+References allocate(), base\_\-register, program\_\-register, stack\_\-register, and store.
+
+\hypertarget{classInterpreter_a59c724a616fcd6c6ac176fe53ba6b81c}{
+\index{Interpreter@{Interpreter}!write@{write}}
+\index{write@{write}!Interpreter@{Interpreter}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}void Interpreter::write (int {\em count})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a59c724a616fcd6c6ac176fe53ba6b81c}
+
+
+References program\_\-register, stack\_\-register, and store.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classInterpreter_a0805dbd4ca54babe4f4b60055f36aa27}{
+\index{Interpreter@{Interpreter}!base\_\-register@{base\_\-register}}
+\index{base\_\-register@{base\_\-register}!Interpreter@{Interpreter}}
+\subsubsection[{base\_\-register}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Interpreter::base\_\-register}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a0805dbd4ca54babe4f4b60055f36aa27}
+\hypertarget{classInterpreter_a341a6e3cb3a9a23afef084eac5e1ff41}{
+\index{Interpreter@{Interpreter}!program\_\-register@{program\_\-register}}
+\index{program\_\-register@{program\_\-register}!Interpreter@{Interpreter}}
+\subsubsection[{program\_\-register}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Interpreter::program\_\-register}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a341a6e3cb3a9a23afef084eac5e1ff41}
+\hypertarget{classInterpreter_a26d311ea5a776034720f8ce465f04bc2}{
+\index{Interpreter@{Interpreter}!running@{running}}
+\index{running@{running}!Interpreter@{Interpreter}}
+\subsubsection[{running}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Interpreter::running}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a26d311ea5a776034720f8ce465f04bc2}
+\hypertarget{classInterpreter_ac2b2272e7e93df082733e94d0c2e39df}{
+\index{Interpreter@{Interpreter}!stack\_\-bottom@{stack\_\-bottom}}
+\index{stack\_\-bottom@{stack\_\-bottom}!Interpreter@{Interpreter}}
+\subsubsection[{stack\_\-bottom}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Interpreter::stack\_\-bottom}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_ac2b2272e7e93df082733e94d0c2e39df}
+\hypertarget{classInterpreter_adceea023d2b221e04ccc84ce0260301e}{
+\index{Interpreter@{Interpreter}!stack\_\-register@{stack\_\-register}}
+\index{stack\_\-register@{stack\_\-register}!Interpreter@{Interpreter}}
+\subsubsection[{stack\_\-register}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Interpreter::stack\_\-register}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_adceea023d2b221e04ccc84ce0260301e}
+\hypertarget{classInterpreter_a55aac45fbc90e77dac77042f269009ad}{
+\index{Interpreter@{Interpreter}!stepping@{stepping}}
+\index{stepping@{stepping}!Interpreter@{Interpreter}}
+\subsubsection[{stepping}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Interpreter::stepping}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_a55aac45fbc90e77dac77042f269009ad}
+\hypertarget{classInterpreter_af320a034984d7ea210a546c9d0313443}{
+\index{Interpreter@{Interpreter}!store@{store}}
+\index{store@{store}!Interpreter@{Interpreter}}
+\subsubsection[{store}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Interpreter::store}\mbox{[}{\bf STORE\_\-SIZE}+1\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classInterpreter_af320a034984d7ea210a546c9d0313443}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interp_8h}{interp.h}\item 
+\hyperlink{interp_8cpp}{interp.cpp}\end{DoxyCompactItemize}

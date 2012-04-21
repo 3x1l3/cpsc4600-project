@@ -1,0 +1,471 @@
+\hypertarget{classBlockTable}{
+\section{BlockTable Class Reference}
+\label{classBlockTable}\index{BlockTable@{BlockTable}}
+}
+
+
+The structure facilitating the creation and manipulation of Program Blocks.  
+
+
+
+
+{\ttfamily \#include $<$blocktable.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classBlockTable_ab9659ed0c4fbbc10e919da0739c49e7e}{BlockTable} (\hyperlink{classSymbolTable}{SymbolTable} \&)
+\begin{DoxyCompactList}\small\item\em Specification File. \item\end{DoxyCompactList}\item 
+\hyperlink{classBlockTable_a5a78c20a967eb659c9f424687fe17c1d}{$\sim$BlockTable} ()
+\item 
+bool \hyperlink{classBlockTable_aa34f1de4dcf9db81aa420d2a9aca3a7c}{search} (int lookFor)
+\begin{DoxyCompactList}\small\item\em Checks if a given \hyperlink{structTableEntry}{TableEntry} ID is found in the current Block. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_aab6bf14513041f3d29a15f9ebd7a053e}{search} (int lookFor, \hyperlink{structTableEntry}{TableEntry} \&entry)
+\begin{DoxyCompactList}\small\item\em Locates a given ID in the current Block, then links said entry to the input \hyperlink{structTableEntry}{TableEntry} reference. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_a72860f8f2ba53404cdf4fdbaf9d5f85e}{search} (int, int \&)
+\begin{DoxyCompactList}\small\item\em Locates a given TE ID in the current Block, and pairs its index with the input integer reference. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_a55f1008e44189505a5ba66d50daa60d5}{define} (int newid, \hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} newkind, \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} newtype, int newsize, int newvalue, int startLabel)
+\item 
+bool \hyperlink{classBlockTable_a52cc3e2d77fb52b3360b224b671ea6be}{define} (int newid, \hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} newkind, \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} newtype, int newsize, int newvalue)
+\begin{DoxyCompactList}\small\item\em Creates an object if we don't find it in the current block. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_a7deb886fce54f404a28de69543cd837b}{define} (int newid, \hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} newkind, \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} newtype)
+\begin{DoxyCompactList}\small\item\em Defines a new block entry, but for non-\/const/non-\/array types. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_a0475d9253127e652e48a24ff3c09b38c}{redefineSize} (int, int)
+\begin{DoxyCompactList}\small\item\em Redefines the size of an Array entry in the current block, if it is found, otherwise returns false. \item\end{DoxyCompactList}\item 
+\hyperlink{structTableEntry}{TableEntry} \hyperlink{classBlockTable_a53d24a1a4460701c8129eabcebfa0870}{find} (int lookfor, bool \&error)
+\begin{DoxyCompactList}\small\item\em Searches through all of the blocks for a corresponding tableEntry and returns it. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_a6bdc70c8ad8a670f510803dc7df162ef}{newBlock} ()
+\begin{DoxyCompactList}\small\item\em Push our old block onto the Table and create a new one for the new scope. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classBlockTable_af91746a425e587ff501359f1df179ca8}{endBlock} ()
+\begin{DoxyCompactList}\small\item\em Decreaments the current block index, pops a block off the block table, and replaces the currentBlock with the previous one. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBlockTable_a06df0e10b6d3d810ee66e6f0a7373c6b}{printBlock} (vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$)
+\begin{DoxyCompactList}\small\item\em Prints the passed-\/in Block (tableentry vector) in a tabular format. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBlockTable_a7f4d48d59c7fab073a3b107a29d873a6}{printBlock} (vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$, string)
+\begin{DoxyCompactList}\small\item\em Prints all of the table entries in the passed-\/in block, but with a manual heading. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBlockTable_af1f2d9c57b11b3cf7f55b31021d85c88}{printAllBlocks} ()
+\begin{DoxyCompactList}\small\item\em Prints all of the Block data in our Blocks vector using the above methods. \item\end{DoxyCompactList}\item 
+string \hyperlink{classBlockTable_ac9a83858d9184169f92781ef26bf603a}{convertKind} (int)
+\begin{DoxyCompactList}\small\item\em Returns a string representation of a Kind enum. \item\end{DoxyCompactList}\item 
+string \hyperlink{classBlockTable_a325649dd7ce1533f3e06520ca2b6bc0a}{convertType} (int)
+\begin{DoxyCompactList}\small\item\em Returns a string representation of a Type enum. \item\end{DoxyCompactList}\item 
+string \hyperlink{classBlockTable_aeabaace35d80418e397dcf20c230f9b9}{tableEntrytoString} (\hyperlink{structTableEntry}{TableEntry})
+\begin{DoxyCompactList}\small\item\em Returns a string representation of a Table Entry. \item\end{DoxyCompactList}\item 
+vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$ \hyperlink{classBlockTable_a2d731b3b9e3313c65eb8d065d3ee9a0e}{returnCurrentBlock} ()
+\begin{DoxyCompactList}\small\item\em Returns the current block (TableEntry$\ast$ vector). \item\end{DoxyCompactList}\item 
+vector$<$ vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$ $>$ \hyperlink{classBlockTable_a0693b9fbb429eb427818b922796f0b4f}{returnAllBlocks} ()
+\begin{DoxyCompactList}\small\item\em Returns every block except the current one, since it is directly accessible. \item\end{DoxyCompactList}\item 
+int \hyperlink{classBlockTable_a445bc009943824d2611e64b10bcffecb}{currentLevel} ()
+\begin{DoxyCompactList}\small\item\em Returns the current block level. \item\end{DoxyCompactList}\item 
+string \hyperlink{classBlockTable_ac9c14b3836cb319a290db4bb6e952a49}{returnLexeme} (int)
+\begin{DoxyCompactList}\small\item\em Returns a given lexeme as a string. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSymbolTable}{SymbolTable} $\ast$ \hyperlink{classBlockTable_af9fff1a8017fac6c965910c1484d3d09}{table}
+\begin{DoxyCompactList}\small\item\em Empty pointer, which has a Scanner's Symbol Table attached when this class is Constructed. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$ $>$ \hyperlink{classBlockTable_a218731f3bdcdcc1aefe6f7e040693e39}{blocks}
+\begin{DoxyCompactList}\small\item\em A vector of Blocks. \item\end{DoxyCompactList}\item 
+vector$<$ \hyperlink{structTableEntry}{TableEntry} $\ast$ $>$ \hyperlink{classBlockTable_a6a762febfc7063228de04cdd6b3490cb}{currentBlock}
+\begin{DoxyCompactList}\small\item\em The current scope/block. \item\end{DoxyCompactList}\item 
+int \hyperlink{classBlockTable_a88b835ac538211364f1bd369edb5d1f3}{currentBlockIndex}
+\begin{DoxyCompactList}\small\item\em Counter that keeps track of our current nested level/the number of blocks within the vector. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The structure facilitating the creation and manipulation of Program Blocks. The \hyperlink{classBlockTable}{BlockTable} data structure allows us to keep track of Program Blocks, through a vector of such objects. A block itself is a Vector of \hyperlink{structTableEntry}{TableEntry} structures, and represents a logical block in a PL program, defined by a Begin/End pair such as a procedure call.
+
+The blocktable provides the capabilities and capacities for adding new blocks, searching for entries in given blocks, adding entries to blocks and smartly allowing us to construct these \hyperlink{structTableEntry}{TableEntry} structures through limited and properly defined access to the core compiler's Symbol Table. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classBlockTable_ab9659ed0c4fbbc10e919da0739c49e7e}{
+\index{BlockTable@{BlockTable}!BlockTable@{BlockTable}}
+\index{BlockTable@{BlockTable}!BlockTable@{BlockTable}}
+\subsubsection[{BlockTable}]{\setlength{\rightskip}{0pt plus 5cm}BlockTable::BlockTable ({\bf SymbolTable} \& {\em symbolTable})}}
+\label{classBlockTable_ab9659ed0c4fbbc10e919da0739c49e7e}
+
+
+Specification File. 
+
+Base Constructor.
+
+A \hyperlink{classBlockTable}{BlockTable} can only be constructed if a \hyperlink{classScanner}{Scanner}, and thus a \hyperlink{classSymbolTable}{SymbolTable}, exist. We assign the address of the symbol table to our local pointer, and set the base index of our block level/scope for the table/program. 
+
+References currentBlockIndex, and table.
+
+\hypertarget{classBlockTable_a5a78c20a967eb659c9f424687fe17c1d}{
+\index{BlockTable@{BlockTable}!$\sim$BlockTable@{$\sim$BlockTable}}
+\index{$\sim$BlockTable@{$\sim$BlockTable}!BlockTable@{BlockTable}}
+\subsubsection[{$\sim$BlockTable}]{\setlength{\rightskip}{0pt plus 5cm}BlockTable::$\sim$BlockTable ()}}
+\label{classBlockTable_a5a78c20a967eb659c9f424687fe17c1d}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classBlockTable_ac9a83858d9184169f92781ef26bf603a}{
+\index{BlockTable@{BlockTable}!convertKind@{convertKind}}
+\index{convertKind@{convertKind}!BlockTable@{BlockTable}}
+\subsubsection[{convertKind}]{\setlength{\rightskip}{0pt plus 5cm}string BlockTable::convertKind (int {\em kind})}}
+\label{classBlockTable_ac9a83858d9184169f92781ef26bf603a}
+
+
+Returns a string representation of a Kind enum. 
+
+Returns a given Kind of a \hyperlink{structTableEntry}{TableEntry} in string format.
+
+Converts a given Kind enum into a corresponding string. Mostly for error checking. If a given kind is not found, we report this. 
+
+References ARRAY, CONSTANT, DEFINED, PROCEDURE, and VARIABLE.
+
+\hypertarget{classBlockTable_a325649dd7ce1533f3e06520ca2b6bc0a}{
+\index{BlockTable@{BlockTable}!convertType@{convertType}}
+\index{convertType@{convertType}!BlockTable@{BlockTable}}
+\subsubsection[{convertType}]{\setlength{\rightskip}{0pt plus 5cm}string BlockTable::convertType (int {\em type})}}
+\label{classBlockTable_a325649dd7ce1533f3e06520ca2b6bc0a}
+
+
+Returns a string representation of a Type enum. 
+
+Returns a string representation of a given Type enum, or returns an error message and the function name. 
+
+References BOOLEAN, INTEGER, and UNIVERSAL.
+
+\hypertarget{classBlockTable_a445bc009943824d2611e64b10bcffecb}{
+\index{BlockTable@{BlockTable}!currentLevel@{currentLevel}}
+\index{currentLevel@{currentLevel}!BlockTable@{BlockTable}}
+\subsubsection[{currentLevel}]{\setlength{\rightskip}{0pt plus 5cm}int BlockTable::currentLevel ()}}
+\label{classBlockTable_a445bc009943824d2611e64b10bcffecb}
+
+
+Returns the current block level. 
+
+Returns the level of the current block, i.e.
+
+the index and scope. 
+
+References currentBlockIndex.
+
+\hypertarget{classBlockTable_a7deb886fce54f404a28de69543cd837b}{
+\index{BlockTable@{BlockTable}!define@{define}}
+\index{define@{define}!BlockTable@{BlockTable}}
+\subsubsection[{define}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::define (int {\em newid}, \/  {\bf Kind} {\em newkind}, \/  {\bf mType} {\em newtype})}}
+\label{classBlockTable_a7deb886fce54f404a28de69543cd837b}
+
+
+Defines a new block entry, but for non-\/const/non-\/array types. 
+
+Defines a new entry in the current block table if not found.
+
+Defines a new \hyperlink{structTableEntry}{TableEntry} record using the input data, adds it to the current block's vector of TableEntries, and returns true.
+
+If the item ALREADY existed (i.e. we try to define X when X is already found) then it returns false.
+
+This version of the function differs in that it is used for all non-\/const and non-\/array types. 
+
+References define().
+
+\hypertarget{classBlockTable_a52cc3e2d77fb52b3360b224b671ea6be}{
+\index{BlockTable@{BlockTable}!define@{define}}
+\index{define@{define}!BlockTable@{BlockTable}}
+\subsubsection[{define}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::define (int {\em newid}, \/  {\bf Kind} {\em newkind}, \/  {\bf mType} {\em newtype}, \/  int {\em newsize}, \/  int {\em newvalue})}}
+\label{classBlockTable_a52cc3e2d77fb52b3360b224b671ea6be}
+
+
+Creates an object if we don't find it in the current block. 
+
+Defines a new entry in the current block table if not found.
+
+We don't call Find as the caller of Define will know whether to check the other blocks. Return true when the object is stored successfully. returns false if the current block contains the object already
+
+Defines a new \hyperlink{structTableEntry}{TableEntry} record using the input data, adds it to the current block's vector of TableEntries, and returns true.
+
+If the item ALREADY existed (i.e. we try to define X when X is already found) then it returns false.
+
+newsize and newvalue are used to define const/array sizes/values, which need special handling. If the object is not a const or array, it will get a 0 for each. 
+
+References define().
+
+\hypertarget{classBlockTable_a55f1008e44189505a5ba66d50daa60d5}{
+\index{BlockTable@{BlockTable}!define@{define}}
+\index{define@{define}!BlockTable@{BlockTable}}
+\subsubsection[{define}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::define (int {\em newid}, \/  {\bf Kind} {\em newkind}, \/  {\bf mType} {\em newtype}, \/  int {\em newsize}, \/  int {\em newvalue}, \/  int {\em startLabel})}}
+\label{classBlockTable_a55f1008e44189505a5ba66d50daa60d5}
+
+
+References currentBlock, currentBlockIndex, TableEntry::displacement, TableEntry::id, TableEntry::level, TableEntry::okind, TableEntry::otype, search(), TableEntry::size, TableEntry::startLabel, and TableEntry::value.
+
+\hypertarget{classBlockTable_af91746a425e587ff501359f1df179ca8}{
+\index{BlockTable@{BlockTable}!endBlock@{endBlock}}
+\index{endBlock@{endBlock}!BlockTable@{BlockTable}}
+\subsubsection[{endBlock}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::endBlock ()}}
+\label{classBlockTable_af91746a425e587ff501359f1df179ca8}
+
+
+Decreaments the current block index, pops a block off the block table, and replaces the currentBlock with the previous one. 
+
+Ends the current block/exits the top-\/most scope.
+
+We clear the current block information, which is synonymous logically with ending the current given scope.
+
+All of the current tableEntrys go out of scope, and are thus cleared along with the other block data.
+
+Additionally, we move the previous block data back into our temporary block, and remove it from the top of the Blocks vector. This brings the \hyperlink{classBlockTable}{BlockTable} to the state it was in before it last raised its scope. 
+
+References blocks, currentBlock, and currentBlockIndex.
+
+\hypertarget{classBlockTable_a53d24a1a4460701c8129eabcebfa0870}{
+\index{BlockTable@{BlockTable}!find@{find}}
+\index{find@{find}!BlockTable@{BlockTable}}
+\subsubsection[{find}]{\setlength{\rightskip}{0pt plus 5cm}{\bf TableEntry} BlockTable::find (int {\em lookfor}, \/  bool \& {\em error})}}
+\label{classBlockTable_a53d24a1a4460701c8129eabcebfa0870}
+
+
+Searches through all of the blocks for a corresponding tableEntry and returns it. 
+
+Searches this and all above blocks for a given \hyperlink{structTableEntry}{TableEntry} ID.
+
+Otherwise, it returns a blank entry and an activated (TRUE) error flag by reference.
+
+Searches for a given \hyperlink{structTableEntry}{TableEntry} by ID in all of the blocks above and including the current one. This essentially searches all entries within scope to see if one currently exists.
+
+If an entry is found, we pass back an \char`\"{}all ok\char`\"{} flag (error = false) and directly return a copy of the given tableEntry itself.
+
+Otherwise, we return a blank table entry and activate our error flag (if the item is not found). 
+
+References blocks, and currentBlock.
+
+\hypertarget{classBlockTable_a6bdc70c8ad8a670f510803dc7df162ef}{
+\index{BlockTable@{BlockTable}!newBlock@{newBlock}}
+\index{newBlock@{newBlock}!BlockTable@{BlockTable}}
+\subsubsection[{newBlock}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::newBlock ()}}
+\label{classBlockTable_a6bdc70c8ad8a670f510803dc7df162ef}
+
+
+Push our old block onto the Table and create a new one for the new scope. 
+
+Adds a new block to the \hyperlink{classBlockTable}{BlockTable} and pushes the old one onto the main vector.
+
+Returns true-\/success/false-\/failure.
+
+If our maximum scope-\/level has not been reached, then we put the current block onto the overall \char`\"{}previous\char`\"{} vector (i.e. \char`\"{}higher level\char`\"{} of the scope).
+
+Really, we push a copy of it, and clear the current one, which allows us to save on memory and reduce the risk of errors.
+
+As usual, a True is returned if a block could be successfully created, and a false otherwise. 
+
+References blocks, currentBlock, currentBlockIndex, and MAXBLOCK.
+
+\hypertarget{classBlockTable_af1f2d9c57b11b3cf7f55b31021d85c88}{
+\index{BlockTable@{BlockTable}!printAllBlocks@{printAllBlocks}}
+\index{printAllBlocks@{printAllBlocks}!BlockTable@{BlockTable}}
+\subsubsection[{printAllBlocks}]{\setlength{\rightskip}{0pt plus 5cm}void BlockTable::printAllBlocks ()}}
+\label{classBlockTable_af1f2d9c57b11b3cf7f55b31021d85c88}
+
+
+Prints all of the Block data in our Blocks vector using the above methods. 
+
+Prints every Block in the \hyperlink{classBlockTable}{BlockTable}.
+
+Uses our above helper functions to print out all of the Blocks in our vector and then prints the current block. 
+
+References blocks, currentBlock, and printBlock().
+
+\hypertarget{classBlockTable_a7f4d48d59c7fab073a3b107a29d873a6}{
+\index{BlockTable@{BlockTable}!printBlock@{printBlock}}
+\index{printBlock@{printBlock}!BlockTable@{BlockTable}}
+\subsubsection[{printBlock}]{\setlength{\rightskip}{0pt plus 5cm}void BlockTable::printBlock (vector$<$ {\bf TableEntry} $\ast$ $>$ {\em block}, \/  string {\em name})}}
+\label{classBlockTable_a7f4d48d59c7fab073a3b107a29d873a6}
+
+
+Prints all of the table entries in the passed-\/in block, but with a manual heading. 
+
+Helper Printer function, prints a block's information in an easy-\/to-\/read format.
+
+Prints all of the table-\/entry records in a given passed-\/in block. A name parameter allows the caller to specificy specifics, such as the current \hyperlink{classParser}{Parser} function they are calling from.
+
+It utilizes our tableEntrytoString function to print the individual \hyperlink{structTableEntry}{TableEntry} records. 
+
+References tableEntrytoString().
+
+\hypertarget{classBlockTable_a06df0e10b6d3d810ee66e6f0a7373c6b}{
+\index{BlockTable@{BlockTable}!printBlock@{printBlock}}
+\index{printBlock@{printBlock}!BlockTable@{BlockTable}}
+\subsubsection[{printBlock}]{\setlength{\rightskip}{0pt plus 5cm}void BlockTable::printBlock (vector$<$ {\bf TableEntry} $\ast$ $>$ {\em block})}}
+\label{classBlockTable_a06df0e10b6d3d810ee66e6f0a7373c6b}
+
+
+Prints the passed-\/in Block (tableentry vector) in a tabular format. 
+
+Prints out the current block with a \char`\"{}stock\char`\"{} title/heading.
+
+Calls our main Block printing function with a default title of \char`\"{}Block\char`\"{} \hypertarget{classBlockTable_a0475d9253127e652e48a24ff3c09b38c}{
+\index{BlockTable@{BlockTable}!redefineSize@{redefineSize}}
+\index{redefineSize@{redefineSize}!BlockTable@{BlockTable}}
+\subsubsection[{redefineSize}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::redefineSize (int {\em id}, \/  int {\em newsize})}}
+\label{classBlockTable_a0475d9253127e652e48a24ff3c09b38c}
+
+
+Redefines the size of an Array entry in the current block, if it is found, otherwise returns false. 
+
+Changes the Size of an entry if said Array is found.
+
+Searches the current block for a given Array entry by id. If found, use the index to change its size, and return true. Otherwise (if not found) return false. 
+
+References currentBlock, and search().
+
+\hypertarget{classBlockTable_a0693b9fbb429eb427818b922796f0b4f}{
+\index{BlockTable@{BlockTable}!returnAllBlocks@{returnAllBlocks}}
+\index{returnAllBlocks@{returnAllBlocks}!BlockTable@{BlockTable}}
+\subsubsection[{returnAllBlocks}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ vector$<$ {\bf TableEntry} $\ast$ $>$ $>$ BlockTable::returnAllBlocks ()}}
+\label{classBlockTable_a0693b9fbb429eb427818b922796f0b4f}
+
+
+Returns every block except the current one, since it is directly accessible. 
+
+Returns all of the Blocks.
+
+Returns the Vector of the Blocks, a Vector of a Vector of \hyperlink{structTableEntry}{TableEntry} records. Does not return the current block. 
+
+References blocks.
+
+\hypertarget{classBlockTable_a2d731b3b9e3313c65eb8d065d3ee9a0e}{
+\index{BlockTable@{BlockTable}!returnCurrentBlock@{returnCurrentBlock}}
+\index{returnCurrentBlock@{returnCurrentBlock}!BlockTable@{BlockTable}}
+\subsubsection[{returnCurrentBlock}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ {\bf TableEntry} $\ast$ $>$ BlockTable::returnCurrentBlock ()}}
+\label{classBlockTable_a2d731b3b9e3313c65eb8d065d3ee9a0e}
+
+
+Returns the current block (TableEntry$\ast$ vector). 
+
+Returns the current block.
+
+Returns the current block, a vector of \hyperlink{structTableEntry}{TableEntry} pointers. 
+
+References currentBlock.
+
+\hypertarget{classBlockTable_ac9c14b3836cb319a290db4bb6e952a49}{
+\index{BlockTable@{BlockTable}!returnLexeme@{returnLexeme}}
+\index{returnLexeme@{returnLexeme}!BlockTable@{BlockTable}}
+\subsubsection[{returnLexeme}]{\setlength{\rightskip}{0pt plus 5cm}string BlockTable::returnLexeme (int {\em entryID})}}
+\label{classBlockTable_ac9c14b3836cb319a290db4bb6e952a49}
+
+
+Returns a given lexeme as a string. 
+
+Grabs the lexeme of a given table ID.
+
+References SymbolTable::getAttributeWhere(), and table.
+
+\hypertarget{classBlockTable_a72860f8f2ba53404cdf4fdbaf9d5f85e}{
+\index{BlockTable@{BlockTable}!search@{search}}
+\index{search@{search}!BlockTable@{BlockTable}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::search (int {\em lookFor}, \/  int \& {\em returnIndex})}}
+\label{classBlockTable_a72860f8f2ba53404cdf4fdbaf9d5f85e}
+
+
+Locates a given TE ID in the current Block, and pairs its index with the input integer reference. 
+
+Searches for a given entry and also returns its index.
+
+Determines (boolean) if a given lookfor (TE ID) is in the current block. If not, it returns a false. If it is found, it will return true as well as attaching the given Block index (location of the item) to the integer reference. 
+
+References currentBlock.
+
+\hypertarget{classBlockTable_aab6bf14513041f3d29a15f9ebd7a053e}{
+\index{BlockTable@{BlockTable}!search@{search}}
+\index{search@{search}!BlockTable@{BlockTable}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::search (int {\em lookFor}, \/  {\bf TableEntry} \& {\em entry})}}
+\label{classBlockTable_aab6bf14513041f3d29a15f9ebd7a053e}
+
+
+Locates a given ID in the current Block, then links said entry to the input \hyperlink{structTableEntry}{TableEntry} reference. 
+
+Search function with ID and actual Entry returns.
+
+Checks all of the entries in the current block to see if the entry ID is found. If found, we return true, but also attach the given item's address to the passed-\/in reference parameter. Thus, we return a reference to the item as well as the \hyperlink{structTableEntry}{TableEntry} ID. 
+
+References currentBlock.
+
+\hypertarget{classBlockTable_aa34f1de4dcf9db81aa420d2a9aca3a7c}{
+\index{BlockTable@{BlockTable}!search@{search}}
+\index{search@{search}!BlockTable@{BlockTable}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}bool BlockTable::search (int {\em lookFor})}}
+\label{classBlockTable_aa34f1de4dcf9db81aa420d2a9aca3a7c}
+
+
+Checks if a given \hyperlink{structTableEntry}{TableEntry} ID is found in the current Block. 
+
+Simple search function.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classBlockTable_a53d24a1a4460701c8129eabcebfa0870}{find()}
+\end{DoxySeeAlso}
+The user does not need the reference, but just a confirmation that a given \hyperlink{structTableEntry}{TableEntry} ID exists in our \hyperlink{classBlockTable}{BlockTable}.
+
+The \hyperlink{structTableEntry}{TableEntry} refrence is discarded automatically. 
+\begin{DoxyParams}{Parameters}
+\item[{\em lookfor}]\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool a boolean of if the ID was found 
+\end{DoxyReturn}
+\hypertarget{classBlockTable_aeabaace35d80418e397dcf20c230f9b9}{
+\index{BlockTable@{BlockTable}!tableEntrytoString@{tableEntrytoString}}
+\index{tableEntrytoString@{tableEntrytoString}!BlockTable@{BlockTable}}
+\subsubsection[{tableEntrytoString}]{\setlength{\rightskip}{0pt plus 5cm}string BlockTable::tableEntrytoString ({\bf TableEntry} {\em entry})}}
+\label{classBlockTable_aeabaace35d80418e397dcf20c230f9b9}
+
+
+Returns a string representation of a Table Entry. 
+
+Converts a given \hyperlink{structTableEntry}{TableEntry} record to a String record type.
+
+Creates a string with a specific formatting for outputting the given information of a specific Table Entry record. 
+
+References convertKind(), convertType(), SymbolTable::getAttributeWhere(), TableEntry::id, TableEntry::okind, TableEntry::otype, TableEntry::size, table, and TableEntry::value.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classBlockTable_a218731f3bdcdcc1aefe6f7e040693e39}{
+\index{BlockTable@{BlockTable}!blocks@{blocks}}
+\index{blocks@{blocks}!BlockTable@{BlockTable}}
+\subsubsection[{blocks}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ vector$<${\bf TableEntry}$\ast$ $>$ $>$ {\bf BlockTable::blocks}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classBlockTable_a218731f3bdcdcc1aefe6f7e040693e39}
+
+
+A vector of Blocks. 
+
+This represents a \char`\"{}table\char`\"{} of records, since a Block is a vector of table entries. \hypertarget{classBlockTable_a6a762febfc7063228de04cdd6b3490cb}{
+\index{BlockTable@{BlockTable}!currentBlock@{currentBlock}}
+\index{currentBlock@{currentBlock}!BlockTable@{BlockTable}}
+\subsubsection[{currentBlock}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf TableEntry}$\ast$$>$ {\bf BlockTable::currentBlock}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classBlockTable_a6a762febfc7063228de04cdd6b3490cb}
+
+
+The current scope/block. 
+
+All operations are done on this block. When we enter a new/deeper Scope, we push this block onto our main vector. Likewise, when the current scope dies, we do the inverse, and refill this block. \hypertarget{classBlockTable_a88b835ac538211364f1bd369edb5d1f3}{
+\index{BlockTable@{BlockTable}!currentBlockIndex@{currentBlockIndex}}
+\index{currentBlockIndex@{currentBlockIndex}!BlockTable@{BlockTable}}
+\subsubsection[{currentBlockIndex}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf BlockTable::currentBlockIndex}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classBlockTable_a88b835ac538211364f1bd369edb5d1f3}
+
+
+Counter that keeps track of our current nested level/the number of blocks within the vector. 
+
+\hypertarget{classBlockTable_af9fff1a8017fac6c965910c1484d3d09}{
+\index{BlockTable@{BlockTable}!table@{table}}
+\index{table@{table}!BlockTable@{BlockTable}}
+\subsubsection[{table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SymbolTable}$\ast$ {\bf BlockTable::table}}}
+\label{classBlockTable_af9fff1a8017fac6c965910c1484d3d09}
+
+
+Empty pointer, which has a Scanner's Symbol Table attached when this class is Constructed. 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{blocktable_8h}{blocktable.h}\item 
+\hyperlink{blocktable_8cpp}{blocktable.cpp}\end{DoxyCompactItemize}

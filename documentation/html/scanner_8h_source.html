@@ -88,27 +88,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00083"></a>00083     
 <a name="l00085"></a><a class="code" href="classScanner.html#a9b0471200485b0ab6d368c93ad718229">00085</a>     <a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>* <a class="code" href="classScanner.html#a9b0471200485b0ab6d368c93ad718229" title="Pointers to necessary Main objects needed by the Scanner.">symTable</a>;
 <a name="l00086"></a><a class="code" href="classScanner.html#a05dbf851548561062953e9b1f235a349">00086</a>     <a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>* <a class="code" href="classScanner.html#a05dbf851548561062953e9b1f235a349">adminPtr</a>;
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 <span class="keyword">public</span>:
-<a name="l00090"></a>00090     <a class="code" href="classScanner.html#afeff639ac96107cdd8f439a09ebceb1f" title="There should only be this one kind of constructor.">Scanner</a>(<a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>&amp;, <a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>&amp;);
-<a name="l00091"></a>00091 
-<a name="l00093"></a><a class="code" href="classScanner.html#a39f85e20f3ca942fd0a8e4bce88c27c7">00093</a>     <a class="code" href="classScanner.html#a39f85e20f3ca942fd0a8e4bce88c27c7" title="Basic, empty destructor.">~Scanner</a>() { };
-<a name="l00094"></a>00094     
-<a name="l00096"></a>00096     <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classScanner.html#ab43ce10667c1f695a396844449d3ab7d" title="Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate...">nextToken</a>();
-<a name="l00097"></a>00097     
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099     <span class="keywordtype">void</span> <a class="code" href="classScanner.html#a7fb5a6640567b85bd3b9dab76751dbb0" title="Links the Scanner&amp;#39;s &amp;quot;source&amp;quot; string to the original PL source code...">loadSource</a>(<span class="keywordtype">string</span>&amp;);
+<a name="l00087"></a>00087     
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="keyword">public</span>:
+<a name="l00092"></a>00092     <a class="code" href="classScanner.html#afeff639ac96107cdd8f439a09ebceb1f" title="There should only be this one kind of constructor.">Scanner</a>(<a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>&amp;, <a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>&amp;);
+<a name="l00093"></a>00093 
+<a name="l00095"></a><a class="code" href="classScanner.html#a39f85e20f3ca942fd0a8e4bce88c27c7">00095</a>     <a class="code" href="classScanner.html#a39f85e20f3ca942fd0a8e4bce88c27c7" title="Basic, empty destructor.">~Scanner</a>() { };
+<a name="l00096"></a>00096     
+<a name="l00098"></a>00098     <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classScanner.html#ab43ce10667c1f695a396844449d3ab7d" title="Goes to the next token and attempts to handle it; otherwise, it grabs the appropriate...">nextToken</a>();
+<a name="l00099"></a>00099     
 <a name="l00100"></a>00100 
-<a name="l00102"></a>00102     <span class="keywordtype">void</span> <a class="code" href="classScanner.html#a83df585ae4ba0622b9b6c107b0581a1c" title="Unused internal Scanning function.">scan</a>();
-<a name="l00103"></a>00103     
-<a name="l00105"></a>00105     <span class="keywordtype">string</span> <a class="code" href="classScanner.html#ad538231c15e7577c026a10be9b17f373" title="Returns the tokenized string.">getTokenizedString</a>();
-<a name="l00106"></a>00106     
-<a name="l00108"></a>00108     <span class="keywordtype">bool</span> <a class="code" href="classScanner.html#a8c4ee8c91d2e7d9ab06c8dc6e86c4ca4" title="Checks to see if we have reached the end of the range of the input string.">inRange</a>();
-<a name="l00109"></a>00109     
-<a name="l00111"></a>00111     <span class="keywordtype">bool</span> <a class="code" href="classScanner.html#afd047e2ead94064418395668a2c85253" title="Checks if a character is a &amp;quot;special&amp;quot; (parsable) character.">isSpecial</a>(<span class="keywordtype">char</span>);
-<a name="l00112"></a>00112 };
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 <span class="preprocessor">#endif</span>
+<a name="l00101"></a>00101     <span class="keywordtype">void</span> <a class="code" href="classScanner.html#a7fb5a6640567b85bd3b9dab76751dbb0" title="Links the Scanner&amp;#39;s &amp;quot;source&amp;quot; string to the original PL source code...">loadSource</a>(<span class="keywordtype">string</span>&amp;);
+<a name="l00102"></a>00102 
+<a name="l00104"></a>00104     <span class="keywordtype">void</span> <a class="code" href="classScanner.html#a83df585ae4ba0622b9b6c107b0581a1c" title="Unused internal Scanning function.">scan</a>();
+<a name="l00105"></a>00105     
+<a name="l00107"></a>00107     <span class="keywordtype">string</span> <a class="code" href="classScanner.html#ad538231c15e7577c026a10be9b17f373" title="Returns the tokenized string.">getTokenizedString</a>();
+<a name="l00108"></a>00108     
+<a name="l00110"></a>00110     <span class="keywordtype">bool</span> <a class="code" href="classScanner.html#a8c4ee8c91d2e7d9ab06c8dc6e86c4ca4" title="Checks to see if we have reached the end of the range of the input string.">inRange</a>();
+<a name="l00111"></a>00111     
+<a name="l00113"></a>00113     <span class="keywordtype">bool</span> <a class="code" href="classScanner.html#afd047e2ead94064418395668a2c85253" title="Checks if a character is a &amp;quot;special&amp;quot; (parsable) character.">isSpecial</a>(<span class="keywordtype">char</span>);
+<a name="l00114"></a>00114 };
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -124,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -55,6 +55,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a1fbe6cec5594463b766db0ac58c9aa1d">SymbolTable</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Basic constructor.  <a href="#a1fbe6cec5594463b766db0ac58c9aa1d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a5d5ae9b5b22d87691cec9ec17cfff650">~SymbolTable</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a1df7dfc3592c924e8c8a9fea1e13bf89">makeEntry</a> (string)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds another entry to table and increases the index then returning the previous index value.  <a href="#a1df7dfc3592c924e8c8a9fea1e13bf89"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a064e30f7ddbd4065244d1d41ea885737">makeEntry</a> (string, string, string)</td></tr>
@@ -78,6 +79,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns an integer representing the location of a lexeme, so long as it is an ID and actual lexeme.  <a href="#a33fa9fe363246a0b54e9f58191ad931e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a218f832e3d8b4d37cb3aee7af732a0c6">getNumOfReservedWords</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the reserved word count.  <a href="#a218f832e3d8b4d37cb3aee7af732a0c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#a70c8b5e2a159350ffefffffbf6d974ee">indexExists</a> (int)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks if a given index is within or at the end of the symbol table.  <a href="#a70c8b5e2a159350ffefffffbf6d974ee"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbolTable.html#ac98627cea258b0931be5286aacb1f478">numberOfReservedWords</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We store and return the number of possible reserved words.  <a href="#ac98627cea258b0931be5286aacb1f478"></a><br/></td></tr>
@@ -114,7 +117,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Default constructor for symboltable, initializes index to 0 and sets reserved words.</p>
 <p>We create a bunch of entries in our symbol table to reflect Reserved Words of the PL Language. The language specifies 17 particular reserved words, which we also store as an integer count. We set our index before making these entries. </p>
 
-<p>References <a class="el" href="symboltable_8h_source.html#l00081">index</a>, <a class="el" href="symboltable_8cpp_source.html#l00060">makeEntry()</a>, and <a class="el" href="symboltable_8h_source.html#l00129">numberOfReservedWords</a>.</p>
+<p>References <a class="el" href="symboltable_8h_source.html#l00081">index</a>, <a class="el" href="symboltable_8cpp_source.html#l00060">makeEntry()</a>, and <a class="el" href="symboltable_8h_source.html#l00130">numberOfReservedWords</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d5ae9b5b22d87691cec9ec17cfff650"></a><!-- doxytag: member="SymbolTable::~SymbolTable" ref="a5d5ae9b5b22d87691cec9ec17cfff650" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SymbolTable::~SymbolTable </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
 
 </div>
 </div>
@@ -260,7 +280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Verify that the attribute value at the given entry matches the one the caller is examining. </p>
 <p>Find if an attribute value exists given the information provided.</p>
-<p>We check if the given lexeme exists, then check if the Value of it is equivalent to the one sent by the caller (the final String "value"). Could be used for Macro shorthands, will likely be used by the <a class="el" href="classParser.html">Parser</a>.</p>
+<p>We check if the given lexeme exists, then check if the Value of it is equivalent to the one sent by the caller (the final String "value"). Could be used for Macro shorthands, will likely be used by the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>index</em>&nbsp;</td><td></td></tr>
@@ -472,7 +492,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Returns the reserved word count. </p>
 
-<p>References <a class="el" href="symboltable_8h_source.html#l00129">numberOfReservedWords</a>.</p>
+<p>References <a class="el" href="symboltable_8h_source.html#l00130">numberOfReservedWords</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a70c8b5e2a159350ffefffffbf6d974ee"></a><!-- doxytag: member="SymbolTable::indexExists" ref="a70c8b5e2a159350ffefffffbf6d974ee" args="(int)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SymbolTable::indexExists </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>index</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Checks if a given index is within or at the end of the symbol table. </p>
+<p>Checks if the index we desire is at the end of our <a class="el" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>.</p>
+<p>If empty, then our search value is the end of the Symbol Table, thus we have no entry with that index. Otherwise, an entry was found that has said index. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bool Boolean shows whether the index exists. </dd></dl>
+
+<p>References <a class="el" href="symboltable_8h_source.html#l00072">table</a>.</p>
 
 </div>
 </div>
@@ -622,7 +667,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -1,0 +1,25 @@
+\hypertarget{blocktable_8cpp}{
+\section{blocktable.cpp File Reference}
+\label{blocktable_8cpp}\index{blocktable.cpp@{blocktable.cpp}}
+}
+
+
+The definitions for the \hyperlink{classAdmin}{Admin} Class Object.  
+
+
+{\ttfamily \#include \char`\"{}blocktable.h\char`\"{}}\par
+
+
+\subsection{Detailed Description}
+The definitions for the \hyperlink{classAdmin}{Admin} Class Object. The \hyperlink{classBlockTable}{BlockTable} class manages a series and collection of Blocks. A Block is a collection of \hyperlink{structTableEntry}{TableEntry} records, which detail a specific semantic object -\/ such as \char`\"{}X\char`\"{}, which is an Integer of (value) 5.
+
+The ancilliary functions allow us to keep track of the current variables and properly check for scope issues and problems by checking for any previous declarations of a current object, and checking for consistency (i.e. that an Integer operation is being applied to an int).
+
+This is accomplished at parse-\/time by constructing and verifying \hyperlink{structTableEntry}{TableEntry} information through a single-\/access to the Scanner's symbol table.
+
+\begin{DoxyAuthor}{Author}
+Jordan Peoples, Chad Klassen, Adam Shepley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+March 1st to April 2nd, 2012 
+\end{DoxyDate}

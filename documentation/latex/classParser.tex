@@ -4,12 +4,17 @@
 }
 
 
+The main object for Parsing the PL source code and guaranteeing correctness.  
+
+
+
+
 {\ttfamily \#include $<$parser.h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classParser_a16503336f00dfa74eedd0ad3092d2c05}{Parser} (\hyperlink{classAdmin}{Admin} \&)
+\hyperlink{classParser_adb5ff4e366a04633abe9d33e951196b2}{Parser} (\hyperlink{classAdmin}{Admin} \&, \hyperlink{classSymbolTable}{SymbolTable} \&)
 \begin{DoxyCompactList}\small\item\em Base constructor, requires the admin parent object that created it. \item\end{DoxyCompactList}\item 
 \hyperlink{classParser_a3e658b5917a93a3ef648050d060e3a93}{$\sim$Parser} ()
 \begin{DoxyCompactList}\small\item\em Default Destructor. \item\end{DoxyCompactList}\item 
@@ -22,94 +27,105 @@ void \hyperlink{classParser_afd75ba38a886da3930c4a29f5d353a62}{match} (string, \
 void \hyperlink{classParser_a705ca7e2357f506dc5bea989e40ca11f}{syntaxError} (\hyperlink{classSet}{Set})
 \begin{DoxyCompactList}\small\item\em Outputs a syntax error message followed by the characters that would be correct. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a61a1e512e33d3498f45d1e6f7c7aaf4d}{syntaxCheck} (\hyperlink{classSet}{Set})
-\begin{DoxyCompactList}\small\item\em A function that requests an error check upon finding a character that is invalid. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A function that requests an error check upon finding a character that is invalid. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classParser_a7f02236268961b80c3d76902969a728a}{existsError} ()
+\begin{DoxyCompactList}\small\item\em Returns a TRUE if there is any kind of error. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classParser_a613d04900f76c66dfdf41e47aff6e539}{errorCount}
+\begin{DoxyCompactList}\small\item\em Keeps track of the Parsing Errors we encounter. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a10a64572cec26c50bdef9575fc79540e}{labelCount}
+\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}{Program} (\hyperlink{classSet}{Set} sts)
 \begin{DoxyCompactList}\small\item\em The following functions make up the core of our \hyperlink{classParser}{Parser}, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions. \item\end{DoxyCompactList}\item 
-void \hyperlink{classParser_a4d583a4596c19faf368265ec1948a42e}{Block} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a481fd10039485563c664099d5ace6428}{DefinitionPart} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aef0bb75e13a569ffde9f8a56625aeb41}{Definition} (\hyperlink{classSet}{Set} sts)
-\item 
+void \hyperlink{classParser_a229a836b6e6d8dce8826647fb430d99d}{Block} (int, int, \hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A Block grammar component, which equates to a specific program Scope. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_abc03fca869e43a1e72a28422fb96b8cb}{DefinitionPart} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em The latter half of a Block, the DefinitionPart. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a164c3a4ff56a3c75d9d26c8c47178b68}{Definition} (int \&, \hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A component Definition, which is of one of three types. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_abb393c5891c5a48e7be396bb6249ee4b}{ConstantDefinition} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a08145dddc145745970fe4849aa667e05}{VariableDefinition} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aca0b05f8805667f5057d695ee157ab74}{VariableDefinitionPart} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a0bb180ec60cb61345a7890c8766f0048}{TypeSymbol} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}{VariableList} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a0f04e446170cd685f2ab8ecb6782025f}{ProcedureDefintion} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Productions for the Definition type of Constant are tested. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a20052e491dc7c5f812dc2784f760731a}{VariableDefinition} (int \&, \hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Processes a Variable according to Definition. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a897a786bb66431b5f1cc0d3c76da5250}{VariableDefinitionPart} (\hyperlink{classSet}{Set} sts, int \&, \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} type)
+\begin{DoxyCompactList}\small\item\em Defines the definition of a VariableList, or an array. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_acc92d496e62aa2a482092dea20de2e67}{TypeSymbol} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Processes a TypeSymbol, of Boolean or Integer design. \item\end{DoxyCompactList}\item 
+vector$<$ int $>$ \hyperlink{classParser_a6ef905d0e7690e53c6794afdffa953cf}{VariableList} (\hyperlink{classSet}{Set} sts, \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} type, \hyperlink{blocktable_8h_aa10c9e8951b8ccf714a59ec321bdac5b}{Kind} kind)
+\begin{DoxyCompactList}\small\item\em Processes a variable list and guarantees a proper set of variable types. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_ae1399c8e85c6b366db055dd12914b0da}{ProcedureDefinition} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Defines a Procedure by name. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}{StatementPart} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Processes the StatementPart of a Block. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a23d5c23531d92c7249034a9e637b4467}{Statement} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Processes a Statement, which can be one of many. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_aa5c2ec1d4c045a6783887bd7453e99ed}{EmptyStatement} (\hyperlink{classSet}{Set} sts)
 \item 
 void \hyperlink{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}{ReadStatement} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}{VariableAccessList} (\hyperlink{classSet}{Set} sts)
-\item 
+vector$<$ \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} $>$ \hyperlink{classParser_a83bdac30bb8bb5d9ee0c820b4d670179}{VariableAccessList} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em We need to track the various types that make up an access list. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a092a51a38e65c3be07328bfc1e370f0e}{WriteStatement} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_a867bebdf8a97af4991fe044b9d7e616b}{ExpressionList} (\hyperlink{classSet}{Set} sts)
-\item 
+vector$<$ \hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} $>$ \hyperlink{classParser_a5b5064d9a2c559fb1aae1c39d5fe3663}{ExpressionList} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em An Expression list can have a series of different types. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a472a0dc9ed06ffc3ec260992ae7197ca}{AssignmentStatement} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Processes an AssignmentStatement grammar component, a subpart of Statement. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a7a6c6b63d49340ff06c453ce8954eeff}{ProcedureStatement} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Processes a subtype of Statement, a Proc. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_af7ef9a71f5e821040a16974c4602e23e}{IfStatement} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em Verifies the If guard process. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_ae1ced275b4dafa58b751c66333a41f98}{DoStatement} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a00618d906669f1d0908961dc6c6c51e0}{GuardedCommandList} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_ab9dbadf49595360da28b8cc77ddec8e7}{GuardedCommand} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a155ac163cd68b4e1b8098b43be1189e1}{Expression} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em processes the Do guarded command. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a071376c630a3e05acaf3b16c35736bf2}{GuardedCommandList} (int \&, int, \hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Matches the valid guarded commands along with the specifiers \mbox{[}\mbox{]}. \item\end{DoxyCompactList}\item 
+void \hyperlink{classParser_a0259d21a13d0fcf20a813ad5ce70d454}{GuardedCommand} (int \&, int, \hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Matches the guards for a GuardedCommand via Expression type check. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_ab441560920f594e80d354c51ce64b77e}{Expression} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Checks the PrimaryExpression evals to determine Eval's type(s) Chains up to ExpressionList Returns a type resulting from the corresponding PrimaryExpression evaluations and uses a vector as (similar to SimpleExpression and Term) there is the possibility of multiple types needing comparison; This is because of the following grammar: Expression -\/$>$ PrimaryExpression \{ PrimaryOperator PrimaryExpression \}. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a7ac200c2e0ac927e115027fb593ac72d}{PrimaryOperator} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_abe6f497eafd870c3e9f28d4c241e280a}{PrimaryExpression} (\hyperlink{classSet}{Set} sts)
-\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a293b721a8e832a137e495a6a2178188e}{PrimaryExpression} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A Primary Expression is a SimpleExpression with an optional operator with a simple expression. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_ab68b61bab0a323b67457d520578cb853}{RelationalOperator} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}{SimpleExpression} (\hyperlink{classSet}{Set} sts)
-\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a9952c751bac78c4e0b3db7be474ed099}{SimpleExpression} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A SimpleExpression must evaluate to an Integer type and defines a simple expression. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a909c968479dd3bafe797f2409e197179}{AddingOperator} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}{Term} (\hyperlink{classSet}{Set} sts)
-\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a55466d8b3d146f56c56e8eb53559e4b1}{Term} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A Term is part of a SimpleExpression, and thus Primary Expression. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a0f016865b3ae30a62a06abbb7fca7345}{MultiplyingOperator} (\hyperlink{classSet}{Set} sts)
 \item 
-void \hyperlink{classParser_a1310e1db541b2a3b614ec4491b7196ea}{Factor} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_ac004c4cc14aeca2512087a692594786b}{VariableAccess} (\hyperlink{classSet}{Set} sts)
-\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a071f2167f08d7bb2838ce98e67dfcc99}{Factor} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Processes the Factor's possible productions and deterimines the correct types. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_aef1c7098390f845332d10b95778aee37}{VariableAccess} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em The production for grabbing a Variable from a VariableAccessList. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}{IndexedSelector} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}{Constant} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aadadd3280fa339b1433a8ad665479bc4}{Numeral} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aa4a37b37b244053459fad1a82c7d9491}{BooleanSymbol} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_aec8b7271b672c8d609cf1df8b51cacc9}{ConstantName} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}{VariableName} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a72cc285af2d83a0348a47a78aced1582}{ProcedureName} (\hyperlink{classSet}{Set} sts)
-\item 
-void \hyperlink{classParser_a3eeedadd101b70aef097d1ef8f5f8974}{FactorName} (\hyperlink{classSet}{Set} sts)
-\item 
+\begin{DoxyCompactList}\small\item\em The index selector for a List, such as a VariableAccessList. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_af12c5409d708918579a425a44db62fd2}{Constant} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Checks validity of a Constant in an input program string. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_afbf7450bc228d82258cf38e8b0733005}{Numeral} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Guarantees that a Numeral was examined. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_abe1306c1c2cd82d3d690c42d0aef228f}{BooleanSymbol} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Checks the validity of a Boolean at this point in the program. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_abac5f93f9f59866cb683a5414cee14ac}{ConstantName} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em We return the type of a constant name. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_acc9e56bb590b37f7ab87395585d2f2de}{VariableName} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em Production for a Variable Name. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a40cd3f4f71c1e5ab0d484679002e55bd}{ProcedureName} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em The name of the Procedure is checked. \item\end{DoxyCompactList}\item 
+\hyperlink{blocktable_8h_a636cfca014f3212ea82d45e28f9cb51b}{mType} \hyperlink{classParser_a7f7f4a0f793d5c31f2a75ea10b426968}{FactorName} (\hyperlink{classSet}{Set} sts)
+\begin{DoxyCompactList}\small\item\em A FactorName is a VariableAccess for resolving FACTOR productions. \item\end{DoxyCompactList}\item 
 void \hyperlink{classParser_a862ea4d5a0d322471e3183aa4d51ad4b}{debug} (string, \hyperlink{classSet}{Set}, \hyperlink{classToken}{Token})
-\begin{DoxyCompactList}\small\item\em A function for printing debug parsing information to the screen. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A function for printing debug parsing information to the screen. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a8f14f036744fbf72a2d3fa1b30f5b334}{NewLabel} ()
+\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -117,18 +133,41 @@ void \hyperlink{classParser_a862ea4d5a0d322471e3183aa4d51ad4b}{debug} (string, \
 \begin{DoxyCompactList}\small\item\em Tokens retrieved using the scanner and used in parsing heuristics. \item\end{DoxyCompactList}\item 
 \hyperlink{classToken}{Token} \hyperlink{classParser_a4f9e59e89197efefa1feff50f5ea8725}{lookAheadToken}
 \item 
+\hyperlink{classToken}{Token} \hyperlink{classParser_aa77efdbbc573c3c89169e199b996e0a1}{prevToken}
+\item 
 \hyperlink{classAdmin}{Admin} $\ast$ \hyperlink{classParser_a96a8ee1229f37648e0ee704827b1c4c7}{admin}
 \begin{DoxyCompactList}\small\item\em The \hyperlink{classParser}{Parser} uses the \hyperlink{classScanner}{Scanner} to parse the file, through a pointer to the admin class. \item\end{DoxyCompactList}\item 
 bool \hyperlink{classParser_a090a56f54cfd45240a039863b8289581}{debugflag}
-\begin{DoxyCompactList}\small\item\em The Debug function only processes if this Flag is set to True. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em The Debug function only processes if this Flag is set to True. \item\end{DoxyCompactList}\item 
+\hyperlink{classSymbolTable}{SymbolTable} $\ast$ \hyperlink{classParser_aa5635cdb5fc754cc3ea8b85eca02dfda}{table}
+\begin{DoxyCompactList}\small\item\em A Symbol Table pointer, allowing direct access to Symbol Table information. \item\end{DoxyCompactList}\item 
+\hyperlink{classBlockTable}{BlockTable} $\ast$ \hyperlink{classParser_a817d3fe67a8ee070f01fd759f8d5d30f}{blocktable}
+\begin{DoxyCompactList}\small\item\em A blocktable object used for proper Scope checking facilities. \item\end{DoxyCompactList}\item 
+string \hyperlink{classParser_aeee13154ac5d45a615a57fd4d982487b}{prevMatch} \mbox{[}4\mbox{]}
+\item 
+int \hyperlink{classParser_a4068ed26fd5e4ea914a05979ba4d792c}{prevID}
+\item 
+stack$<$ \hyperlink{parser_8h_a84146e06b05135ce314ab9e853e43d8c}{blocktype} $>$ \hyperlink{classParser_ae9c8fcaf225a1d019fc1e87ee330605c}{blockTypeStack}
+\begin{DoxyCompactList}\small\item\em Used to track what area of the Block we are currently in, and thus what mType we should be returning. \item\end{DoxyCompactList}\item 
+int \hyperlink{classParser_a43e9e43e927c28bc883fd7ff20d165a1}{numberOfScopeTypeErrors}
+\begin{DoxyCompactList}\small\item\em Tracks the Scope type of parsing errors we encounter. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+The main object for Parsing the PL source code and guaranteeing correctness. The \hyperlink{classParser}{Parser} is responsible for verifying that the syntax in a PL program's source code is semantically correct. It verifies/guarantees that a program corresponds to the correct series of Production Rules of the PL grammar, but correspondingly guarantees that the scope and type checking rules, or rather, the implicit rules of the grammar are also adhered to.
+
+The Function Call tree that is generated corresponds to the outline for a correct Parse tree for the PL grammar, and thus an incorrect program will break this tree at some point, in some fashion.
+
+Every function call corresponds to a PL production or a corrected PL production set (adjusted for ambiguity or problems when present).
+
+The \hyperlink{classParser}{Parser} uses a \hyperlink{classBlockTable}{BlockTable} to ensure that the scope and type rules are valid when parsing a given statement. This is done by ensuring that the scope of an \char`\"{}entry\char`\"{} is correct or \char`\"{}new\char`\"{}, and that all following usages of a declaration are verified in kind. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classParser_a16503336f00dfa74eedd0ad3092d2c05}{
+\hypertarget{classParser_adb5ff4e366a04633abe9d33e951196b2}{
 \index{Parser@{Parser}!Parser@{Parser}}
 \index{Parser@{Parser}!Parser@{Parser}}
-\subsubsection[{Parser}]{\setlength{\rightskip}{0pt plus 5cm}Parser::Parser ({\bf Admin} \& {\em adminObject})}}
-\label{classParser_a16503336f00dfa74eedd0ad3092d2c05}
+\subsubsection[{Parser}]{\setlength{\rightskip}{0pt plus 5cm}Parser::Parser ({\bf Admin} \& {\em adminObject}, \/  {\bf SymbolTable} \& {\em symTable})}}
+\label{classParser_adb5ff4e366a04633abe9d33e951196b2}
 
 
 Base constructor, requires the admin parent object that created it. 
@@ -142,7 +181,7 @@ Binds the external admin object locally, controls the debug status and sets the 
 \item[{\em adminObject}]a reference to the parent \hyperlink{classAdmin}{Admin} object. \end{DoxyParams}
 
 
-References admin, debugflag, lookAheadToken, and nextToken().
+References admin, blocktable, debugflag, errorCount, labelCount, lookAheadToken, nextToken(), numberOfScopeTypeErrors, and table.
 
 \hypertarget{classParser_a3e658b5917a93a3ef648050d060e3a93}{
 \index{Parser@{Parser}!$\sim$Parser@{$\sim$Parser}}
@@ -172,34 +211,72 @@ References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck
 \label{classParser_a472a0dc9ed06ffc3ec260992ae7197ca}
 
 
-References debug(), ExpressionList(), First::ExpressionList(), lookAheadToken, match(), Set::munion(), syntaxCheck(), and VariableAccessList().
+Processes an AssignmentStatement grammar component, a subpart of Statement. 
 
-\hypertarget{classParser_a4d583a4596c19faf368265ec1948a42e}{
+Uses two vectors of mTypes to match up to Variable and Expression lists, and guarantee their types match correspondingly, or outputs a type mismatch error therein. 
+
+References admin, blocktable, BOOLEAN, CBOOLEAN, CINTEGER, BlockTable::convertType(), debug(), Admin::emit2(), ExpressionList(), First::ExpressionList(), Admin::getColumnNumber(), Admin::getLineNumber(), INTEGER, lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, syntaxCheck(), and VariableAccessList().
+
+\hypertarget{classParser_a229a836b6e6d8dce8826647fb430d99d}{
 \index{Parser@{Parser}!Block@{Block}}
 \index{Block@{Block}!Parser@{Parser}}
-\subsubsection[{Block}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Block ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a4d583a4596c19faf368265ec1948a42e}
+\subsubsection[{Block}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Block (int {\em beginLabel}, \/  int {\em varLabel}, \/  {\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a229a836b6e6d8dce8826647fb430d99d}
 
 
-References debug(), DefinitionPart(), First::DefinitionPart(), lookAheadToken, match(), Set::munion(), StatementPart(), First::StatementPart(), and syntaxCheck().
+A Block grammar component, which equates to a specific program Scope. 
 
-\hypertarget{classParser_aa4a37b37b244053459fad1a82c7d9491}{
+Each Block contains a DefinitionPart and StatementPart, and indicates that a new program Scope has been entered. Thus, the internal parts have access to the previous Block entries (scope data) but the StatementPart AFTER this block (if any) will not have access to the information created in this Block production (we use endBlock to ensure this.) 
+
+A new scope has started.
+
+The previous scope (block) has ended. 
+
+
+
+References admin, blocktable, debug(), DefinitionPart(), First::DefinitionPart(), Admin::emit2(), Admin::emit3(), BlockTable::endBlock(), lookAheadToken, match(), Set::munion(), BlockTable::newBlock(), StatementPart(), First::StatementPart(), and syntaxCheck().
+
+\hypertarget{classParser_abe1306c1c2cd82d3d690c42d0aef228f}{
 \index{Parser@{Parser}!BooleanSymbol@{BooleanSymbol}}
 \index{BooleanSymbol@{BooleanSymbol}!Parser@{Parser}}
-\subsubsection[{BooleanSymbol}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::BooleanSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aa4a37b37b244053459fad1a82c7d9491}
+\subsubsection[{BooleanSymbol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::BooleanSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_abe1306c1c2cd82d3d690c42d0aef228f}
 
 
-References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+Checks the validity of a Boolean at this point in the program. 
 
-\hypertarget{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}{
+Ensures the next token is proper for a boolean of some sort, then returns a BOOLEAN mType for our semantic analysis. 
+
+Makes sure our proceeding tokens are correct for a boolean expression.
+
+Ensures that the \hyperlink{classParser}{Parser} knows that a Boolean was evaluated. 
+
+
+
+References BOOLEAN, debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_af12c5409d708918579a425a44db62fd2}{
 \index{Parser@{Parser}!Constant@{Constant}}
 \index{Constant@{Constant}!Parser@{Parser}}
-\subsubsection[{Constant}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Constant ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aa1a1fb5ff017a1b3fbaabf63033586fa}
+\subsubsection[{Constant}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::Constant ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_af12c5409d708918579a425a44db62fd2}
 
 
-References BooleanSymbol(), ConstantName(), debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Numeral(), and syntaxCheck().
+Checks validity of a Constant in an input program string. 
+
+Either in a constantDefinition or an Array definition, Can be a Numeral, BooleanSymbol or ConstantName
+
+A constant can be one of multiple types, and thus we check which one while checking the validity and let that mtype information chain upwards. 
+
+Create firstsets of the possibilities of a Constant.
+
+Check for validity of the matching token, which is one of these...
+
+then we return the given matching type. 
+
+
+
+References admin, blockTypeStack, BooleanSymbol(), ConstantName(), debug(), Admin::emit2(), Token::getLexeme(), Token::getValue(), Set::isMember(), lookAheadToken, Numeral(), STATEMENTPART, and syntaxCheck().
 
 \hypertarget{classParser_abb393c5891c5a48e7be396bb6249ee4b}{
 \index{Parser@{Parser}!ConstantDefinition@{ConstantDefinition}}
@@ -208,14 +285,26 @@ References BooleanSymbol(), ConstantName(), debug(), Token::getLexeme(), Set::is
 \label{classParser_abb393c5891c5a48e7be396bb6249ee4b}
 
 
-References Constant(), First::Constant(), ConstantName(), First::ConstantName(), debug(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+Productions for the Definition type of Constant are tested. 
 
-\hypertarget{classParser_aec8b7271b672c8d609cf1df8b51cacc9}{
+Consists of \char`\"{}const\char`\"{} ConstantName \char`\"{}=\char`\"{} Constant -\/$>$
+
+Thus, we check to make sure each component is value, and check the Constant and ConstantName productions.
+
+Here, is where we check to see that the Constant information does not exist in our scope already, and generate an error if it does. 
+
+References admin, blocktable, BOOLEAN, Constant(), CONSTANT, First::Constant(), ConstantName(), First::ConstantName(), debug(), BlockTable::define(), BlockTable::find(), Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Token::getValue(), INTEGER, lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, TableEntry::okind, TableEntry::otype, syntaxCheck(), UNIVERSAL, and TableEntry::value.
+
+\hypertarget{classParser_abac5f93f9f59866cb683a5414cee14ac}{
 \index{Parser@{Parser}!ConstantName@{ConstantName}}
 \index{ConstantName@{ConstantName}!Parser@{Parser}}
-\subsubsection[{ConstantName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ConstantName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aec8b7271b672c8d609cf1df8b51cacc9}
+\subsubsection[{ConstantName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::ConstantName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_abac5f93f9f59866cb683a5414cee14ac}
 
+
+We return the type of a constant name. 
+
+We're in the definition part at this point, and thus defining the const in its name. 
 
 References debug(), lookAheadToken, syntaxCheck(), and VariableName().
 
@@ -241,23 +330,52 @@ Outputs the current parsing information as a form of debugging information. The 
 
 References admin, debugflag, Admin::getColumnNumber(), and Admin::getLineNumber().
 
-\hypertarget{classParser_aef0bb75e13a569ffde9f8a56625aeb41}{
+\hypertarget{classParser_a164c3a4ff56a3c75d9d26c8c47178b68}{
 \index{Parser@{Parser}!Definition@{Definition}}
 \index{Definition@{Definition}!Parser@{Parser}}
-\subsubsection[{Definition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Definition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aef0bb75e13a569ffde9f8a56625aeb41}
+\subsubsection[{Definition}]{\setlength{\rightskip}{0pt plus 5cm}int Parser::Definition (int \& {\em varStart}, \/  {\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a164c3a4ff56a3c75d9d26c8c47178b68}
 
 
-References ConstantDefinition(), First::ConstantDefinition(), debug(), Token::getLexeme(), lookAheadToken, First::ProcedureDefinition(), ProcedureDefintion(), syntaxCheck(), VariableDefinition(), and First::VariableDefinition().
+A component Definition, which is of one of three types. 
 
-\hypertarget{classParser_a481fd10039485563c664099d5ace6428}{
+No special type checking or scope rules occurs here, but rather, in one of the proceeding functions.
+
+A Definition can be one of these three types: Constant, Variable or Procedure; an array is of type Variable, of course.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classParser_abc03fca869e43a1e72a28422fb96b8cb}{DefinitionPart()} 
+\end{DoxySeeAlso}
+
+
+We simply check which kind of Definition the next token belongs to. 
+
+
+
+References ConstantDefinition(), First::ConstantDefinition(), debug(), Token::getLexeme(), lookAheadToken, ProcedureDefinition(), First::ProcedureDefinition(), syntaxCheck(), VariableDefinition(), and First::VariableDefinition().
+
+\hypertarget{classParser_abc03fca869e43a1e72a28422fb96b8cb}{
 \index{Parser@{Parser}!DefinitionPart@{DefinitionPart}}
 \index{DefinitionPart@{DefinitionPart}!Parser@{Parser}}
-\subsubsection[{DefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::DefinitionPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a481fd10039485563c664099d5ace6428}
+\subsubsection[{DefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}int Parser::DefinitionPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_abc03fca869e43a1e72a28422fb96b8cb}
 
 
-References debug(), First::Definition(), Definition(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+The latter half of a Block, the DefinitionPart. 
+
+The DefinitionPart is where PL constructs are first declared, though only given distinct values in the cases of Proc names, Const values, and array sizes.
+
+The block type is recorded to ensure that Expressions and guards evaluate properly. 
+
+Used to guarantee that the proceeding productions have the right semantic types when checked.
+
+Loops through until we find a \hyperlink{classToken}{Token} that isn't a valid Definition/is the end of the DefinitionPart
+
+Since we are no longer in the DefinitionPart, we pop it off the Type stack. 
+
+
+
+References blockTypeStack, debug(), First::Definition(), Definition(), DEFINITIONPART, Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
 
 \hypertarget{classParser_ae1ced275b4dafa58b751c66333a41f98}{
 \index{Parser@{Parser}!DoStatement@{DoStatement}}
@@ -266,7 +384,11 @@ References debug(), First::Definition(), Definition(), Token::getLexeme(), Set::
 \label{classParser_ae1ced275b4dafa58b751c66333a41f98}
 
 
-References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+processes the Do guarded command. 
+
+Part of guaranteeing the Guards are correct. Matches the relevent guards checks that the subsequent guarded command list is valid. 
+
+References admin, debug(), Admin::emit2(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), NewLabel(), and syntaxCheck().
 
 \hypertarget{classParser_aa5c2ec1d4c045a6783887bd7453e99ed}{
 \index{Parser@{Parser}!EmptyStatement@{EmptyStatement}}
@@ -277,57 +399,108 @@ References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAhead
 
 References debug(), lookAheadToken, match(), and syntaxCheck().
 
-\hypertarget{classParser_a155ac163cd68b4e1b8098b43be1189e1}{
+\hypertarget{classParser_a7f02236268961b80c3d76902969a728a}{
+\index{Parser@{Parser}!existsError@{existsError}}
+\index{existsError@{existsError}!Parser@{Parser}}
+\subsubsection[{existsError}]{\setlength{\rightskip}{0pt plus 5cm}bool Parser::existsError ()}}
+\label{classParser_a7f02236268961b80c3d76902969a728a}
+
+
+Returns a TRUE if there is any kind of error. 
+
+Returns a true if any errors of any kind are found.
+
+References errorCount, and numberOfScopeTypeErrors.
+
+\hypertarget{classParser_ab441560920f594e80d354c51ce64b77e}{
 \index{Parser@{Parser}!Expression@{Expression}}
 \index{Expression@{Expression}!Parser@{Parser}}
-\subsubsection[{Expression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Expression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a155ac163cd68b4e1b8098b43be1189e1}
+\subsubsection[{Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::Expression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ab441560920f594e80d354c51ce64b77e}
 
 
-References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Set::munion(), First::PrimaryExpression(), PrimaryExpression(), PrimaryOperator(), First::PrimaryOperator(), and syntaxCheck().
+Checks the PrimaryExpression evals to determine Eval's type(s) Chains up to ExpressionList Returns a type resulting from the corresponding PrimaryExpression evaluations and uses a vector as (similar to SimpleExpression and Term) there is the possibility of multiple types needing comparison; This is because of the following grammar: Expression -\/$>$ PrimaryExpression \{ PrimaryOperator PrimaryExpression \}. 
 
-\hypertarget{classParser_a867bebdf8a97af4991fe044b9d7e616b}{
+
+
+References admin, BOOLEAN, CBOOLEAN, CINTEGER, debug(), Admin::emit1(), Token::getLexeme(), INTEGER, Set::isMember(), lookAheadToken, Set::munion(), First::PrimaryExpression(), PrimaryExpression(), PrimaryOperator(), First::PrimaryOperator(), syntaxCheck(), and UNIVERSAL.
+
+\hypertarget{classParser_a5b5064d9a2c559fb1aae1c39d5fe3663}{
 \index{Parser@{Parser}!ExpressionList@{ExpressionList}}
 \index{ExpressionList@{ExpressionList}!Parser@{Parser}}
-\subsubsection[{ExpressionList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ExpressionList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a867bebdf8a97af4991fe044b9d7e616b}
+\subsubsection[{ExpressionList}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ {\bf mType} $>$ Parser::ExpressionList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a5b5064d9a2c559fb1aae1c39d5fe3663}
 
+
+An Expression list can have a series of different types. 
+
+Evaluates a list of Expressions for use by Statements.
+
+Grabs all of the types of the expression(s) and stores them in a vector, which is later returned. 
 
 References debug(), First::Expression(), Expression(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
 
-\hypertarget{classParser_a1310e1db541b2a3b614ec4491b7196ea}{
+\hypertarget{classParser_a071f2167f08d7bb2838ce98e67dfcc99}{
 \index{Parser@{Parser}!Factor@{Factor}}
 \index{Factor@{Factor}!Parser@{Parser}}
-\subsubsection[{Factor}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Factor ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a1310e1db541b2a3b614ec4491b7196ea}
+\subsubsection[{Factor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::Factor ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a071f2167f08d7bb2838ce98e67dfcc99}
 
 
-References First::Constant(), Constant(), debug(), Expression(), First::Expression(), First::Factor(), FactorName(), First::FactorName(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), syntaxError(), First::VariableAccess(), and VariableAccess().
+Processes the Factor's possible productions and deterimines the correct types. 
 
-\hypertarget{classParser_a3eeedadd101b70aef097d1ef8f5f8974}{
+Calls FactorName instead of VariableName, to remove an ambiguity. Determines the type of Factor and returns it, or an error. 
+
+$\ast$ $\ast$ $\ast$ $\ast$ $\ast$
+
+FIX TO 1 BY REMOVING THE -\/1 ALSO IN FACTOR NAME. ED is currently starting at 1, but we think el should start at 1 but it starts at 0. We would have to change -\/ , +, AND, OR, $>$, $<$ possibly to the post-\/fix form. Also EQUALS $\ast$
+
+
+
+References admin, blocktable, First::Constant(), Constant(), BlockTable::currentLevel(), debug(), TableEntry::displacement, Admin::emit1(), Admin::emit3(), Expression(), First::Expression(), First::Factor(), FactorName(), First::FactorName(), BlockTable::find(), Token::getLexeme(), Token::getValue(), TableEntry::level, lookAheadToken, match(), Set::munion(), TableEntry::okind, syntaxCheck(), VARIABLE, and VariableAccess().
+
+\hypertarget{classParser_a7f7f4a0f793d5c31f2a75ea10b426968}{
 \index{Parser@{Parser}!FactorName@{FactorName}}
 \index{FactorName@{FactorName}!Parser@{Parser}}
-\subsubsection[{FactorName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::FactorName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a3eeedadd101b70aef097d1ef8f5f8974}
+\subsubsection[{FactorName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::FactorName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a7f7f4a0f793d5c31f2a75ea10b426968}
 
 
-References BooleanSymbol(), First::BooleanSymbol(), First::Constant(), Token::getLexeme(), IndexedSelector(), First::IndexedSelector(), Set::isMember(), lookAheadToken, match(), Set::munion(), Numeral(), First::Numeral(), syntaxCheck(), and First::VariableAccess().
+A FactorName is a VariableAccess for resolving FACTOR productions. 
 
-\hypertarget{classParser_ab9dbadf49595360da28b8cc77ddec8e7}{
+Returns the given type of the factor (numeral, boolean or universal). Alternatively, if the next token is a VariableName, it grabs the type that said Variable corresponds to. 
+
+If it's a name, grab its type, and process the index if it's an array
+
+Otherwise, it's either a Numeral or a Boolean symbol type. Process them. 
+
+
+
+References admin, blocktable, BooleanSymbol(), First::BooleanSymbol(), First::Constant(), BlockTable::currentLevel(), debug(), TableEntry::displacement, Admin::emit1(), Admin::emit3(), BlockTable::find(), Token::getLexeme(), Admin::getLineNumber(), Token::getValue(), IndexedSelector(), First::IndexedSelector(), Set::isMember(), TableEntry::level, lookAheadToken, Set::munion(), Numeral(), First::Numeral(), TableEntry::size, syntaxCheck(), First::VariableAccess(), and VariableName().
+
+\hypertarget{classParser_a0259d21a13d0fcf20a813ad5ce70d454}{
 \index{Parser@{Parser}!GuardedCommand@{GuardedCommand}}
 \index{GuardedCommand@{GuardedCommand}!Parser@{Parser}}
-\subsubsection[{GuardedCommand}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommand ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_ab9dbadf49595360da28b8cc77ddec8e7}
+\subsubsection[{GuardedCommand}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommand (int \& {\em thisLabel}, \/  int {\em GoTo}, \/  {\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a0259d21a13d0fcf20a813ad5ce70d454}
 
 
-References debug(), Expression(), lookAheadToken, match(), Set::munion(), StatementPart(), First::StatementPart(), and syntaxCheck().
+Matches the guards for a GuardedCommand via Expression type check. 
 
-\hypertarget{classParser_a00618d906669f1d0908961dc6c6c51e0}{
+Brief...then evaluates the StatementPart of a Guarded command (do ..., if ...) If the expression type is not a Boolean, then it throws the proper error. Does not chain up. 
+
+References admin, BOOLEAN, CBOOLEAN, debug(), Admin::emit2(), Expression(), Admin::getColumnNumber(), Admin::getLineNumber(), lookAheadToken, match(), Set::munion(), NewLabel(), numberOfScopeTypeErrors, StatementPart(), First::StatementPart(), and syntaxCheck().
+
+\hypertarget{classParser_a071376c630a3e05acaf3b16c35736bf2}{
 \index{Parser@{Parser}!GuardedCommandList@{GuardedCommandList}}
 \index{GuardedCommandList@{GuardedCommandList}!Parser@{Parser}}
-\subsubsection[{GuardedCommandList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommandList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a00618d906669f1d0908961dc6c6c51e0}
+\subsubsection[{GuardedCommandList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::GuardedCommandList (int \& {\em startLabel}, \/  int {\em GoTo}, \/  {\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a071376c630a3e05acaf3b16c35736bf2}
 
+
+Matches the valid guarded commands along with the specifiers \mbox{[}\mbox{]}. 
+
+Verifies that the GuardedCommands are valid, and each subsequent guarded command in the list is valid as well. 
 
 References debug(), Token::getLexeme(), First::GuardedCommand(), GuardedCommand(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
 
@@ -338,7 +511,11 @@ References debug(), Token::getLexeme(), First::GuardedCommand(), GuardedCommand(
 \label{classParser_af7ef9a71f5e821040a16974c4602e23e}
 
 
-References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+Verifies the If guard process. 
+
+Checks for proper If components, while calling for a possible GuardedCommandList 
+
+References admin, debug(), Admin::emit2(), Admin::getLineNumber(), GuardedCommandList(), First::GuardedCommandList(), lookAheadToken, match(), Set::munion(), NewLabel(), and syntaxCheck().
 
 \hypertarget{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}{
 \index{Parser@{Parser}!IndexedSelector@{IndexedSelector}}
@@ -347,7 +524,17 @@ References debug(), GuardedCommandList(), First::GuardedCommandList(), lookAhead
 \label{classParser_ae6fd008bc26a87fbfe39d41a7391c01a}
 
 
-References debug(), Expression(), First::Expression(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+The index selector for a List, such as a VariableAccessList. 
+
+We check to ensure that the list accessor has the specified symbols (\mbox{[}\_\-\mbox{]}) An indexed selector is composed of \mbox{[} EXPRESSION \mbox{]}. Chains up to VariableAccessList through VariableAccess. 
+
+Determine the type of expression for this selector.
+
+the Indexed Selector is not an integer or constant integer, and thus is not valid! 
+
+
+
+References admin, blocktable, CINTEGER, BlockTable::convertType(), debug(), Expression(), First::Expression(), Admin::getColumnNumber(), Admin::getLineNumber(), INTEGER, lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, and syntaxCheck().
 
 \hypertarget{classParser_afd75ba38a886da3930c4a29f5d353a62}{
 \index{Parser@{Parser}!match@{match}}
@@ -362,10 +549,15 @@ The Parser's lexeme Matching function.
 
 Uses a set object consisting of the next possible valid lexemes to check of matched character is valid, and outputs an error otherwise. 
 \begin{DoxyParams}{Parameters}
-\item[{\em matchMe}]The string lexeme to be matched. \item[{\em validNextCharacters}]The set of characters that represent a valid match.\item[{\em matchMe}]A lexeme that we wish to check for a match for validity. \item[{\em validNextCharacters}]A set of characters that would be a \char`\"{}valid\char`\"{} next input. \end{DoxyParams}
+\item[{\em matchMe}]The string lexeme to be matched. \item[{\em validNextCharacters}]The set of characters that represent a valid match.\end{DoxyParams}
+Matches the input lexeme to that of the next token. Otherwise, we generate and error. Finally, we check for a valid syntax set.
 
 
-References Token::getLexeme(), lookAheadToken, nextToken(), syntaxCheck(), and syntaxError().
+\begin{DoxyParams}{Parameters}
+\item[{\em matchMe}]A lexeme that we wish to check for a match for validity. \item[{\em validNextCharacters}]A set of characters that would be a \char`\"{}valid\char`\"{} next input. \end{DoxyParams}
+
+
+References debug(), Token::getLexeme(), lookAheadToken, nextToken(), syntaxCheck(), and syntaxError().
 
 \hypertarget{classParser_a0f016865b3ae30a62a06abbb7fca7345}{
 \index{Parser@{Parser}!MultiplyingOperator@{MultiplyingOperator}}
@@ -375,6 +567,15 @@ References Token::getLexeme(), lookAheadToken, nextToken(), syntaxCheck(), and s
 
 
 References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a8f14f036744fbf72a2d3fa1b30f5b334}{
+\index{Parser@{Parser}!NewLabel@{NewLabel}}
+\index{NewLabel@{NewLabel}!Parser@{Parser}}
+\subsubsection[{NewLabel}]{\setlength{\rightskip}{0pt plus 5cm}int Parser::NewLabel ()\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a8f14f036744fbf72a2d3fa1b30f5b334}
+
+
+References labelCount.
 
 \hypertarget{classParser_ab53c98f6ae7ca5a9a48a1eec75fb52bc}{
 \index{Parser@{Parser}!nextToken@{nextToken}}
@@ -391,23 +592,45 @@ Loops the tokenizer until a non-\/bad/non-\/newline/non-\/comment token is found
 
 References admin, BADNUMERAL, BADSYMBOL, COMMENT, Token::getType(), NEWLINE, and Admin::nextToken().
 
-\hypertarget{classParser_aadadd3280fa339b1433a8ad665479bc4}{
+\hypertarget{classParser_afbf7450bc228d82258cf38e8b0733005}{
 \index{Parser@{Parser}!Numeral@{Numeral}}
 \index{Numeral@{Numeral}!Parser@{Parser}}
-\subsubsection[{Numeral}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Numeral ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aadadd3280fa339b1433a8ad665479bc4}
+\subsubsection[{Numeral}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::Numeral ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_afbf7450bc228d82258cf38e8b0733005}
 
 
-References debug(), lookAheadToken, match(), and syntaxCheck().
+Guarantees that a Numeral was examined. 
 
-\hypertarget{classParser_abe6f497eafd870c3e9f28d4c241e280a}{
+Checks for the proper lookahead for a Numeral stop set. 
+
+We have evaluated an INTEGER literal. 
+
+
+
+References debug(), INTEGER, lookAheadToken, match(), and syntaxCheck().
+
+\hypertarget{classParser_a293b721a8e832a137e495a6a2178188e}{
 \index{Parser@{Parser}!PrimaryExpression@{PrimaryExpression}}
 \index{PrimaryExpression@{PrimaryExpression}!Parser@{Parser}}
-\subsubsection[{PrimaryExpression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::PrimaryExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_abe6f497eafd870c3e9f28d4c241e280a}
+\subsubsection[{PrimaryExpression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::PrimaryExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a293b721a8e832a137e495a6a2178188e}
 
 
-References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Set::munion(), RelationalOperator(), First::RelationalOperator(), First::SimpleExpression(), SimpleExpression(), and syntaxCheck().
+A Primary Expression is a SimpleExpression with an optional operator with a simple expression. 
+
+Checks to make sure that the proper evaluations occur for a SimpleExpression; One must evaluate to a boolean, but with multiples, it could be comparative, or equivalency. Thus we check to see what type of Factors are resultant from the simpleexpression terms. 
+
+We've come to a functional specifier, so we'll either return a boolop if the factor is valid, or an error type.
+
+It's a SimpleExpression akin to a term-\/kind of some sort, so we'll check the corresponding production types.
+
+a relational operator follows the first SimpleExpression, thus we know that we will have to have int comparisons rather than returning a boolean
+
+Clarify that, since there are two SimpleExpressions, that their types are comparable in terms of boolean ops 
+
+
+
+References admin, BOOLEAN, CBOOLEAN, CINTEGER, debug(), Admin::emit1(), Factor(), Token::getLexeme(), INTEGER, Set::isMember(), lookAheadToken, Set::munion(), RelationalOperator(), First::RelationalOperator(), First::SimpleExpression(), SimpleExpression(), syntaxCheck(), and UNIVERSAL.
 
 \hypertarget{classParser_a7ac200c2e0ac927e115027fb593ac72d}{
 \index{Parser@{Parser}!PrimaryOperator@{PrimaryOperator}}
@@ -418,21 +641,29 @@ References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, Set::mu
 
 References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
 
-\hypertarget{classParser_a0f04e446170cd685f2ab8ecb6782025f}{
-\index{Parser@{Parser}!ProcedureDefintion@{ProcedureDefintion}}
-\index{ProcedureDefintion@{ProcedureDefintion}!Parser@{Parser}}
-\subsubsection[{ProcedureDefintion}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureDefintion ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a0f04e446170cd685f2ab8ecb6782025f}
+\hypertarget{classParser_ae1399c8e85c6b366db055dd12914b0da}{
+\index{Parser@{Parser}!ProcedureDefinition@{ProcedureDefinition}}
+\index{ProcedureDefinition@{ProcedureDefinition}!Parser@{Parser}}
+\subsubsection[{ProcedureDefinition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureDefinition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ae1399c8e85c6b366db055dd12914b0da}
 
 
-References Block(), First::Block(), debug(), lookAheadToken, match(), Set::munion(), ProcedureName(), First::ProcedureName(), and syntaxCheck().
+Defines a Procedure by name. 
 
-\hypertarget{classParser_a72cc285af2d83a0348a47a78aced1582}{
+Defines the Procedure and processes its name accordingly. Adds it to the current/given block. 
+
+References admin, Block(), First::Block(), blocktable, debug(), BlockTable::define(), Admin::emit1(), Admin::emit2(), Admin::emit3(), Token::getValue(), lookAheadToken, match(), Set::munion(), NewLabel(), PROCEDURE, ProcedureName(), First::ProcedureName(), syntaxCheck(), and UNIVERSAL.
+
+\hypertarget{classParser_a40cd3f4f71c1e5ab0d484679002e55bd}{
 \index{Parser@{Parser}!ProcedureName@{ProcedureName}}
 \index{ProcedureName@{ProcedureName}!Parser@{Parser}}
-\subsubsection[{ProcedureName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::ProcedureName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a72cc285af2d83a0348a47a78aced1582}
+\subsubsection[{ProcedureName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::ProcedureName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a40cd3f4f71c1e5ab0d484679002e55bd}
 
+
+The name of the Procedure is checked. 
+
+A type evaluated from a VariableName is returned. A procedure's name is a string and should correspond to a variable name. 
 
 References debug(), lookAheadToken, syntaxCheck(), and VariableName().
 
@@ -443,7 +674,11 @@ References debug(), lookAheadToken, syntaxCheck(), and VariableName().
 \label{classParser_a7a6c6b63d49340ff06c453ce8954eeff}
 
 
-References debug(), lookAheadToken, match(), Set::munion(), ProcedureName(), First::ProcedureName(), and syntaxCheck().
+Processes a subtype of Statement, a Proc. 
+
+Checks to see if the Procedure exists in a previous Scope/Block. If not, then the call was invalid/procname does not match or exist, otherwise it just returns the command properly. 
+
+References admin, blocktable, BlockTable::convertKind(), BlockTable::convertType(), BlockTable::currentLevel(), debug(), Admin::emit3(), BlockTable::find(), Admin::getColumnNumber(), Admin::getLineNumber(), Token::getValue(), TableEntry::level, lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, TableEntry::okind, TableEntry::otype, PROCEDURE, ProcedureName(), First::ProcedureName(), TableEntry::startLabel, and syntaxCheck().
 
 \hypertarget{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}{
 \index{Parser@{Parser}!Program@{Program}}
@@ -456,15 +691,37 @@ The following functions make up the core of our \hyperlink{classParser}{Parser},
 
 The following is a set of Production-\/Rule functions.
 
+For each of these, refer to the Parser.cpp heading comments.
+
+In order to guarantee that our Productions are satisfying the various Type checking requirements of the PL language, we need to make sure that they evaluate to -\/ or return -\/ or operate on the proper type of expression or terminal or nonterminal set (at the very basest of levels, these end of being roughly equivalent).
+
+Thus, we return an mType or a vector of mType (for lists) in order to guarantee that the proper evaluation or comparison has occured, or in order to check if the following or preceding evaluations are correct.
+
+For each of the following, refer to the PL grammar. Any deviations indicate a correction of the grammar to eliminate the problems of Ambiguity or implicit differentiation. In any case, the role of each function is explicit within the function's name itself.
+
+Pages 282-\/287 of Per Brinch Hansen's Pascal Compiler book.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{parser_8cpp}{parser.cpp}, \hyperlink{blocktable_8h}{blocktable.h}
+\end{DoxySeeAlso}
 Each one has a specific speciality in regards to how they treat their input and production rules, but on the whole they follow a key process:
 
 1) Output the function name and data. 2) Choose a production rule to follow based off of the lookahead 3) Try to Match any prerequisite statements or rules 4) Append any valid lexemes to the StopSet sts 5) Choose a production rule and follow it (a non-\/terminal) 6) Repeat $\sim$3-\/5 unless an error is found 7) Attempt to match the post-\/requisite statement/lexeme/rule. 8) Check the validity of the lookahead in regards to the stopset sts
 
 This implicitly maintains a \char`\"{}stack\char`\"{} of unique stopsets at each function (production) level, These are allocated on the application stack.
 
-Thus, we need to be wary of Stack Overflows when using the recursive parser. 
+Thus, we need to be wary of Stack Overflows when using the recursive parser.
 
-References Block(), debug(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+In order to guarantee Semantic correctness and correct Scope validity, some productions need to return their mType or the mType of their proceeding operations which is then compared against the set of proper possible mTypes for the given production rules to guarantee that it's valid.
+
+i.e. we cannot have Integer X := 5 in the DefinitionPart. For scope checking, we check the current and preceeding blocks to see if the currently examined table entry/tokenized object is semantically valid and not being redeclared or improperly used. The order and syntax of such operations varies with each specific production, and thus does not fit into the 8-\/point checklist above.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{parser_8h}{parser.h} The root production of A PL program, the \hyperlink{classParser_a068fd2e519704d6fbaf9c8ecb3469e49}{Program} production.
+\end{DoxySeeAlso}
+The PL program should start here, and ends with the ./\$ sign set. From here, the first, base Block is created and called. 
+
+References admin, Block(), debug(), Admin::emit1(), Admin::emit3(), lookAheadToken, match(), Set::munion(), NewLabel(), and syntaxCheck().
 
 \hypertarget{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}{
 \index{Parser@{Parser}!ReadStatement@{ReadStatement}}
@@ -473,7 +730,7 @@ References Block(), debug(), lookAheadToken, match(), Set::munion(), and syntaxC
 \label{classParser_ac356b40bf99f68cc721b7e4ad2ebb67d}
 
 
-References debug(), lookAheadToken, match(), Set::munion(), syntaxCheck(), VariableAccessList(), and First::VariableAccessList().
+References admin, debug(), Admin::emit2(), lookAheadToken, match(), Set::munion(), syntaxCheck(), VariableAccessList(), and First::VariableAccessList().
 
 \hypertarget{classParser_ab68b61bab0a323b67457d520578cb853}{
 \index{Parser@{Parser}!RelationalOperator@{RelationalOperator}}
@@ -497,16 +754,24 @@ The main Runner for the \hyperlink{classParser}{Parser} object.
 
 Sets the \$ marker for the file as a stopset value. This ensures that \$ does not get recognized as a syntax error and that any matches that happen to include a \$ will be correct. The initial grammar prod., Program, is parsed (executed with sts). 
 
-References Program().
+References errorCount, numberOfScopeTypeErrors, and Program().
 
-\hypertarget{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}{
+\hypertarget{classParser_a9952c751bac78c4e0b3db7be474ed099}{
 \index{Parser@{Parser}!SimpleExpression@{SimpleExpression}}
 \index{SimpleExpression@{SimpleExpression}!Parser@{Parser}}
-\subsubsection[{SimpleExpression}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::SimpleExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a6fc78d62a16df562e2a22e0f5c1acaf9}
+\subsubsection[{SimpleExpression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::SimpleExpression ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a9952c751bac78c4e0b3db7be474ed099}
 
 
-References AddingOperator(), First::AddingOperator(), debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), Term(), and First::Term().
+A SimpleExpression must evaluate to an Integer type and defines a simple expression. 
+
+A vector of mTypes is used because a SimpleExpression is like a Term; One or Many of its subcomponents. A SimpleExpression is composed of Multiple terms, a possible sub operator, and multiple Adding operators correspondingly. Thus, we verify that the terms and operator types evaluate properly, and return the corresponding result. 
+
+Vector to track the subcomponent types. 
+
+
+
+References AddingOperator(), First::AddingOperator(), admin, BOOLEAN, CBOOLEAN, CINTEGER, debug(), Admin::emit1(), Token::getLexeme(), INTEGER, lookAheadToken, match(), Set::munion(), syntaxCheck(), Term(), First::Term(), and UNIVERSAL.
 
 \hypertarget{classParser_a23d5c23531d92c7249034a9e637b4467}{
 \index{Parser@{Parser}!Statement@{Statement}}
@@ -515,7 +780,11 @@ References AddingOperator(), First::AddingOperator(), debug(), Token::getLexeme(
 \label{classParser_a23d5c23531d92c7249034a9e637b4467}
 
 
-References AssignmentStatement(), debug(), DoStatement(), EmptyStatement(), Token::getLexeme(), IfStatement(), Set::isMember(), lookAheadToken, First::ProcedureDefinition(), ProcedureStatement(), ReadStatement(), syntaxCheck(), and WriteStatement().
+Processes a Statement, which can be one of many. 
+
+Processes possible statements, only one input to many possibilities. 
+
+References AssignmentStatement(), debug(), DoStatement(), EmptyStatement(), Token::getLexeme(), IfStatement(), Set::isMember(), lookAheadToken, ProcedureStatement(), ReadStatement(), syntaxCheck(), and WriteStatement().
 
 \hypertarget{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}{
 \index{Parser@{Parser}!StatementPart@{StatementPart}}
@@ -524,7 +793,11 @@ References AssignmentStatement(), debug(), DoStatement(), EmptyStatement(), Toke
 \label{classParser_ac3ae7245f6ecc00a9e14cbed66a0b347}
 
 
-References debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), Statement(), First::Statement(), and syntaxCheck().
+Processes the StatementPart of a Block. 
+
+Adds StatementPart to the blocktype stack and calls the statementpart productions (statement). Pops accordingly after successful parsing. 
+
+References blockTypeStack, debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), Statement(), First::Statement(), STATEMENTPART, and syntaxCheck().
 
 \hypertarget{classParser_a61a1e512e33d3498f45d1e6f7c7aaf4d}{
 \index{Parser@{Parser}!syntaxCheck@{syntaxCheck}}
@@ -535,7 +808,11 @@ References debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), 
 
 A function that requests an error check upon finding a character that is invalid. 
 
-This can only happen after having followed a Valid input character. 
+Checks if the next \hyperlink{classToken}{Token} (its lexeme) is of a valid set of characters.
+
+This can only happen after having followed a Valid input character.
+
+Checks if the the lexeme of the nlookahead/next token is in the set of valid characters, and generates a Syntax Error if they are not. That is, if the next character isn't valid, then there's a syntax error. 
 
 References Token::getLexeme(), Set::isMember(), lookAheadToken, and syntaxError().
 
@@ -548,84 +825,159 @@ References Token::getLexeme(), Set::isMember(), lookAheadToken, and syntaxError(
 
 Outputs a syntax error message followed by the characters that would be correct. 
 
+Cleans up after an error has been detected while matching or checking syntax.
+
 syntaxError will loop until it finds the next valid character after finding an error. 
 \begin{DoxyParams}{Parameters}
-\item[{\em validNextCharacters}]The set of valid next characters as indicated by the grammar. \end{DoxyParams}
+\item[{\em validNextCharacters}]The set of valid next characters as indicated by the grammar.\end{DoxyParams}
+14240815
 
+Increases the error count, outputs the relevent error information, then loops until it encounters a valid set of next parseable characters. 
 
-References admin, Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Set::isMember(), lookAheadToken, nextToken(), and Set::toString().
+References admin, currentToken, errorCount, Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Set::isMember(), lookAheadToken, nextToken(), and Set::toString().
 
-\hypertarget{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}{
+\hypertarget{classParser_a55466d8b3d146f56c56e8eb53559e4b1}{
 \index{Parser@{Parser}!Term@{Term}}
 \index{Term@{Term}!Parser@{Parser}}
-\subsubsection[{Term}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::Term ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_ab7fd24e2aeb0ad2685e11f3ea5594049}
+\subsubsection[{Term}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::Term ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a55466d8b3d146f56c56e8eb53559e4b1}
 
 
-References debug(), First::Factor(), Factor(), Token::getLexeme(), Set::isMember(), lookAheadToken, MultiplyingOperator(), First::MultiplyingOperator(), Set::munion(), and syntaxCheck().
+A Term is part of a SimpleExpression, and thus Primary Expression. 
 
-\hypertarget{classParser_a0bb180ec60cb61345a7890c8766f0048}{
+A term can actually be a logical series of Terms, as they occur over multiple expressions. Thus, we need to keep track of them in an mType vector.
+
+Eventually, this chains back up to SimpleExpression, then PrimaryExpression, then Expression. The Term is a core/central production language grammar component.
+
+Term = Factor \{ MultiplyingOperator Factor \}. 
+
+A vector of types to account for a series of terms.
+
+We grab the relevant Term mType from a Factor, the base of a Term production
+
+Used to grab the proper Multiplicative symbol for ASSEM output.
+
+If we have a qualifying MultiplyingOperator, then we keep adding the Factor terms to the mType vector until we are no longer processing Term components. \begin{DoxySeeAlso}{See also}
+Term-\/Grammar Production.
+\end{DoxySeeAlso}
+We output after the pushback with FACTOR in order to get the postfix form. 
+
+
+
+References admin, BOOLEAN, CBOOLEAN, CINTEGER, debug(), Admin::emit1(), First::Factor(), Factor(), Token::getLexeme(), INTEGER, lookAheadToken, MultiplyingOperator(), First::MultiplyingOperator(), Set::munion(), syntaxCheck(), and UNIVERSAL.
+
+\hypertarget{classParser_acc92d496e62aa2a482092dea20de2e67}{
 \index{Parser@{Parser}!TypeSymbol@{TypeSymbol}}
 \index{TypeSymbol@{TypeSymbol}!Parser@{Parser}}
-\subsubsection[{TypeSymbol}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::TypeSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a0bb180ec60cb61345a7890c8766f0048}
+\subsubsection[{TypeSymbol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::TypeSymbol ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_acc92d496e62aa2a482092dea20de2e67}
 
 
-References debug(), Token::getLexeme(), lookAheadToken, match(), and syntaxCheck().
+Processes a TypeSymbol, of Boolean or Integer design. 
 
-\hypertarget{classParser_ac004c4cc14aeca2512087a692594786b}{
+Returns a an mType from a typesymbol, Checks the lookahead and returns the valid type (int or bool) or returns a UNIVERSAL (error) type. 
+
+References BOOLEAN, debug(), Token::getLexeme(), INTEGER, lookAheadToken, match(), syntaxCheck(), and UNIVERSAL.
+
+\hypertarget{classParser_aef1c7098390f845332d10b95778aee37}{
 \index{Parser@{Parser}!VariableAccess@{VariableAccess}}
 \index{VariableAccess@{VariableAccess}!Parser@{Parser}}
-\subsubsection[{VariableAccess}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableAccess ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_ac004c4cc14aeca2512087a692594786b}
+\subsubsection[{VariableAccess}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::VariableAccess ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aef1c7098390f845332d10b95778aee37}
 
 
-References debug(), Token::getLexeme(), First::IndexedSelector(), IndexedSelector(), Set::isMember(), lookAheadToken, Set::munion(), syntaxCheck(), and VariableName().
+The production for grabbing a Variable from a VariableAccessList. 
 
-\hypertarget{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}{
+We check to make sure that the index selector is valid, then chain up the type from the given VariableName. 
+
+\hyperlink{classSet}{Set} the index selector stop set.
+
+Grab the proper type from the variable name.
+
+Process the indexedSelector data, if valid. 
+
+
+
+References admin, blocktable, BlockTable::currentLevel(), debug(), TableEntry::displacement, Admin::emit3(), BlockTable::find(), Token::getLexeme(), Admin::getLineNumber(), Token::getValue(), First::IndexedSelector(), IndexedSelector(), Set::isMember(), TableEntry::level, lookAheadToken, Set::munion(), TableEntry::size, syntaxCheck(), and VariableName().
+
+\hypertarget{classParser_a83bdac30bb8bb5d9ee0c820b4d670179}{
 \index{Parser@{Parser}!VariableAccessList@{VariableAccessList}}
 \index{VariableAccessList@{VariableAccessList}!Parser@{Parser}}
-\subsubsection[{VariableAccessList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableAccessList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a8b1f76ff69c6cd8e54c0d06405e26f38}
+\subsubsection[{VariableAccessList}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ {\bf mType} $>$ Parser::VariableAccessList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a83bdac30bb8bb5d9ee0c820b4d670179}
 
+
+We need to track the various types that make up an access list. 
+
+Processes a list of VariableAccess productions.
+
+Returns a vector of the corresponding types of variableaccess vars. 
 
 References debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), syntaxCheck(), First::VariableAccess(), and VariableAccess().
 
-\hypertarget{classParser_a08145dddc145745970fe4849aa667e05}{
+\hypertarget{classParser_a20052e491dc7c5f812dc2784f760731a}{
 \index{Parser@{Parser}!VariableDefinition@{VariableDefinition}}
 \index{VariableDefinition@{VariableDefinition}!Parser@{Parser}}
-\subsubsection[{VariableDefinition}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableDefinition ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a08145dddc145745970fe4849aa667e05}
+\subsubsection[{VariableDefinition}]{\setlength{\rightskip}{0pt plus 5cm}int Parser::VariableDefinition (int \& {\em varStart}, \/  {\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a20052e491dc7c5f812dc2784f760731a}
 
+
+Processes a Variable according to Definition. 
+
+Grabs the type of an input symbol and passes it to the VariableDefinitionPart. This allows us to properly process Arrays or standard VARIABLEs and attach them to the blocktable and block and current scope as required, while checking their components (such as the array index specifier) accordingly. 
 
 References debug(), lookAheadToken, Set::munion(), syntaxCheck(), TypeSymbol(), VariableDefinitionPart(), and First::VariableDefinitionPart().
 
-\hypertarget{classParser_aca0b05f8805667f5057d695ee157ab74}{
+\hypertarget{classParser_a897a786bb66431b5f1cc0d3c76da5250}{
 \index{Parser@{Parser}!VariableDefinitionPart@{VariableDefinitionPart}}
 \index{VariableDefinitionPart@{VariableDefinitionPart}!Parser@{Parser}}
-\subsubsection[{VariableDefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableDefinitionPart ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_aca0b05f8805667f5057d695ee157ab74}
+\subsubsection[{VariableDefinitionPart}]{\setlength{\rightskip}{0pt plus 5cm}int Parser::VariableDefinitionPart ({\bf Set} {\em sts}, \/  int \& {\em varStart}, \/  {\bf mType} {\em type})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a897a786bb66431b5f1cc0d3c76da5250}
 
 
-References Constant(), First::Constant(), debug(), Token::getLexeme(), lookAheadToken, match(), Set::munion(), syntaxCheck(), VariableList(), and First::VariableList().
+Defines the definition of a VariableList, or an array. 
 
-\hypertarget{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}{
+Array as defined; \char`\"{}array\char`\"{} VariableList \char`\"{}\mbox{[}\char`\"{} Constant \char`\"{}\mbox{]}\char`\"{} or it's just VariableList
+
+Guarantees that the valid prodution is chosed by examining the type of the variable and the corresponding sets resultant from the lookahead.
+
+Checks the validity of Array components if necessary, and creates the Array to specification within the \hyperlink{classBlockTable}{BlockTable}. 
+
+References admin, ARRAY, blocktable, Constant(), First::Constant(), BlockTable::convertType(), debug(), BlockTable::find(), Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Token::getValue(), INTEGER, lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, TableEntry::otype, BlockTable::redefineSize(), syntaxCheck(), TableEntry::value, VARIABLE, VariableList(), and First::VariableList().
+
+\hypertarget{classParser_a6ef905d0e7690e53c6794afdffa953cf}{
 \index{Parser@{Parser}!VariableList@{VariableList}}
 \index{VariableList@{VariableList}!Parser@{Parser}}
-\subsubsection[{VariableList}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableList ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a6bd20fada4e59e17e0f2b00ec5e86ae1}
+\subsubsection[{VariableList}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ int $>$ Parser::VariableList ({\bf Set} {\em sts}, \/  {\bf mType} {\em type}, \/  {\bf Kind} {\em kind})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a6ef905d0e7690e53c6794afdffa953cf}
 
 
-References debug(), Token::getLexeme(), Set::isMember(), lookAheadToken, match(), Set::munion(), syntaxCheck(), First::VariableName(), and VariableName().
+Processes a variable list and guarantees a proper set of variable types. 
 
-\hypertarget{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}{
+Checks for variables as it creates their block and table entries, and returns a vector of their ids. 
+
+References admin, blocktable, BlockTable::convertKind(), debug(), BlockTable::define(), SymbolTable::getAttributeWhere(), Admin::getColumnNumber(), Token::getLexeme(), Admin::getLineNumber(), Token::getValue(), Set::isMember(), lookAheadToken, match(), Set::munion(), numberOfScopeTypeErrors, syntaxCheck(), BlockTable::table, First::VariableName(), and VariableName().
+
+\hypertarget{classParser_acc9e56bb590b37f7ab87395585d2f2de}{
 \index{Parser@{Parser}!VariableName@{VariableName}}
 \index{VariableName@{VariableName}!Parser@{Parser}}
-\subsubsection[{VariableName}]{\setlength{\rightskip}{0pt plus 5cm}void Parser::VariableName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
-\label{classParser_a6ab8f6d47347f69f75a4bd8eb75988ac}
+\subsubsection[{VariableName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mType} Parser::VariableName ({\bf Set} {\em sts})\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_acc9e56bb590b37f7ab87395585d2f2de}
 
 
-References debug(), lookAheadToken, match(), and syntaxCheck().
+Production for a Variable Name. 
+
+We either define a new Const/Proc/Array variable type (Universal), or we check for the variable's existence (as the only other access is in a statement). If it does not exist, then we're using an undeclared name. Otherwise, we determine and return the variable's type to the previous production. 
+
+We set the type of a VariableName by checking the kind of variable and its corresponding entry's oType. I.e. A constant Integer. If we're in the definition part, it's of a Universal type. Otherwise, we search for it...if it isn't found, then we're using an undeclared variable.
+
+The variable was not found, and we're not declaring it for the first time, so it's an error.
+
+Return whatever type we have. Universal is the stock type when we encounter an error. 
+
+
+
+References admin, blocktable, blockTypeStack, BOOLEAN, CBOOLEAN, CINTEGER, CONSTANT, debug(), DEFINITIONPART, Admin::emit2(), BlockTable::find(), Admin::getColumnNumber(), Admin::getLineNumber(), Token::getValue(), INTEGER, lookAheadToken, match(), numberOfScopeTypeErrors, TableEntry::okind, TableEntry::otype, STATEMENTPART, syntaxCheck(), UNIVERSAL, and TableEntry::value.
 
 \hypertarget{classParser_a092a51a38e65c3be07328bfc1e370f0e}{
 \index{Parser@{Parser}!WriteStatement@{WriteStatement}}
@@ -634,7 +986,7 @@ References debug(), lookAheadToken, match(), and syntaxCheck().
 \label{classParser_a092a51a38e65c3be07328bfc1e370f0e}
 
 
-References debug(), ExpressionList(), First::ExpressionList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
+References admin, debug(), Admin::emit2(), ExpressionList(), First::ExpressionList(), lookAheadToken, match(), Set::munion(), and syntaxCheck().
 
 
 
@@ -647,6 +999,27 @@ References debug(), ExpressionList(), First::ExpressionList(), lookAheadToken, m
 
 
 The \hyperlink{classParser}{Parser} uses the \hyperlink{classScanner}{Scanner} to parse the file, through a pointer to the admin class. 
+
+\hypertarget{classParser_a817d3fe67a8ee070f01fd759f8d5d30f}{
+\index{Parser@{Parser}!blocktable@{blocktable}}
+\index{blocktable@{blocktable}!Parser@{Parser}}
+\subsubsection[{blocktable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BlockTable}$\ast$ {\bf Parser::blocktable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a817d3fe67a8ee070f01fd759f8d5d30f}
+
+
+A blocktable object used for proper Scope checking facilities. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{blocktable_8h}{blocktable.h} 
+\end{DoxySeeAlso}
+\hypertarget{classParser_ae9c8fcaf225a1d019fc1e87ee330605c}{
+\index{Parser@{Parser}!blockTypeStack@{blockTypeStack}}
+\index{blockTypeStack@{blockTypeStack}!Parser@{Parser}}
+\subsubsection[{blockTypeStack}]{\setlength{\rightskip}{0pt plus 5cm}stack$<${\bf blocktype}$>$ {\bf Parser::blockTypeStack}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_ae9c8fcaf225a1d019fc1e87ee330605c}
+
+
+Used to track what area of the Block we are currently in, and thus what mType we should be returning. 
 
 \hypertarget{classParser_a8180cecab442c4c7f582bbe1d0682bf1}{
 \index{Parser@{Parser}!currentToken@{currentToken}}
@@ -666,11 +1039,58 @@ Tokens retrieved using the scanner and used in parsing heuristics.
 
 The Debug function only processes if this Flag is set to True. 
 
+\hypertarget{classParser_a613d04900f76c66dfdf41e47aff6e539}{
+\index{Parser@{Parser}!errorCount@{errorCount}}
+\index{errorCount@{errorCount}!Parser@{Parser}}
+\subsubsection[{errorCount}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Parser::errorCount}}}
+\label{classParser_a613d04900f76c66dfdf41e47aff6e539}
+
+
+Keeps track of the Parsing Errors we encounter. 
+
+\hypertarget{classParser_a10a64572cec26c50bdef9575fc79540e}{
+\index{Parser@{Parser}!labelCount@{labelCount}}
+\index{labelCount@{labelCount}!Parser@{Parser}}
+\subsubsection[{labelCount}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Parser::labelCount}}}
+\label{classParser_a10a64572cec26c50bdef9575fc79540e}
 \hypertarget{classParser_a4f9e59e89197efefa1feff50f5ea8725}{
 \index{Parser@{Parser}!lookAheadToken@{lookAheadToken}}
 \index{lookAheadToken@{lookAheadToken}!Parser@{Parser}}
 \subsubsection[{lookAheadToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} {\bf Parser::lookAheadToken}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{classParser_a4f9e59e89197efefa1feff50f5ea8725}
+\hypertarget{classParser_a43e9e43e927c28bc883fd7ff20d165a1}{
+\index{Parser@{Parser}!numberOfScopeTypeErrors@{numberOfScopeTypeErrors}}
+\index{numberOfScopeTypeErrors@{numberOfScopeTypeErrors}!Parser@{Parser}}
+\subsubsection[{numberOfScopeTypeErrors}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Parser::numberOfScopeTypeErrors}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a43e9e43e927c28bc883fd7ff20d165a1}
+
+
+Tracks the Scope type of parsing errors we encounter. 
+
+\hypertarget{classParser_a4068ed26fd5e4ea914a05979ba4d792c}{
+\index{Parser@{Parser}!prevID@{prevID}}
+\index{prevID@{prevID}!Parser@{Parser}}
+\subsubsection[{prevID}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Parser::prevID}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_a4068ed26fd5e4ea914a05979ba4d792c}
+\hypertarget{classParser_aeee13154ac5d45a615a57fd4d982487b}{
+\index{Parser@{Parser}!prevMatch@{prevMatch}}
+\index{prevMatch@{prevMatch}!Parser@{Parser}}
+\subsubsection[{prevMatch}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf Parser::prevMatch}\mbox{[}4\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aeee13154ac5d45a615a57fd4d982487b}
+\hypertarget{classParser_aa77efdbbc573c3c89169e199b996e0a1}{
+\index{Parser@{Parser}!prevToken@{prevToken}}
+\index{prevToken@{prevToken}!Parser@{Parser}}
+\subsubsection[{prevToken}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Token} {\bf Parser::prevToken}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aa77efdbbc573c3c89169e199b996e0a1}
+\hypertarget{classParser_aa5635cdb5fc754cc3ea8b85eca02dfda}{
+\index{Parser@{Parser}!table@{table}}
+\index{table@{table}!Parser@{Parser}}
+\subsubsection[{table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SymbolTable}$\ast$ {\bf Parser::table}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classParser_aa5635cdb5fc754cc3ea8b85eca02dfda}
+
+
+A Symbol Table pointer, allowing direct access to Symbol Table information. 
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

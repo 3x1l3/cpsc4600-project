@@ -14,7 +14,7 @@ This is the main administrator class that manages the different compiler functio
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}{Admin} (string \&)
+\hyperlink{classAdmin_a1483f37673aa04863e86a37b8c493733}{Admin} (string \&, int debug)
 \begin{DoxyCompactList}\small\item\em Base constructor for the Administrator. \item\end{DoxyCompactList}\item 
 void \hyperlink{classAdmin_a6519bde7fd1ffd997a66987c2417d7bd}{recordError} (string)
 \begin{DoxyCompactList}\small\item\em Records the Error Message string into the Error vector. \item\end{DoxyCompactList}\item 
@@ -33,12 +33,24 @@ bool \hyperlink{classAdmin_af5cd211ee7891ec1fec719bace4b678b}{checkMaxErrors} ()
 int \hyperlink{classAdmin_a576e2dfe10f528ad5f1816e673ed2e32}{getColumnNumber} ()
 \begin{DoxyCompactList}\small\item\em Basic retrieval functions, used for debug. \item\end{DoxyCompactList}\item 
 int \hyperlink{classAdmin_a1a33282a2d64fa3dd9b3e8ac1a4799e3}{getLineNumber} ()
-\begin{DoxyCompactList}\small\item\em Send back the line number without edits. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Send back the line number without edits. \item\end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_a8518362526e301c8ccd26eeff689b862}{emit1} (string)
+\begin{DoxyCompactList}\small\item\em Our functions for emitting our ASM code. \item\end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_a7862a90db685a8321e47d684c67b6451}{emit2} (string, int)
+\begin{DoxyCompactList}\small\item\em Double Emit Function Outputs two-\/param interp code. \item\end{DoxyCompactList}\item 
+void \hyperlink{classAdmin_ab97fe62f8c41b03f21082f5a9bc7ecfa}{emit3} (string, int, int)
+\begin{DoxyCompactList}\small\item\em Trinary Emit Function Outputs three-\/piece code. \item\end{DoxyCompactList}\item 
+string \hyperlink{classAdmin_a40cf08260b4ca4200791ed3f13080153}{getASM} ()
+\begin{DoxyCompactList}\small\item\em Returns our stringstream code to be used by the assembler. \item\end{DoxyCompactList}\item 
+int \hyperlink{classAdmin_a1740ce0bc2f182fd337cb3d44a15b3fb}{getErrorCount} ()
+\begin{DoxyCompactList}\small\item\em Returns an error count,. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 int \hyperlink{classAdmin_ae6bcb0d3aa08b938197a332c5af5a456}{column}
-\end{DoxyCompactItemize}
+\item 
+int \hyperlink{classAdmin_ac243ca073c9295f7a451089724093fae}{asmDebugFlag}
+\begin{DoxyCompactList}\small\item\em Determines whether the EMITS output or not. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -50,6 +62,8 @@ int \hyperlink{classAdmin_a77039c04350669e25d604593a77bea36}{current\_\-line}
 \begin{DoxyCompactList}\small\item\em We track the current line and column locations while reading through our File string. \item\end{DoxyCompactList}\item 
 stringstream \hyperlink{classAdmin_ad5610f86befa3a43987ce15cfc389d28}{error\_\-str}
 \begin{DoxyCompactList}\small\item\em We store our errors in a StringStream for easy manipulation and conversion. \item\end{DoxyCompactList}\item 
+stringstream \hyperlink{classAdmin_a008c56533042666979d7c685dc5d01a8}{assemblerStream}
+\begin{DoxyCompactList}\small\item\em We store our Intermediary/Back-\/End code in a StringStream for eventual writing to file or output. \item\end{DoxyCompactList}\item 
 \hyperlink{classSymbolTable}{SymbolTable} $\ast$ \hyperlink{classAdmin_afb5161f047f166b985257447b9c47f22}{table}
 \begin{DoxyCompactList}\small\item\em Symbol Table, \hyperlink{classParser}{Parser} and \hyperlink{classScanner}{Scanner} object pointers. \item\end{DoxyCompactList}\item 
 \hyperlink{classScanner}{Scanner} $\ast$ \hyperlink{classAdmin_a6846c5ec5e565001a18a20167ff7b3cf}{scanner}
@@ -61,7 +75,9 @@ int \hyperlink{classAdmin_ae1c48226f950c3e470785785aff4d536}{symTIndex}
 bool \hyperlink{classAdmin_a18dd34f91c28721e9ba9ec9370ae5f98}{correctLine}
 \begin{DoxyCompactList}\small\item\em If a line cannot be scanned/parsed, this boolean is used to indicate such. \item\end{DoxyCompactList}\item 
 int \hyperlink{classAdmin_ae29edcd0464b203b35f72caba6af7295}{errorCount}
-\begin{DoxyCompactList}\small\item\em Simple tracking of the number of errors encountered. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Simple tracking of the number of errors encountered. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classAdmin_a7160b27f8f1cf8d4e526cc6e54ee8031}{tokenFlag}
+\begin{DoxyCompactList}\small\item\em Flag used to turn off/on token found printouts. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -70,11 +86,11 @@ This is the main administrator class that manages the different compiler functio
 As of now, the Administrator executes the scanning and parsing functions when needed and supplies the correct data for each. It may also mediate for the Error Handling classes. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}{
+\hypertarget{classAdmin_a1483f37673aa04863e86a37b8c493733}{
 \index{Admin@{Admin}!Admin@{Admin}}
 \index{Admin@{Admin}!Admin@{Admin}}
-\subsubsection[{Admin}]{\setlength{\rightskip}{0pt plus 5cm}Admin::Admin (string \& {\em src})}}
-\label{classAdmin_a5b1a3a537008af6065e9cb55522b7a67}
+\subsubsection[{Admin}]{\setlength{\rightskip}{0pt plus 5cm}Admin::Admin (string \& {\em src}, \/  int {\em DEBUG})}}
+\label{classAdmin_a1483f37673aa04863e86a37b8c493733}
 
 
 Base constructor for the Administrator. 
@@ -99,11 +115,13 @@ We send the symbol table to the \hyperlink{classScanner}{Scanner}, along with a 
 
 The reference to the \char`\"{}File\char`\"{} string is sent to the scanner.
 
-Create the base \hyperlink{classParser}{Parser} object with a pointer back to here to allow it to access the scanner-\/$>$ 
+Create the base \hyperlink{classParser}{Parser} object with a pointer back to here to allow it to access the scanner-\/$>$
+
+A flag for managing the output of TOKEN debug information. \hyperlink{classSet}{Set} to TRUE to see said information. 
 
 
 
-References column, correctLine, current\_\-line, errorCount, Scanner::loadSource(), parser, scanner, symTIndex, and table.
+References asmDebugFlag, column, correctLine, current\_\-line, errorCount, Scanner::loadSource(), parser, scanner, symTIndex, table, and tokenFlag.
 
 
 
@@ -126,6 +144,60 @@ A boolean indicating if we have too many errors.
 
 References errorCount, and MAXERRORS.
 
+\hypertarget{classAdmin_a8518362526e301c8ccd26eeff689b862}{
+\index{Admin@{Admin}!emit1@{emit1}}
+\index{emit1@{emit1}!Admin@{Admin}}
+\subsubsection[{emit1}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::emit1 (string {\em str})}}
+\label{classAdmin_a8518362526e301c8ccd26eeff689b862}
+
+
+Our functions for emitting our ASM code. 
+
+Singular Emit Function Outputs the single string param of backend code.
+
+Stores in primary backend StringStream. 
+
+References asmDebugFlag, and assemblerStream.
+
+\hypertarget{classAdmin_a7862a90db685a8321e47d684c67b6451}{
+\index{Admin@{Admin}!emit2@{emit2}}
+\index{emit2@{emit2}!Admin@{Admin}}
+\subsubsection[{emit2}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::emit2 (string {\em str}, \/  int {\em i})}}
+\label{classAdmin_a7862a90db685a8321e47d684c67b6451}
+
+
+Double Emit Function Outputs two-\/param interp code. 
+
+Stores in primary backend StringStream. 
+
+References asmDebugFlag, and assemblerStream.
+
+\hypertarget{classAdmin_ab97fe62f8c41b03f21082f5a9bc7ecfa}{
+\index{Admin@{Admin}!emit3@{emit3}}
+\index{emit3@{emit3}!Admin@{Admin}}
+\subsubsection[{emit3}]{\setlength{\rightskip}{0pt plus 5cm}void Admin::emit3 (string {\em str}, \/  int {\em i}, \/  int {\em j})}}
+\label{classAdmin_ab97fe62f8c41b03f21082f5a9bc7ecfa}
+
+
+Trinary Emit Function Outputs three-\/piece code. 
+
+Stores in primary backend StringStream. 
+
+References asmDebugFlag, and assemblerStream.
+
+\hypertarget{classAdmin_a40cf08260b4ca4200791ed3f13080153}{
+\index{Admin@{Admin}!getASM@{getASM}}
+\index{getASM@{getASM}!Admin@{Admin}}
+\subsubsection[{getASM}]{\setlength{\rightskip}{0pt plus 5cm}string Admin::getASM ()}}
+\label{classAdmin_a40cf08260b4ca4200791ed3f13080153}
+
+
+Returns our stringstream code to be used by the assembler. 
+
+Returns the \hyperlink{classAssembler}{Assembler} stream.
+
+References assemblerStream.
+
 \hypertarget{classAdmin_a576e2dfe10f528ad5f1816e673ed2e32}{
 \index{Admin@{Admin}!getColumnNumber@{getColumnNumber}}
 \index{getColumnNumber@{getColumnNumber}!Admin@{Admin}}
@@ -138,6 +210,19 @@ Basic retrieval functions, used for debug.
 Retrieve the Column number in raw/unchanged/unmodified form.
 
 References column.
+
+\hypertarget{classAdmin_a1740ce0bc2f182fd337cb3d44a15b3fb}{
+\index{Admin@{Admin}!getErrorCount@{getErrorCount}}
+\index{getErrorCount@{getErrorCount}!Admin@{Admin}}
+\subsubsection[{getErrorCount}]{\setlength{\rightskip}{0pt plus 5cm}int Admin::getErrorCount ()}}
+\label{classAdmin_a1740ce0bc2f182fd337cb3d44a15b3fb}
+
+
+Returns an error count,. 
+
+Returns the Error count as an int.
+
+References errorCount.
 
 \hypertarget{classAdmin_a1a33282a2d64fa3dd9b3e8ac1a4799e3}{
 \index{Admin@{Admin}!getLineNumber@{getLineNumber}}
@@ -215,7 +300,7 @@ This outputs the \hyperlink{classToken}{Token} to the Screen in a $<$ \_\-\_\-\_
 
 
 
-References BADNAME, BADNUMERAL, BADSYMBOL, checkMaxErrors(), column, current\_\-line, ENDOFFILE, error\_\-str, errorCount, Token::getLexeme(), Token::getType(), Scanner::inRange(), Scanner::nextToken(), recordError(), scanner, and Token::toString().
+References BADNAME, BADNUMERAL, BADSYMBOL, checkMaxErrors(), column, current\_\-line, ENDOFFILE, error\_\-str, errorCount, Token::getLexeme(), Token::getType(), Scanner::inRange(), Scanner::nextToken(), recordError(), scanner, tokenFlag, and Token::toString().
 
 \hypertarget{classAdmin_a6519bde7fd1ffd997a66987c2417d7bd}{
 \index{Admin@{Admin}!recordError@{recordError}}
@@ -282,15 +367,35 @@ An integer count of errors encountered.
 
 Run the Parser! The parser itself will also manage the error count.
 
-We return an \char`\"{}all clear\char`\"{} digit of 0 if there were no errors. The rest is handled in the main. 
+We return an \char`\"{}all clear\char`\"{} digit of 0 if there were no errors. The rest is handled in the main.
+
+We output to an ASM file. 
 
 
 
-References error\_\-msgs, errorCount, Scanner::inRange(), parser, Parser::run(), and scanner.
+References assemblerStream, error\_\-msgs, errorCount, Parser::existsError(), Scanner::inRange(), parser, Parser::run(), and scanner.
 
 
 
 \subsection{Member Data Documentation}
+\hypertarget{classAdmin_ac243ca073c9295f7a451089724093fae}{
+\index{Admin@{Admin}!asmDebugFlag@{asmDebugFlag}}
+\index{asmDebugFlag@{asmDebugFlag}!Admin@{Admin}}
+\subsubsection[{asmDebugFlag}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Admin::asmDebugFlag}}}
+\label{classAdmin_ac243ca073c9295f7a451089724093fae}
+
+
+Determines whether the EMITS output or not. 
+
+\hypertarget{classAdmin_a008c56533042666979d7c685dc5d01a8}{
+\index{Admin@{Admin}!assemblerStream@{assemblerStream}}
+\index{assemblerStream@{assemblerStream}!Admin@{Admin}}
+\subsubsection[{assemblerStream}]{\setlength{\rightskip}{0pt plus 5cm}stringstream {\bf Admin::assemblerStream}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a008c56533042666979d7c685dc5d01a8}
+
+
+We store our Intermediary/Back-\/End code in a StringStream for eventual writing to file or output. 
+
 \hypertarget{classAdmin_ae6bcb0d3aa08b938197a332c5af5a456}{
 \index{Admin@{Admin}!column@{column}}
 \index{column@{column}!Admin@{Admin}}
@@ -377,7 +482,16 @@ Increases per entry, removing the need to use the Symbol Table's iterator functi
 
 Symbol Table, \hyperlink{classParser}{Parser} and \hyperlink{classScanner}{Scanner} object pointers. 
 
-This allows us to send symbol tables and scanners to and from other objects, and makes it easier to manage memory and overflows. 
+This allows us to send symbol tables and scanners to and from other objects, and makes it easier to manage memory and overflows. \hypertarget{classAdmin_a7160b27f8f1cf8d4e526cc6e54ee8031}{
+\index{Admin@{Admin}!tokenFlag@{tokenFlag}}
+\index{tokenFlag@{tokenFlag}!Admin@{Admin}}
+\subsubsection[{tokenFlag}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Admin::tokenFlag}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classAdmin_a7160b27f8f1cf8d4e526cc6e54ee8031}
+
+
+Flag used to turn off/on token found printouts. 
+
+
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

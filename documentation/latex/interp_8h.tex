@@ -1,0 +1,202 @@
+\hypertarget{interp_8h}{
+\section{interp.h File Reference}
+\label{interp_8h}\index{interp.h@{interp.h}}
+}
+{\ttfamily \#include $<$string$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classInterpreter}{Interpreter}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0}{OperationCode} \{ \par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a96186829480e5b34b1373288e956b1c8}{OP\_\-ADD}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0ae2310d00f26e94b32317ecd168fb7e18}{OP\_\-AND}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a49aa29b0b9fa259c60ac204f0d4c35e4}{OP\_\-ARROW}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a046e33f5cf370c278363c9bbba1b6674}{OP\_\-ASSIGN}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0ab4603aa384c2088935ec9d01fada39b6}{OP\_\-BAR}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a098bbeea13096667b102f7fd90cbe38f}{OP\_\-CALL}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a0aae8bd3e44dcbe18dcd011ea16f7d3c}{OP\_\-CONSTANT}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a78a61af8bcdaef135491c842df4c2b83}{OP\_\-DIVIDE}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0ac715b0abb94d27df7f142450267580c0}{OP\_\-ENDPROC}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a401ef1557cec7cd1a780a6dd6b638b97}{OP\_\-ENDPROG}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a383e0c5476b2ddc1839af951b393ca17}{OP\_\-EQUAL}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a8e53b17a8dc24e075188a1dc1b4bcdc3}{OP\_\-FI}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0addbb0006f28cdbbe905d2a40690c59cd}{OP\_\-GREATER}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a01a12fde7484a1418e0ac1bdff4f1a45}{OP\_\-INDEX}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0af2a253a4d4cc984967d002ea5e1f801a}{OP\_\-LESS}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0aeee6c9348a242fbf6f968e4eae84d7a1}{OP\_\-MINUS}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a35d87fc4e6e56fc4e31c1f6477caff74}{OP\_\-MODULO}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a53859d69b6be506aaa34bcde305e3508}{OP\_\-MULTIPLY}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a36a6b73cc4823f54891a013e2cc760d1}{OP\_\-NOT}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0af317be3def89f5f66558bbc402291176}{OP\_\-OR}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a40da35afd62a513461b3e1cdaa5d393d}{OP\_\-PROC}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a77c773eb7d9eb2abc4f8b66bb5f5c6de}{OP\_\-PROG}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0ac02b22f7017838ad0c1304b26a8cb2d2}{OP\_\-READ}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0adedf7e5a9b5ff1438fc168f1ceb9acc2}{OP\_\-SUBTRACT}, 
+\par
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0adb59ee27e46043edcdab27e6624cf252}{OP\_\-VALUE}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0ad448f82fab9674390a02a60f860d6b2e}{OP\_\-VARIABLE}, 
+\hyperlink{interp_8h_aabbe492c60331b13038e39d4207940e0a17a60143bf77a229ec511cfe1465723e}{OP\_\-WRITE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const int \hyperlink{interp_8h_a610b46241859b5e63fe92fae6d55d14e}{STORE\_\-SIZE} = 1000
+\item 
+static const string \hyperlink{interp_8h_ad7d28d7900e7ee7ccc1c41bada4d5eed}{opcode\_\-name} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0}{
+\index{interp.h@{interp.h}!OperationCode@{OperationCode}}
+\index{OperationCode@{OperationCode}!interp.h@{interp.h}}
+\subsubsection[{OperationCode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf OperationCode}}}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0}
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{OP\_\-ADD@{OP\_\-ADD}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-ADD@{OP\_\-ADD}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a96186829480e5b34b1373288e956b1c8}{
+OP\_\-ADD}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a96186829480e5b34b1373288e956b1c8}
+}]\index{OP\_\-AND@{OP\_\-AND}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-AND@{OP\_\-AND}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0ae2310d00f26e94b32317ecd168fb7e18}{
+OP\_\-AND}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0ae2310d00f26e94b32317ecd168fb7e18}
+}]\index{OP\_\-ARROW@{OP\_\-ARROW}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-ARROW@{OP\_\-ARROW}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a49aa29b0b9fa259c60ac204f0d4c35e4}{
+OP\_\-ARROW}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a49aa29b0b9fa259c60ac204f0d4c35e4}
+}]\index{OP\_\-ASSIGN@{OP\_\-ASSIGN}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-ASSIGN@{OP\_\-ASSIGN}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a046e33f5cf370c278363c9bbba1b6674}{
+OP\_\-ASSIGN}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a046e33f5cf370c278363c9bbba1b6674}
+}]\index{OP\_\-BAR@{OP\_\-BAR}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-BAR@{OP\_\-BAR}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0ab4603aa384c2088935ec9d01fada39b6}{
+OP\_\-BAR}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0ab4603aa384c2088935ec9d01fada39b6}
+}]\index{OP\_\-CALL@{OP\_\-CALL}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-CALL@{OP\_\-CALL}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a098bbeea13096667b102f7fd90cbe38f}{
+OP\_\-CALL}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a098bbeea13096667b102f7fd90cbe38f}
+}]\index{OP\_\-CONSTANT@{OP\_\-CONSTANT}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-CONSTANT@{OP\_\-CONSTANT}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a0aae8bd3e44dcbe18dcd011ea16f7d3c}{
+OP\_\-CONSTANT}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a0aae8bd3e44dcbe18dcd011ea16f7d3c}
+}]\index{OP\_\-DIVIDE@{OP\_\-DIVIDE}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-DIVIDE@{OP\_\-DIVIDE}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a78a61af8bcdaef135491c842df4c2b83}{
+OP\_\-DIVIDE}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a78a61af8bcdaef135491c842df4c2b83}
+}]\index{OP\_\-ENDPROC@{OP\_\-ENDPROC}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-ENDPROC@{OP\_\-ENDPROC}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0ac715b0abb94d27df7f142450267580c0}{
+OP\_\-ENDPROC}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0ac715b0abb94d27df7f142450267580c0}
+}]\index{OP\_\-ENDPROG@{OP\_\-ENDPROG}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-ENDPROG@{OP\_\-ENDPROG}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a401ef1557cec7cd1a780a6dd6b638b97}{
+OP\_\-ENDPROG}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a401ef1557cec7cd1a780a6dd6b638b97}
+}]\index{OP\_\-EQUAL@{OP\_\-EQUAL}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-EQUAL@{OP\_\-EQUAL}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a383e0c5476b2ddc1839af951b393ca17}{
+OP\_\-EQUAL}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a383e0c5476b2ddc1839af951b393ca17}
+}]\index{OP\_\-FI@{OP\_\-FI}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-FI@{OP\_\-FI}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a8e53b17a8dc24e075188a1dc1b4bcdc3}{
+OP\_\-FI}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a8e53b17a8dc24e075188a1dc1b4bcdc3}
+}]\index{OP\_\-GREATER@{OP\_\-GREATER}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-GREATER@{OP\_\-GREATER}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0addbb0006f28cdbbe905d2a40690c59cd}{
+OP\_\-GREATER}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0addbb0006f28cdbbe905d2a40690c59cd}
+}]\index{OP\_\-INDEX@{OP\_\-INDEX}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-INDEX@{OP\_\-INDEX}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a01a12fde7484a1418e0ac1bdff4f1a45}{
+OP\_\-INDEX}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a01a12fde7484a1418e0ac1bdff4f1a45}
+}]\index{OP\_\-LESS@{OP\_\-LESS}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-LESS@{OP\_\-LESS}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0af2a253a4d4cc984967d002ea5e1f801a}{
+OP\_\-LESS}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0af2a253a4d4cc984967d002ea5e1f801a}
+}]\index{OP\_\-MINUS@{OP\_\-MINUS}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-MINUS@{OP\_\-MINUS}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0aeee6c9348a242fbf6f968e4eae84d7a1}{
+OP\_\-MINUS}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0aeee6c9348a242fbf6f968e4eae84d7a1}
+}]\index{OP\_\-MODULO@{OP\_\-MODULO}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-MODULO@{OP\_\-MODULO}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a35d87fc4e6e56fc4e31c1f6477caff74}{
+OP\_\-MODULO}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a35d87fc4e6e56fc4e31c1f6477caff74}
+}]\index{OP\_\-MULTIPLY@{OP\_\-MULTIPLY}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-MULTIPLY@{OP\_\-MULTIPLY}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a53859d69b6be506aaa34bcde305e3508}{
+OP\_\-MULTIPLY}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a53859d69b6be506aaa34bcde305e3508}
+}]\index{OP\_\-NOT@{OP\_\-NOT}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-NOT@{OP\_\-NOT}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a36a6b73cc4823f54891a013e2cc760d1}{
+OP\_\-NOT}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a36a6b73cc4823f54891a013e2cc760d1}
+}]\index{OP\_\-OR@{OP\_\-OR}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-OR@{OP\_\-OR}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0af317be3def89f5f66558bbc402291176}{
+OP\_\-OR}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0af317be3def89f5f66558bbc402291176}
+}]\index{OP\_\-PROC@{OP\_\-PROC}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-PROC@{OP\_\-PROC}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a40da35afd62a513461b3e1cdaa5d393d}{
+OP\_\-PROC}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a40da35afd62a513461b3e1cdaa5d393d}
+}]\index{OP\_\-PROG@{OP\_\-PROG}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-PROG@{OP\_\-PROG}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a77c773eb7d9eb2abc4f8b66bb5f5c6de}{
+OP\_\-PROG}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a77c773eb7d9eb2abc4f8b66bb5f5c6de}
+}]\index{OP\_\-READ@{OP\_\-READ}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-READ@{OP\_\-READ}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0ac02b22f7017838ad0c1304b26a8cb2d2}{
+OP\_\-READ}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0ac02b22f7017838ad0c1304b26a8cb2d2}
+}]\index{OP\_\-SUBTRACT@{OP\_\-SUBTRACT}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-SUBTRACT@{OP\_\-SUBTRACT}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0adedf7e5a9b5ff1438fc168f1ceb9acc2}{
+OP\_\-SUBTRACT}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0adedf7e5a9b5ff1438fc168f1ceb9acc2}
+}]\index{OP\_\-VALUE@{OP\_\-VALUE}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-VALUE@{OP\_\-VALUE}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0adb59ee27e46043edcdab27e6624cf252}{
+OP\_\-VALUE}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0adb59ee27e46043edcdab27e6624cf252}
+}]\index{OP\_\-VARIABLE@{OP\_\-VARIABLE}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-VARIABLE@{OP\_\-VARIABLE}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0ad448f82fab9674390a02a60f860d6b2e}{
+OP\_\-VARIABLE}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0ad448f82fab9674390a02a60f860d6b2e}
+}]\index{OP\_\-WRITE@{OP\_\-WRITE}!interp.h@{interp.h}}\index{interp.h@{interp.h}!OP\_\-WRITE@{OP\_\-WRITE}}\item[{\em 
+\hypertarget{interp_8h_aabbe492c60331b13038e39d4207940e0a17a60143bf77a229ec511cfe1465723e}{
+OP\_\-WRITE}
+\label{interp_8h_aabbe492c60331b13038e39d4207940e0a17a60143bf77a229ec511cfe1465723e}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{interp_8h_ad7d28d7900e7ee7ccc1c41bada4d5eed}{
+\index{interp.h@{interp.h}!opcode\_\-name@{opcode\_\-name}}
+\index{opcode\_\-name@{opcode\_\-name}!interp.h@{interp.h}}
+\subsubsection[{opcode\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const string {\bf opcode\_\-name}\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{interp_8h_ad7d28d7900e7ee7ccc1c41bada4d5eed}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+
+{
+ "add", "and", "arrow", "assign", "bar", "call", "constant",
+ "divide", "endproc", "endprog", "equal", "fi", "greater",
+ "index", "less", "minus", "modulo", "multiply", "not",
+ "or", "proc", "prog", "read", "subtract", "value",
+ "variable", "write"
+}
+\end{DoxyCode}
+\hypertarget{interp_8h_a610b46241859b5e63fe92fae6d55d14e}{
+\index{interp.h@{interp.h}!STORE\_\-SIZE@{STORE\_\-SIZE}}
+\index{STORE\_\-SIZE@{STORE\_\-SIZE}!interp.h@{interp.h}}
+\subsubsection[{STORE\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf STORE\_\-SIZE} = 1000}}
+\label{interp_8h_a610b46241859b5e63fe92fae6d55d14e}

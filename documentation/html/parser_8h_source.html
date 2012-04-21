@@ -49,104 +49,135 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00027"></a>00027 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;iostream&gt;</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;sstream&gt;</span>
-<a name="l00030"></a>00030 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="token_8h.html" title="The specification/apparatus for the base Token object.">token.h</a>&quot;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="admin_8h.html" title="The specification for the Admin Class Object.">admin.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="set_8h.html" title="The specification header for the base Set class.">set.h</a>&quot;</span>        
-<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="first_8h.html" title="The specification for the static First set-collection object.">first.h</a>&quot;</span>
-<a name="l00037"></a>00037 
-<a name="l00039"></a>00039 <span class="keyword">using</span> std::string;
-<a name="l00040"></a>00040 <span class="keyword">using</span> std::cout;
-<a name="l00041"></a>00041 <span class="keyword">using</span> std::endl;
-<a name="l00042"></a>00042 <span class="keyword">using</span> std::stringstream;
-<a name="l00043"></a>00043 
-<a name="l00045"></a>00045 <span class="keyword">class </span><a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>;
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;stack&gt;</span>
+<a name="l00031"></a>00031 
+<a name="l00037"></a><a class="code" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96">00037</a> <span class="keyword">enum</span> <a class="code" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c" title="Standard STL output, string and container classes.">blocktype</a> { <a class="code" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8ca55fca26d1d0cf71206df262ff0e53e96">STATEMENTPART</a>, <a class="code" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8ca6d8159b1b703299e41ff798ec42c04de">DEFINITIONPART</a> };
+<a name="l00038"></a>00038 
+<a name="l00041"></a>00041 <span class="preprocessor">#include &quot;<a class="code" href="token_8h.html" title="The specification/apparatus for the base Token object.">token.h</a>&quot;</span>
+<a name="l00042"></a>00042 <span class="preprocessor">#include &quot;<a class="code" href="admin_8h.html" title="The specification for the Admin Class Object.">admin.h</a>&quot;</span>
+<a name="l00043"></a>00043 <span class="preprocessor">#include &quot;<a class="code" href="set_8h.html" title="The specification header for the base Set class.">set.h</a>&quot;</span>        
+<a name="l00044"></a>00044 <span class="preprocessor">#include &quot;<a class="code" href="first_8h.html" title="The specification for the static First set-collection object.">first.h</a>&quot;</span>
+<a name="l00045"></a>00045 <span class="preprocessor">#include &quot;<a class="code" href="blocktable_8h.html" title="The specification for the Admin Class Object.">blocktable.h</a>&quot;</span>
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="classParser.html">00048</a> <span class="keyword">class </span><a class="code" href="classParser.html">Parser</a> {
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keyword">private</span>:
-<a name="l00051"></a>00051   
-<a name="l00053"></a><a class="code" href="classParser.html#a8180cecab442c4c7f582bbe1d0682bf1">00053</a>   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#a8180cecab442c4c7f582bbe1d0682bf1" title="Tokens retrieved using the scanner and used in parsing heuristics.">currentToken</a>;
-<a name="l00054"></a><a class="code" href="classParser.html#a4f9e59e89197efefa1feff50f5ea8725">00054</a>   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#a4f9e59e89197efefa1feff50f5ea8725">lookAheadToken</a>;
-<a name="l00055"></a>00055   
-<a name="l00057"></a><a class="code" href="classParser.html#a96a8ee1229f37648e0ee704827b1c4c7">00057</a>   <a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>* <a class="code" href="classParser.html#a96a8ee1229f37648e0ee704827b1c4c7" title="The Parser uses the Scanner to parse the file, through a pointer to the admin class...">admin</a>;
-<a name="l00058"></a>00058   
-<a name="l00059"></a>00059   
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a068fd2e519704d6fbaf9c8ecb3469e49" title="The following functions make up the core of our Parser, and are (in effect) essentially...">Program</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00067"></a>00067   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a4d583a4596c19faf368265ec1948a42e">Block</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00068"></a>00068   
-<a name="l00069"></a>00069   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a481fd10039485563c664099d5ace6428">DefinitionPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aef0bb75e13a569ffde9f8a56625aeb41">Definition</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00071"></a>00071   <span class="keywordtype">void</span> <a class="code" href="classParser.html#abb393c5891c5a48e7be396bb6249ee4b">ConstantDefinition</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00072"></a>00072   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a08145dddc145745970fe4849aa667e05">VariableDefinition</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00073"></a>00073   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aca0b05f8805667f5057d695ee157ab74">VariableDefinitionPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00074"></a>00074   
-<a name="l00075"></a>00075   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a0bb180ec60cb61345a7890c8766f0048">TypeSymbol</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts); 
-<a name="l00076"></a>00076   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a6bd20fada4e59e17e0f2b00ec5e86ae1">VariableList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a0f04e446170cd685f2ab8ecb6782025f">ProcedureDefintion</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00078"></a>00078   
-<a name="l00079"></a>00079   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ac3ae7245f6ecc00a9e14cbed66a0b347">StatementPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00080"></a>00080   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a23d5c23531d92c7249034a9e637b4467">Statement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00081"></a>00081   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aa5c2ec1d4c045a6783887bd7453e99ed">EmptyStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00082"></a>00082   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ac356b40bf99f68cc721b7e4ad2ebb67d">ReadStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00083"></a>00083   
-<a name="l00084"></a>00084   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a8b1f76ff69c6cd8e54c0d06405e26f38">VariableAccessList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00085"></a>00085   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a092a51a38e65c3be07328bfc1e370f0e">WriteStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00086"></a>00086   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a867bebdf8a97af4991fe044b9d7e616b">ExpressionList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00087"></a>00087   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a472a0dc9ed06ffc3ec260992ae7197ca">AssignmentStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00088"></a>00088   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a7a6c6b63d49340ff06c453ce8954eeff">ProcedureStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00089"></a>00089   <span class="keywordtype">void</span> <a class="code" href="classParser.html#af7ef9a71f5e821040a16974c4602e23e">IfStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00090"></a>00090   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ae1ced275b4dafa58b751c66333a41f98">DoStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00091"></a>00091   
-<a name="l00092"></a>00092   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a00618d906669f1d0908961dc6c6c51e0">GuardedCommandList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00093"></a>00093   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ab9dbadf49595360da28b8cc77ddec8e7">GuardedCommand</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00094"></a>00094   
-<a name="l00095"></a>00095   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a155ac163cd68b4e1b8098b43be1189e1">Expression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00096"></a>00096   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a7ac200c2e0ac927e115027fb593ac72d">PrimaryOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00097"></a>00097   <span class="keywordtype">void</span> <a class="code" href="classParser.html#abe6f497eafd870c3e9f28d4c241e280a">PrimaryExpression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00098"></a>00098   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ab68b61bab0a323b67457d520578cb853">RelationalOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00099"></a>00099   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a6fc78d62a16df562e2a22e0f5c1acaf9">SimpleExpression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00100"></a>00100   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a909c968479dd3bafe797f2409e197179">AddingOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00101"></a>00101   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ab7fd24e2aeb0ad2685e11f3ea5594049">Term</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00102"></a>00102   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a0f016865b3ae30a62a06abbb7fca7345">MultiplyingOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00103"></a>00103   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a1310e1db541b2a3b614ec4491b7196ea">Factor</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00104"></a>00104   
-<a name="l00105"></a>00105   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ac004c4cc14aeca2512087a692594786b">VariableAccess</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00106"></a>00106   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ae6fd008bc26a87fbfe39d41a7391c01a">IndexedSelector</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00107"></a>00107   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aa1a1fb5ff017a1b3fbaabf63033586fa">Constant</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00108"></a>00108   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aadadd3280fa339b1433a8ad665479bc4">Numeral</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00109"></a>00109   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aa4a37b37b244053459fad1a82c7d9491">BooleanSymbol</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00110"></a>00110   
-<a name="l00111"></a>00111   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aec8b7271b672c8d609cf1df8b51cacc9">ConstantName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00112"></a>00112   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a6ab8f6d47347f69f75a4bd8eb75988ac">VariableName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00113"></a>00113   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a72cc285af2d83a0348a47a78aced1582">ProcedureName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00114"></a>00114   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a3eeedadd101b70aef097d1ef8f5f8974">FactorName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116 
-<a name="l00122"></a>00122   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a862ea4d5a0d322471e3183aa4d51ad4b" title="A function for printing debug parsing information to the screen.">debug</a>(<span class="keywordtype">string</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>, <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a>);
-<a name="l00123"></a>00123         
-<a name="l00125"></a><a class="code" href="classParser.html#a090a56f54cfd45240a039863b8289581">00125</a>   <span class="keywordtype">bool</span> <a class="code" href="classParser.html#a090a56f54cfd45240a039863b8289581" title="The Debug function only processes if this Flag is set to True.">debugflag</a>;
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127   
-<a name="l00128"></a>00128 <span class="keyword">public</span>:
+<a name="l00048"></a>00048 <span class="keyword">using</span> std::string;
+<a name="l00049"></a>00049 <span class="keyword">using</span> std::cout;
+<a name="l00050"></a>00050 <span class="keyword">using</span> std::endl;
+<a name="l00051"></a>00051 <span class="keyword">using</span> std::stringstream;
+<a name="l00052"></a>00052 
+<a name="l00054"></a>00054 <span class="keyword">class </span><a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>;
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 
+<a name="l00079"></a><a class="code" href="classParser.html">00079</a> <span class="keyword">class </span><a class="code" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> {
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 <span class="keyword">private</span>:
+<a name="l00082"></a>00082   
+<a name="l00084"></a><a class="code" href="classParser.html#a8180cecab442c4c7f582bbe1d0682bf1">00084</a>   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#a8180cecab442c4c7f582bbe1d0682bf1" title="Tokens retrieved using the scanner and used in parsing heuristics.">currentToken</a>;
+<a name="l00085"></a><a class="code" href="classParser.html#a4f9e59e89197efefa1feff50f5ea8725">00085</a>   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#a4f9e59e89197efefa1feff50f5ea8725">lookAheadToken</a>;
+<a name="l00086"></a><a class="code" href="classParser.html#aa77efdbbc573c3c89169e199b996e0a1">00086</a>   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#aa77efdbbc573c3c89169e199b996e0a1">prevToken</a>;
+<a name="l00087"></a>00087   
+<a name="l00089"></a><a class="code" href="classParser.html#a96a8ee1229f37648e0ee704827b1c4c7">00089</a>   <a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>* <a class="code" href="classParser.html#a96a8ee1229f37648e0ee704827b1c4c7" title="The Parser uses the Scanner to parse the file, through a pointer to the admin class...">admin</a>;
+<a name="l00090"></a>00090   
+<a name="l00091"></a>00091 
+<a name="l00116"></a>00116   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a068fd2e519704d6fbaf9c8ecb3469e49" title="The following functions make up the core of our Parser, and are (in effect) essentially...">Program</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00117"></a>00117   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a229a836b6e6d8dce8826647fb430d99d" title="A Block grammar component, which equates to a specific program Scope.">Block</a>(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00118"></a>00118   
+<a name="l00119"></a>00119   <span class="keywordtype">int</span> <a class="code" href="classParser.html#abc03fca869e43a1e72a28422fb96b8cb" title="The latter half of a Block, the DefinitionPart.">DefinitionPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00120"></a>00120   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a164c3a4ff56a3c75d9d26c8c47178b68" title="A component Definition, which is of one of three types.">Definition</a>(<span class="keywordtype">int</span>&amp;, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00121"></a>00121   <span class="keywordtype">void</span> <a class="code" href="classParser.html#abb393c5891c5a48e7be396bb6249ee4b" title="Productions for the Definition type of Constant are tested.">ConstantDefinition</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00122"></a>00122   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a20052e491dc7c5f812dc2784f760731a" title="Processes a Variable according to Definition.">VariableDefinition</a>(<span class="keywordtype">int</span>&amp;, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00123"></a>00123   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a897a786bb66431b5f1cc0d3c76da5250" title="Defines the definition of a VariableList, or an array.">VariableDefinitionPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts, <span class="keywordtype">int</span>&amp;, <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> type);
+<a name="l00124"></a>00124   
+<a name="l00125"></a>00125   
+<a name="l00126"></a>00126   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#acc92d496e62aa2a482092dea20de2e67" title="Processes a TypeSymbol, of Boolean or Integer design.">TypeSymbol</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts); 
+<a name="l00127"></a>00127   vector&lt;int&gt; <a class="code" href="classParser.html#a6ef905d0e7690e53c6794afdffa953cf" title="Processes a variable list and guarantees a proper set of variable types.">VariableList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts, <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> type, <a class="code" href="blocktable_8h.html#aa10c9e8951b8ccf714a59ec321bdac5b" title="Enumerates the KIND an object referred to by a TableEntry.">Kind</a> kind);
+<a name="l00128"></a>00128   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ae1399c8e85c6b366db055dd12914b0da" title="Defines a Procedure by name.">ProcedureDefinition</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
 <a name="l00129"></a>00129   
-<a name="l00131"></a>00131   <a class="code" href="classParser.html#a16503336f00dfa74eedd0ad3092d2c05" title="Base constructor, requires the admin parent object that created it.">Parser</a>(<a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>&amp; );
-<a name="l00132"></a>00132   
-<a name="l00134"></a>00134   <a class="code" href="classParser.html#a3e658b5917a93a3ef648050d060e3a93" title="Default Destructor.">~Parser</a>();
-<a name="l00135"></a>00135   
-<a name="l00137"></a>00137   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a9e8d06d145f534e73a40b38e3f6711a0" title="Runs the Parser by starting the Parse production(s) tree with the EOL $ symbol.">run</a>();
-<a name="l00138"></a>00138   
-<a name="l00140"></a>00140   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#ab53c98f6ae7ca5a9a48a1eec75fb52bc" title="Uses the Admin object to run the scanner and grab the next token, parsing when valid...">nextToken</a>();
-<a name="l00141"></a>00141   
-<a name="l00150"></a>00150   <span class="keywordtype">void</span> <a class="code" href="classParser.html#afd75ba38a886da3930c4a29f5d353a62" title="Lexeme matching function.">match</a>(<span class="keywordtype">string</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
-<a name="l00151"></a>00151   
-<a name="l00157"></a>00157   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a705ca7e2357f506dc5bea989e40ca11f" title="Outputs a syntax error message followed by the characters that would be correct.">syntaxError</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
-<a name="l00158"></a>00158   
-<a name="l00163"></a>00163   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a61a1e512e33d3498f45d1e6f7c7aaf4d" title="A function that requests an error check upon finding a character that is invalid...">syntaxCheck</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
-<a name="l00164"></a>00164 };
-<a name="l00165"></a>00165 
-<a name="l00166"></a>00166 <span class="preprocessor">#endif</span>
+<a name="l00130"></a>00130   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ac3ae7245f6ecc00a9e14cbed66a0b347" title="Processes the StatementPart of a Block.">StatementPart</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00131"></a>00131   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a23d5c23531d92c7249034a9e637b4467" title="Processes a Statement, which can be one of many.">Statement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00132"></a>00132   <span class="keywordtype">void</span> <a class="code" href="classParser.html#aa5c2ec1d4c045a6783887bd7453e99ed">EmptyStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ac356b40bf99f68cc721b7e4ad2ebb67d">ReadStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00134"></a>00134   
+<a name="l00136"></a>00136   vector&lt;mType&gt; <a class="code" href="classParser.html#a83bdac30bb8bb5d9ee0c820b4d670179" title="We need to track the various types that make up an access list.">VariableAccessList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00137"></a>00137   
+<a name="l00138"></a>00138   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a092a51a38e65c3be07328bfc1e370f0e">WriteStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00139"></a>00139   
+<a name="l00141"></a>00141   vector&lt;mType&gt; <a class="code" href="classParser.html#a5b5064d9a2c559fb1aae1c39d5fe3663" title="An Expression list can have a series of different types.">ExpressionList</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00142"></a>00142   
+<a name="l00143"></a>00143   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a472a0dc9ed06ffc3ec260992ae7197ca" title="Processes an AssignmentStatement grammar component, a subpart of Statement.">AssignmentStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00144"></a>00144   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a7a6c6b63d49340ff06c453ce8954eeff" title="Processes a subtype of Statement, a Proc.">ProcedureStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00145"></a>00145   <span class="keywordtype">void</span> <a class="code" href="classParser.html#af7ef9a71f5e821040a16974c4602e23e" title="Verifies the If guard process.">IfStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00146"></a>00146   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ae1ced275b4dafa58b751c66333a41f98" title="processes the Do guarded command.">DoStatement</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00147"></a>00147   
+<a name="l00148"></a>00148   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a071376c630a3e05acaf3b16c35736bf2" title="Matches the valid guarded commands along with the specifiers [].">GuardedCommandList</a>(<span class="keywordtype">int</span>&amp;, <span class="keywordtype">int</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00149"></a>00149   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a0259d21a13d0fcf20a813ad5ce70d454" title="Matches the guards for a GuardedCommand via Expression type check.">GuardedCommand</a>(<span class="keywordtype">int</span>&amp;, <span class="keywordtype">int</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00150"></a>00150   
+<a name="l00151"></a>00151   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#ab441560920f594e80d354c51ce64b77e" title="Checks the PrimaryExpression evals to determine Eval&amp;#39;s type(s) Chains up to ExpressionList...">Expression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00152"></a>00152   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a7ac200c2e0ac927e115027fb593ac72d">PrimaryOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00153"></a>00153   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a293b721a8e832a137e495a6a2178188e" title="A Primary Expression is a SimpleExpression with an optional operator with a simple...">PrimaryExpression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00154"></a>00154   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ab68b61bab0a323b67457d520578cb853">RelationalOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00155"></a>00155   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a9952c751bac78c4e0b3db7be474ed099" title="A SimpleExpression must evaluate to an Integer type and defines a simple expression...">SimpleExpression</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a909c968479dd3bafe797f2409e197179">AddingOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00157"></a>00157   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a55466d8b3d146f56c56e8eb53559e4b1" title="A Term is part of a SimpleExpression, and thus Primary Expression.">Term</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00158"></a>00158   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a0f016865b3ae30a62a06abbb7fca7345">MultiplyingOperator</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00159"></a>00159   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a071f2167f08d7bb2838ce98e67dfcc99" title="Processes the Factor&amp;#39;s possible productions and deterimines the correct types...">Factor</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00160"></a>00160   
+<a name="l00161"></a>00161   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#aef1c7098390f845332d10b95778aee37" title="The production for grabbing a Variable from a VariableAccessList.">VariableAccess</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00162"></a>00162   <span class="keywordtype">void</span> <a class="code" href="classParser.html#ae6fd008bc26a87fbfe39d41a7391c01a" title="The index selector for a List, such as a VariableAccessList.">IndexedSelector</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00163"></a>00163   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#af12c5409d708918579a425a44db62fd2" title="Checks validity of a Constant in an input program string.">Constant</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00164"></a>00164   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#afbf7450bc228d82258cf38e8b0733005" title="Guarantees that a Numeral was examined.">Numeral</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00165"></a>00165   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#abe1306c1c2cd82d3d690c42d0aef228f" title="Checks the validity of a Boolean at this point in the program.">BooleanSymbol</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00166"></a>00166   
+<a name="l00167"></a>00167   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#abac5f93f9f59866cb683a5414cee14ac" title="We return the type of a constant name.">ConstantName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00168"></a>00168   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#acc9e56bb590b37f7ab87395585d2f2de" title="Production for a Variable Name.">VariableName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00169"></a>00169   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a40cd3f4f71c1e5ab0d484679002e55bd" title="The name of the Procedure is checked.">ProcedureName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00170"></a>00170   <a class="code" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b" title="The TYPE of TableEntry; The PL Grammar features the first three.">mType</a> <a class="code" href="classParser.html#a7f7f4a0f793d5c31f2a75ea10b426968" title="A FactorName is a VariableAccess for resolving FACTOR productions.">FactorName</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> sts);
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172 
+<a name="l00178"></a>00178   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a862ea4d5a0d322471e3183aa4d51ad4b" title="A function for printing debug parsing information to the screen.">debug</a>(<span class="keywordtype">string</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>, <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a>);
+<a name="l00179"></a>00179         
+<a name="l00181"></a><a class="code" href="classParser.html#a090a56f54cfd45240a039863b8289581">00181</a>   <span class="keywordtype">bool</span> <a class="code" href="classParser.html#a090a56f54cfd45240a039863b8289581" title="The Debug function only processes if this Flag is set to True.">debugflag</a>;
+<a name="l00182"></a>00182   
+<a name="l00184"></a><a class="code" href="classParser.html#aa5635cdb5fc754cc3ea8b85eca02dfda">00184</a>   <a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>* <a class="code" href="classParser.html#aa5635cdb5fc754cc3ea8b85eca02dfda" title="A Symbol Table pointer, allowing direct access to Symbol Table information.">table</a>;
+<a name="l00185"></a>00185   
+<a name="l00187"></a><a class="code" href="classParser.html#a817d3fe67a8ee070f01fd759f8d5d30f">00187</a>   <a class="code" href="classBlockTable.html" title="The structure facilitating the creation and manipulation of Program Blocks.">BlockTable</a>* <a class="code" href="classParser.html#a817d3fe67a8ee070f01fd759f8d5d30f" title="A blocktable object used for proper Scope checking facilities.">blocktable</a>;
+<a name="l00188"></a>00188   
+<a name="l00189"></a>00189   <span class="comment">//A deprecated Array used for checking previous declarations.</span>
+<a name="l00190"></a><a class="code" href="classParser.html#aeee13154ac5d45a615a57fd4d982487b">00190</a>   <span class="keywordtype">string</span> <a class="code" href="classParser.html#aeee13154ac5d45a615a57fd4d982487b">prevMatch</a>[4];
+<a name="l00191"></a>00191   <span class="comment">//Deprecated, used in conjunction with prevmatch for previous scope attempt.</span>
+<a name="l00192"></a><a class="code" href="classParser.html#a4068ed26fd5e4ea914a05979ba4d792c">00192</a>   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a4068ed26fd5e4ea914a05979ba4d792c">prevID</a>;
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194   
+<a name="l00196"></a><a class="code" href="classParser.html#ae9c8fcaf225a1d019fc1e87ee330605c">00196</a>   stack&lt;blocktype&gt; <a class="code" href="classParser.html#ae9c8fcaf225a1d019fc1e87ee330605c" title="Used to track what area of the Block we are currently in, and thus what mType we...">blockTypeStack</a>;
+<a name="l00197"></a>00197   
+<a name="l00199"></a><a class="code" href="classParser.html#a43e9e43e927c28bc883fd7ff20d165a1">00199</a>   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a43e9e43e927c28bc883fd7ff20d165a1" title="Tracks the Scope type of parsing errors we encounter.">numberOfScopeTypeErrors</a>;
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a8f14f036744fbf72a2d3fa1b30f5b334">NewLabel</a>();
+<a name="l00202"></a>00202   
+<a name="l00203"></a>00203 <span class="keyword">public</span>:
+<a name="l00204"></a>00204   
+<a name="l00206"></a>00206   <a class="code" href="classParser.html#adb5ff4e366a04633abe9d33e951196b2" title="Base constructor, requires the admin parent object that created it.">Parser</a>(<a class="code" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a>&amp;, <a class="code" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a>&amp;);
+<a name="l00207"></a>00207   
+<a name="l00209"></a>00209   <a class="code" href="classParser.html#a3e658b5917a93a3ef648050d060e3a93" title="Default Destructor.">~Parser</a>();
+<a name="l00210"></a>00210   
+<a name="l00212"></a>00212   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a9e8d06d145f534e73a40b38e3f6711a0" title="Runs the Parser by starting the Parse production(s) tree with the EOL $ symbol.">run</a>();
+<a name="l00213"></a>00213   
+<a name="l00215"></a>00215   <a class="code" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> <a class="code" href="classParser.html#ab53c98f6ae7ca5a9a48a1eec75fb52bc" title="Uses the Admin object to run the scanner and grab the next token, parsing when valid...">nextToken</a>();
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217   
+<a name="l00226"></a>00226   <span class="keywordtype">void</span> <a class="code" href="classParser.html#afd75ba38a886da3930c4a29f5d353a62" title="Lexeme matching function.">match</a>(<span class="keywordtype">string</span>, <a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
+<a name="l00227"></a>00227 
+<a name="l00233"></a>00233   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a705ca7e2357f506dc5bea989e40ca11f" title="Outputs a syntax error message followed by the characters that would be correct.">syntaxError</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
+<a name="l00234"></a>00234 
+<a name="l00239"></a>00239   <span class="keywordtype">void</span> <a class="code" href="classParser.html#a61a1e512e33d3498f45d1e6f7c7aaf4d" title="A function that requests an error check upon finding a character that is invalid...">syntaxCheck</a>(<a class="code" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a>);
+<a name="l00240"></a>00240   
+<a name="l00242"></a><a class="code" href="classParser.html#a613d04900f76c66dfdf41e47aff6e539">00242</a>   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a613d04900f76c66dfdf41e47aff6e539" title="Keeps track of the Parsing Errors we encounter.">errorCount</a>;
+<a name="l00243"></a>00243   
+<a name="l00244"></a><a class="code" href="classParser.html#a10a64572cec26c50bdef9575fc79540e">00244</a>   <span class="keywordtype">int</span> <a class="code" href="classParser.html#a10a64572cec26c50bdef9575fc79540e">labelCount</a>;
+<a name="l00245"></a>00245   
+<a name="l00247"></a>00247   <span class="keywordtype">bool</span> <a class="code" href="classParser.html#a7f02236268961b80c3d76902969a728a" title="Returns a TRUE if there is any kind of error.">existsError</a>();
+<a name="l00248"></a>00248 };
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -162,7 +193,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

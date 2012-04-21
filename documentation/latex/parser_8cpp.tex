@@ -21,12 +21,21 @@ We use the output function debug() with the C++ macro \char`\"{}\_\-\_\-func\_\-
 
 A SET is an object containing a vector of lexemic strings. \begin{DoxySeeAlso}{See also}
 \hyperlink{set_8cpp}{set.cpp} The \hyperlink{classSet}{Set} \char`\"{}sts\char`\"{} that is passed between objects is the \char`\"{}stop set\char`\"{}, which functions as a sentinel set indicating the valid next characters; if we see a lexeme that is not in the (sts) Stop \hyperlink{classSet}{Set}, we stop (generate an error).
+\end{DoxySeeAlso}
+Every relevant function has been augmented to output (to a stream, and then to a file) a string representing a given block's information in regards to the corresponding Assembly and Interpretation functions and three-\/address code needed to properly manipulate the stack and the corresponding memory addresses of the variables and instructions in the PL source file.
 
-/documentation/
+\begin{DoxySeeAlso}{See also}
+/documentation/ 
+
+/test/ 
+
+/tools/ 
+
+README
 \end{DoxySeeAlso}
 \begin{DoxyAuthor}{Author}
 Jordan Peoples, Chad Klassen, Adam Shepley 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-January 9th to February 29th, 2011 
+January 9th to April 20th, 2011 
 \end{DoxyDate}

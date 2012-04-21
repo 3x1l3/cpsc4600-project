@@ -45,17 +45,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <h1>Parser Class Reference</h1><!-- doxytag: class="Parser" -->
+<p>The main object for Parsing the PL source code and guaranteeing correctness.  
+<a href="#_details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
 
 <p><a href="classParser-members.html">List of all members.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a16503336f00dfa74eedd0ad3092d2c05">Parser</a> (<a class="el" href="classAdmin.html">Admin</a> &amp;)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Base constructor, requires the admin parent object that created it.  <a href="#a16503336f00dfa74eedd0ad3092d2c05"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#adb5ff4e366a04633abe9d33e951196b2">Parser</a> (<a class="el" href="classAdmin.html">Admin</a> &amp;, <a class="el" href="classSymbolTable.html">SymbolTable</a> &amp;)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Base constructor, requires the admin parent object that created it.  <a href="#adb5ff4e366a04633abe9d33e951196b2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a3e658b5917a93a3ef648050d060e3a93">~Parser</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Default Destructor.  <a href="#a3e658b5917a93a3ef648050d060e3a93"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a9e8d06d145f534e73a40b38e3f6711a0">run</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Runs the <a class="el" href="classParser.html">Parser</a> by starting the Parse production(s) tree with the EOL $ symbol.  <a href="#a9e8d06d145f534e73a40b38e3f6711a0"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Runs the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> by starting the Parse production(s) tree with the EOL $ symbol.  <a href="#a9e8d06d145f534e73a40b38e3f6711a0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classToken.html">Token</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ab53c98f6ae7ca5a9a48a1eec75fb52bc">nextToken</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Uses the <a class="el" href="classAdmin.html" title="This is the main administrator class that manages the different compiler functions...">Admin</a> object to run the scanner and grab the next token, parsing when valid.  <a href="#ab53c98f6ae7ca5a9a48a1eec75fb52bc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#afd75ba38a886da3930c4a29f5d353a62">match</a> (string, <a class="el" href="classSet.html">Set</a>)</td></tr>
@@ -64,62 +67,119 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Outputs a syntax error message followed by the characters that would be correct.  <a href="#a705ca7e2357f506dc5bea989e40ca11f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a61a1e512e33d3498f45d1e6f7c7aaf4d">syntaxCheck</a> (<a class="el" href="classSet.html">Set</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A function that requests an error check upon finding a character that is invalid.  <a href="#a61a1e512e33d3498f45d1e6f7c7aaf4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a7f02236268961b80c3d76902969a728a">existsError</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns a TRUE if there is any kind of error.  <a href="#a7f02236268961b80c3d76902969a728a"></a><br/></td></tr>
+<tr><td colspan="2"><h2>Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a613d04900f76c66dfdf41e47aff6e539">errorCount</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Keeps track of the Parsing Errors we encounter.  <a href="#a613d04900f76c66dfdf41e47aff6e539"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a10a64572cec26c50bdef9575fc79540e">labelCount</a></td></tr>
 <tr><td colspan="2"><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a068fd2e519704d6fbaf9c8ecb3469e49">Program</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The following functions make up the core of our <a class="el" href="classParser.html">Parser</a>, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions.  <a href="#a068fd2e519704d6fbaf9c8ecb3469e49"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a4d583a4596c19faf368265ec1948a42e">Block</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a481fd10039485563c664099d5ace6428">DefinitionPart</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aef0bb75e13a569ffde9f8a56625aeb41">Definition</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The following functions make up the core of our <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions.  <a href="#a068fd2e519704d6fbaf9c8ecb3469e49"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a229a836b6e6d8dce8826647fb430d99d">Block</a> (int, int, <a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A Block grammar component, which equates to a specific program Scope.  <a href="#a229a836b6e6d8dce8826647fb430d99d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#abc03fca869e43a1e72a28422fb96b8cb">DefinitionPart</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The latter half of a Block, the DefinitionPart.  <a href="#abc03fca869e43a1e72a28422fb96b8cb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a164c3a4ff56a3c75d9d26c8c47178b68">Definition</a> (int &amp;, <a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A component Definition, which is of one of three types.  <a href="#a164c3a4ff56a3c75d9d26c8c47178b68"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#abb393c5891c5a48e7be396bb6249ee4b">ConstantDefinition</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a08145dddc145745970fe4849aa667e05">VariableDefinition</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aca0b05f8805667f5057d695ee157ab74">VariableDefinitionPart</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a0bb180ec60cb61345a7890c8766f0048">TypeSymbol</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a6bd20fada4e59e17e0f2b00ec5e86ae1">VariableList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a0f04e446170cd685f2ab8ecb6782025f">ProcedureDefintion</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Productions for the Definition type of Constant are tested.  <a href="#abb393c5891c5a48e7be396bb6249ee4b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a20052e491dc7c5f812dc2784f760731a">VariableDefinition</a> (int &amp;, <a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes a Variable according to Definition.  <a href="#a20052e491dc7c5f812dc2784f760731a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a897a786bb66431b5f1cc0d3c76da5250">VariableDefinitionPart</a> (<a class="el" href="classSet.html">Set</a> sts, int &amp;, <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> type)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Defines the definition of a VariableList, or an array.  <a href="#a897a786bb66431b5f1cc0d3c76da5250"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#acc92d496e62aa2a482092dea20de2e67">TypeSymbol</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes a TypeSymbol, of Boolean or Integer design.  <a href="#acc92d496e62aa2a482092dea20de2e67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">vector&lt; int &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a6ef905d0e7690e53c6794afdffa953cf">VariableList</a> (<a class="el" href="classSet.html">Set</a> sts, <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> type, <a class="el" href="blocktable_8h.html#aa10c9e8951b8ccf714a59ec321bdac5b">Kind</a> kind)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes a variable list and guarantees a proper set of variable types.  <a href="#a6ef905d0e7690e53c6794afdffa953cf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ae1399c8e85c6b366db055dd12914b0da">ProcedureDefinition</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Defines a Procedure by name.  <a href="#ae1399c8e85c6b366db055dd12914b0da"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ac3ae7245f6ecc00a9e14cbed66a0b347">StatementPart</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes the StatementPart of a Block.  <a href="#ac3ae7245f6ecc00a9e14cbed66a0b347"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a23d5c23531d92c7249034a9e637b4467">Statement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes a Statement, which can be one of many.  <a href="#a23d5c23531d92c7249034a9e637b4467"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa5c2ec1d4c045a6783887bd7453e99ed">EmptyStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ac356b40bf99f68cc721b7e4ad2ebb67d">ReadStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8b1f76ff69c6cd8e54c0d06405e26f38">VariableAccessList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a83bdac30bb8bb5d9ee0c820b4d670179">VariableAccessList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We need to track the various types that make up an access list.  <a href="#a83bdac30bb8bb5d9ee0c820b4d670179"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a092a51a38e65c3be07328bfc1e370f0e">WriteStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a867bebdf8a97af4991fe044b9d7e616b">ExpressionList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a5b5064d9a2c559fb1aae1c39d5fe3663">ExpressionList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An Expression list can have a series of different types.  <a href="#a5b5064d9a2c559fb1aae1c39d5fe3663"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a472a0dc9ed06ffc3ec260992ae7197ca">AssignmentStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes an AssignmentStatement grammar component, a subpart of Statement.  <a href="#a472a0dc9ed06ffc3ec260992ae7197ca"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a7a6c6b63d49340ff06c453ce8954eeff">ProcedureStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes a subtype of Statement, a Proc.  <a href="#a7a6c6b63d49340ff06c453ce8954eeff"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#af7ef9a71f5e821040a16974c4602e23e">IfStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Verifies the If guard process.  <a href="#af7ef9a71f5e821040a16974c4602e23e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ae1ced275b4dafa58b751c66333a41f98">DoStatement</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a00618d906669f1d0908961dc6c6c51e0">GuardedCommandList</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ab9dbadf49595360da28b8cc77ddec8e7">GuardedCommand</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a155ac163cd68b4e1b8098b43be1189e1">Expression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">processes the Do guarded command.  <a href="#ae1ced275b4dafa58b751c66333a41f98"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a071376c630a3e05acaf3b16c35736bf2">GuardedCommandList</a> (int &amp;, int, <a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Matches the valid guarded commands along with the specifiers [].  <a href="#a071376c630a3e05acaf3b16c35736bf2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a0259d21a13d0fcf20a813ad5ce70d454">GuardedCommand</a> (int &amp;, int, <a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Matches the guards for a GuardedCommand via Expression type check.  <a href="#a0259d21a13d0fcf20a813ad5ce70d454"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ab441560920f594e80d354c51ce64b77e">Expression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks the PrimaryExpression evals to determine Eval's type(s) Chains up to ExpressionList Returns a type resulting from the corresponding PrimaryExpression evaluations and uses a vector as (similar to SimpleExpression and Term) there is the possibility of multiple types needing comparison; This is because of the following grammar: Expression -&gt; PrimaryExpression { PrimaryOperator PrimaryExpression }.  <a href="#ab441560920f594e80d354c51ce64b77e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a7ac200c2e0ac927e115027fb593ac72d">PrimaryOperator</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#abe6f497eafd870c3e9f28d4c241e280a">PrimaryExpression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a293b721a8e832a137e495a6a2178188e">PrimaryExpression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A Primary Expression is a SimpleExpression with an optional operator with a simple expression.  <a href="#a293b721a8e832a137e495a6a2178188e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ab68b61bab0a323b67457d520578cb853">RelationalOperator</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a6fc78d62a16df562e2a22e0f5c1acaf9">SimpleExpression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a9952c751bac78c4e0b3db7be474ed099">SimpleExpression</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A SimpleExpression must evaluate to an Integer type and defines a simple expression.  <a href="#a9952c751bac78c4e0b3db7be474ed099"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a909c968479dd3bafe797f2409e197179">AddingOperator</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ab7fd24e2aeb0ad2685e11f3ea5594049">Term</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a55466d8b3d146f56c56e8eb53559e4b1">Term</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A Term is part of a SimpleExpression, and thus Primary Expression.  <a href="#a55466d8b3d146f56c56e8eb53559e4b1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a0f016865b3ae30a62a06abbb7fca7345">MultiplyingOperator</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a1310e1db541b2a3b614ec4491b7196ea">Factor</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ac004c4cc14aeca2512087a692594786b">VariableAccess</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a071f2167f08d7bb2838ce98e67dfcc99">Factor</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Processes the Factor's possible productions and deterimines the correct types.  <a href="#a071f2167f08d7bb2838ce98e67dfcc99"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aef1c7098390f845332d10b95778aee37">VariableAccess</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The production for grabbing a Variable from a VariableAccessList.  <a href="#aef1c7098390f845332d10b95778aee37"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ae6fd008bc26a87fbfe39d41a7391c01a">IndexedSelector</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa1a1fb5ff017a1b3fbaabf63033586fa">Constant</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aadadd3280fa339b1433a8ad665479bc4">Numeral</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa4a37b37b244053459fad1a82c7d9491">BooleanSymbol</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aec8b7271b672c8d609cf1df8b51cacc9">ConstantName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a6ab8f6d47347f69f75a4bd8eb75988ac">VariableName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a72cc285af2d83a0348a47a78aced1582">ProcedureName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a3eeedadd101b70aef097d1ef8f5f8974">FactorName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The index selector for a List, such as a VariableAccessList.  <a href="#ae6fd008bc26a87fbfe39d41a7391c01a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#af12c5409d708918579a425a44db62fd2">Constant</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks validity of a Constant in an input program string.  <a href="#af12c5409d708918579a425a44db62fd2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#afbf7450bc228d82258cf38e8b0733005">Numeral</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Guarantees that a Numeral was examined.  <a href="#afbf7450bc228d82258cf38e8b0733005"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#abe1306c1c2cd82d3d690c42d0aef228f">BooleanSymbol</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks the validity of a Boolean at this point in the program.  <a href="#abe1306c1c2cd82d3d690c42d0aef228f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#abac5f93f9f59866cb683a5414cee14ac">ConstantName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">We return the type of a constant name.  <a href="#abac5f93f9f59866cb683a5414cee14ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#acc9e56bb590b37f7ab87395585d2f2de">VariableName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Production for a Variable Name.  <a href="#acc9e56bb590b37f7ab87395585d2f2de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a40cd3f4f71c1e5ab0d484679002e55bd">ProcedureName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The name of the Procedure is checked.  <a href="#a40cd3f4f71c1e5ab0d484679002e55bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a7f7f4a0f793d5c31f2a75ea10b426968">FactorName</a> (<a class="el" href="classSet.html">Set</a> sts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A FactorName is a VariableAccess for resolving FACTOR productions.  <a href="#a7f7f4a0f793d5c31f2a75ea10b426968"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a862ea4d5a0d322471e3183aa4d51ad4b">debug</a> (string, <a class="el" href="classSet.html">Set</a>, <a class="el" href="classToken.html">Token</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A function for printing debug parsing information to the screen.  <a href="#a862ea4d5a0d322471e3183aa4d51ad4b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8f14f036744fbf72a2d3fa1b30f5b334">NewLabel</a> ()</td></tr>
 <tr><td colspan="2"><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classToken.html">Token</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8180cecab442c4c7f582bbe1d0682bf1">currentToken</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tokens retrieved using the scanner and used in parsing heuristics.  <a href="#a8180cecab442c4c7f582bbe1d0682bf1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classToken.html">Token</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a4f9e59e89197efefa1feff50f5ea8725">lookAheadToken</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classToken.html">Token</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa77efdbbc573c3c89169e199b996e0a1">prevToken</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAdmin.html">Admin</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a96a8ee1229f37648e0ee704827b1c4c7">admin</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="classParser.html">Parser</a> uses the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> to parse the file, through a pointer to the admin class.  <a href="#a96a8ee1229f37648e0ee704827b1c4c7"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> uses the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> to parse the file, through a pointer to the admin class.  <a href="#a96a8ee1229f37648e0ee704827b1c4c7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a090a56f54cfd45240a039863b8289581">debugflag</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The Debug function only processes if this Flag is set to True.  <a href="#a090a56f54cfd45240a039863b8289581"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSymbolTable.html">SymbolTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa5635cdb5fc754cc3ea8b85eca02dfda">table</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A Symbol Table pointer, allowing direct access to Symbol Table information.  <a href="#aa5635cdb5fc754cc3ea8b85eca02dfda"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBlockTable.html">BlockTable</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a817d3fe67a8ee070f01fd759f8d5d30f">blocktable</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">A blocktable object used for proper Scope checking facilities.  <a href="#a817d3fe67a8ee070f01fd759f8d5d30f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aeee13154ac5d45a615a57fd4d982487b">prevMatch</a> [4]</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a4068ed26fd5e4ea914a05979ba4d792c">prevID</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">stack&lt; <a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c">blocktype</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#ae9c8fcaf225a1d019fc1e87ee330605c">blockTypeStack</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Used to track what area of the Block we are currently in, and thus what mType we should be returning.  <a href="#ae9c8fcaf225a1d019fc1e87ee330605c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a43e9e43e927c28bc883fd7ff20d165a1">numberOfScopeTypeErrors</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tracks the Scope type of parsing errors we encounter.  <a href="#a43e9e43e927c28bc883fd7ff20d165a1"></a><br/></td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>The main object for Parsing the PL source code and guaranteeing correctness. </p>
+<p>The <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> is responsible for verifying that the syntax in a PL program's source code is semantically correct. It verifies/guarantees that a program corresponds to the correct series of Production Rules of the PL grammar, but correspondingly guarantees that the scope and type checking rules, or rather, the implicit rules of the grammar are also adhered to.</p>
+<p>The Function Call tree that is generated corresponds to the outline for a correct Parse tree for the PL grammar, and thus an incorrect program will break this tree at some point, in some fashion.</p>
+<p>Every function call corresponds to a PL production or a corrected PL production set (adjusted for ambiguity or problems when present).</p>
+<p>The <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> uses a <a class="el" href="classBlockTable.html" title="The structure facilitating the creation and manipulation of Program Blocks.">BlockTable</a> to ensure that the scope and type rules are valid when parsing a given statement. This is done by ensuring that the scope of an "entry" is correct or "new", and that all following usages of a declaration are verified in kind. </p>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a16503336f00dfa74eedd0ad3092d2c05"></a><!-- doxytag: member="Parser::Parser" ref="a16503336f00dfa74eedd0ad3092d2c05" args="(Admin &amp;)" -->
+<a class="anchor" id="adb5ff4e366a04633abe9d33e951196b2"></a><!-- doxytag: member="Parser::Parser" ref="adb5ff4e366a04633abe9d33e951196b2" args="(Admin &amp;, SymbolTable &amp;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -127,16 +187,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           <td class="memname">Parser::Parser </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classAdmin.html">Admin</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>adminObject</em></td>
-          <td>&nbsp;)&nbsp;</td>
+          <td class="paramname"> <em>adminObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classSymbolTable.html">SymbolTable</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>symTable</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Base constructor, requires the admin parent object that created it. </p>
-<p>Constructor for <a class="el" href="classParser.html">Parser</a> object class.</p>
+<p>Constructor for <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> object class.</p>
 <p>Binds the external admin object locally, controls the debug status and sets the initial lookahead token/scanner var position.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
@@ -145,7 +214,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </dd>
 </dl>
 
-<p>References <a class="el" href="parser_8h_source.html#l00057">admin</a>, <a class="el" href="parser_8h_source.html#l00125">debugflag</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, and <a class="el" href="parser_8cpp_source.html#l00101">nextToken()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8h_source.html#l00181">debugflag</a>, <a class="el" href="parser_8h_source.html#l00242">errorCount</a>, <a class="el" href="parser_8h_source.html#l00244">labelCount</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00150">nextToken()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, and <a class="el" href="parser_8h_source.html#l00184">table</a>.</p>
 
 </div>
 </div>
@@ -186,7 +255,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -206,36 +275,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00452">ExpressionList()</a>, <a class="el" href="first_8cpp_source.html#l00177">First::ExpressionList()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00427">VariableAccessList()</a>.</p>
+<p>Processes an AssignmentStatement grammar component, a subpart of Statement. </p>
+<p>Uses two vectors of mTypes to match up to Variable and Expression lists, and guarantee their types match correspondingly, or outputs a type mismatch error therein. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="blocktable_8cpp_source.html#l00411">BlockTable::convertType()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="parser_8cpp_source.html#l00871">ExpressionList()</a>, <a class="el" href="first_8cpp_source.html#l00177">First::ExpressionList()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00832">VariableAccessList()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4d583a4596c19faf368265ec1948a42e"></a><!-- doxytag: member="Parser::Block" ref="a4d583a4596c19faf368265ec1948a42e" args="(Set sts)" -->
+<a class="anchor" id="a229a836b6e6d8dce8826647fb430d99d"></a><!-- doxytag: member="Parser::Block" ref="a229a836b6e6d8dce8826647fb430d99d" args="(int, int, Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Parser::Block </td>
           <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>beginLabel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>varLabel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"> <em>sts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00217">DefinitionPart()</a>, <a class="el" href="first_8cpp_source.html#l00077">First::DefinitionPart()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00349">StatementPart()</a>, <a class="el" href="first_8cpp_source.html#l00091">First::StatementPart()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>A Block grammar component, which equates to a specific program Scope. </p>
+<p>Each Block contains a DefinitionPart and StatementPart, and indicates that a new program Scope has been entered. Thus, the internal parts have access to the previous Block entries (scope data) but the StatementPart AFTER this block (if any) will not have access to the information created in this Block production (we use endBlock to ensure this.) </p>
+
+<p><p>A new scope has started.</p>
+<p>The previous scope (block) has ended. </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00364">DefinitionPart()</a>, <a class="el" href="first_8cpp_source.html#l00077">First::DefinitionPart()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="blocktable_8cpp_source.html#l00306">BlockTable::endBlock()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="blocktable_8cpp_source.html#l00275">BlockTable::newBlock()</a>, <a class="el" href="parser_8cpp_source.html#l00739">StatementPart()</a>, <a class="el" href="first_8cpp_source.html#l00091">First::StatementPart()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa4a37b37b244053459fad1a82c7d9491"></a><!-- doxytag: member="Parser::BooleanSymbol" ref="aa4a37b37b244053459fad1a82c7d9491" args="(Set sts)" -->
+<a class="anchor" id="abe1306c1c2cd82d3d690c42d0aef228f"></a><!-- doxytag: member="Parser::BooleanSymbol" ref="abe1306c1c2cd82d3d690c42d0aef228f" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::BooleanSymbol </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::BooleanSymbol </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -246,16 +340,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Checks the validity of a Boolean at this point in the program. </p>
+<p>Ensures the next token is proper for a boolean of some sort, then returns a BOOLEAN mType for our semantic analysis. </p>
+
+<p><p>Makes sure our proceeding tokens are correct for a boolean expression.</p>
+<p>Ensures that the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> knows that a Boolean was evaluated. </p>
+</p>
+
+<p>References <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa1a1fb5ff017a1b3fbaabf63033586fa"></a><!-- doxytag: member="Parser::Constant" ref="aa1a1fb5ff017a1b3fbaabf63033586fa" args="(Set sts)" -->
+<a class="anchor" id="af12c5409d708918579a425a44db62fd2"></a><!-- doxytag: member="Parser::Constant" ref="af12c5409d708918579a425a44db62fd2" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Constant </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::Constant </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -266,7 +367,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00820">BooleanSymbol()</a>, <a class="el" href="parser_8cpp_source.html#l00836">ConstantName()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00812">Numeral()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Checks validity of a Constant in an input program string. </p>
+<p>Either in a constantDefinition or an Array definition, Can be a Numeral, BooleanSymbol or ConstantName</p>
+<p>A constant can be one of multiple types, and thus we check which one while checking the validity and let that mtype information chain upwards. </p>
+
+<p><p>Create firstsets of the possibilities of a Constant.</p>
+<p>Check for validity of the matching token, which is one of these...</p>
+<p>then we return the given matching type. </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00196">blockTypeStack</a>, <a class="el" href="parser_8cpp_source.html#l01789">BooleanSymbol()</a>, <a class="el" href="parser_8cpp_source.html#l01816">ConstantName()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l01769">Numeral()</a>, <a class="el" href="parser_8h_source.html#l00037">STATEMENTPART</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -286,16 +396,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00787">Constant()</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="parser_8cpp_source.html#l00836">ConstantName()</a>, <a class="el" href="first_8cpp_source.html#l00287">First::ConstantName()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Productions for the Definition type of Constant are tested. </p>
+<p>Consists of "const" ConstantName "=" Constant -&gt;</p>
+<p>Thus, we check to make sure each component is value, and check the Constant and ConstantName productions.</p>
+<p>Here, is where we check to see that the Constant information does not exist in our scope already, and generate an error if it does. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="parser_8cpp_source.html#l01719">Constant()</a>, <a class="el" href="blocktable_8h_source.html#l00033">CONSTANT</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="parser_8cpp_source.html#l01816">ConstantName()</a>, <a class="el" href="first_8cpp_source.html#l00287">First::ConstantName()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8cpp_source.html#l00108">BlockTable::define()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="blocktable_8h_source.html#l00068">TableEntry::okind</a>, <a class="el" href="blocktable_8h_source.html#l00071">TableEntry::otype</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>, and <a class="el" href="blocktable_8h_source.html#l00077">TableEntry::value</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aec8b7271b672c8d609cf1df8b51cacc9"></a><!-- doxytag: member="Parser::ConstantName" ref="aec8b7271b672c8d609cf1df8b51cacc9" args="(Set sts)" -->
+<a class="anchor" id="abac5f93f9f59866cb683a5414cee14ac"></a><!-- doxytag: member="Parser::ConstantName" ref="abac5f93f9f59866cb683a5414cee14ac" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::ConstantName </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::ConstantName </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -306,7 +421,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00845">VariableName()</a>.</p>
+<p>We return the type of a constant name. </p>
+<p>We're in the definition part at this point, and thus defining the const in its name. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l01835">VariableName()</a>.</p>
 
 </div>
 </div>
@@ -354,16 +472,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </dd>
 </dl>
 
-<p>References <a class="el" href="parser_8h_source.html#l00057">admin</a>, <a class="el" href="parser_8h_source.html#l00125">debugflag</a>, <a class="el" href="admin_8cpp_source.html#l00223">Admin::getColumnNumber()</a>, and <a class="el" href="admin_8cpp_source.html#l00229">Admin::getLineNumber()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00181">debugflag</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, and <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aef0bb75e13a569ffde9f8a56625aeb41"></a><!-- doxytag: member="Parser::Definition" ref="aef0bb75e13a569ffde9f8a56625aeb41" args="(Set sts)" -->
+<a class="anchor" id="a164c3a4ff56a3c75d9d26c8c47178b68"></a><!-- doxytag: member="Parser::Definition" ref="a164c3a4ff56a3c75d9d26c8c47178b68" args="(int &amp;, Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Definition </td>
+          <td class="memname">int Parser::Definition </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>varStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
+          <td class="paramname"> <em>sts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>A component Definition, which is of one of three types. </p>
+<p>No special type checking or scope rules occurs here, but rather, in one of the proceeding functions.</p>
+<p>A Definition can be one of these three types: Constant, Variable or Procedure; an array is of type Variable, of course.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classParser.html#abc03fca869e43a1e72a28422fb96b8cb" title="The latter half of a Block, the DefinitionPart.">DefinitionPart()</a> </dd></dl>
+
+<p><p>We simply check which kind of Definition the next token belongs to. </p>
+</p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00444">ConstantDefinition()</a>, <a class="el" href="first_8cpp_source.html#l00296">First::ConstantDefinition()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00708">ProcedureDefinition()</a>, <a class="el" href="first_8cpp_source.html#l00331">First::ProcedureDefinition()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00523">VariableDefinition()</a>, and <a class="el" href="first_8cpp_source.html#l00303">First::VariableDefinition()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc03fca869e43a1e72a28422fb96b8cb"></a><!-- doxytag: member="Parser::DefinitionPart" ref="abc03fca869e43a1e72a28422fb96b8cb" args="(Set sts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Parser::DefinitionPart </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -374,27 +529,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00258">ConstantDefinition()</a>, <a class="el" href="first_8cpp_source.html#l00296">First::ConstantDefinition()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="first_8cpp_source.html#l00331">First::ProcedureDefinition()</a>, <a class="el" href="parser_8cpp_source.html#l00339">ProcedureDefintion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00272">VariableDefinition()</a>, and <a class="el" href="first_8cpp_source.html#l00303">First::VariableDefinition()</a>.</p>
+<p>The latter half of a Block, the DefinitionPart. </p>
+<p>The DefinitionPart is where PL constructs are first declared, though only given distinct values in the cases of Proc names, Const values, and array sizes.</p>
+<p>The block type is recorded to ensure that Expressions and guards evaluate properly. </p>
 
-</div>
-</div>
-<a class="anchor" id="a481fd10039485563c664099d5ace6428"></a><!-- doxytag: member="Parser::DefinitionPart" ref="a481fd10039485563c664099d5ace6428" args="(Set sts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Parser::DefinitionPart </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
+<p><p>Used to guarantee that the proceeding productions have the right semantic types when checked.</p>
+<p>Loops through until we find a <a class="el" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> that isn't a valid Definition/is the end of the DefinitionPart</p>
+<p>Since we are no longer in the DefinitionPart, we pop it off the Type stack. </p>
+</p>
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="first_8cpp_source.html#l00085">First::Definition()</a>, <a class="el" href="parser_8cpp_source.html#l00237">Definition()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00196">blockTypeStack</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="first_8cpp_source.html#l00085">First::Definition()</a>, <a class="el" href="parser_8cpp_source.html#l00407">Definition()</a>, <a class="el" href="parser_8h_source.html#l00037">DEFINITIONPART</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -414,7 +558,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00517">GuardedCommandList()</a>, <a class="el" href="first_8cpp_source.html#l00189">First::GuardedCommandList()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>processes the Do guarded command. </p>
+<p>Part of guaranteeing the Guards are correct. Matches the relevent guards checks that the subsequent guarded command list is valid. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="parser_8cpp_source.html#l01082">GuardedCommandList()</a>, <a class="el" href="first_8cpp_source.html#l00189">First::GuardedCommandList()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00084">NewLabel()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -434,16 +581,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a155ac163cd68b4e1b8098b43be1189e1"></a><!-- doxytag: member="Parser::Expression" ref="a155ac163cd68b4e1b8098b43be1189e1" args="(Set sts)" -->
+<a class="anchor" id="a7f02236268961b80c3d76902969a728a"></a><!-- doxytag: member="Parser::existsError" ref="a7f02236268961b80c3d76902969a728a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Expression </td>
+          <td class="memname">bool Parser::existsError </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns a TRUE if there is any kind of error. </p>
+<p>Returns a true if any errors of any kind are found.</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00242">errorCount</a>, and <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab441560920f594e80d354c51ce64b77e"></a><!-- doxytag: member="Parser::Expression" ref="ab441560920f594e80d354c51ce64b77e" args="(Set sts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::Expression </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -454,16 +623,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="first_8cpp_source.html#l00201">First::PrimaryExpression()</a>, <a class="el" href="parser_8cpp_source.html#l00576">PrimaryExpression()</a>, <a class="el" href="parser_8cpp_source.html#l00560">PrimaryOperator()</a>, <a class="el" href="first_8cpp_source.html#l00207">First::PrimaryOperator()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Checks the PrimaryExpression evals to determine Eval's type(s) Chains up to ExpressionList Returns a type resulting from the corresponding PrimaryExpression evaluations and uses a vector as (similar to SimpleExpression and Term) there is the possibility of multiple types needing comparison; This is because of the following grammar: Expression -&gt; PrimaryExpression { PrimaryOperator PrimaryExpression }. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="first_8cpp_source.html#l00201">First::PrimaryExpression()</a>, <a class="el" href="parser_8cpp_source.html#l01218">PrimaryExpression()</a>, <a class="el" href="parser_8cpp_source.html#l01190">PrimaryOperator()</a>, <a class="el" href="first_8cpp_source.html#l00207">First::PrimaryOperator()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a867bebdf8a97af4991fe044b9d7e616b"></a><!-- doxytag: member="Parser::ExpressionList" ref="a867bebdf8a97af4991fe044b9d7e616b" args="(Set sts)" -->
+<a class="anchor" id="a5b5064d9a2c559fb1aae1c39d5fe3663"></a><!-- doxytag: member="Parser::ExpressionList" ref="a5b5064d9a2c559fb1aae1c39d5fe3663" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::ExpressionList </td>
+          <td class="memname">vector&lt; <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> &gt; Parser::ExpressionList </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -474,16 +645,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="parser_8cpp_source.html#l00546">Expression()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>An Expression list can have a series of different types. </p>
+<p>Evaluates a list of Expressions for use by Statements.</p>
+<p>Grabs all of the types of the expression(s) and stores them in a vector, which is later returned. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="parser_8cpp_source.html#l01142">Expression()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1310e1db541b2a3b614ec4491b7196ea"></a><!-- doxytag: member="Parser::Factor" ref="a1310e1db541b2a3b614ec4491b7196ea" args="(Set sts)" -->
+<a class="anchor" id="a071f2167f08d7bb2838ce98e67dfcc99"></a><!-- doxytag: member="Parser::Factor" ref="a071f2167f08d7bb2838ce98e67dfcc99" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Factor </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::Factor </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -494,16 +669,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="parser_8cpp_source.html#l00787">Constant()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00546">Expression()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="first_8cpp_source.html#l00248">First::Factor()</a>, <a class="el" href="parser_8cpp_source.html#l00734">FactorName()</a>, <a class="el" href="first_8cpp_source.html#l00345">First::FactorName()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00144">syntaxError()</a>, <a class="el" href="first_8cpp_source.html#l00171">First::VariableAccess()</a>, and <a class="el" href="parser_8cpp_source.html#l00759">VariableAccess()</a>.</p>
+<p>Processes the Factor's possible productions and deterimines the correct types. </p>
+<p>Calls FactorName instead of VariableName, to remove an ambiguity. Determines the type of Factor and returns it, or an error. </p>
+
+<p><p>* * * * *</p>
+<p>FIX TO 1 BY REMOVING THE -1 ALSO IN FACTOR NAME. ED is currently starting at 1, but we think el should start at 1 but it starts at 0. We would have to change - , +, AND, OR, &gt;, &lt; possibly to the post-fix form. Also EQUALS *</p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="parser_8cpp_source.html#l01719">Constant()</a>, <a class="el" href="blocktable_8cpp_source.html#l00485">BlockTable::currentLevel()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8h_source.html#l00083">TableEntry::displacement</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="parser_8cpp_source.html#l01142">Expression()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="first_8cpp_source.html#l00248">First::Factor()</a>, <a class="el" href="parser_8cpp_source.html#l01586">FactorName()</a>, <a class="el" href="first_8cpp_source.html#l00345">First::FactorName()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="blocktable_8h_source.html#l00080">TableEntry::level</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="blocktable_8h_source.html#l00068">TableEntry::okind</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="blocktable_8h_source.html#l00033">VARIABLE</a>, and <a class="el" href="parser_8cpp_source.html#l01638">VariableAccess()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3eeedadd101b70aef097d1ef8f5f8974"></a><!-- doxytag: member="Parser::FactorName" ref="a3eeedadd101b70aef097d1ef8f5f8974" args="(Set sts)" -->
+<a class="anchor" id="a7f7f4a0f793d5c31f2a75ea10b426968"></a><!-- doxytag: member="Parser::FactorName" ref="a7f7f4a0f793d5c31f2a75ea10b426968" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::FactorName </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::FactorName </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -514,47 +696,90 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00820">BooleanSymbol()</a>, <a class="el" href="first_8cpp_source.html#l00278">First::BooleanSymbol()</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8cpp_source.html#l00775">IndexedSelector()</a>, <a class="el" href="first_8cpp_source.html#l00265">First::IndexedSelector()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00812">Numeral()</a>, <a class="el" href="first_8cpp_source.html#l00271">First::Numeral()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="first_8cpp_source.html#l00171">First::VariableAccess()</a>.</p>
+<p>A FactorName is a VariableAccess for resolving FACTOR productions. </p>
+<p>Returns the given type of the factor (numeral, boolean or universal). Alternatively, if the next token is a VariableName, it grabs the type that said Variable corresponds to. </p>
+
+<p><p>If it's a name, grab its type, and process the index if it's an array</p>
+<p>Otherwise, it's either a Numeral or a Boolean symbol type. Process them. </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8cpp_source.html#l01789">BooleanSymbol()</a>, <a class="el" href="first_8cpp_source.html#l00278">First::BooleanSymbol()</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="blocktable_8cpp_source.html#l00485">BlockTable::currentLevel()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8h_source.html#l00083">TableEntry::displacement</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="parser_8cpp_source.html#l01682">IndexedSelector()</a>, <a class="el" href="first_8cpp_source.html#l00265">First::IndexedSelector()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="blocktable_8h_source.html#l00080">TableEntry::level</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l01769">Numeral()</a>, <a class="el" href="first_8cpp_source.html#l00271">First::Numeral()</a>, <a class="el" href="blocktable_8h_source.html#l00074">TableEntry::size</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="first_8cpp_source.html#l00171">First::VariableAccess()</a>, and <a class="el" href="parser_8cpp_source.html#l01835">VariableName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab9dbadf49595360da28b8cc77ddec8e7"></a><!-- doxytag: member="Parser::GuardedCommand" ref="ab9dbadf49595360da28b8cc77ddec8e7" args="(Set sts)" -->
+<a class="anchor" id="a0259d21a13d0fcf20a813ad5ce70d454"></a><!-- doxytag: member="Parser::GuardedCommand" ref="a0259d21a13d0fcf20a813ad5ce70d454" args="(int &amp;, int, Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Parser::GuardedCommand </td>
           <td>(</td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>thisLabel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>GoTo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"> <em>sts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00546">Expression()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00349">StatementPart()</a>, <a class="el" href="first_8cpp_source.html#l00091">First::StatementPart()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Matches the guards for a GuardedCommand via Expression type check. </p>
+<p>Brief...then evaluates the StatementPart of a Guarded command (do ..., if ...) If the expression type is not a Boolean, then it throws the proper error. Does not chain up. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="parser_8cpp_source.html#l01142">Expression()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00084">NewLabel()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="parser_8cpp_source.html#l00739">StatementPart()</a>, <a class="el" href="first_8cpp_source.html#l00091">First::StatementPart()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a00618d906669f1d0908961dc6c6c51e0"></a><!-- doxytag: member="Parser::GuardedCommandList" ref="a00618d906669f1d0908961dc6c6c51e0" args="(Set sts)" -->
+<a class="anchor" id="a071376c630a3e05acaf3b16c35736bf2"></a><!-- doxytag: member="Parser::GuardedCommandList" ref="a071376c630a3e05acaf3b16c35736bf2" args="(int &amp;, int, Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Parser::GuardedCommandList </td>
           <td>(</td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>startLabel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>GoTo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"> <em>sts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="first_8cpp_source.html#l00195">First::GuardedCommand()</a>, <a class="el" href="parser_8cpp_source.html#l00533">GuardedCommand()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Matches the valid guarded commands along with the specifiers []. </p>
+<p>Verifies that the GuardedCommands are valid, and each subsequent guarded command in the list is valid as well. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="first_8cpp_source.html#l00195">First::GuardedCommand()</a>, <a class="el" href="parser_8cpp_source.html#l01105">GuardedCommand()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -574,7 +799,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00517">GuardedCommandList()</a>, <a class="el" href="first_8cpp_source.html#l00189">First::GuardedCommandList()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Verifies the If guard process. </p>
+<p>Checks for proper If components, while calling for a possible GuardedCommandList </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="parser_8cpp_source.html#l01082">GuardedCommandList()</a>, <a class="el" href="first_8cpp_source.html#l00189">First::GuardedCommandList()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00084">NewLabel()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -594,7 +822,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00546">Expression()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>The index selector for a List, such as a VariableAccessList. </p>
+<p>We check to ensure that the list accessor has the specified symbols ([_]) An indexed selector is composed of [ EXPRESSION ]. Chains up to VariableAccessList through VariableAccess. </p>
+
+<p><p>Determine the type of expression for this selector.</p>
+<p>the Indexed Selector is not an integer or constant integer, and thus is not valid! </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="blocktable_8cpp_source.html#l00411">BlockTable::convertType()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8cpp_source.html#l01142">Expression()</a>, <a class="el" href="first_8cpp_source.html#l00183">First::Expression()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -630,13 +865,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>matchMe</em>&nbsp;</td><td>The string lexeme to be matched. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>validNextCharacters</em>&nbsp;</td><td>The set of characters that represent a valid match.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Matches the input lexeme to that of the next token. Otherwise, we generate and error. Finally, we check for a valid syntax set.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>matchMe</em>&nbsp;</td><td>A lexeme that we wish to check for a match for validity. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>validNextCharacters</em>&nbsp;</td><td>A set of characters that would be a "valid" next input. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>References <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00101">nextToken()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00144">syntaxError()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00150">nextToken()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00199">syntaxError()</a>.</p>
 
 </div>
 </div>
@@ -656,7 +897,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f14f036744fbf72a2d3fa1b30f5b334"></a><!-- doxytag: member="Parser::NewLabel" ref="a8f14f036744fbf72a2d3fa1b30f5b334" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Parser::NewLabel </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>References <a class="el" href="parser_8h_source.html#l00244">labelCount</a>.</p>
 
 </div>
 </div>
@@ -679,16 +939,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Function that advances the scanner until a valid input is found.</p>
 <p>Loops the tokenizer until a non-bad/non-newline/non-comment token is found. Returns a token, possibly blank. </p>
 
-<p>References <a class="el" href="parser_8h_source.html#l00057">admin</a>, <a class="el" href="token_8h_source.html#l00043">BADNUMERAL</a>, <a class="el" href="token_8h_source.html#l00044">BADSYMBOL</a>, <a class="el" href="token_8h_source.html#l00048">COMMENT</a>, <a class="el" href="token_8cpp_source.html#l00054">Token::getType()</a>, <a class="el" href="token_8h_source.html#l00044">NEWLINE</a>, and <a class="el" href="admin_8cpp_source.html#l00128">Admin::nextToken()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="token_8h_source.html#l00043">BADNUMERAL</a>, <a class="el" href="token_8h_source.html#l00044">BADSYMBOL</a>, <a class="el" href="token_8h_source.html#l00048">COMMENT</a>, <a class="el" href="token_8cpp_source.html#l00054">Token::getType()</a>, <a class="el" href="token_8h_source.html#l00044">NEWLINE</a>, and <a class="el" href="admin_8cpp_source.html#l00151">Admin::nextToken()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aadadd3280fa339b1433a8ad665479bc4"></a><!-- doxytag: member="Parser::Numeral" ref="aadadd3280fa339b1433a8ad665479bc4" args="(Set sts)" -->
+<a class="anchor" id="afbf7450bc228d82258cf38e8b0733005"></a><!-- doxytag: member="Parser::Numeral" ref="afbf7450bc228d82258cf38e8b0733005" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Numeral </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::Numeral </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -699,16 +959,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Guarantees that a Numeral was examined. </p>
+<p>Checks for the proper lookahead for a Numeral stop set. </p>
+
+<p><p>We have evaluated an INTEGER literal. </p>
+</p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abe6f497eafd870c3e9f28d4c241e280a"></a><!-- doxytag: member="Parser::PrimaryExpression" ref="abe6f497eafd870c3e9f28d4c241e280a" args="(Set sts)" -->
+<a class="anchor" id="a293b721a8e832a137e495a6a2178188e"></a><!-- doxytag: member="Parser::PrimaryExpression" ref="a293b721a8e832a137e495a6a2178188e" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::PrimaryExpression </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::PrimaryExpression </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -719,7 +985,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00590">RelationalOperator()</a>, <a class="el" href="first_8cpp_source.html#l00224">First::RelationalOperator()</a>, <a class="el" href="first_8cpp_source.html#l00215">First::SimpleExpression()</a>, <a class="el" href="parser_8cpp_source.html#l00611">SimpleExpression()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>A Primary Expression is a SimpleExpression with an optional operator with a simple expression. </p>
+<p>Checks to make sure that the proper evaluations occur for a SimpleExpression; One must evaluate to a boolean, but with multiples, it could be comparative, or equivalency. Thus we check to see what type of Factors are resultant from the simpleexpression terms. </p>
+
+<p><p>We've come to a functional specifier, so we'll either return a boolop if the factor is valid, or an error type.</p>
+<p>It's a SimpleExpression akin to a term-kind of some sort, so we'll check the corresponding production types.</p>
+<p>a relational operator follows the first SimpleExpression, thus we know that we will have to have int comparisons rather than returning a boolean</p>
+<p>Clarify that, since there are two SimpleExpressions, that their types are comparable in terms of boolean ops </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="parser_8cpp_source.html#l01508">Factor()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l01294">RelationalOperator()</a>, <a class="el" href="first_8cpp_source.html#l00224">First::RelationalOperator()</a>, <a class="el" href="first_8cpp_source.html#l00215">First::SimpleExpression()</a>, <a class="el" href="parser_8cpp_source.html#l01324">SimpleExpression()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
@@ -739,16 +1014,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0f04e446170cd685f2ab8ecb6782025f"></a><!-- doxytag: member="Parser::ProcedureDefintion" ref="a0f04e446170cd685f2ab8ecb6782025f" args="(Set sts)" -->
+<a class="anchor" id="ae1399c8e85c6b366db055dd12914b0da"></a><!-- doxytag: member="Parser::ProcedureDefinition" ref="ae1399c8e85c6b366db055dd12914b0da" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::ProcedureDefintion </td>
+          <td class="memname">void Parser::ProcedureDefinition </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -759,16 +1034,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00201">Block()</a>, <a class="el" href="first_8cpp_source.html#l00071">First::Block()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00854">ProcedureName()</a>, <a class="el" href="first_8cpp_source.html#l00117">First::ProcedureName()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Defines a Procedure by name. </p>
+<p>Defines the Procedure and processes its name accordingly. Adds it to the current/given block. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00318">Block()</a>, <a class="el" href="first_8cpp_source.html#l00071">First::Block()</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8cpp_source.html#l00108">BlockTable::define()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00084">NewLabel()</a>, <a class="el" href="blocktable_8h_source.html#l00033">PROCEDURE</a>, <a class="el" href="parser_8cpp_source.html#l01901">ProcedureName()</a>, <a class="el" href="first_8cpp_source.html#l00117">First::ProcedureName()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a72cc285af2d83a0348a47a78aced1582"></a><!-- doxytag: member="Parser::ProcedureName" ref="a72cc285af2d83a0348a47a78aced1582" args="(Set sts)" -->
+<a class="anchor" id="a40cd3f4f71c1e5ab0d484679002e55bd"></a><!-- doxytag: member="Parser::ProcedureName" ref="a40cd3f4f71c1e5ab0d484679002e55bd" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::ProcedureName </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::ProcedureName </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -779,7 +1057,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00845">VariableName()</a>.</p>
+<p>The name of the Procedure is checked. </p>
+<p>A type evaluated from a VariableName is returned. A procedure's name is a string and should correspond to a variable name. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l01835">VariableName()</a>.</p>
 
 </div>
 </div>
@@ -799,7 +1080,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00854">ProcedureName()</a>, <a class="el" href="first_8cpp_source.html#l00117">First::ProcedureName()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Processes a subtype of Statement, a Proc. </p>
+<p>Checks to see if the Procedure exists in a previous Scope/Block. If not, then the call was invalid/procname does not match or exist, otherwise it just returns the command properly. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8cpp_source.html#l00382">BlockTable::convertKind()</a>, <a class="el" href="blocktable_8cpp_source.html#l00411">BlockTable::convertType()</a>, <a class="el" href="blocktable_8cpp_source.html#l00485">BlockTable::currentLevel()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="blocktable_8h_source.html#l00080">TableEntry::level</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="blocktable_8h_source.html#l00068">TableEntry::okind</a>, <a class="el" href="blocktable_8h_source.html#l00071">TableEntry::otype</a>, <a class="el" href="blocktable_8h_source.html#l00033">PROCEDURE</a>, <a class="el" href="parser_8cpp_source.html#l01901">ProcedureName()</a>, <a class="el" href="first_8cpp_source.html#l00117">First::ProcedureName()</a>, <a class="el" href="blocktable_8h_source.html#l00085">TableEntry::startLabel</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -819,14 +1103,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>The following functions make up the core of our <a class="el" href="classParser.html">Parser</a>, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions. </p>
+<p>The following functions make up the core of our <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a>, and are (in effect) essentially just a visual and literal representation of the PL language's grammar rules; each nonterminal production rule is equivalent to the calling of another one of these functions. </p>
 <p>The following is a set of Production-Rule functions.</p>
+<p>For each of these, refer to the Parser.cpp heading comments.</p>
+<p>In order to guarantee that our Productions are satisfying the various Type checking requirements of the PL language, we need to make sure that they evaluate to - or return - or operate on the proper type of expression or terminal or nonterminal set (at the very basest of levels, these end of being roughly equivalent).</p>
+<p>Thus, we return an mType or a vector of mType (for lists) in order to guarantee that the proper evaluation or comparison has occured, or in order to check if the following or preceding evaluations are correct.</p>
+<p>For each of the following, refer to the PL grammar. Any deviations indicate a correction of the grammar to eliminate the problems of Ambiguity or implicit differentiation. In any case, the role of each function is explicit within the function's name itself.</p>
+<p>Pages 282-287 of Per Brinch Hansen's Pascal Compiler book.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="parser_8cpp.html" title="The definition file for the Parser component object.">parser.cpp</a>, <a class="el" href="blocktable_8h.html" title="The specification for the Admin Class Object.">blocktable.h</a></dd></dl>
 <p>Each one has a specific speciality in regards to how they treat their input and production rules, but on the whole they follow a key process:</p>
 <p>1) Output the function name and data. 2) Choose a production rule to follow based off of the lookahead 3) Try to Match any prerequisite statements or rules 4) Append any valid lexemes to the StopSet sts 5) Choose a production rule and follow it (a non-terminal) 6) Repeat ~3-5 unless an error is found 7) Attempt to match the post-requisite statement/lexeme/rule. 8) Check the validity of the lookahead in regards to the stopset sts</p>
 <p>This implicitly maintains a "stack" of unique stopsets at each function (production) level, These are allocated on the application stack.</p>
-<p>Thus, we need to be wary of Stack Overflows when using the recursive parser. </p>
+<p>Thus, we need to be wary of Stack Overflows when using the recursive parser.</p>
+<p>In order to guarantee Semantic correctness and correct Scope validity, some productions need to return their mType or the mType of their proceeding operations which is then compared against the set of proper possible mTypes for the given production rules to guarantee that it's valid.</p>
+<p>i.e. we cannot have Integer X := 5 in the DefinitionPart. For scope checking, we check the current and preceeding blocks to see if the currently examined table entry/tokenized object is semantically valid and not being redeclared or improperly used. The order and syntax of such operations varies with each specific production, and thus does not fit into the 8-point checklist above.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="parser_8h.html" title="The specification header for the Parser component object.">parser.h</a> The root production of A PL program, the <a class="el" href="classParser.html#a068fd2e519704d6fbaf9c8ecb3469e49" title="The following functions make up the core of our Parser, and are (in effect) essentially...">Program</a> production.</dd></dl>
+<p>The PL program should start here, and ends with the ./$ sign set. From here, the first, base Block is created and called. </p>
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00201">Block()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00318">Block()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00084">NewLabel()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -846,7 +1140,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00427">VariableAccessList()</a>, and <a class="el" href="first_8cpp_source.html#l00165">First::VariableAccessList()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00832">VariableAccessList()</a>, and <a class="el" href="first_8cpp_source.html#l00165">First::VariableAccessList()</a>.</p>
 
 </div>
 </div>
@@ -866,7 +1160,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -885,20 +1179,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>Runs the <a class="el" href="classParser.html">Parser</a> by starting the Parse production(s) tree with the EOL $ symbol. </p>
-<p>The main Runner for the <a class="el" href="classParser.html">Parser</a> object.</p>
+<p>Runs the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> by starting the Parse production(s) tree with the EOL $ symbol. </p>
+<p>The main Runner for the <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> object.</p>
 <p>Sets the $ marker for the file as a stopset value. This ensures that $ does not get recognized as a syntax error and that any matches that happen to include a $ will be correct. The initial grammar prod., Program, is parsed (executed with sts). </p>
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00188">Program()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00242">errorCount</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, and <a class="el" href="parser_8cpp_source.html#l00276">Program()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6fc78d62a16df562e2a22e0f5c1acaf9"></a><!-- doxytag: member="Parser::SimpleExpression" ref="a6fc78d62a16df562e2a22e0f5c1acaf9" args="(Set sts)" -->
+<a class="anchor" id="a9952c751bac78c4e0b3db7be474ed099"></a><!-- doxytag: member="Parser::SimpleExpression" ref="a9952c751bac78c4e0b3db7be474ed099" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::SimpleExpression </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::SimpleExpression </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -909,7 +1203,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00633">AddingOperator()</a>, <a class="el" href="first_8cpp_source.html#l00234">First::AddingOperator()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00649">Term()</a>, and <a class="el" href="first_8cpp_source.html#l00242">First::Term()</a>.</p>
+<p>A SimpleExpression must evaluate to an Integer type and defines a simple expression. </p>
+<p>A vector of mTypes is used because a SimpleExpression is like a Term; One or Many of its subcomponents. A SimpleExpression is composed of Multiple terms, a possible sub operator, and multiple Adding operators correspondingly. Thus, we verify that the terms and operator types evaluate properly, and return the corresponding result. </p>
+
+<p><p>Vector to track the subcomponent types. </p>
+</p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l01386">AddingOperator()</a>, <a class="el" href="first_8cpp_source.html#l00234">First::AddingOperator()</a>, <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l01416">Term()</a>, <a class="el" href="first_8cpp_source.html#l00242">First::Term()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
@@ -929,7 +1229,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00468">AssignmentStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00502">DoStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00410">EmptyStatement()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8cpp_source.html#l00490">IfStatement()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="first_8cpp_source.html#l00331">First::ProcedureDefinition()</a>, <a class="el" href="parser_8cpp_source.html#l00480">ProcedureStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00418">ReadStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00443">WriteStatement()</a>.</p>
+<p>Processes a Statement, which can be one of many. </p>
+<p>Processes possible statements, only one input to many possibilities. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00903">AssignmentStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8cpp_source.html#l01054">DoStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00807">EmptyStatement()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8cpp_source.html#l01024">IfStatement()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00985">ProcedureStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00815">ReadStatement()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00852">WriteStatement()</a>.</p>
 
 </div>
 </div>
@@ -949,7 +1252,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00364">Statement()</a>, <a class="el" href="first_8cpp_source.html#l00104">First::Statement()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Processes the StatementPart of a Block. </p>
+<p>Adds StatementPart to the blocktype stack and calls the statementpart productions (statement). Pops accordingly after successful parsing. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00196">blockTypeStack</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00761">Statement()</a>, <a class="el" href="first_8cpp_source.html#l00104">First::Statement()</a>, <a class="el" href="parser_8h_source.html#l00037">STATEMENTPART</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -970,9 +1276,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="memdoc">
 
 <p>A function that requests an error check upon finding a character that is invalid. </p>
-<p>This can only happen after having followed a Valid input character. </p>
+<p>Checks if the next <a class="el" href="classToken.html" title="Token object that is made up of a lexeme (string), a value (integer) and a Type.">Token</a> (its lexeme) is of a valid set of characters.</p>
+<p>This can only happen after having followed a Valid input character.</p>
+<p>Checks if the the lexeme of the nlookahead/next token is in the set of valid characters, and generates a Syntax Error if they are not. That is, if the next character isn't valid, then there's a syntax error. </p>
 
-<p>References <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, and <a class="el" href="parser_8cpp_source.html#l00144">syntaxError()</a>.</p>
+<p>References <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, and <a class="el" href="parser_8cpp_source.html#l00199">syntaxError()</a>.</p>
 
 </div>
 </div>
@@ -993,24 +1301,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="memdoc">
 
 <p>Outputs a syntax error message followed by the characters that would be correct. </p>
+<p>Cleans up after an error has been detected while matching or checking syntax.</p>
 <p>syntaxError will loop until it finds the next valid character after finding an error. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>validNextCharacters</em>&nbsp;</td><td>The set of valid next characters as indicated by the grammar. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>validNextCharacters</em>&nbsp;</td><td>The set of valid next characters as indicated by the grammar.</td></tr>
   </table>
   </dd>
 </dl>
+<p>14240815</p>
+<p>Increases the error count, outputs the relevent error information, then loops until it encounters a valid set of next parseable characters. </p>
 
-<p>References <a class="el" href="parser_8h_source.html#l00057">admin</a>, <a class="el" href="admin_8cpp_source.html#l00223">Admin::getColumnNumber()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00229">Admin::getLineNumber()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00101">nextToken()</a>, and <a class="el" href="set_8cpp_source.html#l00102">Set::toString()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00084">currentToken</a>, <a class="el" href="parser_8h_source.html#l00242">errorCount</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00150">nextToken()</a>, and <a class="el" href="set_8cpp_source.html#l00102">Set::toString()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab7fd24e2aeb0ad2685e11f3ea5594049"></a><!-- doxytag: member="Parser::Term" ref="ab7fd24e2aeb0ad2685e11f3ea5594049" args="(Set sts)" -->
+<a class="anchor" id="a55466d8b3d146f56c56e8eb53559e4b1"></a><!-- doxytag: member="Parser::Term" ref="a55466d8b3d146f56c56e8eb53559e4b1" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::Term </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::Term </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -1021,16 +1332,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="first_8cpp_source.html#l00248">First::Factor()</a>, <a class="el" href="parser_8cpp_source.html#l00692">Factor()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00670">MultiplyingOperator()</a>, <a class="el" href="first_8cpp_source.html#l00256">First::MultiplyingOperator()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>A Term is part of a SimpleExpression, and thus Primary Expression. </p>
+<p>A term can actually be a logical series of Terms, as they occur over multiple expressions. Thus, we need to keep track of them in an mType vector.</p>
+<p>Eventually, this chains back up to SimpleExpression, then PrimaryExpression, then Expression. The Term is a core/central production language grammar component.</p>
+<p>Term = Factor { MultiplyingOperator Factor }. </p>
+
+<p><p>A vector of types to account for a series of terms.</p>
+<p>We grab the relevant Term mType from a Factor, the base of a Term production</p>
+<p>Used to grab the proper Multiplicative symbol for ASSEM output.</p>
+<p>If we have a qualifying MultiplyingOperator, then we keep adding the Factor terms to the mType vector until we are no longer processing Term components. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd>Term-Grammar Production.</dd></dl>
+<p>We output after the pushback with FACTOR in order to get the postfix form. </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00263">Admin::emit1()</a>, <a class="el" href="first_8cpp_source.html#l00248">First::Factor()</a>, <a class="el" href="parser_8cpp_source.html#l01508">Factor()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l01479">MultiplyingOperator()</a>, <a class="el" href="first_8cpp_source.html#l00256">First::MultiplyingOperator()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0bb180ec60cb61345a7890c8766f0048"></a><!-- doxytag: member="Parser::TypeSymbol" ref="a0bb180ec60cb61345a7890c8766f0048" args="(Set sts)" -->
+<a class="anchor" id="acc92d496e62aa2a482092dea20de2e67"></a><!-- doxytag: member="Parser::TypeSymbol" ref="acc92d496e62aa2a482092dea20de2e67" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::TypeSymbol </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::TypeSymbol </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -1041,16 +1365,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>Processes a TypeSymbol, of Boolean or Integer design. </p>
+<p>Returns a an mType from a typesymbol, Checks the lookahead and returns the valid type (int or bool) or returns a UNIVERSAL (error) type. </p>
+
+<p>References <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac004c4cc14aeca2512087a692594786b"></a><!-- doxytag: member="Parser::VariableAccess" ref="ac004c4cc14aeca2512087a692594786b" args="(Set sts)" -->
+<a class="anchor" id="aef1c7098390f845332d10b95778aee37"></a><!-- doxytag: member="Parser::VariableAccess" ref="aef1c7098390f845332d10b95778aee37" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::VariableAccess </td>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::VariableAccess </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -1061,16 +1388,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="first_8cpp_source.html#l00265">First::IndexedSelector()</a>, <a class="el" href="parser_8cpp_source.html#l00775">IndexedSelector()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l00845">VariableName()</a>.</p>
+<p>The production for grabbing a Variable from a VariableAccessList. </p>
+<p>We check to make sure that the index selector is valid, then chain up the type from the given VariableName. </p>
+
+<p><p><a class="el" href="classSet.html" title="The set class manages logical sets of lexemetic values.">Set</a> the index selector stop set.</p>
+<p>Grab the proper type from the variable name.</p>
+<p>Process the indexedSelector data, if valid. </p>
+</p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8cpp_source.html#l00485">BlockTable::currentLevel()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8h_source.html#l00083">TableEntry::displacement</a>, <a class="el" href="admin_8cpp_source.html#l00292">Admin::emit3()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="first_8cpp_source.html#l00265">First::IndexedSelector()</a>, <a class="el" href="parser_8cpp_source.html#l01682">IndexedSelector()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="blocktable_8h_source.html#l00080">TableEntry::level</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="blocktable_8h_source.html#l00074">TableEntry::size</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, and <a class="el" href="parser_8cpp_source.html#l01835">VariableName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8b1f76ff69c6cd8e54c0d06405e26f38"></a><!-- doxytag: member="Parser::VariableAccessList" ref="a8b1f76ff69c6cd8e54c0d06405e26f38" args="(Set sts)" -->
+<a class="anchor" id="a83bdac30bb8bb5d9ee0c820b4d670179"></a><!-- doxytag: member="Parser::VariableAccessList" ref="a83bdac30bb8bb5d9ee0c820b4d670179" args="(Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::VariableAccessList </td>
+          <td class="memname">vector&lt; <a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> &gt; Parser::VariableAccessList </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -1081,16 +1416,130 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="first_8cpp_source.html#l00171">First::VariableAccess()</a>, and <a class="el" href="parser_8cpp_source.html#l00759">VariableAccess()</a>.</p>
+<p>We need to track the various types that make up an access list. </p>
+<p>Processes a list of VariableAccess productions.</p>
+<p>Returns a vector of the corresponding types of variableaccess vars. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="first_8cpp_source.html#l00171">First::VariableAccess()</a>, and <a class="el" href="parser_8cpp_source.html#l01638">VariableAccess()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a08145dddc145745970fe4849aa667e05"></a><!-- doxytag: member="Parser::VariableDefinition" ref="a08145dddc145745970fe4849aa667e05" args="(Set sts)" -->
+<a class="anchor" id="a20052e491dc7c5f812dc2784f760731a"></a><!-- doxytag: member="Parser::VariableDefinition" ref="a20052e491dc7c5f812dc2784f760731a" args="(int &amp;, Set sts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Parser::VariableDefinition </td>
+          <td class="memname">int Parser::VariableDefinition </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>varStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
+          <td class="paramname"> <em>sts</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Processes a Variable according to Definition. </p>
+<p>Grabs the type of an input symbol and passes it to the VariableDefinitionPart. This allows us to properly process Arrays or standard VARIABLEs and attach them to the blocktable and block and current scope as required, while checking their components (such as the array index specifier) accordingly. </p>
+
+<p>References <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00616">TypeSymbol()</a>, <a class="el" href="parser_8cpp_source.html#l00547">VariableDefinitionPart()</a>, and <a class="el" href="first_8cpp_source.html#l00309">First::VariableDefinitionPart()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a897a786bb66431b5f1cc0d3c76da5250"></a><!-- doxytag: member="Parser::VariableDefinitionPart" ref="a897a786bb66431b5f1cc0d3c76da5250" args="(Set sts, int &amp;, mType type)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Parser::VariableDefinitionPart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
+          <td class="paramname"> <em>sts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&nbsp;</td>
+          <td class="paramname"> <em>varStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td>
+          <td class="paramname"> <em>type</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Defines the definition of a VariableList, or an array. </p>
+<p>Array as defined; "array" VariableList "[" Constant "]" or it's just VariableList</p>
+<p>Guarantees that the valid prodution is chosed by examining the type of the variable and the corresponding sets resultant from the lookahead.</p>
+<p>Checks the validity of Array components if necessary, and creates the Array to specification within the <a class="el" href="classBlockTable.html" title="The structure facilitating the creation and manipulation of Program Blocks.">BlockTable</a>. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="blocktable_8h_source.html#l00033">ARRAY</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8cpp_source.html#l01719">Constant()</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="blocktable_8cpp_source.html#l00411">BlockTable::convertType()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="blocktable_8h_source.html#l00071">TableEntry::otype</a>, <a class="el" href="blocktable_8cpp_source.html#l00196">BlockTable::redefineSize()</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="blocktable_8h_source.html#l00077">TableEntry::value</a>, <a class="el" href="blocktable_8h_source.html#l00033">VARIABLE</a>, <a class="el" href="parser_8cpp_source.html#l00644">VariableList()</a>, and <a class="el" href="first_8cpp_source.html#l00325">First::VariableList()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6ef905d0e7690e53c6794afdffa953cf"></a><!-- doxytag: member="Parser::VariableList" ref="a6ef905d0e7690e53c6794afdffa953cf" args="(Set sts, mType type, Kind kind)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; int &gt; Parser::VariableList </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
+          <td class="paramname"> <em>sts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a>&nbsp;</td>
+          <td class="paramname"> <em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="blocktable_8h.html#aa10c9e8951b8ccf714a59ec321bdac5b">Kind</a>&nbsp;</td>
+          <td class="paramname"> <em>kind</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Processes a variable list and guarantees a proper set of variable types. </p>
+<p>Checks for variables as it creates their block and table entries, and returns a vector of their ids. </p>
+
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="blocktable_8cpp_source.html#l00382">BlockTable::convertKind()</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="blocktable_8cpp_source.html#l00108">BlockTable::define()</a>, <a class="el" href="symboltable_8cpp_source.html#l00183">SymbolTable::getAttributeWhere()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="blocktable_8h_source.html#l00181">BlockTable::table</a>, <a class="el" href="first_8cpp_source.html#l00338">First::VariableName()</a>, and <a class="el" href="parser_8cpp_source.html#l01835">VariableName()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acc9e56bb590b37f7ab87395585d2f2de"></a><!-- doxytag: member="Parser::VariableName" ref="acc9e56bb590b37f7ab87395585d2f2de" args="(Set sts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="blocktable_8h.html#a636cfca014f3212ea82d45e28f9cb51b">mType</a> Parser::VariableName </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
           <td class="paramname"> <em>sts</em></td>
@@ -1101,67 +1550,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00305">TypeSymbol()</a>, <a class="el" href="parser_8cpp_source.html#l00281">VariableDefinitionPart()</a>, and <a class="el" href="first_8cpp_source.html#l00309">First::VariableDefinitionPart()</a>.</p>
+<p>Production for a Variable Name. </p>
+<p>We either define a new Const/Proc/Array variable type (Universal), or we check for the variable's existence (as the only other access is in a statement). If it does not exist, then we're using an undeclared name. Otherwise, we determine and return the variable's type to the previous production. </p>
 
-</div>
-</div>
-<a class="anchor" id="aca0b05f8805667f5057d695ee157ab74"></a><!-- doxytag: member="Parser::VariableDefinitionPart" ref="aca0b05f8805667f5057d695ee157ab74" args="(Set sts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Parser::VariableDefinitionPart </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
+<p><p>We set the type of a VariableName by checking the kind of variable and its corresponding entry's oType. I.e. A constant Integer. If we're in the definition part, it's of a Universal type. Otherwise, we search for it...if it isn't found, then we're using an undeclared variable.</p>
+<p>The variable was not found, and we're not declaring it for the first time, so it's an error.</p>
+<p>Return whatever type we have. Universal is the stock type when we encounter an error. </p>
+</p>
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00787">Constant()</a>, <a class="el" href="first_8cpp_source.html#l00111">First::Constant()</a>, <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="parser_8cpp_source.html#l00320">VariableList()</a>, and <a class="el" href="first_8cpp_source.html#l00325">First::VariableList()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6bd20fada4e59e17e0f2b00ec5e86ae1"></a><!-- doxytag: member="Parser::VariableList" ref="a6bd20fada4e59e17e0f2b00ec5e86ae1" args="(Set sts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Parser::VariableList </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="token_8cpp_source.html#l00058">Token::getLexeme()</a>, <a class="el" href="set_8cpp_source.html#l00167">Set::isMember()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>, <a class="el" href="first_8cpp_source.html#l00338">First::VariableName()</a>, and <a class="el" href="parser_8cpp_source.html#l00845">VariableName()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6ab8f6d47347f69f75a4bd8eb75988ac"></a><!-- doxytag: member="Parser::VariableName" ref="a6ab8f6d47347f69f75a4bd8eb75988ac" args="(Set sts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Parser::VariableName </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classSet.html">Set</a>&nbsp;</td>
-          <td class="paramname"> <em>sts</em></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8h_source.html#l00187">blocktable</a>, <a class="el" href="parser_8h_source.html#l00196">blockTypeStack</a>, <a class="el" href="blocktable_8h_source.html#l00038">BOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CBOOLEAN</a>, <a class="el" href="blocktable_8h_source.html#l00038">CINTEGER</a>, <a class="el" href="blocktable_8h_source.html#l00033">CONSTANT</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="parser_8h_source.html#l00037">DEFINITIONPART</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="blocktable_8cpp_source.html#l00225">BlockTable::find()</a>, <a class="el" href="admin_8cpp_source.html#l00247">Admin::getColumnNumber()</a>, <a class="el" href="admin_8cpp_source.html#l00253">Admin::getLineNumber()</a>, <a class="el" href="token_8cpp_source.html#l00050">Token::getValue()</a>, <a class="el" href="blocktable_8h_source.html#l00038">INTEGER</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="parser_8h_source.html#l00199">numberOfScopeTypeErrors</a>, <a class="el" href="blocktable_8h_source.html#l00068">TableEntry::okind</a>, <a class="el" href="blocktable_8h_source.html#l00071">TableEntry::otype</a>, <a class="el" href="parser_8h_source.html#l00037">STATEMENTPART</a>, <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>, <a class="el" href="blocktable_8h_source.html#l00038">UNIVERSAL</a>, and <a class="el" href="blocktable_8h_source.html#l00077">TableEntry::value</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1578,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="parser_8cpp_source.html#l00085">debug()</a>, <a class="el" href="parser_8cpp_source.html#l00452">ExpressionList()</a>, <a class="el" href="first_8cpp_source.html#l00177">First::ExpressionList()</a>, <a class="el" href="parser_8h_source.html#l00054">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00123">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00155">syntaxCheck()</a>.</p>
+<p>References <a class="el" href="parser_8h_source.html#l00089">admin</a>, <a class="el" href="parser_8cpp_source.html#l00135">debug()</a>, <a class="el" href="admin_8cpp_source.html#l00277">Admin::emit2()</a>, <a class="el" href="parser_8cpp_source.html#l00871">ExpressionList()</a>, <a class="el" href="first_8cpp_source.html#l00177">First::ExpressionList()</a>, <a class="el" href="parser_8h_source.html#l00085">lookAheadToken</a>, <a class="el" href="parser_8cpp_source.html#l00175">match()</a>, <a class="el" href="set_8cpp_source.html#l00079">Set::munion()</a>, and <a class="el" href="parser_8cpp_source.html#l00221">syntaxCheck()</a>.</p>
 
 </div>
 </div>
@@ -1197,7 +1594,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="memdoc">
 
-<p>The <a class="el" href="classParser.html">Parser</a> uses the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> to parse the file, through a pointer to the admin class. </p>
+<p>The <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> uses the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> to parse the file, through a pointer to the admin class. </p>
+
+</div>
+</div>
+<a class="anchor" id="a817d3fe67a8ee070f01fd759f8d5d30f"></a><!-- doxytag: member="Parser::blocktable" ref="a817d3fe67a8ee070f01fd759f8d5d30f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBlockTable.html">BlockTable</a>* <a class="el" href="classParser.html#a817d3fe67a8ee070f01fd759f8d5d30f">Parser::blocktable</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>A blocktable object used for proper Scope checking facilities. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="blocktable_8h.html" title="The specification for the Admin Class Object.">blocktable.h</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9c8fcaf225a1d019fc1e87ee330605c"></a><!-- doxytag: member="Parser::blockTypeStack" ref="ae9c8fcaf225a1d019fc1e87ee330605c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stack&lt;<a class="el" href="parser_8h.html#a84146e06b05135ce314ab9e853e43d8c">blocktype</a>&gt; <a class="el" href="classParser.html#ae9c8fcaf225a1d019fc1e87ee330605c">Parser::blockTypeStack</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Used to track what area of the Block we are currently in, and thus what mType we should be returning. </p>
 
 </div>
 </div>
@@ -1231,6 +1659,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 </div>
 </div>
+<a class="anchor" id="a613d04900f76c66dfdf41e47aff6e539"></a><!-- doxytag: member="Parser::errorCount" ref="a613d04900f76c66dfdf41e47aff6e539" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classParser.html#a613d04900f76c66dfdf41e47aff6e539">Parser::errorCount</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Keeps track of the Parsing Errors we encounter. </p>
+
+</div>
+</div>
+<a class="anchor" id="a10a64572cec26c50bdef9575fc79540e"></a><!-- doxytag: member="Parser::labelCount" ref="a10a64572cec26c50bdef9575fc79540e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classParser.html#a10a64572cec26c50bdef9575fc79540e">Parser::labelCount</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a4f9e59e89197efefa1feff50f5ea8725"></a><!-- doxytag: member="Parser::lookAheadToken" ref="a4f9e59e89197efefa1feff50f5ea8725" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1241,6 +1697,75 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </table>
 </div>
 <div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a43e9e43e927c28bc883fd7ff20d165a1"></a><!-- doxytag: member="Parser::numberOfScopeTypeErrors" ref="a43e9e43e927c28bc883fd7ff20d165a1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classParser.html#a43e9e43e927c28bc883fd7ff20d165a1">Parser::numberOfScopeTypeErrors</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Tracks the Scope type of parsing errors we encounter. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4068ed26fd5e4ea914a05979ba4d792c"></a><!-- doxytag: member="Parser::prevID" ref="a4068ed26fd5e4ea914a05979ba4d792c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classParser.html#a4068ed26fd5e4ea914a05979ba4d792c">Parser::prevID</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aeee13154ac5d45a615a57fd4d982487b"></a><!-- doxytag: member="Parser::prevMatch" ref="aeee13154ac5d45a615a57fd4d982487b" args="[4]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classParser.html#aeee13154ac5d45a615a57fd4d982487b">Parser::prevMatch</a>[4]<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa77efdbbc573c3c89169e199b996e0a1"></a><!-- doxytag: member="Parser::prevToken" ref="aa77efdbbc573c3c89169e199b996e0a1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classToken.html">Token</a> <a class="el" href="classParser.html#aa77efdbbc573c3c89169e199b996e0a1">Parser::prevToken</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa5635cdb5fc754cc3ea8b85eca02dfda"></a><!-- doxytag: member="Parser::table" ref="aa5635cdb5fc754cc3ea8b85eca02dfda" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classSymbolTable.html">SymbolTable</a>* <a class="el" href="classParser.html#aa5635cdb5fc754cc3ea8b85eca02dfda">Parser::table</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>A Symbol Table pointer, allowing direct access to Symbol Table information. </p>
 
 </div>
 </div>
@@ -1263,7 +1788,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

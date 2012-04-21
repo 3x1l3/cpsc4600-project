@@ -58,7 +58,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>The Interface/Specification for our <a class="el" href="classSymbolTable.html" title="symboltable object that stores lexemes, IDentifiers and Locations as keys.">SymbolTable</a> (symboltable). </p>
-<p>The Symbol Table (symboltable) object is a core object used by the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> and <a class="el" href="classParser.html">Parser</a> and the majority of the compiler altogether.</p>
+<p>The Symbol Table (symboltable) object is a core object used by the <a class="el" href="classScanner.html" title="Scanner object reads chars, constructs tokens and contributes to parser/symboltable...">Scanner</a> and <a class="el" href="classParser.html" title="The main object for Parsing the PL source code and guaranteeing correctness.">Parser</a> and the majority of the compiler altogether.</p>
 <p>We impliment the symbol table as a Map of a Map of a Map. The reason behind this is that it allows any given component of the table to have multiple values if needed. Additionally, the nested Map structure allows for fast searching and direct access as well.</p>
 <p>Traditionally, a Symbol Table will be constructed for each "block" of nesting we enter.</p>
 <p>It should be noted that "lexeme" is used frequently but in most cases the given function / table entry may not be a traditional lexeme at all. We provide functions to find a symbol table entry with any 2 given entry values.</p>
@@ -79,7 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Mar 2 00:17:42 2012 for CJA-PL-Compiler by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Apr 20 23:10:12 2012 for CJA-PL-Compiler by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
