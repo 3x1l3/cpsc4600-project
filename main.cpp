@@ -30,6 +30,7 @@
 #include <fstream>
 #include <istream>
 #include <ostream>
+#include <cstring>
 
 /** Associated custom libraries/Classes */
 #include "admin.h"
@@ -60,6 +61,8 @@ int main( int argc, char* argv[])
     string line;
     string file;
     
+    int DEBUG_FLAG = 0;
+    
     /* //DISPLAY ALL INPUT STRINGS
       // [1] IS THE ACTUAL FIRST PARAMETER! [0] IS THE BINARY NAME!
     if(argc > 0)
@@ -82,15 +85,28 @@ int main( int argc, char* argv[])
     }
     else
     {
-      if(argc > 2)
-	cout << "\nMultiple inputs detected. Using the first input: " << argv[1] << " ONLY." << endl;
+      if(argc > 3)
+	cout << "\nToo many inputs detected. Using the first input: " << argv[1] << " ONLY." << endl;
       
       inputFileString.append(argv[1]);
     }
     cout << endl << "\nAttempting to scan Filename: " << inputFileString << endl;
     std::ifstream myfile (inputFileString.c_str());
   
+    string dflag = "-g";
+    cout << "OUTPUT " << argc << endl;
     
+    /** Set the debug flag for ASM output if we see the -g flag. */
+    if (argc == 3)
+    {
+      if(strcmp(argv[2], dflag.c_str()) == 0)
+	DEBUG_FLAG = 1;
+      else
+	DEBUG_FLAG = 0;
+    }
+    else
+      DEBUG_FLAG = 0;
+    cout << "dflag is " << DEBUG_FLAG << endl;
     
     if ( myfile.is_open() )
     {
@@ -117,7 +133,7 @@ int main( int argc, char* argv[])
      * We could also have some error handling here, but that is not required.
      * @see Admin()
      */
-    Admin* admin = new Admin(file);
+    Admin* admin = new Admin(file, DEBUG_FLAG);
     int status = admin->scan();
 
     if(status == 0)

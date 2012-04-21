@@ -28,7 +28,7 @@
  * 
  * @param src The PL program in the File string.
  */
-Admin::Admin(string& src)
+Admin::Admin(string& src, int DEBUG)
 {
     current_line = 1;
     //start at negative one casue there is always one more column than actualy charcter
@@ -50,6 +50,8 @@ Admin::Admin(string& src)
 
     /** A flag for managing the output of TOKEN debug information. Set to TRUE to see said information. */
     tokenFlag = false;
+    
+    asmDebugFlag = DEBUG;
 
 }
 
@@ -261,7 +263,10 @@ int Admin::getLineNumber()
 void Admin::emit1(string str) 
 {
   assemblerStream << str; if(str != "ENDPROG") assemblerStream <<  endl;
-  cout << str << endl;
+  if(asmDebugFlag == 1)
+  {  
+    cout << str << endl;
+  }
 }
 
 /** 
@@ -272,8 +277,11 @@ void Admin::emit1(string str)
 void Admin::emit2(string str, int i) 
 {
   assemblerStream << str << endl << i << endl;
-  cout << str << endl;
-  cout << i << endl;
+  if(asmDebugFlag == 1)
+  {
+    cout << str << endl;
+    cout << i << endl;
+  }
 }
 
 /** 
@@ -284,9 +292,12 @@ void Admin::emit2(string str, int i)
 void Admin::emit3(string str, int i, int j) 
 {
   assemblerStream << str << endl << i << endl << j << endl;
-  cout << str << endl;
-  cout << i << endl;
-  cout << j << endl;
+  if(asmDebugFlag == 1)
+  {
+    cout << str << endl;
+    cout << i << endl;
+    cout << j << endl;
+  }
 }
 
 /** Returns the Assembler stream. */

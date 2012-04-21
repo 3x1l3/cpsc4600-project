@@ -118,7 +118,7 @@ public:
      * from the Main file.
      * @param src variable
      */
-    Admin(string&);
+    Admin(string&, int debug);
 
     /** Records the Error Message string into the Error vector. */
     void recordError(string);
@@ -157,6 +157,9 @@ public:
     /** Returns an error count, */
     int getErrorCount();
 
+    /** Determines whether the EMITS output or not. */
+    
+    int asmDebugFlag;
 };
 
 #endif
