@@ -1,3 +1,7 @@
+$simple recursive file
+$prints out 1 through 10, after the control var 112, and before the controlvar 224
+$uses recursion, a calls a and so on.
+
 begin
 
 const p = 112;
@@ -19,5 +23,5 @@ end;
 x:=0;
 call a;
 
-write p, x;
+write p, x, y;
 end.
